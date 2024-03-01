@@ -10,6 +10,7 @@ Level::Level(sf::RenderWindow* hwnd, Input* in) {
 	robot.setSize(sf::Vector2f(150, 275));
 	robot.setPosition(175, 375);
 	robot.setInput(input);
+	robot.setHealth(100);
 	if (!robotTexture.loadFromFile("Assets/Sprites/Robot-Full.png")) { std::cerr << "Robot texture failed to load"; }
 	robot.setTexture(&robotTexture);
 
@@ -34,9 +35,11 @@ Level::Level(sf::RenderWindow* hwnd, Input* in) {
 	dummy.setSize(sf::Vector2f(150, 275));
 	dummy.setPosition(975, 375);
 	dummy.setInput(input);
+	dummy.setHealth(100);
 	if (!robotTexture.loadFromFile("Assets/Sprites/Robot-Full.png")) { std::cerr << "Robot texture failed to load"; }
 	dummy.setTexture(&robotTexture);
 	dummy.setScale(-1.f, 1.f);
+
 
 
 
@@ -68,9 +71,12 @@ void Level::update(float dt)
 {
 	robot.update(dt);
 	dummy.update(dt);
-	
-	HealthBarUpdate(robot, robot);
-	robot.setHealth(robot.getHealth() - 0.0000001);
+	dummy.setCollisionBox(dummy.getPosition().x, dummy.getPosition().y, 150, 275);
+	HealthBarUpdate(robot, dummy);
+	if (dummy.getGlobalBounds().intersects(robot.getJab().getHitbox().getGlobalBounds())) {
+		dummy.setHealth(dummy.getHealth() - 0.5);
+	}
+
 
 }
 
