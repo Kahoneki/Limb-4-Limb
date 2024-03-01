@@ -22,6 +22,7 @@ private:
 	// Level objects
 
 	Player robot;
+	Player dummy;
 	sf::Texture robotTexture;
 
 };

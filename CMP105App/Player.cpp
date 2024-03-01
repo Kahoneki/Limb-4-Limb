@@ -24,26 +24,26 @@ Player::~Player() {
 
 
 
-void Player::handleInput(float dt) {
+void Player::handleInput(float dt, int jump, int left, int right) {
 	//----MOVEMENT----//
 	//Handle movement if player is on ground, else they shouldn't be able to change horizontal velocity or jump
 	if (actionable) {
 		if (isGrounded) {
 			//Pressing both keys at same time or not pressing either key
-			if ((input->isKeyDown(sf::Keyboard::D) && input->isKeyDown(sf::Keyboard::A)) || (!input->isKeyDown(sf::Keyboard::D) && (!input->isKeyDown(sf::Keyboard::A)))) {
+			if ((input->isKeyDown(left) && input->isKeyDown(right)) || (!input->isKeyDown(left) && (!input->isKeyDown(right)))) {
 				//Slow down to an immediate hault
 				velocity.x = 0;
 			}
 			//Pressing either left or right (but not both - case covered by above check)
-			else if (input->isKeyDown(sf::Keyboard::D) || input->isKeyDown(sf::Keyboard::A)) {
+			else if (input->isKeyDown(right) || input->isKeyDown(left)) {
 				//Handle movement
-				if (input->isKeyDown(sf::Keyboard::D))
+				if (input->isKeyDown(right))
 					velocity.x = topSpeed;
-				if (input->isKeyDown(sf::Keyboard::A))
+				if (input->isKeyDown(left))
 					velocity.x = -topSpeed;
 			}
 			//Jumping
-			if (input->isKeyDown(sf::Keyboard::Space)) {
+			if (input->isKeyDown(jump)) {
 				isGrounded = false;
 				velocity.y = jumpSpeed;
 				velocity.x *= 1.25;
