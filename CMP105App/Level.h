@@ -18,10 +18,16 @@ public:
 	void update(float dt) override;
 	void render() override;
 
+
+	void HealthBarUpdate(Player play1, Player play2);
 private:
 	// Level objects
 
 	Player robot;
 	sf::Texture robotTexture;
+	GameObject HealthBarFront1;
+	GameObject HealthBarFront2;
+	GameObject HealthBarBack1;
+	GameObject HealthBarBack2;
 
 };

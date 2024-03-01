@@ -1,7 +1,28 @@
 ﻿  Level.cpp
-  Main.cpp
-  Player.cpp
-C:\Users\20rya\OneDrive\Documents\CMP 105 Weedle Game\CMP105App\Player.cpp(71,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
-  LINK : C:\Users\20rya\OneDrive\Documents\CMP 105 Weedle Game\x64\Debug\CMP105App.exe not found or not built by the last incremental link; performing full link
-  CMP105App.vcxproj -> C:\Users\20rya\OneDrive\Documents\CMP 105 Weedle Game\x64\Debug\CMP105App.exe
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:         with
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:         [
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:             T=unsigned int
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:         ]
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:         with
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:         [
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:             T=unsigned int
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:         ]
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(60,36): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(83,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(83,39): warning C4244:         with
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(83,39): warning C4244:         [
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(83,39): warning C4244:             T=float
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(83,39): warning C4244:         ]
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(84,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(84,39): warning C4244:         with
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(84,39): warning C4244:         [
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(84,39): warning C4244:             T=float
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(84,39): warning C4244:         ]
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(85,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(85,59): warning C4244:         with
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(85,59): warning C4244:         [
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(85,59): warning C4244:             T=unsigned int
+\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(85,59): warning C4244:         ]
+  CMP105App.vcxproj -> \\StuHomeEven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\x64\Debug\CMP105App.exe
