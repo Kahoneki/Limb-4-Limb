@@ -1,28 +1,9 @@
-﻿  Level.cpp
-M:\GitHub\CMP105 Uni Repo\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-          with
-          [
-              T=unsigned int
-          ]
-M:\GitHub\CMP105 Uni Repo\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-          with
-          [
-              T=unsigned int
-          ]
-M:\GitHub\CMP105 Uni Repo\cmp105-groupproject-weedle\CMP105App\Level.cpp(73,37): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-M:\GitHub\CMP105 Uni Repo\cmp105-groupproject-weedle\CMP105App\Level.cpp(105,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-M:\GitHub\CMP105 Uni Repo\cmp105-groupproject-weedle\CMP105App\Level.cpp(106,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-M:\GitHub\CMP105 Uni Repo\cmp105-groupproject-weedle\CMP105App\Level.cpp(107,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-          with
-          [
-              T=unsigned int
-          ]
+﻿  Player.cpp
+M:\GitHub\CMP105 Uni Repo\cmp105-groupproject-weedle\CMP105App\Player.cpp(146,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+M:\GitHub\CMP105 Uni Repo\cmp105-groupproject-weedle\CMP105App\Player.cpp(202,46): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+M:\GitHub\CMP105 Uni Repo\cmp105-groupproject-weedle\CMP105App\Player.cpp(204,45): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+M:\GitHub\CMP105 Uni Repo\cmp105-groupproject-weedle\CMP105App\Player.cpp(217,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+M:\GitHub\CMP105 Uni Repo\cmp105-groupproject-weedle\CMP105App\Player.cpp(219,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+M:\GitHub\CMP105 Uni Repo\cmp105-groupproject-weedle\CMP105App\Player.cpp(224,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+M:\GitHub\CMP105 Uni Repo\cmp105-groupproject-weedle\CMP105App\Player.cpp(226,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   CMP105App.vcxproj -> M:\GitHub\CMP105 Uni Repo\cmp105-groupproject-weedle\x64\Debug\CMP105App.exe

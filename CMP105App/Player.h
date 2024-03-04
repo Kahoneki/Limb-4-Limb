@@ -24,10 +24,7 @@ public:
 	int getProtection();
 	bool getLimbActivity(int index);
 	int getLimbRotation(int index);
-	Attack getJab();
-	Attack getleg();
-	Attack getleg2();
-	Attack getupcut();
+	Attack getAttack(int index);
 
 	//Setters
 	void setHealth(int val);
@@ -51,11 +48,9 @@ private:
 	//Combat
 	int health;
 	int protection;
+	bool isAttacking;
 
-	Attack jab;
-	Attack leg;
-	Attack leg2;
-	Attack upcut;
+	Attack attacks[4];
 
 	//Base
 	int characterIndex;

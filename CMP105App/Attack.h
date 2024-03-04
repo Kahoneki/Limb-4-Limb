@@ -10,6 +10,7 @@ public:
 
 	//Constructor/Destructor
 	Attack();
+	Attack(float start, float act, float rec, float w, float h, float relx, float rely);
 	~Attack();
 
 
@@ -23,17 +24,11 @@ public:
 	bool getAttacking();
 
 	//Setters
-
-	void setAttack(float start, float act, float rec, float w, float h, float relx, float rely);
 	void setHitbox(int width, int height, int xpos, int ypos);
-	void setCounter(float count);
 	void setAttacking(bool fighting);
 
 	//Handles the actual attack
 	void strike(float dt, float player_x, float player_y);
-	void kick(float dt, float player_x, float player_y);
-	void kick2(float dt, float player_x, float player_y);
-	void upper(float dt, float player_x, float player_y);
 
 private:
 
@@ -50,10 +45,11 @@ private:
 	float recovery;
 
 	// Counts frames when an attack happens. Used to check which state ( startup, active, recovery ) the attack is in.
-	float counter;
+	int counter;
 
 	// Checks if the player is mid attack
 	bool attacking;
+
 
 	// Data for the hitbox
 	float width;
@@ -63,5 +59,7 @@ private:
 	float relative_xpos;
 
 	float relative_ypos;
+
+
 };
 

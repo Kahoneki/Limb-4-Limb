@@ -69,11 +69,12 @@ void Level::update(float dt)
 	dummy.update(dt);
 	dummy.setCollisionBox(dummy.getPosition().x, dummy.getPosition().y, 150, 275);
 	HealthBarUpdate(robot, dummy);
-	if (dummy.getGlobalBounds().intersects(robot.getJab().getHitbox().getGlobalBounds())) {
-		dummy.setHealth(dummy.getHealth() - 0.5);
+
+	for (int i{}; i < 4; ++i) {
+		if (dummy.getGlobalBounds().intersects(robot.getAttack(i).getHitbox().getGlobalBounds())) {
+			dummy.setHealth(dummy.getHealth() - 0.5);
+		}
 	}
-
-
 }
 
 
@@ -83,10 +84,9 @@ void Level::render()
 	beginDraw();
 
 	window->draw(robot);
-	window->draw(robot.getJab().getHitbox());
-	window->draw(robot.getleg().getHitbox());
-	window->draw(robot.getleg2().getHitbox());
-	window->draw(robot.getupcut().getHitbox());
+	for (int i{}; i < 4; ++i) {
+		window->draw(robot.getAttack(i).getHitbox());
+	}
 
 
 	window->draw(dummy);
