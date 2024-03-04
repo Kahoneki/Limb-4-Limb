@@ -10,7 +10,7 @@ public:
 
 	//Constructor/Destructor
 	Player();
-	Player(float acc, float ts, float js, int hp, int prot);
+	Player(float acc, float ts, float js, int hp, int prot, int c1);
 	~Player();
 
 	
@@ -22,6 +22,8 @@ public:
 	//Getters
 	int getHealth();
 	int getProtection();
+	bool getLimbActivity(int index);
+	int getLimbRotation(int index);
 	Attack getJab();
 	Attack getleg();
 	Attack getleg2();
@@ -29,6 +31,10 @@ public:
 
 	//Setters
 	void setHealth(int val);
+	void UpdateTextures(); //Call whenever there's a change to activeLimbs[]
+	void setLimbActivity(int index, bool val);
+	void setLimbRotation(int index, int rotation); //Degrees
+	void addLimbRotation(int index, int rotation); //Degrees
 
 
 private:
@@ -51,7 +57,25 @@ private:
 	Attack leg2;
 	Attack upcut;
 
-	
+	//Base
+	int characterIndex;
+
+	//Sprite
+	//in order: left arm, right arm, left leg, right leg
+	bool activeLimbs[4];
+
+	sf::Texture* basePlayerTexture;
+	sf::Sprite* basePlayerSprite;
+
+	sf::Texture* aliveLimbTextures[4];
+	sf::Sprite* aliveLimbSprites[4];
+
+	sf::Texture* deadLimbTextures[4];
+	sf::Sprite* deadLimbSprites[4];
+
+	sf::RenderTexture* playerRenderTexture;
+
+	bool updateTextures;
 	
 };
 
