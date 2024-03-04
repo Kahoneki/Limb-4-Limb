@@ -21,10 +21,10 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1) {
 
 	for (bool& b : activeLimbs) { b = true; }
 
-	jab.setAttack(4, 7, 14, 60, 25, 125, 75);
-	leg.setAttack(2, 5, 16, 60, 30, 105, 230);
-	leg2.setAttack(5, 15, 40, 60, 30, 105, 230);
-	upcut.setAttack(6, 21, 43, 60, 70, 125, 30);
+	attacks[0] = Attack(4, 7, 14, 60, 25, 125, 75);
+	attacks[1] = Attack(2, 5, 16, 60, 30, 105, 230);
+	attacks[2] = Attack(5, 15, 40, 60, 30, 105, 230);
+	attacks[3] = Attack(6, 21, 43, 60, 70, 125, 30);
 
 	//Create render texture for player
 	playerRenderTexture = new sf::RenderTexture();
@@ -101,27 +101,25 @@ void Player::handleInput(float dt, int jump, int left, int right) {
 
 			//-----GROUND COMBAT-----//
 			if (input->isKeyDown(sf::Keyboard::J)) {
-				jab.setAttacking(true);
+				attacks[0].setAttacking(true);
 				velocity.x = 0;
-				actionable = false;
+				isAttacking = true;
 			}
 			if (input->isKeyDown(sf::Keyboard::K)) {
-				leg.setAttacking(true);
+				attacks[1].setAttacking(true);
 				velocity.x = 0;
-				actionable = false;
 			}
 			if (input->isKeyDown(sf::Keyboard::L)) {
-				leg2.setAttacking(true);
+				attacks[2].setAttacking(true);
 				velocity.x = 0;
-				actionable = false;
 			}
 			if (input->isKeyDown(sf::Keyboard::I)) {
-				upcut.setAttacking(true);
+				attacks[3].setAttacking(true);
 				isGrounded = false;
 				velocity.y = jumpSpeed;
 				velocity.x = 0;
-				actionable = false;
 			}
+
 
 			//DEBUGGING TEXTURE CHANGING LOGIC - TEMP
 			activeLimbs[0] = !input->isKeyDown(sf::Keyboard::Num1);
@@ -135,6 +133,8 @@ void Player::handleInput(float dt, int jump, int left, int right) {
 		else {
 			velocity.y -= acceleration * dt;
 		}
+
+		isAttacking = false;
 	}
 }
 
@@ -152,36 +152,15 @@ void Player::update(float dt) {
 		isGrounded = true;
 	}
 
-	
-	// Checks if an attack is in progress and acts accordingly
-	if (jab.getAttacking()) {
+	//Handle combat
+	actionable = true;
+	for (Attack& atk : attacks) {
+		if (atk.getAttacking()) {
+			atk.strike(dt, getPosition().x, getPosition().y);
+			actionable = false;
+		}
+	}
 
-		jab.strike(dt, getPosition().x, getPosition().y);
-	}
-	else {
-		actionable = true;
-	}
-	if (leg.getAttacking()) {
-
-		leg.kick(dt, getPosition().x, getPosition().y);
-	}
-	else {
-		actionable = true;
-	}
-	if (leg2.getAttacking()) {
-
-		leg2.kick2(dt, getPosition().x, getPosition().y);
-	}
-	else {
-		actionable = true;
-	}
-	if (upcut.getAttacking()) {
-
-		upcut.upper(dt, getPosition().x, getPosition().y);
-	}
-	else {
-		actionable = true;
-	}
 
 	if (updateTextures) {
 		updateTextures = false;
@@ -225,6 +204,10 @@ int Player::getLimbRotation(int index) {
 		return deadLimbSprites[index]->getRotation();
 }
 
+Attack Player::getAttack(int index) {
+	return attacks[index];
+}
+
 void Player::UpdateTextures() { updateTextures = true; }
 
 void Player::setLimbActivity(int index, bool val) { activeLimbs[index] = val; }
@@ -242,13 +225,3 @@ void Player::addLimbRotation(int index, int rotation) {
 	else
 		deadLimbSprites[index]->rotate(rotation);
 }
-
-
-Attack Player::getJab() { return jab;  }
-
-Attack Player::getleg() { return leg; }
-
-Attack Player::getleg2() { return leg2; }
-
-Attack Player::getupcut() { return upcut; }
-
