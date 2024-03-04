@@ -6,13 +6,11 @@ Level::Level(sf::RenderWindow* hwnd, Input* in) {
 	input = in;
 
 	// initialise game objects
-	robot = Player(2200.0f, 175.0f, 900.0f, 100, 100);
+	robot = Player(2200.0f, 175.0f, 900.0f, 100, 100, 0);
 	robot.setSize(sf::Vector2f(150, 275));
 	robot.setPosition(175, 375);
 	robot.setInput(input);
 	robot.setHealth(100);
-	if (!robotTexture.loadFromFile("Assets/Sprites/Robot-Full.png")) { std::cerr << "Robot texture failed to load"; }
-	robot.setTexture(&robotTexture);
 
 	HealthBarFront1.setSize(sf::Vector2f(400, 50));
 	HealthBarFront1.setPosition(25, 25);
@@ -31,13 +29,11 @@ Level::Level(sf::RenderWindow* hwnd, Input* in) {
 	HealthBarBack2.setFillColor(sf::Color::Red);
 
 	
-	dummy = Player(2200.0f, 175.0f, 900.0f, 100, 100);
+	dummy = Player(2200.0f, 175.0f, 900.0f, 100, 100, 0);
 	dummy.setSize(sf::Vector2f(150, 275));
 	dummy.setPosition(975, 375);
 	dummy.setInput(input);
 	dummy.setHealth(100);
-	if (!robotTexture.loadFromFile("Assets/Sprites/Robot-Full.png")) { std::cerr << "Robot texture failed to load"; }
-	dummy.setTexture(&robotTexture);
 	dummy.setScale(-1.f, 1.f);
 
 
