@@ -88,6 +88,9 @@ void Level::render()
 
 	window->draw(robot);
 	window->draw(robot.getJab().getHitbox());
+	window->draw(robot.getleg().getHitbox());
+	window->draw(robot.getleg2().getHitbox());
+	window->draw(robot.getupcut().getHitbox());
 
 
 	window->draw(dummy);

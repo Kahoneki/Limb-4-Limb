@@ -23,6 +23,9 @@ public:
 	int getHealth();
 	int getProtection();
 	Attack getJab();
+	Attack getleg();
+	Attack getleg2();
+	Attack getupcut();
 
 	//Setters
 	void setHealth(int val);
@@ -44,6 +47,10 @@ private:
 	int protection;
 
 	Attack jab;
+	Attack leg;
+	Attack leg2;
+	Attack upcut;
+
 	
 	
 };

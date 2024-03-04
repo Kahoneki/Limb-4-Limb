@@ -32,6 +32,81 @@ void Attack::strike(float dt, float player_x, float player_y) {
 		counter = 0;
 	}
 }
+void Attack::kick(float dt, float player_x, float player_y)
+{
+	counter += (45.f * dt);
+
+	if (counter > startup && counter < active)
+	{
+		setHitbox(width, 30, player_x + 105, player_y + 230);
+	}
+
+	if (counter > active)
+	{
+		setHitbox(0, 0, 0, 0);
+	}
+
+	if (counter > recovery)
+	{
+		attacking = false;
+		counter = 0;
+
+
+	}
+}
+
+void Attack::kick2(float dt, float player_x, float player_y)
+{
+	counter += (60.f * dt);
+
+	if (counter > startup && counter < active)
+	{
+		setHitbox(width, 30, player_x + 105, player_y + 230);
+	}
+
+	if (counter > active)
+	{
+		setHitbox(0, 0, 0, 0);
+
+	}
+
+	if (counter > recovery)
+	{
+		attacking = false;
+		counter = 0;
+	}
+
+
+
+
+}
+void Attack::upper(float dt, float player_x, float player_y)
+{
+	counter += (45.f * dt);
+
+	if (counter > startup && counter < active)
+	{
+		setHitbox(width, 70, player_x + 125, player_y + 30);
+	}
+
+	if (counter > active)
+	{
+		setHitbox(0, 0, 0, 0);
+	}
+
+	if (counter > recovery)
+	{
+		attacking = false;
+		counter = 0;
+	}
+
+
+
+
+
+
+
+}
 // Getters
 
 GameObject Attack::getHitbox() { return hitbox; }

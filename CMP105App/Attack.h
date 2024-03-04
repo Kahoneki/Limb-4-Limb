@@ -31,6 +31,9 @@ public:
 
 	//Handles the actual attack
 	void strike(float dt, float player_x, float player_y);
+	void kick(float dt, float player_x, float player_y);
+	void kick2(float dt, float player_x, float player_y);
+	void upper(float dt, float player_x, float player_y);
 
 private:
 
