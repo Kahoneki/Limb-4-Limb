@@ -44,8 +44,11 @@ private:
 	// The total amount of frames for the attack.
 	float recovery;
 
-	// Counts frames when an attack happens. Used to check which state ( startup, active, recovery ) the attack is in.
-	int counter;
+	// Counts frames when an attack happens (taking into account delta time). Used to check which state ( startup, active, recovery ) the attack is in.
+	float counter;
+
+	//Fixed framerate
+	int physicsClockFramerate;
 
 	// Checks if the player is mid attack
 	bool attacking;
