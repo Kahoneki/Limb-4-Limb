@@ -19,6 +19,7 @@ Attack::Attack(float start, float act, float rec, float w, float h, float relx, 
 	relative_xpos = relx;
 	relative_ypos = rely;
 
+	physicsClockFramerate = 30;
 }
 
 
@@ -28,7 +29,8 @@ Attack::~Attack() {
 void Attack::strike(float dt, float player_x, float player_y) {
 
 	std::cerr << counter << std::endl;
-	counter++;
+	std::cerr << dt << std::endl;
+	counter += physicsClockFramerate*dt;
 
 	// If attack is in active frames, create the hitbox
 	if (counter > startup && counter < active) {
