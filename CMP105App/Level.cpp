@@ -57,8 +57,8 @@ void Level::handleInput(float dt)
 		window->close();
 	}
 	
-	robot.handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::F, sf::Keyboard::R, sf::Keyboard::T, sf::Keyboard::G);
-	dummy.handleInput(dt, sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::L, sf::Keyboard::SemiColon, sf::Keyboard::O, sf::Keyboard::P);
+	robot.handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::G, sf::Keyboard::T);
+	dummy.handleInput(dt, sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::O, sf::Keyboard::L, sf::Keyboard::SemiColon, sf::Keyboard::P);
 
 
 }
@@ -72,14 +72,14 @@ void Level::update(float dt)
 	for (int i{}; i < 4; ++i) {
 		if (dummy.getGlobalBounds().intersects(robot.getAttack(i).getHitbox().getGlobalBounds())) {
 			if (!robot.getStruck()){ 
-				dummy.setHealth(dummy.getHealth() - 0.5);
+				dummy.setHealth(dummy.getHealth() - robot.getAttack(i).getDamage());
 				robot.setStruck(true);
 			}
 		}
 
 		if (robot.getGlobalBounds().intersects(dummy.getAttack(i).getHitbox().getGlobalBounds())) {
 			if (!dummy.getStruck()) {
-				robot.setHealth(robot.getHealth() - 0.5);
+				robot.setHealth(robot.getHealth() - dummy.getAttack(i).getDamage());
 				dummy.setStruck(true);
 			}
 		}

@@ -7,7 +7,7 @@
 Attack::Attack() {
 }
 
-Attack::Attack(float start, float act, float rec, float w, float h, float relx, float rely) {
+Attack::Attack(float start, float act, float rec, float w, float h, float relx, float rely, int dam) {
 
 	startup = start;
 	active = act;
@@ -18,6 +18,7 @@ Attack::Attack(float start, float act, float rec, float w, float h, float relx, 
 	height = h;
 	relative_xpos = relx;
 	relative_ypos = rely;
+	damage = dam;
 
 	physicsClockFramerate = 30;
 }
@@ -67,6 +68,8 @@ float Attack::getActive() { return active; }
 float Attack::getRecovery() { return recovery; }
 
 bool Attack::getAttacking() { return attacking; }
+
+int Attack::getDamage() { return damage; }
 
 
 // Setters

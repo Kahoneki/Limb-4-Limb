@@ -10,7 +10,7 @@ public:
 
 	//Constructor/Destructor
 	Attack();
-	Attack(float start, float act, float rec, float w, float h, float relx, float rely);
+	Attack(float start, float act, float rec, float w, float h, float relx, float rely, int dam);
 	~Attack();
 
 
@@ -22,6 +22,7 @@ public:
 	float getActive();
 	float getRecovery();
 	bool getAttacking();
+	int getDamage();
 
 	//Setters
 	void setHitbox(int width, int height, int xpos, int ypos);
@@ -52,6 +53,9 @@ private:
 
 	// Checks if the player is mid attack
 	bool attacking;
+#
+	//Damage of the attack
+	int damage;
 
 	// Data for the hitbox
 	float width;
