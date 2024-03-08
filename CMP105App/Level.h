@@ -26,6 +26,8 @@ private:
 	Player robot;
 	Player dummy;
 	sf::Texture robotTexture;
+	sf::Texture bgTexture;
+	GameObject background;
 	GameObject HealthBarFront1;
 	GameObject HealthBarFront2;
 	GameObject HealthBarBack1;

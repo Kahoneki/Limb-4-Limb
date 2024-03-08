@@ -158,6 +158,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Framework\BaseLevel.cpp" />
     <ClCompile Include="Framework\Input.cpp" />
     <ClCompile Include="Framework\GameObject.cpp" />
@@ -171,6 +172,7 @@
     <Text Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Audio.h" />
     <ClInclude Include="Framework\BaseLevel.h" />
     <ClInclude Include="Framework\Input.h" />
     <ClInclude Include="Framework\GameObject.h" />

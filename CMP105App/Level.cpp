@@ -36,7 +36,9 @@ Level::Level(sf::RenderWindow* hwnd, Input* in) {
 	dummy.setHealth(100);
 	dummy.setScale(-1.f, 1.f);
 
-
+	background.setSize(sf::Vector2f(window->getSize()));
+	bgTexture.loadFromFile("Assets/Background/background.png");
+	background.setTexture(&bgTexture);
 
 
 
@@ -82,7 +84,7 @@ void Level::update(float dt)
 void Level::render()
 {
 	beginDraw();
-
+	window->draw(background);
 	window->draw(robot);
 	for (int i{}; i < 4; ++i) {
 		window->draw(robot.getAttack(i).getHitbox());
