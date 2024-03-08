@@ -75,6 +75,8 @@ void Level::update(float dt)
 			dummy.setHealth(dummy.getHealth() - 0.5);
 		}
 	}
+
+	
 }
 
 
@@ -105,5 +107,14 @@ void Level::HealthBarUpdate(Player play1, Player play2) {
 	HealthBarFront1.setSize(sf::Vector2f(Calc1, 50));
 	HealthBarFront2.setSize(sf::Vector2f(Calc2, 50));
 	HealthBarFront2.setPosition((window->getSize().x - Calc2 - 25), 25);
+
+	if (play1.getHealth() <= 0)
+	{
+		window->close();
+	}
+	if (play2.getHealth() <= 0) 
+	{
+		window->close();
+	}
 
 }
