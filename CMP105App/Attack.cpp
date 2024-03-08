@@ -26,7 +26,7 @@ Attack::Attack(float start, float act, float rec, float w, float h, float relx, 
 Attack::~Attack() {
 }
 
-void Attack::strike(float dt, float player_x, float player_y) {
+void Attack::strike(float dt, float player_x, float player_y, bool flip) {
 
 	std::cerr << counter << std::endl;
 	std::cerr << dt << std::endl;
@@ -34,7 +34,12 @@ void Attack::strike(float dt, float player_x, float player_y) {
 
 	// If attack is in active frames, create the hitbox
 	if (counter > startup && counter < active) {
-		setHitbox(width, height, player_x + relative_xpos, player_y + relative_ypos);
+		if (!flip) {
+			setHitbox(width, height, player_x + relative_xpos, player_y + relative_ypos);
+		}
+		else {
+			setHitbox(width, height, player_x - -relative_xpos - 300, player_y + relative_ypos);
+		}
 	}
 
 	// if attack is out of active frames, remove the hitbox

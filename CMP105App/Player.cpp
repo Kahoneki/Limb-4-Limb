@@ -8,7 +8,7 @@ Player::Player() {
 //For testing losing limbs
 bool numDown = false;
 
-Player::Player(float acc, float ts, float js, int hp, int prot, int c1) {
+Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool flip) {
 	acceleration = acc;
 	topSpeed = ts;
 	jumpSpeed = js;
@@ -18,6 +18,8 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1) {
 
 	isGrounded = false;
 	actionable = true;
+	struck = false;
+	flipped = flip;
 
 	for (bool& b : activeLimbs) { b = true; }
 
@@ -61,6 +63,7 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1) {
 		//Dont draw dead limbs at startup
 
 	}
+
 	playerRenderTexture->display();
 	setTexture(&playerRenderTexture->getTexture());
 
@@ -74,7 +77,7 @@ Player::~Player() {
 
 
 
-void Player::handleInput(float dt, int jump, int left, int right) {
+void Player::handleInput(float dt, int jump, int left, int right, int jab, int kick, int sweep, int upper) {
 	//----MOVEMENT----//
 	//Handle movement if player is on ground, else they shouldn't be able to change horizontal velocity or jump
 	if (actionable) {
@@ -100,20 +103,20 @@ void Player::handleInput(float dt, int jump, int left, int right) {
 			}
 
 			//-----GROUND COMBAT-----//
-			if (input->isKeyDown(sf::Keyboard::J)) {
+			if (input->isKeyDown(jab)) {
 				attacks[0].setAttacking(true);
 				velocity.x = 0;
 				isAttacking = true;
 			}
-			if (input->isKeyDown(sf::Keyboard::K)) {
+			if (input->isKeyDown(kick)) {
 				attacks[1].setAttacking(true);
 				velocity.x = 0;
 			}
-			if (input->isKeyDown(sf::Keyboard::L)) {
+			if (input->isKeyDown(sweep)) {
 				attacks[2].setAttacking(true);
 				velocity.x = 0;
 			}
-			if (input->isKeyDown(sf::Keyboard::I)) {
+			if (input->isKeyDown(upper)) {
 				attacks[3].setAttacking(true);
 				isGrounded = false;
 				velocity.y = jumpSpeed;
@@ -135,6 +138,7 @@ void Player::handleInput(float dt, int jump, int left, int right) {
 		}
 
 		isAttacking = false;
+		struck = false;
 	}
 }
 
@@ -156,7 +160,7 @@ void Player::update(float dt) {
 	actionable = true;
 	for (Attack& atk : attacks) {
 		if (atk.getAttacking()) {
-			atk.strike(dt, getPosition().x, getPosition().y);
+			atk.strike(dt, getPosition().x, getPosition().y, flipped);
 			actionable = false;
 		}
 	}
@@ -194,6 +198,7 @@ int Player::getHealth() { return health; }
 
 void Player::setHealth(int val) { health = val; }
 
+bool Player::getActionable() { return actionable; }
 
 bool Player::getLimbActivity(int index) { return activeLimbs[index]; }
 
@@ -208,7 +213,13 @@ Attack Player::getAttack(int index) {
 	return attacks[index];
 }
 
+bool Player::getStruck() { return struck; }
+
 void Player::UpdateTextures() { updateTextures = true; }
+
+void Player::setFlipped(bool flip) { flipped = flip; }
+
+void Player::setStruck(bool hit) { struck = hit; }
 
 void Player::setLimbActivity(int index, bool val) { activeLimbs[index] = val; }
 

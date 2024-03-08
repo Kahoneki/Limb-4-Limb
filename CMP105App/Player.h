@@ -10,12 +10,12 @@ public:
 
 	//Constructor/Destructor
 	Player();
-	Player(float acc, float ts, float js, int hp, int prot, int c1);
+	Player(float acc, float ts, float js, int hp, int prot, int c1, bool flip);
 	~Player();
 
 	
 	//Pipeline
-	void handleInput(float dt, int up, int left, int right);
+	void handleInput(float dt, int up, int left, int right, int jab, int kick, int sweep, int upper);
 	void update(float dt) override;
 
 
@@ -24,6 +24,8 @@ public:
 	int getProtection();
 	bool getLimbActivity(int index);
 	int getLimbRotation(int index);
+	bool getActionable();
+	bool getStruck();
 	Attack getAttack(int index);
 
 	//Setters
@@ -32,6 +34,8 @@ public:
 	void setLimbActivity(int index, bool val);
 	void setLimbRotation(int index, int rotation); //Degrees
 	void addLimbRotation(int index, int rotation); //Degrees
+	void setFlipped(bool flip);
+	void setStruck(bool hit);
 
 
 private:
@@ -49,11 +53,12 @@ private:
 	int health;
 	int protection;
 	bool isAttacking;
-
 	Attack attacks[4];
+	bool struck;
 
 	//Base
 	int characterIndex;
+	bool flipped;
 
 	//Sprite
 	//in order: left arm, right arm, left leg, right leg

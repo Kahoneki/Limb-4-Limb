@@ -6,7 +6,7 @@ Level::Level(sf::RenderWindow* hwnd, Input* in) {
 	input = in;
 
 	// initialise game objects
-	robot = Player(2200.0f, 175.0f, 900.0f, 100, 100, 0);
+	robot = Player(2200.0f, 175.0f, 900.0f, 100, 100, 0, false);
 	robot.setSize(sf::Vector2f(150, 275));
 	robot.setPosition(175, 375);
 	robot.setInput(input);
@@ -29,12 +29,13 @@ Level::Level(sf::RenderWindow* hwnd, Input* in) {
 	HealthBarBack2.setFillColor(sf::Color::Red);
 
 	
-	dummy = Player(2200.0f, 175.0f, 900.0f, 100, 100, 0);
+	dummy = Player(2200.0f, 175.0f, 900.0f, 100, 100, 0, true);
 	dummy.setSize(sf::Vector2f(150, 275));
 	dummy.setPosition(975, 375);
 	dummy.setInput(input);
 	dummy.setHealth(100);
-	dummy.setScale(-1.f, 1.f);
+	dummy.setScale(-1.0f, 1.0f);
+
 
 
 
@@ -56,8 +57,8 @@ void Level::handleInput(float dt)
 		window->close();
 	}
 	
-	robot.handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D);
-	dummy.handleInput(dt, sf::Keyboard::T, sf::Keyboard::F, sf::Keyboard::H);
+	robot.handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::F, sf::Keyboard::R, sf::Keyboard::T, sf::Keyboard::G);
+	dummy.handleInput(dt, sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::L, sf::Keyboard::SemiColon, sf::Keyboard::O, sf::Keyboard::P);
 
 
 }
@@ -67,14 +68,24 @@ void Level::update(float dt)
 {
 	robot.update(dt);
 	dummy.update(dt);
-	dummy.setCollisionBox(dummy.getPosition().x, dummy.getPosition().y, 150, 275);
-	HealthBarUpdate(robot, dummy);
-
+	dummy.setCollisionBox(dummy.getPosition().x, dummy.getPosition().y, -150, -275);
 	for (int i{}; i < 4; ++i) {
 		if (dummy.getGlobalBounds().intersects(robot.getAttack(i).getHitbox().getGlobalBounds())) {
-			dummy.setHealth(dummy.getHealth() - 0.5);
+			if (!robot.getStruck()){ 
+				dummy.setHealth(dummy.getHealth() - 0.5);
+				robot.setStruck(true);
+			}
+		}
+
+		if (robot.getGlobalBounds().intersects(dummy.getAttack(i).getHitbox().getGlobalBounds())) {
+			if (!dummy.getStruck()) {
+				robot.setHealth(robot.getHealth() - 0.5);
+				dummy.setStruck(true);
+			}
 		}
 	}
+	HealthBarUpdate(robot, dummy);
+
 }
 
 
@@ -90,6 +101,9 @@ void Level::render()
 
 
 	window->draw(dummy);
+	for (int i{}; i < 4; ++i) {
+		window->draw(dummy.getAttack(i).getHitbox());
+	}
 	window->draw(HealthBarBack1);
 	window->draw(HealthBarBack2);
 	window->draw(HealthBarFront1);

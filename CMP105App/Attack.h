@@ -28,7 +28,7 @@ public:
 	void setAttacking(bool fighting);
 
 	//Handles the actual attack
-	void strike(float dt, float player_x, float player_y);
+	void strike(float dt, float player_x, float player_y, bool flip);
 
 private:
 
@@ -52,7 +52,6 @@ private:
 
 	// Checks if the player is mid attack
 	bool attacking;
-
 
 	// Data for the hitbox
 	float width;
