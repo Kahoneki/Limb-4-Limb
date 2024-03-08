@@ -31,4 +31,7 @@ private:
 	GameObject HealthBarBack1;
 	GameObject HealthBarBack2;
 
+	// Variable to make sure the hitbox only hits the opponent once
+	bool struck;
+
 };
