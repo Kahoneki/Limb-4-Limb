@@ -7,12 +7,13 @@
 Attack::Attack() {
 }
 
-Attack::Attack(float start, float act, float rec, float w, float h, float relx, float rely, int dam) {
+Attack::Attack(float start, float act, float rec, int hs, float w, float h, float relx, float rely, int dam) {
 
 	startup = start;
 	active = act;
 	recovery = rec;
 	counter = 0;
+	hitstun = hs;
 	attacking = false;
 	width = w;
 	height = h;
@@ -35,12 +36,7 @@ void Attack::strike(float dt, float player_x, float player_y, bool flip) {
 
 	// If attack is in active frames, create the hitbox
 	if (counter > startup && counter < active) {
-		if (!flip) {
-			setHitbox(width, height, player_x + relative_xpos, player_y + relative_ypos);
-		}
-		else {
-			setHitbox(width, height, player_x - -relative_xpos - 300, player_y + relative_ypos);
-		}
+		setHitbox(width, height, player_x + relative_xpos - 300*flip, player_y + relative_ypos);
 	}
 
 	// if attack is out of active frames, remove the hitbox

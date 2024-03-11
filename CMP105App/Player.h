@@ -25,7 +25,7 @@ public:
 	bool getLimbActivity(int index);
 	int getLimbRotation(int index);
 	bool getActionable();
-	bool getStruck();
+	int getStunFramesLeft();
 	Attack getAttack(int index);
 
 	//Setters
@@ -35,7 +35,7 @@ public:
 	void setLimbRotation(int index, int rotation); //Degrees
 	void addLimbRotation(int index, int rotation); //Degrees
 	void setFlipped(bool flip);
-	void setStruck(bool hit);
+	void setStunFramesLeft(int numFrames);
 
 
 private:
@@ -54,7 +54,7 @@ private:
 	int protection;
 	bool isAttacking;
 	Attack attacks[4];
-	bool struck;
+	int stunFramesLeft;
 
 	//Base
 	int characterIndex;

@@ -23,10 +23,10 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 
 	for (bool& b : activeLimbs) { b = true; }
 
-	attacks[0] = Attack(4, 7, 14, 60, 25, 125, 75, 5);
-	attacks[1] = Attack(2, 5, 16, 60, 30, 105, 230, 8);
-	attacks[2] = Attack(5, 15, 40, 60, 30, 105, 230, 18);
-	attacks[3] = Attack(6, 21, 43, 60, 70, 125, 30, 20);
+	attacks[0] = Attack(4, 7, 14, 30, 60, 25, 125, 75, 5);
+	attacks[1] = Attack(2, 5, 16, 30, 60, 30, 105, 230, 8);
+	attacks[2] = Attack(5, 15, 40, 30, 60, 30, 105, 230, 18);
+	attacks[3] = Attack(6, 21, 43, 30, 60, 70, 125, 30, 20);
 
 	//Create render texture for player
 	playerRenderTexture = new sf::RenderTexture();
@@ -213,13 +213,13 @@ Attack Player::getAttack(int index) {
 	return attacks[index];
 }
 
-bool Player::getStruck() { return struck; }
+int Player::getStunFramesLeft() { return stunFramesLeft; }
 
 void Player::UpdateTextures() { updateTextures = true; }
 
 void Player::setFlipped(bool flip) { flipped = flip; }
 
-void Player::setStruck(bool hit) { struck = hit; }
+void Player::setStunFramesLeft(int numFrames) { stunFramesLeft = stunFramesLeft; }
 
 void Player::setLimbActivity(int index, bool val) { activeLimbs[index] = val; }
 
