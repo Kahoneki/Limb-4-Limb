@@ -18,15 +18,16 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 
 	isGrounded = false;
 	actionable = true;
-	struck = false;
 	flipped = flip;
 
 	for (bool& b : activeLimbs) { b = true; }
 
-	attacks[0] = Attack(4, 7, 14, 60, 25, 125, 75, 5);
-	attacks[1] = Attack(2, 5, 16, 60, 30, 105, 230, 8);
-	attacks[2] = Attack(5, 15, 40, 60, 30, 105, 230, 18);
-	attacks[3] = Attack(6, 21, 43, 60, 70, 125, 30, 20);
+	attacks[0] = Attack(4, 7, 14, 50, 60, 25, 125, 75, 5);
+	attacks[1] = Attack(2, 5, 16, 50, 60, 30, 105, 230, 8);
+	attacks[2] = Attack(5, 15, 40, 50, 60, 30, 105, 230, 18);
+	attacks[3] = Attack(6, 21, 43, 50, 60, 70, 125, 30, 20);
+
+	stunFramesLeft = 0;
 
 	//Create render texture for player
 	playerRenderTexture = new sf::RenderTexture();
@@ -138,7 +139,6 @@ void Player::handleInput(float dt, int jump, int left, int right, int jab, int k
 		}
 
 		isAttacking = false;
-		struck = false;
 	}
 }
 
@@ -146,6 +146,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int jab, int k
 void Player::update(float dt) {
 
 	//Update position
+	if (stunFramesLeft) { velocity.x = 0; }
 	float xPos = getPosition().x + velocity.x * dt;
 	float yPos = getPosition().y - ((velocity.y * dt) + 0.5 * (acceleration * dt * dt)); //s=ut+1/2(at^2)
 	setPosition(xPos, yPos);
@@ -154,10 +155,14 @@ void Player::update(float dt) {
 	if (getPosition().y >= 375) {
 		setPosition(getPosition().x, 375);
 		isGrounded = true;
+		velocity.y = 0;
 	}
 
+
 	//Handle combat
-	actionable = true;
+	actionable = !stunFramesLeft;
+	//if (characterIndex) { std::cerr << "actionable: " << actionable << std::endl; std::cerr << "frames left: " << stunFramesLeft << std::endl << std::endl; }
+
 	for (Attack& atk : attacks) {
 		if (atk.getAttacking()) {
 			atk.strike(dt, getPosition().x, getPosition().y, flipped);
@@ -190,6 +195,9 @@ void Player::update(float dt) {
 		playerRenderTexture->display();
 		setTexture(&playerRenderTexture->getTexture());
 	}
+
+	if (stunFramesLeft > 0) { stunFramesLeft -= Attack::physicsClockFramerate * dt; }
+	else if (stunFramesLeft < 0) { stunFramesLeft = 0; }
 }
 
 
@@ -202,37 +210,20 @@ bool Player::getActionable() { return actionable; }
 
 bool Player::getLimbActivity(int index) { return activeLimbs[index]; }
 
-int Player::getLimbRotation(int index) {
-	if (activeLimbs[index])
-		return aliveLimbSprites[index]->getRotation();
-	else
-		return deadLimbSprites[index]->getRotation();
-}
+int Player::getLimbRotation(int index) { return activeLimbs[index] ? aliveLimbSprites[index]->getRotation() : deadLimbSprites[index]->getRotation(); }
 
-Attack Player::getAttack(int index) {
-	return attacks[index];
-}
+Attack Player::getAttack(int index) { return attacks[index]; }
 
-bool Player::getStruck() { return struck; }
+int Player::getStunFramesLeft() { return stunFramesLeft; }
 
 void Player::UpdateTextures() { updateTextures = true; }
 
 void Player::setFlipped(bool flip) { flipped = flip; }
 
-void Player::setStruck(bool hit) { struck = hit; }
+void Player::setStunFramesLeft(int numFrames) { stunFramesLeft = numFrames; }
 
 void Player::setLimbActivity(int index, bool val) { activeLimbs[index] = val; }
 
-void Player::setLimbRotation(int index, int rotation) {
-	if (activeLimbs[index])
-		aliveLimbSprites[index]->setRotation(rotation);
-	else
-		deadLimbSprites[index]->setRotation(rotation);
-}
+void Player::setLimbRotation(int index, int rotation) { activeLimbs[index] ? aliveLimbSprites[index]->setRotation(rotation) : deadLimbSprites[index]->setRotation(rotation); }
 
-void Player::addLimbRotation(int index, int rotation) {
-	if (activeLimbs[index])
-		aliveLimbSprites[index]->rotate(rotation);
-	else
-		deadLimbSprites[index]->rotate(rotation);
-}
+void Player::addLimbRotation(int index, int rotation) { activeLimbs[index] ? aliveLimbSprites[index]->rotate(rotation) : deadLimbSprites[index]->rotate(rotation); }

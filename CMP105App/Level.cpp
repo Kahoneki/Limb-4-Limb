@@ -71,16 +71,16 @@ void Level::update(float dt)
 	dummy.setCollisionBox(dummy.getPosition().x, dummy.getPosition().y, -150, -275);
 	for (int i{}; i < 4; ++i) {
 		if (dummy.getGlobalBounds().intersects(robot.getAttack(i).getHitbox().getGlobalBounds())) {
-			if (!robot.getStruck()){ 
+			if (!dummy.getStunFramesLeft()){ 
 				dummy.setHealth(dummy.getHealth() - robot.getAttack(i).getDamage());
-				robot.setStruck(true);
+				dummy.setStunFramesLeft(dummy.getAttack(i).getHitstun());
 			}
 		}
 
 		if (robot.getGlobalBounds().intersects(dummy.getAttack(i).getHitbox().getGlobalBounds())) {
-			if (!dummy.getStruck()) {
+			if (!robot.getStunFramesLeft()) {
 				robot.setHealth(robot.getHealth() - dummy.getAttack(i).getDamage());
-				dummy.setStruck(true);
+				robot.setStunFramesLeft(robot.getAttack(i).getHitstun());
 			}
 		}
 	}

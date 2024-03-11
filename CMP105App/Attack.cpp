@@ -7,20 +7,19 @@
 Attack::Attack() {
 }
 
-Attack::Attack(float start, float act, float rec, float w, float h, float relx, float rely, int dam) {
+Attack::Attack(float start, float act, float rec, int hs, float w, float h, float relx, float rely, int dam) {
 
 	startup = start;
 	active = act;
 	recovery = rec;
 	counter = 0;
+	hitstun = hs;
 	attacking = false;
 	width = w;
 	height = h;
 	relative_xpos = relx;
 	relative_ypos = rely;
 	damage = dam;
-
-	physicsClockFramerate = 30;
 }
 
 
@@ -29,18 +28,11 @@ Attack::~Attack() {
 
 void Attack::strike(float dt, float player_x, float player_y, bool flip) {
 
-	std::cerr << counter << std::endl;
-	std::cerr << dt << std::endl;
 	counter += physicsClockFramerate*dt;
 
 	// If attack is in active frames, create the hitbox
 	if (counter > startup && counter < active) {
-		if (!flip) {
-			setHitbox(width, height, player_x + relative_xpos, player_y + relative_ypos);
-		}
-		else {
-			setHitbox(width, height, player_x - -relative_xpos - 300, player_y + relative_ypos);
-		}
+		setHitbox(width, height, player_x + relative_xpos - 300*flip, player_y + relative_ypos);
 	}
 
 	// if attack is out of active frames, remove the hitbox
@@ -66,6 +58,8 @@ float Attack::getStartup() { return startup; }
 float Attack::getActive() { return active; }
 
 float Attack::getRecovery() { return recovery; }
+
+int Attack::getHitstun(){ return hitstun; }
 
 bool Attack::getAttacking() { return attacking; }
 

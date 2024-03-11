@@ -10,7 +10,7 @@ public:
 
 	//Constructor/Destructor
 	Attack();
-	Attack(float start, float act, float rec, float w, float h, float relx, float rely, int dam);
+	Attack(float start, float act, float rec, int hs, float w, float h, float relx, float rely, int dam);
 	~Attack();
 
 
@@ -21,6 +21,7 @@ public:
 	float getStartup();
 	float getActive();
 	float getRecovery();
+	int getHitstun();
 	bool getAttacking();
 	int getDamage();
 
@@ -31,8 +32,11 @@ public:
 	//Handles the actual attack
 	void strike(float dt, float player_x, float player_y, bool flip);
 
-private:
 
+	//Fixed framerate
+	static const int physicsClockFramerate = 30;
+
+private:
 
 	GameObject hitbox;
 
@@ -48,14 +52,16 @@ private:
 	// Counts frames when an attack happens (taking into account delta time). Used to check which state ( startup, active, recovery ) the attack is in.
 	float counter;
 
-	//Fixed framerate
-	int physicsClockFramerate;
+	//Number of frames opponent is stunned for
+	int hitstun;
+
 
 	// Checks if the player is mid attack
 	bool attacking;
 #
 	//Damage of the attack
 	int damage;
+
 
 	// Data for the hitbox
 	float width;
