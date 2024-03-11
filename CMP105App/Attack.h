@@ -21,6 +21,7 @@ public:
 	float getStartup();
 	float getActive();
 	float getRecovery();
+	int getHitstun();
 	bool getAttacking();
 	int getDamage();
 
@@ -31,6 +32,9 @@ public:
 	//Handles the actual attack
 	void strike(float dt, float player_x, float player_y, bool flip);
 
+
+	//Fixed framerate
+	static const int physicsClockFramerate = 30;
 
 private:
 
@@ -51,8 +55,6 @@ private:
 	//Number of frames opponent is stunned for
 	int hitstun;
 
-	//Fixed framerate
-	int physicsClockFramerate;
 
 	// Checks if the player is mid attack
 	bool attacking;

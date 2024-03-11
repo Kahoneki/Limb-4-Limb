@@ -54,7 +54,7 @@ private:
 	int protection;
 	bool isAttacking;
 	Attack attacks[4];
-	int stunFramesLeft;
+	float stunFramesLeft;
 
 	//Base
 	int characterIndex;

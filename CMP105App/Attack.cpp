@@ -20,8 +20,6 @@ Attack::Attack(float start, float act, float rec, int hs, float w, float h, floa
 	relative_xpos = relx;
 	relative_ypos = rely;
 	damage = dam;
-
-	physicsClockFramerate = 30;
 }
 
 
@@ -30,8 +28,6 @@ Attack::~Attack() {
 
 void Attack::strike(float dt, float player_x, float player_y, bool flip) {
 
-	std::cerr << counter << std::endl;
-	std::cerr << dt << std::endl;
 	counter += physicsClockFramerate*dt;
 
 	// If attack is in active frames, create the hitbox
@@ -62,6 +58,8 @@ float Attack::getStartup() { return startup; }
 float Attack::getActive() { return active; }
 
 float Attack::getRecovery() { return recovery; }
+
+int Attack::getHitstun(){ return hitstun; }
 
 bool Attack::getAttacking() { return attacking; }
 
