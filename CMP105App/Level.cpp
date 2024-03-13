@@ -59,8 +59,8 @@ void Level::handleInput(float dt)
 		window->close();
 	}
 	
-	robot.handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::G, sf::Keyboard::T);
-	dummy.handleInput(dt, sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::O, sf::Keyboard::L, sf::Keyboard::SemiColon, sf::Keyboard::P);
+	robot.handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S,  sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::G, sf::Keyboard::T);
+	dummy.handleInput(dt, sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Down, sf::Keyboard::O, sf::Keyboard::L, sf::Keyboard::SemiColon, sf::Keyboard::P);
 
 
 }
@@ -128,10 +128,12 @@ void Level::HealthBarUpdate(Player play1, Player play2) {
 	if (play1.getHealth() <= 0)
 	{
 		window->close();
+		std::cout << "Player 2 is the winner!" << std::endl;
 	}
 	if (play2.getHealth() <= 0) 
 	{
 		window->close();
+		std::cout << "Player 1 is the winner!" << std::endl;
 	}
 
 }
