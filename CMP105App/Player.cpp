@@ -22,10 +22,10 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 
 	for (bool& b : activeLimbs) { b = true; }
 
-	attacks[0] = Attack(4, 7, 14, 50, 60, 25, 125, 75, 5);
-	attacks[1] = Attack(2, 5, 16, 50, 60, 30, 105, 230, 8);
-	attacks[2] = Attack(5, 15, 40, 50, 60, 30, 105, 230, 18);
-	attacks[3] = Attack(6, 21, 43, 50, 60, 70, 125, 30, 20);
+	attacks[0] = Attack(4, 7, 14, 50, 60, 25, 50, -59, 5);
+	attacks[1] = Attack(2, 5, 16, 50, 60, 30, 30, 96, 8);
+	attacks[2] = Attack(5, 15, 40, 50, 60, 30, 30, 96, 18);
+	attacks[3] = Attack(6, 21, 43, 50, 60, 70, 50, -104, 20);
 
 	stunFramesLeft = 0;
 

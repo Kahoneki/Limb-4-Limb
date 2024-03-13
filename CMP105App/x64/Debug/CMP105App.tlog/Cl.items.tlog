@@ -1,9 +1,7 @@
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Framework\BaseLevel.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\x64\Debug\BaseLevel.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Framework\Input.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\x64\Debug\Input.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Framework\GameObject.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\x64\Debug\GameObject.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Attack.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\x64\Debug\Attack.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Level.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\x64\Debug\Level.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Main.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\x64\Debug\Main.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\x64\Debug\Player.obj
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\modules\std.ixx;C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\x64\Debug\std.ixx.obj
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\modules\std.compat.ixx;C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\x64\Debug\std.compat.ixx.obj
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Framework\BaseLevel.cpp;C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\x64\Debug\BaseLevel.obj
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Framework\Input.cpp;C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\x64\Debug\Input.obj
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Framework\GameObject.cpp;C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\x64\Debug\GameObject.obj
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp;C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\x64\Debug\Attack.obj
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp;C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\x64\Debug\Level.obj
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Main.cpp;C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\x64\Debug\Main.obj
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Player.cpp;C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\x64\Debug\Player.obj
