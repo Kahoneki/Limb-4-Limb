@@ -1,0 +1,229 @@
+#include "Player.h"
+#include <iostream>
+#include <format>
+
+Player::Player() {
+}
+
+//For testing losing limbs
+bool numDown = false;
+
+Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool flip) {
+	acceleration = acc;
+	topSpeed = ts;
+	jumpSpeed = js;
+	health = hp;
+	protection = prot;
+	characterIndex = c1;
+
+	isGrounded = false;
+	actionable = true;
+	flipped = flip;
+
+	for (bool& b : activeLimbs) { b = true; }
+
+	attacks[0] = Attack(4, 7, 14, 50, 60, 25, 125, 75, 5);
+	attacks[1] = Attack(2, 5, 16, 50, 60, 30, 105, 230, 8);
+	attacks[2] = Attack(5, 15, 40, 50, 60, 30, 105, 230, 18);
+	attacks[3] = Attack(6, 21, 43, 50, 60, 70, 125, 30, 20);
+
+	stunFramesLeft = 0;
+
+	//Create render texture for player
+	playerRenderTexture = new sf::RenderTexture();
+	if (!playerRenderTexture->create(125, 225)) { std::cerr << std::format("Error creating render texture for player {}", characterIndex); }
+
+	//Load base player textue and sprite
+	basePlayerTexture = new sf::Texture();
+	if (!basePlayerTexture->loadFromFile(std::format("Assets/Sprites/Characters/{}/body.png", characterIndex))) {
+		std::cerr << std::format("Failed to load player {} base texture ", characterIndex);
+	}
+	basePlayerSprite = new sf::Sprite(*basePlayerTexture);
+	basePlayerSprite->setPosition(0, 0);
+	playerRenderTexture->draw(*basePlayerSprite);
+
+	//Load limb textures and sprites
+	for (int i{}; i < 4; ++i) {
+
+		//Alive limb
+		aliveLimbTextures[i] = new sf::Texture();
+		if (!aliveLimbTextures[i]->loadFromFile(std::format("Assets/Sprites/Characters/{}/Limbs/Alive{}.png", characterIndex, i))) {
+			std::cerr << std::format("Failed to load player {} alive limb texture {}", characterIndex, i);
+		}
+		aliveLimbSprites[i] = new sf::Sprite(*aliveLimbTextures[i]);
+		aliveLimbSprites[i]->setPosition(0, 0);
+		playerRenderTexture->draw(*aliveLimbSprites[i]);
+
+		//Dead limb
+		deadLimbTextures[i] = new sf::Texture();
+		if (!deadLimbTextures[i]->loadFromFile(std::format("Assets/Sprites/Characters/{}/Limbs/Dead{}.png", characterIndex, i))) {
+			std::cerr << std::format("Failed to load player {} dead limb texture {}", characterIndex, i);
+		}
+		deadLimbSprites[i] = new sf::Sprite(*deadLimbTextures[i]);
+		deadLimbSprites[i]->setPosition(0, 0);
+		//Dont draw dead limbs at startup
+
+	}
+
+	playerRenderTexture->display();
+	setTexture(&playerRenderTexture->getTexture());
+
+	updateTextures = false;
+
+}
+
+Player::~Player() {
+
+}
+
+
+
+void Player::handleInput(float dt, int jump, int left, int right, int jab, int kick, int sweep, int upper) {
+	//----MOVEMENT----//
+	//Handle movement if player is on ground, else they shouldn't be able to change horizontal velocity or jump
+	if (actionable) {
+		if (isGrounded) {
+			//Pressing both keys at same time or not pressing either key
+			if ((input->isKeyDown(left) && input->isKeyDown(right)) || (!input->isKeyDown(left) && (!input->isKeyDown(right)))) {
+				//Slow down to an immediate hault
+				velocity.x = 0;
+			}
+			//Pressing either left or right (but not both - case covered by above check)
+			else if (input->isKeyDown(right) || input->isKeyDown(left)) {
+				//Handle movement
+				if (input->isKeyDown(right))
+					velocity.x = topSpeed;
+				if (input->isKeyDown(left))
+					velocity.x = -topSpeed;
+			}
+			//Jumping
+			if (input->isKeyDown(jump)) {
+				isGrounded = false;
+				velocity.y = jumpSpeed;
+				velocity.x *= 1.25;
+			}
+
+			//-----GROUND COMBAT-----//
+			if (input->isKeyDown(jab)) {
+				attacks[0].setAttacking(true);
+				velocity.x = 0;
+				isAttacking = true;
+			}
+			if (input->isKeyDown(kick)) {
+				attacks[1].setAttacking(true);
+				velocity.x = 0;
+			}
+			if (input->isKeyDown(sweep)) {
+				attacks[2].setAttacking(true);
+				velocity.x = 0;
+			}
+			if (input->isKeyDown(upper)) {
+				attacks[3].setAttacking(true);
+				isGrounded = false;
+				velocity.y = jumpSpeed;
+				velocity.x = 0;
+			}
+
+
+			//DEBUGGING TEXTURE CHANGING LOGIC - TEMP
+			activeLimbs[0] = !input->isKeyDown(sf::Keyboard::Num1);
+			activeLimbs[1] = !input->isKeyDown(sf::Keyboard::Num2);
+			activeLimbs[2] = !input->isKeyDown(sf::Keyboard::Num3);
+			activeLimbs[3] = !input->isKeyDown(sf::Keyboard::Num4);
+			UpdateTextures();
+
+		}
+		//Player is in air, so bring them towards ground
+		else {
+			velocity.y -= acceleration * dt;
+		}
+
+		isAttacking = false;
+	}
+}
+
+
+void Player::update(float dt) {
+
+	//Update position
+	if (stunFramesLeft) { velocity.x = 0; }
+	float xPos = getPosition().x + velocity.x * dt;
+	float yPos = getPosition().y - ((velocity.y * dt) + 0.5 * (acceleration * dt * dt)); //s=ut+1/2(at^2)
+	setPosition(xPos, yPos);
+
+	//Grounded check
+	if (getPosition().y >= 375) {
+		setPosition(getPosition().x, 375);
+		isGrounded = true;
+		velocity.y = 0;
+	}
+
+
+	//Handle combat
+	actionable = !stunFramesLeft;
+	//if (characterIndex) { std::cerr << "actionable: " << actionable << std::endl; std::cerr << "frames left: " << stunFramesLeft << std::endl << std::endl; }
+
+	for (Attack& atk : attacks) {
+		if (atk.getAttacking()) {
+			atk.strike(dt, getPosition().x, getPosition().y, flipped);
+			actionable = false;
+		}
+	}
+
+
+	if (updateTextures) {
+		updateTextures = false;
+
+		//Clear the render texture
+		playerRenderTexture->clear(sf::Color::Transparent);
+
+		//Draw base
+		playerRenderTexture->draw(*basePlayerSprite);
+		playerRenderTexture->display();
+
+		//Draw limbs
+		for (int i{}; i < 4; ++i) {
+			if (activeLimbs[i]) {
+				//Draw alive limb
+				playerRenderTexture->draw(*aliveLimbSprites[i]);
+			}
+			else {
+				//Draw dead limb
+				playerRenderTexture->draw(*deadLimbSprites[i]);
+			}
+		}
+		playerRenderTexture->display();
+		setTexture(&playerRenderTexture->getTexture());
+	}
+
+	if (stunFramesLeft > 0) { stunFramesLeft -= Attack::physicsClockFramerate * dt; }
+	else if (stunFramesLeft < 0) { stunFramesLeft = 0; }
+}
+
+
+
+int Player::getHealth() { return health; }
+
+void Player::setHealth(int val) { health = val; }
+
+bool Player::getActionable() { return actionable; }
+
+bool Player::getLimbActivity(int index) { return activeLimbs[index]; }
+
+int Player::getLimbRotation(int index) { return activeLimbs[index] ? aliveLimbSprites[index]->getRotation() : deadLimbSprites[index]->getRotation(); }
+
+Attack Player::getAttack(int index) { return attacks[index]; }
+
+int Player::getStunFramesLeft() { return stunFramesLeft; }
+
+void Player::UpdateTextures() { updateTextures = true; }
+
+void Player::setFlipped(bool flip) { flipped = flip; }
+
+void Player::setStunFramesLeft(int numFrames) { stunFramesLeft = numFrames; }
+
+void Player::setLimbActivity(int index, bool val) { activeLimbs[index] = val; }
+
+void Player::setLimbRotation(int index, int rotation) { activeLimbs[index] ? aliveLimbSprites[index]->setRotation(rotation) : deadLimbSprites[index]->setRotation(rotation); }
+
+void Player::addLimbRotation(int index, int rotation) { activeLimbs[index] ? aliveLimbSprites[index]->rotate(rotation) : deadLimbSprites[index]->rotate(rotation); }
