@@ -26,6 +26,7 @@ public:
 	int getLimbRotation(int index);
 	bool getActionable();
 	int getStunFramesLeft();
+	bool getFlipped();
 	Attack getAttack(int index);
 
 	//Setters

@@ -139,18 +139,11 @@ void Level::HealthBarUpdate(Player play1, Player play2) {
 
 
 void Level::FlipCheck(Player& p1, Player& p2) {
-	//p1 on right facing right, p2 on left facing left
-	if (p1.getScale().x == 1 && p1.getPosition().x > p2.getPosition().x) {
-		p1.setFlipped(true);
-		p1.setScale(-1, 1);
-		p2.setFlipped(false);
-		p2.setScale(1, 1);
-	}
-	//p1 on left facing left, p2 on right facing right
-	else if (p1.getScale().x == -1 && p1.getPosition().x < p2.getPosition().x) {
-		p1.setFlipped(false);
-		p1.setScale(1, 1);
-		p2.setFlipped(true);
-		p2.setScale(-1, 1);
+	bool playersFacingOppositeDirections { (p1.getScale().x == 1 && p1.getPosition().x > p2.getPosition().x) || (p1.getScale().x == -1 && p1.getPosition().x < p2.getPosition().x) };
+	if (playersFacingOppositeDirections) {
+		p1.setFlipped(!p1.getFlipped());
+		p1.setScale(!p1.getScale().x, 1);
+		p2.setFlipped(!p2.getFlipped());
+		p2.setScale(!p2.getScale().x, 1);
 	}
 }

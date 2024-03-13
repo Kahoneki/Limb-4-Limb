@@ -216,6 +216,8 @@ Attack Player::getAttack(int index) { return attacks[index]; }
 
 int Player::getStunFramesLeft() { return stunFramesLeft; }
 
+bool Player::getFlipped() { return flipped; }
+
 void Player::UpdateTextures() { updateTextures = true; }
 
 void Player::setFlipped(bool flip) { flipped = flip; }
