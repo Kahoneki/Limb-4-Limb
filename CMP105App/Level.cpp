@@ -11,6 +11,7 @@ Level::Level(sf::RenderWindow* hwnd, Input* in) {
 	robot.setPosition(175, 375);
 	robot.setInput(input);
 	robot.setHealth(100);
+	robot.setOrigin(robot.getLocalBounds().width / 2.f, robot.getLocalBounds().height / 2.f);
 
 	HealthBarFront1.setSize(sf::Vector2f(400, 50));
 	HealthBarFront1.setPosition(25, 25);
@@ -35,7 +36,8 @@ Level::Level(sf::RenderWindow* hwnd, Input* in) {
 	dummy.setInput(input);
 	dummy.setHealth(100);
 	dummy.setScale(-1.0f, 1.0f);
-
+	dummy.setOrigin(dummy.getLocalBounds().width / 2.f, dummy.getLocalBounds().height / 2.f);
+	dummy.setFillColor(sf::Color::Red);
 
 
 
@@ -86,6 +88,8 @@ void Level::update(float dt)
 	}
 	HealthBarUpdate(robot, dummy);
 
+	FlipCheck(robot, dummy);
+
 }
 
 
@@ -108,6 +112,7 @@ void Level::render()
 	window->draw(HealthBarBack2);
 	window->draw(HealthBarFront1);
 	window->draw(HealthBarFront2);
+
 	endDraw();
 }
 
@@ -131,4 +136,16 @@ void Level::HealthBarUpdate(Player play1, Player play2) {
 		std::cout << "Player 1 is the winner!" << std::endl;
 	}
 
+}
+
+
+
+void Level::FlipCheck(Player& p1, Player& p2) {
+	bool playersFacingOppositeDirections { (p1.getScale().x == 1 && p1.getPosition().x > p2.getPosition().x) || (p1.getScale().x == -1 && p1.getPosition().x < p2.getPosition().x) };
+	if (playersFacingOppositeDirections) {
+		p1.setFlipped(!p1.getFlipped());
+		p1.setScale(!p1.getScale().x, 1);
+		p2.setFlipped(!p2.getFlipped());
+		p2.setScale(!p2.getScale().x, 1);
+	}
 }

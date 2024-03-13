@@ -1,35 +1,30 @@
-﻿  Player.cpp
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(111,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(111,52): warning C4244:         with
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(111,52): warning C4244:         [
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(111,52): warning C4244:             T=float
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(111,52): warning C4244:         ]
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(112,64): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(112,64): warning C4244:         with
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(112,64): warning C4244:         [
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(112,64): warning C4244:             T=float
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(112,64): warning C4244:         ]
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(120,53): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(120,53): warning C4244:         with
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(120,53): warning C4244:         [
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(120,53): warning C4244:             T=float
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(120,53): warning C4244:         ]
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(121,65): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(121,65): warning C4244:         with
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(121,65): warning C4244:         [
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(121,65): warning C4244:             T=float
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(121,65): warning C4244:         ]
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(143,28): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(143,28): warning C4244:         with
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(143,28): warning C4244:         [
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(143,28): warning C4244:             T=float
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(143,28): warning C4244:         ]
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(190,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(245,66): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(249,42): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(255,66): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(259,115): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(259,163): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(261,110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\CMP105App\Player.cpp(261,153): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  CMP105App.vcxproj -> C:\Users\20rya\OneDrive\Documents\GitHub\cmp105-groupproject-weedle test\cmp105-groupproject-weedle\x64\Debug\CMP105App.exe
+﻿  Attack.cpp
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(36,72): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(36,54): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(36,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(36,14): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(39,64): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(39,38): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(39,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(39,14): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,37): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,37): warning C4244:         with
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,37): warning C4244:         [
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,37): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,37): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,30): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,30): warning C4244:         with
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,30): warning C4244:         [
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,30): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,30): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,40): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,40): warning C4244:         with
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,40): warning C4244:         [
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,40): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,40): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,34): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,34): warning C4244:         with
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,34): warning C4244:         [
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,34): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,34): warning C4244:         ]
+  CMP105App.vcxproj -> C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\x64\Debug\CMP105App.exe
