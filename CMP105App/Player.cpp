@@ -23,10 +23,10 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 
 	for (bool& b : activeLimbs) { b = true; }
 
-	attacks[0] = Attack(4, 7, 14, 50, 60, 25, 125, 75, 5);
-	attacks[1] = Attack(2, 5, 16, 50, 60, 30, 105, 230, 8);
-	attacks[2] = Attack(5, 15, 40, 50, 60, 30, 105, 230, 18);
-	attacks[3] = Attack(6, 21, 43, 50, 60, 70, 125, 30, 20);
+	attacks[0] = Attack(4, 7, 14, 10, 60, 25, 125, 75, 5);
+	attacks[1] = Attack(2, 5, 16, 16, 60, 30, 105, 230, 8);
+	attacks[2] = Attack(5, 15, 40, 35, 60, 30, 105, 230, 18);
+	attacks[3] = Attack(6, 21, 22, 60, 60, 70, 125, 30, 20);
 
 	stunFramesLeft = 0;
 
@@ -140,7 +140,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			if (input->isKeyDown(upper)) {
 				attacks[3].setAttacking(true);
 				isGrounded = false;
-				velocity.y = jumpSpeed * 0.8;
+				velocity.y = jumpSpeed * 0.5;
 				velocity.x = 0;
 			}
 
@@ -151,7 +151,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			activeLimbs[2] = !input->isKeyDown(sf::Keyboard::Num3);
 			activeLimbs[3] = !input->isKeyDown(sf::Keyboard::Num4);
 			UpdateTextures();
-
+			velocity.y -= acceleration * dt;
 		}
 		//Player is in air, so bring them towards ground
 		else {
@@ -165,11 +165,6 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 
 void Player::update(float dt) {
 
-	//Update position
-	if (stunFramesLeft) { velocity.x = 0; }
-	float xPos = getPosition().x + velocity.x * dt;
-	float yPos = getPosition().y - ((velocity.y * dt) + 0.5 * (acceleration * dt * dt)); //s=ut+1/2(at^2)
-	setPosition(xPos, yPos);
 
 	//Grounded check
 
@@ -187,6 +182,13 @@ void Player::update(float dt) {
 			velocity.y = 0;
 		}
 	}
+
+
+	//Update position
+	if (stunFramesLeft) { velocity.x = 0; }
+	float xPos = getPosition().x + velocity.x * dt;
+	float yPos = getPosition().y - ((velocity.y * dt) + (0.5 * (acceleration * dt * dt))); //s=ut+1/2(at^2)
+	setPosition(xPos, yPos);
 
 
 	//Handle combat
