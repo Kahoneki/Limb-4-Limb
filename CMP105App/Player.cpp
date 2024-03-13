@@ -18,6 +18,7 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 
 	isGrounded = false;
 	actionable = true;
+	crouched = false;
 	flipped = flip;
 
 	for (bool& b : activeLimbs) { b = true; }
@@ -28,6 +29,7 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 	attacks[3] = Attack(6, 21, 43, 50, 60, 70, 125, 30, 20);
 
 	stunFramesLeft = 0;
+
 
 	//Create render texture for player
 	playerRenderTexture = new sf::RenderTexture();
@@ -78,7 +80,7 @@ Player::~Player() {
 
 
 
-void Player::handleInput(float dt, int jump, int left, int right, int jab, int kick, int sweep, int upper) {
+void Player::handleInput(float dt, int jump, int left, int right, int down, int jab, int kick, int sweep, int upper) {
 	//----MOVEMENT----//
 	//Handle movement if player is on ground, else they shouldn't be able to change horizontal velocity or jump
 	if (actionable) {
@@ -103,6 +105,24 @@ void Player::handleInput(float dt, int jump, int left, int right, int jab, int k
 				velocity.x *= 1.25;
 			}
 
+			//Ducking
+			if (input->isKeyDown(down)) {
+				if (!crouched) {
+					setSize(sf::Vector2f(getSize().x, getSize().y * 0.5));
+					setPosition(sf::Vector2f(getPosition().x, getPosition().y * 1.5));
+					crouched = true;
+				}
+
+			}
+
+			if (crouched) {
+				if (!input->isKeyDown(down)) {
+						setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
+						setPosition(sf::Vector2f(getPosition().x, getPosition().y / 1.5));
+						crouched = false;
+				}
+			}
+
 			//-----GROUND COMBAT-----//
 			if (input->isKeyDown(jab)) {
 				attacks[0].setAttacking(true);
@@ -120,7 +140,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int jab, int k
 			if (input->isKeyDown(upper)) {
 				attacks[3].setAttacking(true);
 				isGrounded = false;
-				velocity.y = jumpSpeed;
+				velocity.y = jumpSpeed * 0.8;
 				velocity.x = 0;
 			}
 
@@ -152,10 +172,20 @@ void Player::update(float dt) {
 	setPosition(xPos, yPos);
 
 	//Grounded check
-	if (getPosition().y >= 375) {
-		setPosition(getPosition().x, 375);
-		isGrounded = true;
-		velocity.y = 0;
+
+	if (!crouched) {
+		if (getPosition().y >= 375) {
+			setPosition(getPosition().x, 375);
+			isGrounded = true;
+			velocity.y = 0;
+		}
+	}
+	else {
+		if (getPosition().y >= 375 + getSize().y) {
+			setPosition(getPosition().x, 375 + getSize().y);
+			isGrounded = true;
+			velocity.y = 0;
+		}
 	}
 
 

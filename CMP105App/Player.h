@@ -15,7 +15,7 @@ public:
 
 	
 	//Pipeline
-	void handleInput(float dt, int up, int left, int right, int jab, int kick, int sweep, int upper);
+	void handleInput(float dt, int up, int left, int right, int down, int jab, int kick, int sweep, int upper);
 	void update(float dt) override;
 
 
@@ -47,7 +47,7 @@ private:
 
 	bool isGrounded;
 	bool actionable;
-
+	bool crouched;
 
 	//Combat
 	int health;
