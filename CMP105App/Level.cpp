@@ -123,10 +123,12 @@ void Level::HealthBarUpdate(Player play1, Player play2) {
 	if (play1.getHealth() <= 0)
 	{
 		window->close();
+		std::cout << "Player 2 is the winner!" << std::endl;
 	}
 	if (play2.getHealth() <= 0) 
 	{
 		window->close();
+		std::cout << "Player 1 is the winner!" << std::endl;
 	}
 
 }
