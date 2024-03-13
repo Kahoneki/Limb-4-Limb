@@ -1,30 +1,27 @@
-﻿  Attack.cpp
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(36,72): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(36,54): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(36,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(36,14): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(39,64): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(39,38): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(39,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(39,14): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,37): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,37): warning C4244:         with
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,37): warning C4244:         [
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,37): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,37): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,30): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,30): warning C4244:         with
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,30): warning C4244:         [
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,30): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(79,30): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,40): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,40): warning C4244:         with
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,40): warning C4244:         [
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,40): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,40): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,34): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,34): warning C4244:         with
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,34): warning C4244:         [
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,34): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Attack.cpp(80,34): warning C4244:         ]
+﻿  Level.cpp
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:         with
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:         [
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:             T=unsigned int
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:         with
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:         [
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:             T=unsigned int
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(124,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(124,39): warning C4244:         with
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(124,39): warning C4244:         [
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(124,39): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(124,39): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(125,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(125,39): warning C4244:         with
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(125,39): warning C4244:         [
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(125,39): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(125,39): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(126,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(126,59): warning C4244:         with
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(126,59): warning C4244:         [
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(126,59): warning C4244:             T=unsigned int
+C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\CMP105App\Level.cpp(126,59): warning C4244:         ]
   CMP105App.vcxproj -> C:\Users\shiny\Desktop\Code\cmp105-groupproject-weedle\x64\Debug\CMP105App.exe

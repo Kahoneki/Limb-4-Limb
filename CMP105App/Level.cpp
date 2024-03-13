@@ -143,9 +143,12 @@ void Level::HealthBarUpdate(Player play1, Player play2) {
 void Level::FlipCheck(Player& p1, Player& p2) {
 	bool playersFacingOppositeDirections { (p1.getScale().x == 1 && p1.getPosition().x > p2.getPosition().x) || (p1.getScale().x == -1 && p1.getPosition().x < p2.getPosition().x) };
 	if (playersFacingOppositeDirections) {
+		std::cout << "sdkhjd";
 		p1.setFlipped(!p1.getFlipped());
-		p1.setScale(!p1.getScale().x, 1);
+		p1.setScale(-p1.getScale().x, 1);
 		p2.setFlipped(!p2.getFlipped());
-		p2.setScale(!p2.getScale().x, 1);
+		p2.setScale(-p2.getScale().x, 1);
+
+		std::cout << p1.getScale().x;
 	}
 }
