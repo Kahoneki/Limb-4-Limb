@@ -6,43 +6,9 @@ Level::Level(sf::RenderWindow* hwnd, Input* in) {
 	input = in;
 
 	// initialise game objects
-	robot = Player(2200.0f, 175.0f, 900.0f, 100, 100, 0, false);
-	robot.setSize(sf::Vector2f(150, 275));
-	robot.setPosition(175, 375);
-	robot.setInput(input);
-	robot.setHealth(100);
-	robot.setOrigin(robot.getLocalBounds().width / 2.f, robot.getLocalBounds().height / 2.f);
-
-	HealthBarFront1.setSize(sf::Vector2f(400, 50));
-	HealthBarFront1.setPosition(25, 25);
-	HealthBarFront1.setFillColor(sf::Color::Green);
-
-	HealthBarBack1.setSize(sf::Vector2f(400, 50));
-	HealthBarBack1.setPosition(25, 25);
-	HealthBarBack1.setFillColor(sf::Color::Red);
-
-	HealthBarFront2.setSize(sf::Vector2f(400, 50));
-	HealthBarFront2.setPosition((window->getSize().x - 425), 25);
-	HealthBarFront2.setFillColor(sf::Color::Green);
-
-	HealthBarBack2.setSize(sf::Vector2f(400, 50));
-	HealthBarBack2.setPosition((window->getSize().x - 425), 25);
-	HealthBarBack2.setFillColor(sf::Color::Red);
-
-	
-	dummy = Player(2200.0f, 175.0f, 900.0f, 100, 100, 0, true);
-	dummy.setSize(sf::Vector2f(150, 275));
-	dummy.setPosition(975, 375);
-	dummy.setInput(input);
-	dummy.setHealth(100);
-	dummy.setScale(-1.0f, 1.0f);
-	dummy.setOrigin(dummy.getLocalBounds().width / 2.f, dummy.getLocalBounds().height / 2.f);
-	dummy.setFillColor(sf::Color::Red);
-
-
-
-
-
+	InitialiseHealthBars();
+	InitialisePlayer1();
+	InitialisePlayer2();
 }
 
 Level::~Level()
@@ -148,4 +114,44 @@ void Level::FlipCheck(Player& p1, Player& p2) {
 		p2.setFlipped(!p2.getFlipped());
 		p2.setScale(-p2.getScale().x, 1);
 	}
+}
+
+
+void Level::InitialiseHealthBars() {
+	HealthBarFront1.setSize(sf::Vector2f(400, 50));
+	HealthBarFront1.setPosition(25, 25);
+	HealthBarFront1.setFillColor(sf::Color::Green);
+
+	HealthBarBack1.setSize(sf::Vector2f(400, 50));
+	HealthBarBack1.setPosition(25, 25);
+	HealthBarBack1.setFillColor(sf::Color::Red);
+
+	HealthBarFront2.setSize(sf::Vector2f(400, 50));
+	HealthBarFront2.setPosition((window->getSize().x - 425), 25);
+	HealthBarFront2.setFillColor(sf::Color::Green);
+	
+	HealthBarBack2.setSize(sf::Vector2f(400, 50));
+	HealthBarBack2.setPosition((window->getSize().x - 425), 25);
+	HealthBarBack2.setFillColor(sf::Color::Red);
+}
+
+
+void Level::InitialisePlayer1() {
+	robot = Player(2200.0f, 175.0f, 900.0f, 100, 100, 0, false);
+	robot.setSize(sf::Vector2f(150, 275));
+	robot.setPosition(175, 375);
+	robot.setInput(input);
+	robot.setHealth(100);
+	robot.setOrigin(robot.getLocalBounds().width / 2.f, robot.getLocalBounds().height / 2.f);
+}
+
+void Level::InitialisePlayer2() {
+	dummy = Player(2200.0f, 175.0f, 900.0f, 100, 100, 0, true);
+	dummy.setSize(sf::Vector2f(150, 275));
+	dummy.setPosition(975, 375);
+	dummy.setInput(input);
+	dummy.setHealth(100);
+	dummy.setScale(-1.0f, 1.0f);
+	dummy.setOrigin(dummy.getLocalBounds().width / 2.f, dummy.getLocalBounds().height / 2.f);
+	dummy.setFillColor(sf::Color::Red);
 }
