@@ -108,7 +108,6 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			//Ducking
 			if (input->isKeyDown(down)) {
 				if (!crouched) {
-					std::cerr << "sdhskfjd";
 					setSize(sf::Vector2f(getSize().x, getSize().y * 0.5));
 					setPosition(sf::Vector2f(getPosition().x, getPosition().y * 1.5));
 					crouched = true;
