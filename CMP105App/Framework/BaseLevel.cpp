@@ -4,6 +4,8 @@ BaseLevel::BaseLevel()
 {
 	window = nullptr;
 	input = nullptr;
+	gameState = nullptr;
+	audio = nullptr;
 }
 
 BaseLevel::~BaseLevel()

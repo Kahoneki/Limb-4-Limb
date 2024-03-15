@@ -44,4 +44,10 @@ private:
 	// Variable to make sure the hitbox only hits the opponent once
 	bool struck;
 
+	void FlipCheck(Player& p1, Player& p2);
+
+	void InitialiseHealthBars();
+	void InitialisePlayer1();
+	void InitialisePlayer2();
+
 };

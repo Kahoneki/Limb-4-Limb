@@ -1,66 +1,27 @@
-﻿  BaseLevel.cpp
-  Input.cpp
-  GameObject.cpp
-  Attack.cpp
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(35,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(35,53): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(35,20): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(35,13): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(74,37): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(74,37): warning C4244:         with
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(74,37): warning C4244:         [
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(74,37): warning C4244:             T=float
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(74,37): warning C4244:         ]
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(74,30): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(74,30): warning C4244:         with
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(74,30): warning C4244:         [
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(74,30): warning C4244:             T=float
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(74,30): warning C4244:         ]
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(75,40): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(75,40): warning C4244:         with
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(75,40): warning C4244:         [
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(75,40): warning C4244:             T=float
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(75,40): warning C4244:         ]
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(75,34): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(75,34): warning C4244:         with
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(75,34): warning C4244:         [
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(75,34): warning C4244:             T=float
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Attack.cpp(75,34): warning C4244:         ]
-  Level.cpp
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:         with
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:         [
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:             T=unsigned int
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:         ]
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:         with
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:         [
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:             T=unsigned int
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:         ]
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(210,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(210,39): warning C4244:         with
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(210,39): warning C4244:         [
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(210,39): warning C4244:             T=float
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(210,39): warning C4244:         ]
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(211,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(211,39): warning C4244:         with
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(211,39): warning C4244:         [
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(211,39): warning C4244:             T=float
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(211,39): warning C4244:         ]
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(212,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(212,59): warning C4244:         with
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(212,59): warning C4244:         [
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(212,59): warning C4244:             T=unsigned int
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Level.cpp(212,59): warning C4244:         ]
-  Main.cpp
-  Player.cpp
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Player.cpp(151,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Player.cpp(213,66): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Player.cpp(217,42): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Player.cpp(223,66): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Player.cpp(227,115): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Player.cpp(227,163): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Player.cpp(229,110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\CMP105App\Player.cpp(229,153): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
-  CMP105App.vcxproj -> C:\Users\tatte\OneDrive - Abertay University\cmp105-groupproject-weedle\x64\Debug\CMP105App.exe
+﻿  Level.cpp
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:         with
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:         [
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:             T=unsigned int
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:         ]
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:         with
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:         [
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:             T=unsigned int
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:         ]
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(124,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(124,39): warning C4244:         with
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(124,39): warning C4244:         [
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(124,39): warning C4244:             T=float
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(124,39): warning C4244:         ]
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(125,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(125,39): warning C4244:         with
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(125,39): warning C4244:         [
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(125,39): warning C4244:             T=float
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(125,39): warning C4244:         ]
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(126,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(126,59): warning C4244:         with
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(126,59): warning C4244:         [
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(126,59): warning C4244:             T=unsigned int
+M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(126,59): warning C4244:         ]
+  CMP105App.vcxproj -> M:\GitHub\cmp105-groupproject-weedle\x64\Debug\CMP105App.exe

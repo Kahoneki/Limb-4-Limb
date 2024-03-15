@@ -1,7 +1,7 @@
 // Input class
 // Class stores the current state on keyboard and mouse input.
 // Store which keys are pressed or released, mouse position and mouse button presses.
-// @author Paul Robertson
+// @author Paul Robertson EDIT Erin Michno Hughes
 
 #pragma once
 #include <vector>
@@ -12,12 +12,15 @@ public:
 	enum class MouseState { UP, DOWN, PRESSED };
 private:
 	// Mouse structure, store mouse relevant information
+	
+
 	struct Mouse
 	{
 		int x, y;
 		MouseState left, right;
 	};
 	
+
 public:
 	Input();
 	// Functions for setting key as pressed, released and checking current state.
@@ -33,7 +36,6 @@ public:
 	void setMousePosition(int lx, int ly);
 	int getMouseX();
 	int getMouseY();
-
 	void setLeftMouse(MouseState state);
 	bool isLeftMouseDown();
 	bool isLeftMousePressed();
