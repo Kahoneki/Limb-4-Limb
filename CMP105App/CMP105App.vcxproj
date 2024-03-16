@@ -159,10 +159,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="Framework\Animation.cpp" />
+    <ClCompile Include="Framework\AudioManager.cpp" />
     <ClCompile Include="Framework\BaseLevel.cpp" />
+    <ClCompile Include="Framework\Collision.cpp" />
     <ClCompile Include="Framework\Input.cpp" />
     <ClCompile Include="Framework\GameObject.cpp" />
     <ClCompile Include="Attack.cpp" />
+    <ClCompile Include="Framework\MusicObject.cpp" />
+    <ClCompile Include="Framework\SoundObject.cpp" />
+    <ClCompile Include="Framework\TileMap.cpp" />
+    <ClCompile Include="Framework\VectorHelper.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -173,10 +180,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Audio.h" />
+    <ClInclude Include="Framework\Animation.h" />
+    <ClInclude Include="Framework\AudioManager.h" />
     <ClInclude Include="Framework\BaseLevel.h" />
+    <ClInclude Include="Framework\Collision.h" />
     <ClInclude Include="Framework\Input.h" />
     <ClInclude Include="Framework\GameObject.h" />
     <ClInclude Include="Attack.h" />
+    <ClInclude Include="Framework\MusicObject.h" />
+    <ClInclude Include="Framework\SoundObject.h" />
+    <ClInclude Include="Framework\TileMap.h" />
+    <ClInclude Include="Framework\VectorHelper.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>

@@ -40,8 +40,8 @@ Level::Level(sf::RenderWindow* hwnd, Input* in) {
 	bgTexture.loadFromFile("Assets/Background/background.png");
 	background.setTexture(&bgTexture);
 
-
-
+	audioManager.playMusicbyName("GuileTheme");
+	
 	
 }
 
@@ -61,7 +61,6 @@ void Level::handleInput(float dt)
 	
 	robot.handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D);
 	dummy.handleInput(dt, sf::Keyboard::T, sf::Keyboard::F, sf::Keyboard::H);
-
 
 }
 

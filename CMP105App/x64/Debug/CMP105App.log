@@ -1,68 +1,28 @@
-﻿  Audio.cpp
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Audio.cpp(14,40): warning C4390: ';': empty controlled statement found; is this the intent?
-  BaseLevel.cpp
-  Input.cpp
-  GameObject.cpp
-  Attack.cpp
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(37,63): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(37,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(37,20): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(37,13): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(72,37): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(72,37): warning C4244:         with
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(72,37): warning C4244:         [
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(72,37): warning C4244:             T=float
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(72,37): warning C4244:         ]
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(72,30): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(72,30): warning C4244:         with
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(72,30): warning C4244:         [
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(72,30): warning C4244:             T=float
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(72,30): warning C4244:         ]
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(73,40): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(73,40): warning C4244:         with
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(73,40): warning C4244:         [
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(73,40): warning C4244:             T=float
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(73,40): warning C4244:         ]
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(73,34): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(73,34): warning C4244:         with
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(73,34): warning C4244:         [
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(73,34): warning C4244:             T=float
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Attack.cpp(73,34): warning C4244:         ]
-  Level.cpp
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:         with
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:         [
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:             T=unsigned int
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:         ]
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:         with
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:         [
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:             T=unsigned int
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:         ]
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(78,38): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(108,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(108,39): warning C4244:         with
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(108,39): warning C4244:         [
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(108,39): warning C4244:             T=float
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(108,39): warning C4244:         ]
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(109,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(109,39): warning C4244:         with
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(109,39): warning C4244:         [
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(109,39): warning C4244:             T=float
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(109,39): warning C4244:         ]
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(110,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(110,59): warning C4244:         with
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(110,59): warning C4244:         [
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(110,59): warning C4244:             T=unsigned int
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(110,59): warning C4244:         ]
-  Main.cpp
-  Player.cpp
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Player.cpp(146,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Player.cpp(202,46): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Player.cpp(204,45): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Player.cpp(217,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Player.cpp(219,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Player.cpp(224,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-\\stuhomeeven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\CMP105App\Player.cpp(226,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
-  CMP105App.vcxproj -> \\StuHomeEven\HomeDrive2$\2301032\GitHub\cmp105-groupproject-weedle\x64\Debug\CMP105App.exe
+﻿  Level.cpp
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:         with
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:         [
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:             T=unsigned int
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:         ]
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:         with
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:         [
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:             T=unsigned int
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:         ]
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(77,38): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(107,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(107,39): warning C4244:         with
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(107,39): warning C4244:         [
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(107,39): warning C4244:             T=float
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(107,39): warning C4244:         ]
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(108,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(108,39): warning C4244:         with
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(108,39): warning C4244:         [
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(108,39): warning C4244:             T=float
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(108,39): warning C4244:         ]
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(109,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(109,59): warning C4244:         with
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(109,59): warning C4244:         [
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(109,59): warning C4244:             T=unsigned int
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(109,59): warning C4244:         ]
+  CMP105App.vcxproj -> C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\x64\Debug\CMP105App.exe

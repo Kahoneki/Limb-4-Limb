@@ -4,6 +4,7 @@
 #include "Framework/BaseLevel.h"
 #include "Framework/Input.h"
 #include "Framework/GameObject.h"
+#include "Framework/AudioManager.h"
 #include "Audio.h"
 #include "Player.h"
 #include <string.h>
@@ -32,5 +33,6 @@ private:
 	GameObject HealthBarFront2;
 	GameObject HealthBarBack1;
 	GameObject HealthBarBack2;
+	AudioManager audioManager;
 
 };
