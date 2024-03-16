@@ -23,10 +23,10 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 
 	for (bool& b : activeLimbs) { b = true; }
 
-	attacks[0] = Attack(4, 7, 14, 50, 60, 25, 50, -59, 5);
-	attacks[1] = Attack(2, 5, 16, 50, 60, 30, 30, 96, 8);
-	attacks[2] = Attack(5, 15, 40, 50, 60, 30, 30, 96, 18);
-	attacks[3] = Attack(6, 21, 43, 50, 60, 70, 50, -104, 20);
+	attacks[0] = Attack(4, 7, 18, 6, 60, 25, 50, -59, 5);
+	attacks[1] = Attack(2, 5, 12, 8, 60, 30, 30, 96, 8);
+	attacks[2] = Attack(5, 15, 40, 60, 60, 30, 30, 96, 18);
+	attacks[3] = Attack(6, 21, 43, 80, 60, 70, 50, -104, 20);
 
 	stunFramesLeft = 0;
 
@@ -94,9 +94,9 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			else if (input->isKeyDown(right) || input->isKeyDown(left)) {
 				//Handle movement
 				if (input->isKeyDown(right))
-					velocity.x = topSpeed;
+					velocity.x = topSpeed - (flipped * (0.3 * topSpeed));
 				if (input->isKeyDown(left))
-					velocity.x = -topSpeed;
+					velocity.x = -topSpeed + (!flipped * (0.3 * topSpeed));
 			}
 			//Jumping
 			if (input->isKeyDown(jump)) {
@@ -124,24 +124,26 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			}
 
 			//-----GROUND COMBAT-----//
-			if (input->isKeyDown(jab)) {
-				attacks[0].setAttacking(true);
-				velocity.x = 0;
-				isAttacking = true;
-			}
-			if (input->isKeyDown(kick)) {
-				attacks[1].setAttacking(true);
-				velocity.x = 0;
-			}
-			if (input->isKeyDown(sweep)) {
-				attacks[2].setAttacking(true);
-				velocity.x = 0;
-			}
-			if (input->isKeyDown(upper)) {
-				attacks[3].setAttacking(true);
-				isGrounded = false;
-				velocity.y = jumpSpeed * 0.5;
-				velocity.x = 0;
+			if (!crouched) {
+				if (input->isKeyDown(jab)) {
+					attacks[0].setAttacking(true);
+					velocity.x = 0;
+					isAttacking = true;
+				}
+				if (input->isKeyDown(kick)) {
+					attacks[1].setAttacking(true);
+					velocity.x = 0;
+				}
+				if (input->isKeyDown(sweep)) {
+					attacks[2].setAttacking(true);
+					velocity.x = 0;
+				}
+				if (input->isKeyDown(upper)) {
+					attacks[3].setAttacking(true);
+					isGrounded = false;
+					velocity.y = jumpSpeed * 0.5;
+					velocity.x = 0;
+				}
 			}
 
 

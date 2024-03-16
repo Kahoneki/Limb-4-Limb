@@ -42,12 +42,15 @@ void Level::update(float dt)
 {
 	robot.update(dt);
 	dummy.update(dt);
+	FlipCheck(robot, dummy);
 	dummy.setCollisionBox(dummy.getPosition().x, dummy.getPosition().y, -150, -275);
 	for (int i{}; i < 4; ++i) {
 		if (dummy.getGlobalBounds().intersects(robot.getAttack(i).getHitbox().getGlobalBounds())) {
 			if (!dummy.getStunFramesLeft()){ 
 				dummy.setHealth(dummy.getHealth() - robot.getAttack(i).getDamage());
 				dummy.setStunFramesLeft(dummy.getAttack(i).getHitstun());
+				dummy.move(sf::Vector2f(-20 + (40 * dummy.getFlipped()), 0));
+				robot.move(sf::Vector2f(-20 + (40 * robot.getFlipped()), 0));
 			}
 		}
 
@@ -55,12 +58,12 @@ void Level::update(float dt)
 			if (!robot.getStunFramesLeft()) {
 				robot.setHealth(robot.getHealth() - dummy.getAttack(i).getDamage());
 				robot.setStunFramesLeft(robot.getAttack(i).getHitstun());
+				dummy.move(sf::Vector2f(-20 + (40 * dummy.getFlipped()), 0));
+				robot.move(sf::Vector2f(-20 + (40 * robot.getFlipped()), 0));
 			}
 		}
 	}
 	HealthBarUpdate(robot, dummy);
-
-	FlipCheck(robot, dummy);
 
 }
 
