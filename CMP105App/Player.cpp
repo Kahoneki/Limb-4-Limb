@@ -8,7 +8,7 @@ Player::Player() {
 //For testing losing limbs
 bool numDown = false;
 
-Player::Player(float acc, float ts, float js, int hp, int prot, int c1) {
+Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool flip) {
 	acceleration = acc;
 	topSpeed = ts;
 	jumpSpeed = js;
@@ -18,13 +18,18 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1) {
 
 	isGrounded = false;
 	actionable = true;
+	crouched = false;
+	flipped = flip;
 
 	for (bool& b : activeLimbs) { b = true; }
 
-	attacks[0] = Attack(4, 7, 14, 60, 25, 125, 75);
-	attacks[1] = Attack(2, 5, 16, 60, 30, 105, 230);
-	attacks[2] = Attack(5, 15, 40, 60, 30, 105, 230);
-	attacks[3] = Attack(6, 21, 43, 60, 70, 125, 30);
+	attacks[0] = Attack(4, 7, 14, 50, 60, 25, 50, -59, 5);
+	attacks[1] = Attack(2, 5, 16, 50, 60, 30, 30, 96, 8);
+	attacks[2] = Attack(5, 15, 40, 50, 60, 30, 30, 96, 18);
+	attacks[3] = Attack(6, 21, 43, 50, 60, 70, 50, -104, 20);
+
+	stunFramesLeft = 0;
+
 
 	//Create render texture for player
 	playerRenderTexture = new sf::RenderTexture();
@@ -61,6 +66,7 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1) {
 		//Dont draw dead limbs at startup
 
 	}
+
 	playerRenderTexture->display();
 	setTexture(&playerRenderTexture->getTexture());
 
@@ -74,7 +80,7 @@ Player::~Player() {
 
 
 
-void Player::handleInput(float dt, int jump, int left, int right) {
+void Player::handleInput(float dt, int jump, int left, int right, int down, int jab, int kick, int sweep, int upper) {
 	//----MOVEMENT----//
 	//Handle movement if player is on ground, else they shouldn't be able to change horizontal velocity or jump
 	if (actionable) {
@@ -99,24 +105,42 @@ void Player::handleInput(float dt, int jump, int left, int right) {
 				velocity.x *= 1.25;
 			}
 
+			//Ducking
+			if (input->isKeyDown(down)) {
+				if (!crouched) {
+					setSize(sf::Vector2f(getSize().x, getSize().y * 0.5));
+					setPosition(sf::Vector2f(getPosition().x, getPosition().y * 1.5));
+					crouched = true;
+				}
+
+			}
+
+			if (crouched) {
+				if (!input->isKeyDown(down)) {
+						setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
+						setPosition(sf::Vector2f(getPosition().x, getPosition().y / 1.5));
+						crouched = false;
+				}
+			}
+
 			//-----GROUND COMBAT-----//
-			if (input->isKeyDown(sf::Keyboard::J)) {
+			if (input->isKeyDown(jab)) {
 				attacks[0].setAttacking(true);
 				velocity.x = 0;
 				isAttacking = true;
 			}
-			if (input->isKeyDown(sf::Keyboard::K)) {
+			if (input->isKeyDown(kick)) {
 				attacks[1].setAttacking(true);
 				velocity.x = 0;
 			}
-			if (input->isKeyDown(sf::Keyboard::L)) {
+			if (input->isKeyDown(sweep)) {
 				attacks[2].setAttacking(true);
 				velocity.x = 0;
 			}
-			if (input->isKeyDown(sf::Keyboard::I)) {
+			if (input->isKeyDown(upper)) {
 				attacks[3].setAttacking(true);
 				isGrounded = false;
-				velocity.y = jumpSpeed;
+				velocity.y = jumpSpeed * 0.5;
 				velocity.x = 0;
 			}
 
@@ -127,7 +151,7 @@ void Player::handleInput(float dt, int jump, int left, int right) {
 			activeLimbs[2] = !input->isKeyDown(sf::Keyboard::Num3);
 			activeLimbs[3] = !input->isKeyDown(sf::Keyboard::Num4);
 			UpdateTextures();
-
+			velocity.y -= acceleration * dt;
 		}
 		//Player is in air, so bring them towards ground
 		else {
@@ -141,22 +165,38 @@ void Player::handleInput(float dt, int jump, int left, int right) {
 
 void Player::update(float dt) {
 
-	//Update position
-	float xPos = getPosition().x + velocity.x * dt;
-	float yPos = getPosition().y - ((velocity.y * dt) + 0.5 * (acceleration * dt * dt)); //s=ut+1/2(at^2)
-	setPosition(xPos, yPos);
 
 	//Grounded check
-	if (getPosition().y >= 375) {
-		setPosition(getPosition().x, 375);
-		isGrounded = true;
+
+	if (!crouched) {
+		if (getPosition().y >= 375) {
+			setPosition(getPosition().x, 375);
+			isGrounded = true;
+			velocity.y = 0;
+		}
+	}
+	else {
+		if (getPosition().y >= 375 + getSize().y) {
+			setPosition(getPosition().x, 375 + getSize().y);
+			isGrounded = true;
+			velocity.y = 0;
+		}
 	}
 
+
+	//Update position
+	if (stunFramesLeft) { velocity.x = 0; }
+	float xPos = getPosition().x + velocity.x * dt;
+	float yPos = getPosition().y - ((velocity.y * dt) + (0.5 * (acceleration * dt * dt))); //s=ut+1/2(at^2)
+	setPosition(xPos, yPos);
+
+
 	//Handle combat
-	actionable = true;
+	actionable = !stunFramesLeft;
+
 	for (Attack& atk : attacks) {
 		if (atk.getAttacking()) {
-			atk.strike(dt, getPosition().x, getPosition().y);
+			atk.strike(dt, getPosition().x, getPosition().y, flipped);
 			actionable = false;
 		}
 	}
@@ -186,6 +226,9 @@ void Player::update(float dt) {
 		playerRenderTexture->display();
 		setTexture(&playerRenderTexture->getTexture());
 	}
+
+	if (stunFramesLeft > 0) { stunFramesLeft -= Attack::physicsClockFramerate * dt; }
+	else if (stunFramesLeft < 0) { stunFramesLeft = 0; }
 }
 
 
@@ -194,34 +237,26 @@ int Player::getHealth() { return health; }
 
 void Player::setHealth(int val) { health = val; }
 
+bool Player::getActionable() { return actionable; }
 
 bool Player::getLimbActivity(int index) { return activeLimbs[index]; }
 
-int Player::getLimbRotation(int index) {
-	if (activeLimbs[index])
-		return aliveLimbSprites[index]->getRotation();
-	else
-		return deadLimbSprites[index]->getRotation();
-}
+int Player::getLimbRotation(int index) { return activeLimbs[index] ? aliveLimbSprites[index]->getRotation() : deadLimbSprites[index]->getRotation(); }
 
-Attack Player::getAttack(int index) {
-	return attacks[index];
-}
+Attack Player::getAttack(int index) { return attacks[index]; }
+
+int Player::getStunFramesLeft() { return stunFramesLeft; }
+
+bool Player::getFlipped() { return flipped; }
 
 void Player::UpdateTextures() { updateTextures = true; }
 
+void Player::setFlipped(bool flip) { flipped = flip; }
+
+void Player::setStunFramesLeft(int numFrames) { stunFramesLeft = numFrames; }
+
 void Player::setLimbActivity(int index, bool val) { activeLimbs[index] = val; }
 
-void Player::setLimbRotation(int index, int rotation) {
-	if (activeLimbs[index])
-		aliveLimbSprites[index]->setRotation(rotation);
-	else
-		deadLimbSprites[index]->setRotation(rotation);
-}
+void Player::setLimbRotation(int index, int rotation) { activeLimbs[index] ? aliveLimbSprites[index]->setRotation(rotation) : deadLimbSprites[index]->setRotation(rotation); }
 
-void Player::addLimbRotation(int index, int rotation) {
-	if (activeLimbs[index])
-		aliveLimbSprites[index]->rotate(rotation);
-	else
-		deadLimbSprites[index]->rotate(rotation);
-}
+void Player::addLimbRotation(int index, int rotation) { activeLimbs[index] ? aliveLimbSprites[index]->rotate(rotation) : deadLimbSprites[index]->rotate(rotation); }
