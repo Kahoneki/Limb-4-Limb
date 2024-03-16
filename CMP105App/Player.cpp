@@ -20,6 +20,7 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 	actionable = true;
 	crouched = false;
 	flipped = flip;
+	blocking = false;
 
 	for (bool& b : activeLimbs) { b = true; }
 
@@ -71,6 +72,7 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 	setTexture(&playerRenderTexture->getTexture());
 
 	updateTextures = false;
+	blocking = false;
 
 }
 
@@ -93,10 +95,14 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			//Pressing either left or right (but not both - case covered by above check)
 			else if (input->isKeyDown(right) || input->isKeyDown(left)) {
 				//Handle movement
-				if (input->isKeyDown(right))
+				if (input->isKeyDown(right)) {
 					velocity.x = topSpeed - (flipped * (0.3 * topSpeed));
-				if (input->isKeyDown(left))
+					blocking = flipped;
+				}
+				if (input->isKeyDown(left)) {
 					velocity.x = -topSpeed + (!flipped * (0.3 * topSpeed));
+					blocking = !flipped;
+				}
 			}
 			//Jumping
 			if (input->isKeyDown(jump)) {
@@ -250,6 +256,8 @@ Attack Player::getAttack(int index) { return attacks[index]; }
 int Player::getStunFramesLeft() { return stunFramesLeft; }
 
 bool Player::getFlipped() { return flipped; }
+
+bool Player::getBlocking() { return blocking;  }
 
 void Player::UpdateTextures() { updateTextures = true; }
 
