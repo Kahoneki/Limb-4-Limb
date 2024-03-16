@@ -21,6 +21,6 @@ public:
 private:
 	// Sound buffer must not leave scope or sound will be destroyed.
 	sf::SoundBuffer* buffer;
-	
+
 };
 

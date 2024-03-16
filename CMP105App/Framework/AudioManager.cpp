@@ -1,11 +1,15 @@
 #include "AudioManager.h"
+#include <string>
 
 // Some initial setup of music.
 // All music will loop and have half the normal volume (so background music is quieter).
 AudioManager::AudioManager()
-{
+{ 
+
 	music.setLoop(true);
-	music.setVolume(50);
+	music.setVolume(15);
+	addSound("Assets/Audio/metalPipe.wav","metalPipe");
+	addMusic("Assets/Audio/GuileTheme.wav", "GuileTheme");
 }
 
 AudioManager::~AudioManager()
@@ -15,10 +19,10 @@ AudioManager::~AudioManager()
 // Given a filename and key a new SOUND object is added to the list. Loading the object into memory for playback
 void AudioManager::addSound(std::string filename, std::string lname)
 {
-	
+
 	sounds.push_back(s);
 	sounds.back().loadSound(filename, lname);
-	
+
 }
 
 // Play back sound based on provided key.

@@ -1,27 +1,28 @@
 ﻿  Level.cpp
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:         with
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:         [
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:             T=unsigned int
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(25,51): warning C4244:         ]
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:         with
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:         [
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:             T=unsigned int
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(29,50): warning C4244:         ]
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(124,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(124,39): warning C4244:         with
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(124,39): warning C4244:         [
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(124,39): warning C4244:             T=float
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(124,39): warning C4244:         ]
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(125,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(125,39): warning C4244:         with
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(125,39): warning C4244:         [
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(125,39): warning C4244:             T=float
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(125,39): warning C4244:         ]
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(126,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(126,59): warning C4244:         with
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(126,59): warning C4244:         [
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(126,59): warning C4244:             T=unsigned int
-M:\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(126,59): warning C4244:         ]
-  CMP105App.vcxproj -> M:\GitHub\cmp105-groupproject-weedle\x64\Debug\CMP105App.exe
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:         with
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:         [
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:             T=unsigned int
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(24,51): warning C4244:         ]
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:         with
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:         [
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:             T=unsigned int
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(28,50): warning C4244:         ]
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(77,38): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(107,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(107,39): warning C4244:         with
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(107,39): warning C4244:         [
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(107,39): warning C4244:             T=float
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(107,39): warning C4244:         ]
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(108,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(108,39): warning C4244:         with
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(108,39): warning C4244:         [
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(108,39): warning C4244:             T=float
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(108,39): warning C4244:         ]
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(109,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(109,59): warning C4244:         with
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(109,59): warning C4244:         [
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(109,59): warning C4244:             T=unsigned int
+C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\CMP105App\Level.cpp(109,59): warning C4244:         ]
+  CMP105App.vcxproj -> C:\Users\PC\Documents\GitHub\cmp105-groupproject-weedle\x64\Debug\CMP105App.exe

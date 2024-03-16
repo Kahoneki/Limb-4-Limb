@@ -14,7 +14,7 @@ class AudioManager
 public:
 	AudioManager();
 	~AudioManager();
-	
+
 	// Add sound object, provide file path and key string
 	void addSound(std::string filename, std::string lname);
 	// Plays sound based on key string provided (if sound exists).
@@ -43,4 +43,3 @@ private:
 	// Re-useable sound object
 	SoundObject s;
 };
-

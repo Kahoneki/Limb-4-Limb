@@ -6,6 +6,13 @@ Level::Level(sf::RenderWindow* hwnd, Input* in) {
 	input = in;
 
 	// initialise game objects
+	background.setSize(sf::Vector2f(window->getSize()));
+	bgTexture.loadFromFile("Assets/Background/background.png");
+	background.setTexture(&bgTexture);
+
+	audioManager.playMusicbyName("GuileTheme");
+	
+	
 	InitialiseHealthBars();
 	InitialisePlayer1();
 	InitialisePlayer2();
@@ -27,7 +34,6 @@ void Level::handleInput(float dt)
 	
 	robot.handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S,  sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::G, sf::Keyboard::T);
 	dummy.handleInput(dt, sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Down, sf::Keyboard::O, sf::Keyboard::L, sf::Keyboard::SemiColon, sf::Keyboard::P);
-
 
 }
 
@@ -63,7 +69,7 @@ void Level::update(float dt)
 void Level::render()
 {
 	beginDraw();
-
+	window->draw(background);
 	window->draw(robot);
 	for (int i{}; i < 4; ++i) {
 		window->draw(robot.getAttack(i).getHitbox());
