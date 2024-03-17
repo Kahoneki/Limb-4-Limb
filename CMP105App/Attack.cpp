@@ -26,16 +26,18 @@ Attack::Attack(float start, float act, float rec, int hs, float w, float h, floa
 Attack::~Attack() {
 }
 
-void Attack::strike(float dt, float player_x, float player_y, bool flip) {
+void Attack::strike(float dt, float player_x, float player_y, bool flip, bool crouch) {
 
 	counter += physicsClockFramerate*dt;
 
 	// If attack is in active frames, create the hitbox
 	if (counter > startup && counter < active) {
-		if (flip)
-			setHitbox(width, height, player_x - relative_xpos - width, player_y + relative_ypos);
-		else
-			setHitbox(width, height, player_x + relative_xpos, player_y + relative_ypos);
+		if (flip) {
+			setHitbox(width, height, player_x - relative_xpos - width, player_y + (crouch ? relative_ypos / 2 : relative_ypos));
+		}
+		else {
+			setHitbox(width, height, player_x + relative_xpos, player_y + (crouch ? relative_ypos / 2 : relative_ypos));
+		}
 	}
 
 	// if attack is out of active frames, remove the hitbox
