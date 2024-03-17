@@ -109,7 +109,8 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			if (input->isKeyDown(down)) {
 				if (!crouched) {
 					setSize(sf::Vector2f(getSize().x, getSize().y * 0.5));
-					setPosition(sf::Vector2f(getPosition().x, getPosition().y * 1.5));
+					setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
+					setPosition(sf::Vector2f(getPosition().x, getPosition().y + 225/4));
 					crouched = true;
 				}
 
@@ -117,9 +118,10 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 
 			if (crouched) {
 				if (!input->isKeyDown(down)) {
-						setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
-						setPosition(sf::Vector2f(getPosition().x, getPosition().y / 1.5));
-						crouched = false;
+					setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
+					setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
+					setPosition(sf::Vector2f(getPosition().x, getPosition().y - 225/4));
+					crouched = false;
 				}
 			}
 
@@ -176,8 +178,8 @@ void Player::update(float dt) {
 		}
 	}
 	else {
-		if (getPosition().y >= 375 + getSize().y) {
-			setPosition(getPosition().x, 375 + getSize().y);
+		if (getPosition().y >= 375 + 225/4) {
+			setPosition(getPosition().x, 375 + 225/4);
 			isGrounded = true;
 			velocity.y = 0;
 		}
@@ -194,9 +196,9 @@ void Player::update(float dt) {
 	//Handle combat
 	actionable = !stunFramesLeft;
 
-	for (Attack& atk : attacks) {
-		if (atk.getAttacking()) {
-			atk.strike(dt, getPosition().x, getPosition().y, flipped);
+	for (int i{}; i < 3; ++i) {
+		if (attacks[i].getAttacking()) {
+			attacks[i].strike(dt, getPosition().x, getPosition().y, flipped, crouched);
 			actionable = false;
 		}
 	}

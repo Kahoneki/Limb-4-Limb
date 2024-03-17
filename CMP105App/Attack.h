@@ -30,7 +30,7 @@ public:
 	void setAttacking(bool fighting);
 
 	//Handles the actual attack
-	void strike(float dt, float player_x, float player_y, bool flip);
+	void strike(float dt, float player_x, float player_y, bool flip, bool crouch);
 
 
 	//Fixed framerate
