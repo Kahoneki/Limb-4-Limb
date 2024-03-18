@@ -28,6 +28,8 @@ public:
 	//Setters
 	void setHitbox(int width, int height, int xpos, int ypos);
 	void setAttacking(bool fighting);
+	void setDamage(int power);
+	void setHitstun(int stun);
 
 	//Handles the actual attack
 	void strike(float dt, float player_x, float player_y, bool flip, bool crouch);

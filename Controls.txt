@@ -1,0 +1,24 @@
+Welcome To Limb For Limb. The epic fighting game where you can lose your robot limbs, but attacking with them makes you stronger!
+
+
+P1 Controls:
+
+WASD - Movement
+
+R - Jab
+T - Uppercut
+F - Kick
+G -Sweep
+
+
+P2 Controls:
+
+IJKL - Movement
+
+9 - Jab
+0 - Uppercut
+O - Kick
+P - Sweep
+
+
+Much like in life, get your opponents health to 0 to win!

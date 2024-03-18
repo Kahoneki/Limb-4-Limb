@@ -24,10 +24,10 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 
 	for (bool& b : activeLimbs) { b = true; }
 
-	attacks[0] = Attack(4, 7, 18, 6, 60, 25, 50, -59, 5);
-	attacks[1] = Attack(2, 5, 12, 8, 60, 30, 30, 96, 8);
-	attacks[2] = Attack(5, 15, 40, 60, 60, 30, 30, 96, 18);
-	attacks[3] = Attack(6, 21, 43, 80, 60, 70, 50, -104, 20);
+	attacks[2] = Attack(4, 7, 18, 6, 60, 25, 50, -59, 5);
+	attacks[0] = Attack(2, 5, 12, 8, 60, 30, 30, 96, 8);
+	attacks[1] = Attack(5, 15, 40, 60, 60, 30, 30, 96, 18);
+	attacks[3] = Attack(2, 15, 30, 70, 60, 70, 50, -104, 20);
 
 	stunFramesLeft = 0;
 
@@ -85,6 +85,7 @@ Player::~Player() {
 void Player::handleInput(float dt, int jump, int left, int right, int down, int jab, int kick, int sweep, int upper) {
 	//----MOVEMENT----//
 	//Handle movement if player is on ground, else they shouldn't be able to change horizontal velocity or jump
+
 	if (actionable) {
 		if (isGrounded) {
 			//Pressing both keys at same time or not pressing either key
@@ -116,7 +117,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 				if (!crouched) {
 					setSize(sf::Vector2f(getSize().x, getSize().y * 0.5));
 					setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-					setPosition(sf::Vector2f(getPosition().x, getPosition().y + 225/4));
+					setPosition(sf::Vector2f(getPosition().x, getPosition().y + 225 / 4));
 					crouched = true;
 				}
 
@@ -126,7 +127,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 				if (!input->isKeyDown(down)) {
 					setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
 					setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-					setPosition(sf::Vector2f(getPosition().x, getPosition().y - 225/4));
+					setPosition(sf::Vector2f(getPosition().x, getPosition().y - 225 / 4));
 					crouched = false;
 				}
 			}
@@ -134,18 +135,18 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			//-----GROUND COMBAT-----//
 			if (!crouched) {
 				if (input->isKeyDown(jab)) {
-					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128)); //Half transparency
-					attacks[0].setAttacking(true);
+					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
+					attacks[2].setAttacking(true);
 					velocity.x = 0;
 				}
 				if (input->isKeyDown(kick)) {
 					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
-					attacks[1].setAttacking(true);
+					attacks[0].setAttacking(true);
 					velocity.x = 0;
 				}
 				if (input->isKeyDown(sweep)) {
 					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
-					attacks[2].setAttacking(true);
+					attacks[1].setAttacking(true);
 					velocity.x = 0;
 				}
 				if (input->isKeyDown(upper)) {
@@ -155,13 +156,6 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 				}
 			}
 
-
-			//DEBUGGING TEXTURE CHANGING LOGIC - TEMP
-			activeLimbs[0] = !input->isKeyDown(sf::Keyboard::Num1);
-			activeLimbs[1] = !input->isKeyDown(sf::Keyboard::Num2);
-			activeLimbs[2] = !input->isKeyDown(sf::Keyboard::Num3);
-			activeLimbs[3] = !input->isKeyDown(sf::Keyboard::Num4);
-			UpdateTextures();
 			velocity.y -= acceleration * dt;
 		}
 	}
@@ -170,6 +164,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 	if (!isGrounded) {
 		velocity.y -= acceleration * dt;
 	}
+
 }
 
 
@@ -212,6 +207,12 @@ void Player::update(float dt) {
 	//Check that player is actionable and that they're not already opaque
 	if (actionable && getFillColor().a != 255) {
 		setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 255)); //Restore to full transparency
+	}
+
+	//Check if limbs are to be destroyed
+	for (int i{}; i < 4; ++i) {
+		activeLimbs[i] = health >= 20 * (i + 1);
+		updateTextures = true;
 	}
 
 
