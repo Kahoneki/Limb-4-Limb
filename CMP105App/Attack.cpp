@@ -33,10 +33,10 @@ void Attack::strike(float dt, float player_x, float player_y, bool flip, bool cr
 	// If attack is in active frames, create the hitbox
 	if (counter > startup && counter < active) {
 		if (flip) {
-			setHitbox(width, height, player_x - relative_xpos - width, player_y + (crouch ? relative_ypos / 2 : relative_ypos));
+			setHitbox(width, height, player_x - relative_xpos - width, player_y + relative_ypos);
 		}
 		else {
-			setHitbox(width, height, player_x + relative_xpos, player_y + (crouch ? relative_ypos / 2 : relative_ypos));
+			setHitbox(width, height, player_x + relative_xpos, player_y + relative_ypos);
 		}
 	}
 
@@ -88,3 +88,7 @@ void Attack::setHitbox(int width, int height, int xpos, int ypos) {
 void Attack::setAttacking(bool fighting) {
 	attacking = fighting;
 }
+
+void Attack::setDamage(int power) { damage = power; }
+
+void Attack::setHitstun(int stun) { hitstun = stun; }
