@@ -135,34 +135,34 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			//-----GROUND COMBAT-----//
 			if (!crouched) {
 				if (input->isKeyDown(jab)) {
+					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
 					attacks[2].setAttacking(true);
 					velocity.x = 0;
-					isAttacking = true;
 				}
 				if (input->isKeyDown(kick)) {
+					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
 					attacks[0].setAttacking(true);
 					velocity.x = 0;
 				}
 				if (input->isKeyDown(sweep)) {
+					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
 					attacks[1].setAttacking(true);
 					velocity.x = 0;
 				}
 				if (input->isKeyDown(upper)) {
+					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
 					attacks[3].setAttacking(true);
 					velocity.x = 0;
-					velocity.y = jumpSpeed * 0.2;
-					isGrounded = false;
 				}
 			}
 
 			velocity.y -= acceleration * dt;
 		}
-		//Player is in air, so bring them towards ground
-		else {
-			velocity.y -= acceleration * dt;
-		}
+	}
 
-		isAttacking = false;
+	//Player is in air, so bring them towards ground
+	if (!isGrounded) {
+		velocity.y -= acceleration * dt;
 	}
 
 }
@@ -203,6 +203,10 @@ void Player::update(float dt) {
 			attacks[i].strike(dt, getPosition().x, getPosition().y, flipped, crouched);
 			actionable = false;
 		}
+	}
+	//Check that player is actionable and that they're not already opaque
+	if (actionable && getFillColor().a != 255) {
+		setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 255)); //Restore to full transparency
 	}
 
 	//Check if limbs are to be destroyed

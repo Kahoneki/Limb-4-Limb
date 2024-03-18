@@ -54,7 +54,6 @@ private:
 	//Combat
 	int health;
 	int protection;
-	bool isAttacking;
 	Attack attacks[4];
 	float stunFramesLeft;
 	bool blocking;

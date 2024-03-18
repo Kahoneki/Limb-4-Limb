@@ -135,8 +135,8 @@ void Level::HealthBarUpdate(Player play1, Player play2) {
 
 	if (play1.getHealth() <= 0 || play2.getHealth() <= 0) {
 		deathScreenActive = true;
+		player1Win = !(play1.getHealth() <= 0);
 		InitialiseDeathScreen();
-		player1Win = play1.getHealth() > 0;
 	}
 
 
