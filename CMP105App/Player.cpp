@@ -169,7 +169,6 @@ void Player::update(float dt) {
 
 
 	//Grounded check
-
 	if (!crouched) {
 		if (getPosition().y >= 375) {
 			setPosition(getPosition().x, 375);
@@ -183,6 +182,12 @@ void Player::update(float dt) {
 			isGrounded = true;
 			velocity.y = 0;
 		}
+	}
+
+	//Out of bounds check
+	if (getPosition().x < 63 || getPosition().x > 1138) { //getSize().x/2 = 63, 1200-getSize().x/2 = 1138 - not using <=/>= since velocity.x is being set to 0 and player would be stuck on edge
+		setPosition(getPosition().x <= 63 ? 63 : 1138, getPosition().y);
+		velocity.x = 0;
 	}
 
 
