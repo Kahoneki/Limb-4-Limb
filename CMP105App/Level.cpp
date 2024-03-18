@@ -6,16 +6,12 @@ Level::Level(sf::RenderWindow* hwnd, Input* in) {
 	input = in;
 
 	// initialise game objects
-	background.setSize(sf::Vector2f(window->getSize()));
-	bgTexture.loadFromFile("Assets/Background/background.png");
-	background.setTexture(&bgTexture);
+	
+	
+	mainMenuActive = true;
+	deathScreenActive = false;
 
-	audioManager.playMusicbyName("GuileTheme");
-	
-	
-	InitialiseHealthBars();
-	InitialisePlayer1();
-	InitialisePlayer2();
+	InitialiseMainMenu();
 }
 
 Level::~Level()
@@ -32,38 +28,49 @@ void Level::handleInput(float dt)
 		window->close();
 	}
 	
-	robot.handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S,  sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::G, sf::Keyboard::T);
-	dummy.handleInput(dt, sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Down, sf::Keyboard::O, sf::Keyboard::L, sf::Keyboard::SemiColon, sf::Keyboard::P);
+	if (mainMenuActive) {
+		MainMenuInput();
+	}
 
+	else if (deathScreenActive) {
+		DeathScreenInput();
+	}
+
+	else {
+		robot.handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::G, sf::Keyboard::T);
+		dummy.handleInput(dt, sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Down, sf::Keyboard::O, sf::Keyboard::L, sf::Keyboard::SemiColon, sf::Keyboard::P);
+	}
 }
 
 // Update game objects
 void Level::update(float dt)
 {
-	robot.update(dt);
-	dummy.update(dt);
-	FlipCheck(robot, dummy);
-	dummy.setCollisionBox(dummy.getPosition().x, dummy.getPosition().y, -150, -275);
-	for (int i{}; i < 4; ++i) {
-		if (dummy.getGlobalBounds().intersects(robot.getAttack(i).getHitbox().getGlobalBounds())) {
-			if (!dummy.getStunFramesLeft()){ 
-				dummy.setHealth(dummy.getHealth() - robot.getAttack(i).getDamage() + (dummy.getBlocking() * 0.9 * robot.getAttack(i).getDamage()));
-				dummy.setStunFramesLeft(dummy.getAttack(i).getHitstun() * !dummy.getBlocking());
-				dummy.move(sf::Vector2f(-10 + (20 * dummy.getFlipped()), 0));
-				robot.move(sf::Vector2f(-10 + (20 * robot.getFlipped()), 0));
+	if (!mainMenuActive && !deathScreenActive) {
+		robot.update(dt);
+		dummy.update(dt);
+		FlipCheck(robot, dummy);
+		dummy.setCollisionBox(dummy.getPosition().x, dummy.getPosition().y, -150, -275);
+		for (int i{}; i < 4; ++i) {
+			if (dummy.getGlobalBounds().intersects(robot.getAttack(i).getHitbox().getGlobalBounds())) {
+				if (!dummy.getStunFramesLeft()){ 
+					dummy.setHealth(dummy.getHealth() - robot.getAttack(i).getDamage() + (dummy.getBlocking() * 0.9 * robot.getAttack(i).getDamage()));
+					dummy.setStunFramesLeft(dummy.getAttack(i).getHitstun() * !dummy.getBlocking());
+					dummy.move(sf::Vector2f(-10 + (20 * dummy.getFlipped()), 0));
+					robot.move(sf::Vector2f(-10 + (20 * robot.getFlipped()), 0));
+				}
 			}
-		}
 
-		if (robot.getGlobalBounds().intersects(dummy.getAttack(i).getHitbox().getGlobalBounds())) {
-			if (!robot.getStunFramesLeft()) {
-				robot.setHealth(robot.getHealth() - dummy.getAttack(i).getDamage() + (robot.getBlocking() * 0.9 * dummy.getAttack(i).getDamage()));
-				robot.setStunFramesLeft(robot.getAttack(i).getHitstun() * !robot.getBlocking());
-				dummy.move(sf::Vector2f(-20 + (40 * dummy.getFlipped()), 0));
-				robot.move(sf::Vector2f(-20 + (40 * robot.getFlipped()), 0));
+			if (robot.getGlobalBounds().intersects(dummy.getAttack(i).getHitbox().getGlobalBounds())) {
+				if (!robot.getStunFramesLeft()) {
+					robot.setHealth(robot.getHealth() - dummy.getAttack(i).getDamage() + (robot.getBlocking() * 0.9 * dummy.getAttack(i).getDamage()));
+					robot.setStunFramesLeft(robot.getAttack(i).getHitstun() * !robot.getBlocking());
+					dummy.move(sf::Vector2f(-20 + (40 * dummy.getFlipped()), 0));
+					robot.move(sf::Vector2f(-20 + (40 * robot.getFlipped()), 0));
+				}
 			}
 		}
+		HealthBarUpdate(robot, dummy);
 	}
-	HealthBarUpdate(robot, dummy);
 
 }
 
@@ -72,21 +79,38 @@ void Level::update(float dt)
 void Level::render()
 {
 	beginDraw();
-	window->draw(background);
-	window->draw(robot);
-	for (int i{}; i < 4; ++i) {
-		window->draw(robot.getAttack(i).getHitbox());
+
+	if (mainMenuActive) {
+		window->draw(titleBox);
+		window->draw(startBox);
+		window->draw(titleText);
+		window->draw(startText);
 	}
 
-
-	window->draw(dummy);
-	for (int i{}; i < 4; ++i) {
-		window->draw(dummy.getAttack(i).getHitbox());
+	else if (deathScreenActive) {
+		window->draw(winBox);
+		window->draw(restartBox);
+		window->draw(winText);
+		window->draw(restartText);
 	}
-	window->draw(HealthBarBack1);
-	window->draw(HealthBarBack2);
-	window->draw(HealthBarFront1);
-	window->draw(HealthBarFront2);
+
+	else {
+		window->draw(background);
+		window->draw(robot);
+		for (int i{}; i < 4; ++i) {
+			window->draw(robot.getAttack(i).getHitbox());
+		}
+		
+		
+		window->draw(dummy);
+		for (int i{}; i < 4; ++i) {
+			window->draw(dummy.getAttack(i).getHitbox());
+		}
+		window->draw(HealthBarBack1);
+		window->draw(HealthBarBack2);
+		window->draw(HealthBarFront1);
+		window->draw(HealthBarFront2);
+	}
 
 	endDraw();
 }
@@ -100,15 +124,10 @@ void Level::HealthBarUpdate(Player play1, Player play2) {
 	HealthBarFront2.setSize(sf::Vector2f(Calc2, 50));
 	HealthBarFront2.setPosition((window->getSize().x - Calc2 - 25), 25);
 
-	if (play1.getHealth() <= 0)
-	{
-		window->close();
-		std::cout << "Player 2 is the winner!" << std::endl;
-	}
-	if (play2.getHealth() <= 0) 
-	{
-		window->close();
-		std::cout << "Player 1 is the winner!" << std::endl;
+	if (play1.getHealth() <= 0 || play2.getHealth() <= 0) {
+		deathScreenActive = true;
+		InitialiseDeathScreen();
+		player1Win = play1.getHealth() > 0;
 	}
 
 }
@@ -124,6 +143,71 @@ void Level::FlipCheck(Player& p1, Player& p2) {
 		p2.setScale(-p2.getScale().x, 1);
 	}
 }
+
+
+
+
+void Level::InitialiseMainMenu() {
+	background.setSize(sf::Vector2f(1200, 675));
+	background.setPosition(0, 0);
+	background.setFillColor(sf::Color::Black);
+
+
+	titleBox.setSize(sf::Vector2f(520, 60));
+	titleBox.setPosition(350, 50);
+	titleBox.setFillColor(sf::Color::White);
+
+
+	startBox.setSize(sf::Vector2f(350, 40));
+	startBox.setPosition(230, 300);
+	startBox.setFillColor(sf::Color::White);
+
+
+	if (!font.loadFromFile("font/arial.ttf"))
+	{
+		std::cout << "Error loading font\n";
+	}
+
+	titleText.setFont(font);
+	titleText.setString("LOSING LIMBS GAME");
+	titleText.setCharacterSize(50);
+	titleText.setFillColor(sf::Color::Red);
+	titleText.setPosition(350, 50);
+
+
+	startText.setFont(font);
+	startText.setString("START");
+	startText.setCharacterSize(30);
+	startText.setFillColor(sf::Color::Red);
+	startText.setPosition(230, 300);
+}
+
+
+void Level::MainMenuInput() {
+	bool mouseOverBox = startBox.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
+	bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left) && !mousePressedLastFrame;
+	if (mouseOverBox && mouseDown) {
+		mainMenuActive = false;
+		InitialiseFightScene();
+	}
+	mousePressedLastFrame = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+}
+
+
+
+void Level::InitialiseFightScene() {
+	background.setSize(sf::Vector2f(window->getSize()));
+	if (!bgTexture.loadFromFile("Assets/Background/background.png")) { std::cerr << "Couldn't load background for fight scene\n"; }
+	background.setFillColor(sf::Color::White);
+	background.setTexture(&bgTexture);
+
+	audioManager.playMusicbyName("GuileTheme");
+
+	InitialiseHealthBars();
+	InitialisePlayer1();
+	InitialisePlayer2();
+}
+
 
 
 void Level::InitialiseHealthBars() {
@@ -163,4 +247,45 @@ void Level::InitialisePlayer2() {
 	dummy.setScale(-1.0f, 1.0f);
 	dummy.setOrigin(dummy.getLocalBounds().width / 2.f, dummy.getLocalBounds().height / 2.f);
 	dummy.setFillColor(sf::Color::Red);
+}
+
+
+
+void Level::InitialiseDeathScreen() {
+	background.setSize(sf::Vector2f(1200, 675));
+	background.setPosition(0, 0);
+	background.setFillColor(sf::Color::Black);
+
+
+	winBox.setSize(sf::Vector2f(520, 60));
+	winBox.setPosition(350, 50);
+	winBox.setFillColor(sf::Color::White);
+
+
+	restartBox.setSize(sf::Vector2f(350, 40));
+	restartBox.setPosition(230, 300);
+	restartBox.setFillColor(sf::Color::White);
+
+	winText.setFont(font);
+	winText.setString(player1Win ? "PLAYER 1 WINS!" : "PLAYER 2 WINS!");
+	winText.setCharacterSize(50);
+	winText.setFillColor(sf::Color::Red);
+	winText.setPosition(350, 50);
+
+
+	restartText.setFont(font);
+	restartText.setString("RESTART");
+	restartText.setCharacterSize(30);
+	restartText.setFillColor(sf::Color::Red);
+	restartText.setPosition(230, 300);
+}
+
+void Level::DeathScreenInput() {
+	bool mouseOverBox = restartBox.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
+	bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left) && !mousePressedLastFrame;
+	if (mouseOverBox && mouseDown) {
+		deathScreenActive = false;
+		InitialiseFightScene();
+	}
+	mousePressedLastFrame = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 }
