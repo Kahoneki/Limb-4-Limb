@@ -32,8 +32,8 @@ void Level::handleInput(float dt)
 		window->close();
 	}
 	
-	robot.handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S,  sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::G, sf::Keyboard::T);
-	dummy.handleInput(dt, sf::Keyboard::Up, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Down, sf::Keyboard::O, sf::Keyboard::L, sf::Keyboard::SemiColon, sf::Keyboard::P);
+	robot.handleInput(dt, sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S,  sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::G, sf::Keyboard::T);
+	dummy.handleInput(dt, sf::Keyboard::I, sf::Keyboard::J, sf::Keyboard::L, sf::Keyboard::K, sf::Keyboard::Num9, sf::Keyboard::O, sf::Keyboard::P, sf::Keyboard::Num0);
 
 }
 
@@ -48,6 +48,9 @@ void Level::update(float dt)
 		if (dummy.getGlobalBounds().intersects(robot.getAttack(i).getHitbox().getGlobalBounds())) {
 			if (!dummy.getStunFramesLeft()){ 
 				dummy.setHealth(dummy.getHealth() - robot.getAttack(i).getDamage() + (dummy.getBlocking() * 0.9 * robot.getAttack(i).getDamage()));
+				if (!robot.getLimbActivity(i)) {
+					dummy.setHealth(dummy.getHealth() - robot.getAttack(i).getDamage() * 0.2);
+				}
 				dummy.setStunFramesLeft(dummy.getAttack(i).getHitstun() * !dummy.getBlocking());
 				dummy.move(sf::Vector2f(-10 + (20 * dummy.getFlipped()), 0));
 				robot.move(sf::Vector2f(-10 + (20 * robot.getFlipped()), 0));
@@ -57,9 +60,12 @@ void Level::update(float dt)
 		if (robot.getGlobalBounds().intersects(dummy.getAttack(i).getHitbox().getGlobalBounds())) {
 			if (!robot.getStunFramesLeft()) {
 				robot.setHealth(robot.getHealth() - dummy.getAttack(i).getDamage() + (robot.getBlocking() * 0.9 * dummy.getAttack(i).getDamage()));
+				if (!dummy.getLimbActivity(i)) {
+					robot.setHealth(robot.getHealth() - dummy.getAttack(i).getDamage() * 0.2);
+				}
 				robot.setStunFramesLeft(robot.getAttack(i).getHitstun() * !robot.getBlocking());
-				dummy.move(sf::Vector2f(-20 + (40 * dummy.getFlipped()), 0));
-				robot.move(sf::Vector2f(-20 + (40 * robot.getFlipped()), 0));
+				dummy.move(sf::Vector2f(-10 + (20 * dummy.getFlipped()), 0));
+				robot.move(sf::Vector2f(-10 + (20 * robot.getFlipped()), 0));
 			}
 		}
 	}
@@ -110,6 +116,7 @@ void Level::HealthBarUpdate(Player play1, Player play2) {
 		window->close();
 		std::cout << "Player 1 is the winner!" << std::endl;
 	}
+
 
 }
 
