@@ -7,7 +7,7 @@ AudioManager::AudioManager()
 { 
 
 	music.setLoop(true);
-	music.setVolume(0);
+	music.setVolume(15);
 	addSound("Assets/Audio/metalPipe.wav","metalPipe");
 	addMusic("Assets/Audio/GuileTheme.wav", "GuileTheme");
 }
