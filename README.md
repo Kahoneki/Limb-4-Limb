@@ -24,13 +24,13 @@ Limb For Limb
 ## Brief Overview of game 
 
 The main feature of my extension for ‘Limb For Limb’ will be the addition of online multiplayer. This will involve either a client-server or peer-to-peer infrastructure and I will conduct proper thorough research to discover the pros and cons of both methods. 
-<br>
+<br><br>
 I hope to develop the combat into a direction which is more fun and friendly to all skill levels in line with something like Super Smash Bros. as opposed to the professional competitive fighting games like Street Fighter that the game is based off. This starts with fleshing out the combat to something I’m happy with and then adding things like bonus items / power ups, special abilities, etc.
-<br>
+<br><br>
 My extension will allow for online matchmaking based on a player’s skill level (which will be adjusted based on online wins/losses), players’ skill levels will be stored in a database along with any other information that would be helpful to keep track of long-term. I could also look into having this data (specifically player's account information) encrypted.
-<br>
+<br><br>
 In addition, I would like to add a single player campaign mode to the game, possibly with unlockable items/characters scattered throughout. This will give me the opportunity to learn about how local save data is managed in games. A singleplayer mode will require the implementation of artificial intelligence controlling the enemies which is another field I’d be interested in learning about.
-<br>
+<br><br>
 I’m looking to almost entirely rewrite the structure of the program to accommodate for these new additions, ensuring strong foundations that follow modular principles and functional abstraction.
 
 ## Must Have Features
