@@ -11,7 +11,7 @@
 **Abertay id:** 2300318
 
 ## Game Extended
-Limb For Limb : This Time It's Global!
+Limb For Limb
 
 author(s)
 
@@ -19,7 +19,7 @@ Weedle
 
 ## Title of Extension
 
-Limb For Limb
+Limb For Limb : This Time It's Global!
 
 ## Brief Overview of game 
 
