@@ -15,15 +15,14 @@ C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\
           [
               T=float
           ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(174,19): warning C4804: '>=': unsafe use of type 'bool' in operation
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(175,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(183,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(191,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(245,66): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(249,42): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(257,66): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(261,115): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(261,163): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(263,110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(263,153): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(175,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(184,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(192,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(246,66): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(250,42): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(258,66): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(262,115): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(262,163): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(264,110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\CMP105App\Player.cpp(264,153): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   CMP105App.vcxproj -> C:\Users\shiny\Desktop\Code\Github Repository Clones\cmp105-groupproject-weedle\x64\Debug\CMP105App.exe
