@@ -35,6 +35,23 @@ private:
 	GameObject HealthBarBack2;
 	AudioManager audioManager;
 
+	sf::Font font;
+	//Main menu
+	bool mainMenuActive;
+	bool mousePressedLastFrame;
+	sf::RectangleShape titleBox;
+	sf::RectangleShape startBox;
+	sf::Text titleText;
+	sf::Text startText;
+
+	//End screen
+	bool deathScreenActive;
+	sf::RectangleShape winBox;
+	sf::RectangleShape restartBox;
+	sf::Text winText;
+	sf::Text restartText;
+	bool player1Win;
+
 	// Variable to make sure the hitbox only hits the opponent once
 	bool struck;
 
@@ -43,5 +60,15 @@ private:
 	void InitialiseHealthBars();
 	void InitialisePlayer1();
 	void InitialisePlayer2();
+
+	void InitialiseDeathScreen();
+
+	void DeathScreenInput();
+
+	void InitialiseMainMenu();
+	void MainMenuInput();
+
+	void InitialiseFightScene();
+
 
 };
