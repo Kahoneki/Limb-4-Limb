@@ -27,6 +27,7 @@ public:
 	bool getActionable();
 	int getStunFramesLeft();
 	bool getFlipped();
+	bool getBlocking();
 	Attack getAttack(int index);
 
 	//Setters
@@ -56,6 +57,7 @@ private:
 	bool isAttacking;
 	Attack attacks[4];
 	float stunFramesLeft;
+	bool blocking;
 
 	//Base
 	int characterIndex;
