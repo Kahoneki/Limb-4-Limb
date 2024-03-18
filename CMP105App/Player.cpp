@@ -212,7 +212,7 @@ void Player::update(float dt) {
 	//Check if limbs are to be destroyed
 	for (int i{}; i < 4; ++i) {
 		activeLimbs[i] = health >= 20 * (i + 1);
-		updateTextures = true;
+		UpdateTextures();
 	}
 
 
