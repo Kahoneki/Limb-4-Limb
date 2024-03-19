@@ -16,6 +16,12 @@
     <Filter Include="Framework">
       <UniqueIdentifier>{f2badd73-2c61-4d1a-996c-51af9b66bfe4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scenes">
+      <UniqueIdentifier>{c484d616-0219-486b-a8fd-b32f466603d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{0b681836-b7fe-4888-844d-3fa0e8b921f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -23,9 +29,6 @@
     </ClCompile>
     <ClCompile Include="Framework\Input.cpp">
       <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Level.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Framework\GameObject.cpp">
       <Filter>Framework</Filter>
@@ -60,6 +63,21 @@
     <ClCompile Include="Framework\VectorHelper.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
+    <ClCompile Include="SceneManager.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="EndScreen.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="README.txt">
@@ -72,9 +90,6 @@
   <ItemGroup>
     <ClInclude Include="Framework\Input.h">
       <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Framework\GameObject.h">
       <Filter>Framework</Filter>
@@ -108,6 +123,15 @@
     </ClInclude>
     <ClInclude Include="Framework\VectorHelper.h">
       <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="EndScreen.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
