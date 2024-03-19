@@ -31,14 +31,15 @@ void TestScene::update(float dt) {
 	
 	players[0]->update(dt);
 	players[1]->update(dt);
+
 	//Loop through both players
 	for (int playerIndex{}; playerIndex < 2; ++playerIndex) {
 		Player* p1 = players[playerIndex]; //Defending player
 		Player* p2 = players[1-playerIndex]; //Attacking player
 
-		//Defending player has stun frames left, break out of loop
+		//Defending player has stun frames left, continue to the next iteration
 		if (p1->getStunFramesLeft())
-			break;
+			continue;
 
 		//Loop through all limbs to see if hitboxes are colliding
 		for (int limbIndex{}; limbIndex < 4; ++limbIndex) {
@@ -46,13 +47,14 @@ void TestScene::update(float dt) {
 			//Hitbox isn't colliding, continue to next limb
 			if (!p1->getGlobalBounds().intersects(p2->getAttack(limbIndex).getHitbox().getGlobalBounds()))
 				continue;
-
+			
 			int damageAmount = p2->getAttack(limbIndex).getDamage();
-			damageAmount *= (p1->getBlocking() ? 0.1 : 1); //If defending is blocking, only apply 10% of the damage
+			damageAmount *= (p1->getBlocking() ? 0.1 : 1); //If defending player is blocking, only apply 10% of the damage
 			damageAmount *= (p2->getLimbActivity(limbIndex) ? 1.2 : 1); //If attacking player's limb is broken, add an extra 20% damage to the attack
-
+			std::cout << p1->getBlocking() << '\n';
+			
 			p1->setHealth(p1->getHealth() - damageAmount);
-			p1->setStunFramesLeft(p1->getBlocking() ? 0 : p1->getAttack(limbIndex).getHitstun()); //If defending player isn't blocking, give them hitstun
+			p1->setStunFramesLeft(p1->getBlocking() ? 0 : p2->getAttack(limbIndex).getHitstun()); //If defending player isn't blocking, give them hitstun
 			
 			//Move both players away from each other a bit to stop attacking player from being able to spam attacks due to player 1's hitstun
 			p1->move(sf::Vector2f(-10 + (20 * p1->getFlipped()), 0));
@@ -127,7 +129,7 @@ void TestScene::InitialiseScene() {
 
 void TestScene::InitialisePlayers() {
 	players[0] = new Player(2200.0f, 175.0f, 900.0f, 100, 100, 0, false);
-	players[1] = new Player(2200.0f, 175.0f, 900.0f, 100, 100, 0, false);
+	players[1] = new Player(2200.0f, 175.0f, 900.0f, 100, 100, 0, true);
 
 	for (Player* player : players) {
 		player->setSize(sf::Vector2f(150, 275));
