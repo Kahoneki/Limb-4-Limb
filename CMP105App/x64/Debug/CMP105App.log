@@ -43,7 +43,6 @@ C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App
   TileMap.cpp
   VectorHelper.cpp
   Main.cpp
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Main.cpp(14,23): warning C4101: 'mode': unreferenced local variable
   MainMenu.cpp
   Player.cpp
 C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(110,28): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
