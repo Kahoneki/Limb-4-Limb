@@ -6,6 +6,7 @@
 #include "Framework/Input.h"
 #include "Framework/GameObject.h"
 #include "Framework/AudioManager.h"
+#include "SceneManager.h"
 #include <string.h>
 #include <iostream>
 
@@ -21,6 +22,8 @@ public:
 	void handleInput(float dt) override;
 	void update(float dt) override;
 	void render() override;
+
+	void InitialiseMainMenu();
 
 private:
 	SceneManager& sceneManager;

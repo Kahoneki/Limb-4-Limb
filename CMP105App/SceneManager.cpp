@@ -10,6 +10,7 @@ SceneManager::SceneManager(sf::RenderWindow* hwnd, Input* in) {
 }
 
 SceneManager::~SceneManager() {
+	delete currentScene;
 }
 
 void SceneManager::LoadScene(BaseLevel* level) {

@@ -1,10 +1,49 @@
 #include "MainMenu.h"
+#include "TestScene.h"
 
 MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
 {
 	window = hwnd;
 	input = in;
 
+	InitialiseMainMenu();
+
+	std::cout << "Loaded main menu scene\n";
+}
+
+
+
+MainMenu::~MainMenu()
+{
+	std::cout << "Unloaded main menu scene\n";
+}
+
+void MainMenu::handleInput(float dt)
+{
+	bool mouseOverBox = startBox.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
+	bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left) && !mousePressedLastFrame;
+	if (mouseOverBox && mouseDown) {
+		TestScene* testScene = new TestScene(window, input, sceneManager);
+		sceneManager.LoadScene(testScene);
+	}
+	mousePressedLastFrame = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+}
+
+void MainMenu::update(float dt) {}
+
+void MainMenu::render()
+{
+	beginDraw();
+	window->draw(titleBox);
+	window->draw(startBox);
+	window->draw(titleText);
+	window->draw(startText);
+	endDraw();
+}
+
+
+
+void MainMenu::InitialiseMainMenu() {
 	background.setSize(sf::Vector2f(1200, 675));
 	background.setPosition(0, 0);
 	background.setFillColor(sf::Color::Black);
@@ -36,30 +75,4 @@ MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneM
 	startText.setCharacterSize(30);
 	startText.setFillColor(sf::Color::Red);
 	startText.setPosition(230, 300);
-
-	std::cout << "Constructed\n";
-}
-
-
-
-MainMenu::~MainMenu()
-{
-}
-
-void MainMenu::handleInput(float dt)
-{
-}
-
-void MainMenu::update(float dt)
-{
-}
-
-void MainMenu::render()
-{
-	beginDraw();
-	window->draw(titleBox);
-	window->draw(startBox);
-	window->draw(titleText);
-	window->draw(startText);
-	endDraw();
 }
