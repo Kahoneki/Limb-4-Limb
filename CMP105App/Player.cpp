@@ -24,9 +24,9 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 
 	for (bool& b : activeLimbs) { b = true; }
 
-	attacks[2] = Attack(4, 7, 18, 6, 60, 25, 50, -59, 5);
 	attacks[0] = Attack(2, 5, 12, 8, 60, 30, 30, 96, 8);
 	attacks[1] = Attack(5, 15, 40, 60, 60, 30, 30, 96, 18);
+	attacks[2] = Attack(4, 7, 18, 6, 60, 25, 50, -59, 5);
 	attacks[3] = Attack(2, 15, 30, 70, 60, 70, 50, -104, 20);
 
 	stunFramesLeft = 0;
@@ -36,7 +36,7 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 	playerRenderTexture = new sf::RenderTexture();
 	if (!playerRenderTexture->create(125, 225)) { std::cerr << std::format("Error creating render texture for player {}", characterIndex); }
 
-	//Load base player textue and sprite
+	//Load base player texture and sprite
 	basePlayerTexture = new sf::Texture();
 	if (!basePlayerTexture->loadFromFile(std::format("Assets/Sprites/Characters/{}/body.png", characterIndex))) {
 		std::cerr << std::format("Failed to load player {} base texture ", characterIndex);
@@ -130,7 +130,6 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 					setPosition(sf::Vector2f(getPosition().x, getPosition().y + 225 / 4));
 					crouched = true;
 				}
-
 			}
 
 			if (crouched) {
@@ -144,11 +143,6 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 
 			//-----GROUND COMBAT-----//
 			if (!crouched) {
-				if (input->isKeyDown(jab)) {
-					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
-					attacks[2].setAttacking(true);
-					velocity.x = 0;
-				}
 				if (input->isKeyDown(kick)) {
 					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
 					attacks[0].setAttacking(true);
@@ -157,6 +151,11 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 				if (input->isKeyDown(sweep)) {
 					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
 					attacks[1].setAttacking(true);
+					velocity.x = 0;
+				}
+				if (input->isKeyDown(jab)) {
+					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
+					attacks[2].setAttacking(true);
 					velocity.x = 0;
 				}
 				if (input->isKeyDown(upper)) {
