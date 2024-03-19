@@ -30,11 +30,11 @@ private:
 	Player* players[2];
 	sf::Texture robotTexture;
 	sf::Texture bgTexture;
-	GameObject background;
-	GameObject HealthBarFront1;
-	GameObject HealthBarFront2;
-	GameObject HealthBarBack1;
-	GameObject HealthBarBack2;
+	sf::RectangleShape background;
+	sf::RectangleShape HealthBarFront1;
+	sf::RectangleShape HealthBarFront2;
+	sf::RectangleShape HealthBarBack1;
+	sf::RectangleShape HealthBarBack2;
 	AudioManager audioManager;
 
 	void FlipCheck();

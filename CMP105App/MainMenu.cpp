@@ -3,19 +3,50 @@
 
 MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
 {
+	std::cout << "Loading main menu\n";
+
 	window = hwnd;
 	input = in;
+	
+	background.setSize(sf::Vector2f(1200, 675));
+	background.setPosition(0, 0);
+	background.setFillColor(sf::Color::Black);
+	
+	
+	titleBox.setSize(sf::Vector2f(520, 60));
+	titleBox.setPosition(350, 50);
+	titleBox.setFillColor(sf::Color::White);
+	
+	
+	startBox.setSize(sf::Vector2f(350, 40));
+	startBox.setPosition(230, 300);
+	startBox.setFillColor(sf::Color::White);
+	
+	
+	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
+	
+	titleText.setFont(font);
+	titleText.setString("LOSING LIMBS GAME");
+	titleText.setCharacterSize(50);
+	titleText.setFillColor(sf::Color::Red);
+	titleText.setPosition(350, 50);
+	
+	
+	startText.setFont(font);
+	startText.setString("START");
+	startText.setCharacterSize(30);
+	startText.setFillColor(sf::Color::Red);
+	startText.setPosition(230, 300);
 
-	InitialiseMainMenu();
-
-	std::cout << "Loaded main menu scene\n";
+	std::cout << "Loaded main menu\n";
 }
 
 
 
 MainMenu::~MainMenu()
 {
-	std::cout << "Unloaded main menu scene\n";
+	std::cout << "Unloading main menu\n";
+	std::cout << "Unloaded main menu\n";
 }
 
 void MainMenu::handleInput(float dt)
@@ -39,40 +70,4 @@ void MainMenu::render()
 	window->draw(titleText);
 	window->draw(startText);
 	endDraw();
-}
-
-
-
-void MainMenu::InitialiseMainMenu() {
-	background.setSize(sf::Vector2f(1200, 675));
-	background.setPosition(0, 0);
-	background.setFillColor(sf::Color::Black);
-
-
-	titleBox.setSize(sf::Vector2f(520, 60));
-	titleBox.setPosition(350, 50);
-	titleBox.setFillColor(sf::Color::White);
-
-
-	startBox.setSize(sf::Vector2f(350, 40));
-	startBox.setPosition(230, 300);
-	startBox.setFillColor(sf::Color::White);
-
-
-	if (!font.loadFromFile("font/arial.ttf")) {
-		std::cout << "Error loading font\n";
-	}
-
-	titleText.setFont(font);
-	titleText.setString("LOSING LIMBS GAME");
-	titleText.setCharacterSize(50);
-	titleText.setFillColor(sf::Color::Red);
-	titleText.setPosition(350, 50);
-
-
-	startText.setFont(font);
-	startText.setString("START");
-	startText.setCharacterSize(30);
-	startText.setFillColor(sf::Color::Red);
-	startText.setPosition(230, 300);
 }

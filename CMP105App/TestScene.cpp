@@ -1,7 +1,10 @@
 #include "TestScene.h"
+#include "EndScreen.h"
 
 TestScene::TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
 {
+	std::cout << "Loading test scene\n";
+
 	window = hwnd;
 	input = in;
 
@@ -16,8 +19,11 @@ TestScene::TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : scen
 
 TestScene::~TestScene()
 {
+	std::cout << "Unloading test scene\n";
 	delete players[0];
 	delete players[1];
+	std::cout << "Unloaded test scene\n";
+
 }
 
 void TestScene::handleInput(float dt) {
@@ -31,6 +37,7 @@ void TestScene::update(float dt) {
 	
 	players[0]->update(dt);
 	players[1]->update(dt);
+	FlipCheck();
 
 	//Loop through both players
 	for (int playerIndex{}; playerIndex < 2; ++playerIndex) {
@@ -51,7 +58,6 @@ void TestScene::update(float dt) {
 			int damageAmount = p2->getAttack(limbIndex).getDamage();
 			damageAmount *= (p1->getBlocking() ? 0.1 : 1); //If defending player is blocking, only apply 10% of the damage
 			damageAmount *= (p2->getLimbActivity(limbIndex) ? 1.2 : 1); //If attacking player's limb is broken, add an extra 20% damage to the attack
-			std::cout << p1->getBlocking() << '\n';
 			
 			p1->setHealth(p1->getHealth() - damageAmount);
 			p1->setStunFramesLeft(p1->getBlocking() ? 0 : p2->getAttack(limbIndex).getHitstun()); //If defending player isn't blocking, give them hitstun
@@ -62,7 +68,6 @@ void TestScene::update(float dt) {
 		}
 	}
 	HealthBarUpdate();
-	FlipCheck();
 }
 
 
@@ -99,13 +104,15 @@ void TestScene::HealthBarUpdate() {
 	HealthBarFront2.setPosition((window->getSize().x - Calc2 - 25), 25);
 
 	if (players[0]->getHealth() <= 0 || players[1]->getHealth() <= 0) {
-		; //----------------------------------------------------------------------ADD LOAD TO END SCREEN-------------------------------------------------------------------------------------------------//
+		EndScreen* endScreen = new EndScreen(window, input, sceneManager, players[0]->getHealth() > 0);
+		sceneManager.LoadScene(endScreen);
 	}
 }
 
 
 void TestScene::FlipCheck() {
-	bool playersFacingOppositeDirections { (players[0]->getScale().x == 1 && players[0]->getPosition().x > players[1]->getPosition().x) || (players[0]->getScale().x == -1 && players[0]->getPosition().x < players[1]->getPosition().x) };
+	bool playersFacingOppositeDirections { (players[0]->getScale().x == 1 && players[0]->getPosition().x > players[1]->getPosition().x) ||
+		                                   (players[0]->getScale().x == -1 && players[0]->getPosition().x < players[1]->getPosition().x) };
 	if (playersFacingOppositeDirections) {
 		players[0]->setFlipped(!players[0]->getFlipped());
 		players[0]->setScale(-players[0]->getScale().x, 1);

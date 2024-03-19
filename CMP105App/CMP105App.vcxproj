@@ -158,6 +158,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EndScreen.cpp" />
     <ClCompile Include="Framework\Animation.cpp" />
     <ClCompile Include="Framework\AudioManager.cpp" />
     <ClCompile Include="Framework\BaseLevel.cpp" />
@@ -182,6 +183,7 @@
     <Text Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EndScreen.h" />
     <ClInclude Include="Framework\Animation.h" />
     <ClInclude Include="Framework\AudioManager.h" />
     <ClInclude Include="Framework\BaseLevel.h" />
