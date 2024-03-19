@@ -10,34 +10,34 @@
   Input.cpp
   GameObject.cpp
   Attack.cpp
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(36,72): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(36,54): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(36,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(36,14): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(39,64): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(39,38): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(39,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(39,14): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(79,37): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(79,37): warning C4244:         with
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(79,37): warning C4244:         [
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(79,37): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(79,37): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(79,30): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(79,30): warning C4244:         with
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(79,30): warning C4244:         [
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(79,30): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(79,30): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(80,40): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(80,40): warning C4244:         with
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(80,40): warning C4244:         [
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(80,40): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(80,40): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(80,34): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(80,34): warning C4244:         with
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(80,34): warning C4244:         [
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(80,34): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(80,34): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.cpp(36,72): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.cpp(36,54): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.cpp(36,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.cpp(36,14): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.cpp(39,64): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.cpp(39,38): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.cpp(39,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.cpp(39,14): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.cpp(79,37): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.cpp(79,30): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.cpp(80,40): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.cpp(80,34): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
   MusicObject.cpp
   SoundObject.cpp
   TileMap.cpp
@@ -45,74 +45,74 @@ C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp(80,34): warni
   Main.cpp
   MainMenu.cpp
   Player.cpp
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(110,28): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(110,28): warning C4244:         with
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(110,28): warning C4244:         [
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(110,28): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(110,28): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(114,29): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(114,29): warning C4244:         with
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(114,29): warning C4244:         [
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(114,29): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(114,29): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(128,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(128,52): warning C4244:         with
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(128,52): warning C4244:         [
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(128,52): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(128,52): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(137,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(137,52): warning C4244:         with
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(137,52): warning C4244:         [
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(137,52): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(137,52): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(187,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(195,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(203,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(267,66): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(271,42): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(281,66): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(285,115): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(285,163): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(287,110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp(287,153): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(110,28): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(114,29): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(128,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(137,52): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(187,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(195,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(203,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(267,66): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(271,42): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(281,66): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(285,115): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(285,163): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(287,110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(287,153): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   SceneManager.cpp
   TestScene.cpp
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(59,36): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(60,40): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(66,30): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(66,30): warning C4244:         with
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(66,30): warning C4244:         [
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(66,30): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(66,30): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(67,30): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(67,30): warning C4244:         with
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(67,30): warning C4244:         [
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(67,30): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(67,30): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244:         with
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244:         [
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(103,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(103,39): warning C4244:         with
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(103,39): warning C4244:         [
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(103,39): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(103,39): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(104,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(104,59): warning C4244:         with
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(104,59): warning C4244:         [
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(104,59): warning C4244:             T=unsigned int
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(104,59): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(165,51): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(165,51): warning C4244:         with
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(165,51): warning C4244:         [
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(165,51): warning C4244:             T=unsigned int
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(165,51): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(169,50): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(169,50): warning C4244:         with
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(169,50): warning C4244:         [
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(169,50): warning C4244:             T=unsigned int
-C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TestScene.cpp(169,50): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(59,36): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(60,40): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,30): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(67,30): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(103,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(104,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(165,51): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(169,50): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
   Generating Code...
-  CMP105App.vcxproj -> C:\Users\shiny\Desktop\Code\CMP105-Individual\x64\Debug\CMP105App.exe
+  CMP105App.vcxproj -> C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\x64\Debug\CMP105App.exe
