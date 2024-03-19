@@ -77,6 +77,16 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 }
 
 Player::~Player() {
+	delete playerRenderTexture;
+
+	delete basePlayerTexture;
+	delete basePlayerSprite;
+
+	for (sf::Texture* t : aliveLimbTextures) { delete t; }
+	for (sf::Sprite* s : aliveLimbSprites) { delete s; }
+
+	for (sf::Texture* t : deadLimbTextures) { delete t; }
+	for (sf::Sprite* s : deadLimbSprites) { delete s; }
 
 }
 

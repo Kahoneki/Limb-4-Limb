@@ -12,7 +12,7 @@ class GameObject : public sf::RectangleShape
 {
 public:
 	GameObject();
-	~GameObject();
+	virtual ~GameObject();
 
 	// Virtual update function. Base function does nothing (for static objects). Inheritted version will most likely override this function.
 	virtual void handleInput(float dt);
