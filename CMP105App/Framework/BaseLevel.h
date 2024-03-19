@@ -15,7 +15,7 @@ public:
 	BaseLevel(sf::RenderWindow* hwnd, Input* in);
 	BaseLevel(sf::RenderWindow* hwnd, Input* in, GameState* gs);
 	BaseLevel(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud);*/
-	~BaseLevel();
+	virtual ~BaseLevel();
 
 	virtual void handleInput(float dt) = 0;
 	virtual void update(float dt) = 0;
