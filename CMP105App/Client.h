@@ -1,9 +1,10 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
+#include "NetworkNode.h"
 #include "SFML/Network.hpp"
 
-class Client
+class Client : NetworkNode
 {
 public:
 	Client(sf::IpAddress _serverAddress, unsigned short _serverPort);
@@ -11,12 +12,6 @@ public:
 	sf::Packet CheckForIncomingData();
 
 private:
-
-	sf::UdpSocket socket;
-
-	sf::IpAddress serverAddress;
-	unsigned short serverPort;
-
 	bool connectedToServer;
 };
 

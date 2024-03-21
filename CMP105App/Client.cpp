@@ -5,6 +5,8 @@ Client::Client(sf::IpAddress _serverAddress, unsigned short _serverPort) {
 	serverAddress = _serverAddress;
 	serverPort = _serverPort;
 
+	socket.setBlocking(false);
+
 	//Send test packet to server to be added to server's list of connected clients
 	sf::Packet packet;
 	packet << "Test";

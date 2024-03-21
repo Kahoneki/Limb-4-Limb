@@ -1,6 +1,7 @@
 #ifndef SERVER_H
 #define SERVER_H
 
+#include "NetworkNode.h"
 #include "SFML/Network.hpp"
 #include <vector>
 
@@ -18,7 +19,7 @@ bool operator!=(ClientInfo a, ClientInfo b) {
 
 
 //Server class for managing clients
-class Server
+class Server : NetworkNode
 {
 
 public:
@@ -27,13 +28,7 @@ public:
 
 
 private:
-	sf::UdpSocket socket;
-	
-	sf::IpAddress ip;
-	unsigned short port;
-
 	std::vector<ClientInfo> connectedClients;
-
 };
 
 

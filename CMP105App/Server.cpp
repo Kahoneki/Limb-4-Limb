@@ -1,12 +1,15 @@
 #include "Server.h"
-#include <algorithm> //for std::find
+#include <algorithm> //For std::find
 #include <iostream>
 
 
 Server::Server(unsigned short _port) {
-	port = _port;
-	if (socket.bind(port) != sf::Socket::Done) { std::cerr << "Server failed to bind to port " << port; }
-	else { std::cout << "Server successfully bound to port " << port; }
+	serverPort = _port;
+
+	socket.setBlocking(false);
+
+	if (socket.bind(serverPort) != sf::Socket::Done) { std::cerr << "Server failed to bind to port " << serverPort; }
+	else { std::cout << "Server successfully bound to port " << serverPort; }
 }
 
 void Server::CheckForIncomingData() {
