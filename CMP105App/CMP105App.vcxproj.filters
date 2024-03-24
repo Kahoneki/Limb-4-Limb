@@ -87,8 +87,8 @@
     <ClCompile Include="Client.cpp">
       <Filter>Source Files\Networking</Filter>
     </ClCompile>
-    <ClCompile Include="Server.cpp">
-      <Filter>Source Files\Networking</Filter>
+    <ClCompile Include="NetworkNode.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,10 +145,10 @@
     <ClInclude Include="EndScreen.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Server.h">
+    <ClInclude Include="Client.h">
       <Filter>Header Files\Networking</Filter>
     </ClInclude>
-    <ClInclude Include="Client.h">
+    <ClInclude Include="NetworkNode.h">
       <Filter>Header Files\Networking</Filter>
     </ClInclude>
   </ItemGroup>

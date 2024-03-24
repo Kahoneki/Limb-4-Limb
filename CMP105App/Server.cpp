@@ -3,24 +3,24 @@
 #include <iostream>
 
 
-Server::Server(unsigned short _port) {
+Server::Server(sf::IpAddress _ip, unsigned short _port) {
+	serverAddress = _ip;
 	serverPort = _port;
 
 	socket.setBlocking(false);
 
-	if (socket.bind(serverPort) != sf::Socket::Done) { std::cerr << "Server failed to bind to port " << serverPort; }
-	else { std::cout << "Server successfully bound to port " << serverPort; }
+	if (socket.bind(serverPort) != sf::Socket::Done) { std::cerr << "Server failed to bind to port " << serverPort << std::endl; }
+	else { std::cout << "Server successfully bound to port " << serverPort << '\n'; }
 }
 
-void Server::CheckForIncomingData() {
+
+void Server::CheckForIncomingDataFromClient() {
 	
 	sf::Packet incomingData;
 	sf::IpAddress incomingClientAddress;
 	unsigned short incomingClientPort;
 
-	if (socket.receive(incomingData, incomingClientAddress, incomingClientPort) != sf::Socket::Done) {
-		return;
-	}
+	if (socket.receive(incomingData, incomingClientAddress, incomingClientPort) != sf::Socket::Done) { return; }
 
 	//Check if client isn't already in vector
 	ClientInfo incomingClient = ClientInfo(incomingClientAddress, incomingClientPort);
@@ -28,6 +28,17 @@ void Server::CheckForIncomingData() {
 		//Client isn't in vector - they're sending a test message and their information has to be added
 		connectedClients.push_back(incomingClient);
 		std::cout << "Client (ip: " << incomingClient.ip << ', ' << incomingClient.port << ") connected to server.\n";
+
+		//Send client index back to client
+		sf::Packet data;
+		data << connectedClients.size()-1;
+		if (socket.send(data, incomingClient.ip, incomingClient.port) != sf::Socket::Done) {
+			std::cerr << "Failed to send client index to client." << std::endl;
+		}
+		else {
+			std::cerr << "Successfully sent client index to client.\n";
+		}
+
 		return;
 	}
 
@@ -41,7 +52,7 @@ void Server::CheckForIncomingData() {
 	//Validate data (make sure client is trying to send data to an ip+port that is in the array and make sure client isn't trying to send themselves data. possibly other checks also.)
 	if ((clientIndex >= connectedClients.size()) || (connectedClients[clientIndex] != incomingClient)) {
 		std::cerr << "Client (ip: " << incomingClient.ip << ', ' << incomingClient.port << ") tried to send a message to an invalid client (ip: "
-                                    << connectedClients[clientIndex].ip << ", " << connectedClients[clientIndex].port << ")!\n";
+                                    << connectedClients[clientIndex].ip << ", " << connectedClients[clientIndex].port << ")!" << std::endl;
 		return;
 	}
 

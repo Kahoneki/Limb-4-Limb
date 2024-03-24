@@ -19,12 +19,12 @@ bool operator!=(ClientInfo a, ClientInfo b) {
 
 
 //Server class for managing clients
-class Server : NetworkNode
+class Server : public NetworkNode
 {
 
 public:
-	Server(unsigned short _port);
-	void CheckForIncomingData();
+	Server(sf::IpAddress _ip, unsigned short _port);
+	void CheckForIncomingDataFromClient() override;
 
 
 private:

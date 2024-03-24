@@ -174,11 +174,10 @@
     <ClCompile Include="Framework\VectorHelper.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="PacketData.cpp" />
+    <ClCompile Include="NetworkNode.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneManager.h" />
-    <ClCompile Include="Server.cpp" />
     <ClCompile Include="TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -200,8 +199,8 @@
     <ClInclude Include="Framework\TileMap.h" />
     <ClInclude Include="Framework\VectorHelper.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="NetworkNode.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Server.h" />
     <ClInclude Include="TestScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
