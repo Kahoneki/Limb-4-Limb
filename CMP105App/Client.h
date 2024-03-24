@@ -16,7 +16,7 @@ public:
 
 private:
 	bool connectedToServer;
-	int clientIndex;
+	sf::Int16 clientIndex;
 };
 
 #endif

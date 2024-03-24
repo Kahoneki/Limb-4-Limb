@@ -28,6 +28,7 @@ Client::Client(sf::IpAddress _serverAddress, unsigned short _serverPort) {
 		else {
 			std::cout << "Successfully received client index from server.\n";
 			data >> clientIndex;
+			std::cout << "client index: " << clientIndex << '\n';
 		}
 	}
 
