@@ -36,17 +36,18 @@ Client::Client(sf::IpAddress _serverAddress, unsigned short _serverPort) {
 }
 
 
-sf::Socket::Status Client::SendDataToClient(int outgoingClientIndex, sf::Packet packet) {
+sf::Socket::Status Client::SendDataToClient(int outgoingClientIndex, sf::Packet incomingPacket) {
 	//Combine client index into the data packet so it can be sent to the server
-	packet << outgoingClientIndex;
-	return socket.send(packet, serverAddress, serverPort);
+	sf::Packet outgoingPacket;
+	outgoingPacket << outgoingClientIndex << incomingPacket;
+	return socket.send(outgoingPacket, serverAddress, serverPort);
 }
 
 
-sf::Socket::Status Client::SendDataToClient(sf::Packet packet) {
+sf::Socket::Status Client::SendDataToClient(sf::Packet incomingPacket) {
 	//This function can be called if there are only two clients connected to the server (in which case it will just send data to the other client).
 	int outgoingClientIndex = 1 - clientIndex; //0->1, 1->0
-	return SendDataToClient(outgoingClientIndex, packet);
+	return SendDataToClient(outgoingClientIndex, incomingPacket);
 }
 
 
