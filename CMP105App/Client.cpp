@@ -28,7 +28,6 @@ Client::Client(sf::IpAddress _serverAddress, unsigned short _serverPort) {
 		else {
 			std::cout << "Successfully received client index from server.\n";
 			data >> clientIndex;
-			std::cout << "client index: " << clientIndex << '\n';
 		}
 	}
 
@@ -39,7 +38,8 @@ Client::Client(sf::IpAddress _serverAddress, unsigned short _serverPort) {
 sf::Socket::Status Client::SendDataToClient(int outgoingClientIndex, sf::Packet incomingPacket) {
 	//Combine client index into the data packet so it can be sent to the server
 	sf::Packet outgoingPacket;
-	outgoingPacket << outgoingClientIndex << incomingPacket;
+	outgoingPacket << outgoingClientIndex;
+	outgoingPacket.append(incomingPacket.getData(), incomingPacket.getDataSize());
 	return socket.send(outgoingPacket, serverAddress, serverPort);
 }
 
@@ -53,14 +53,13 @@ sf::Socket::Status Client::SendDataToClient(sf::Packet incomingPacket) {
 
 //To be called every frame
 sf::Packet Client::CheckForIncomingDataFromServer() {
-
 	sf::Packet incomingData;
 
 	//Used to check that client is in fact receiving data from the server and not, another client, for example
 	sf::IpAddress incomingIp;
 	unsigned short incomingPort;
 
-	//Extract data and check if 
+	//Extract data and check if it's empty
 	if (socket.receive(incomingData, incomingIp, incomingPort) != sf::Socket::Done) { return sf::Packet(); }
 
 	//Ensuring data is coming from server and not another client
@@ -69,6 +68,7 @@ sf::Packet Client::CheckForIncomingDataFromServer() {
 		std::cerr << "Client should send data through the server instead." << std::endl;
 		return sf::Packet();
 	}
+
 
 	return incomingData;
 
