@@ -179,6 +179,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneManager.h" />
     <ClCompile Include="TestScene.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="DO_NOT_EDIT.txt" />
@@ -202,6 +203,7 @@
     <ClInclude Include="NetworkNode.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="TestScene.h" />
+    <ClInclude Include="TimeManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

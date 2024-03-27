@@ -1,5 +1,10 @@
 #include "NetworkNode.h"
 
+
+NetworkNode::~NetworkNode()
+{
+}
+
 void NetworkNode::CheckForIncomingDataFromClient()
 {
 }

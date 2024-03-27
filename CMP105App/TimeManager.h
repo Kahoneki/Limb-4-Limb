@@ -21,11 +21,11 @@ private:
 	
 	sf::Clock clock;
 
-	static int ticksPerSecond;
-	static float tickSpeed;
-	static float timeThroughTick; //Used for keeping track of how far through the current tick the game is
+	int ticksPerSecond;
+	float tickSpeed;
+	float timeThroughTick; //Used for keeping track of how far through the current tick the game is
 
-	static float deltaTime;
+	float deltaTime;
 };
 
 #endif

@@ -9,7 +9,7 @@ Client::Client(sf::IpAddress _serverAddress, unsigned short _serverPort) {
 
 	//Send test packet to server to be added to server's list of connected clients
 	sf::Packet packet;
-	packet << "Test";
+	packet << PacketCode::AddClient;
 	if (socket.send(packet, serverAddress, serverPort) != sf::Socket::Done) {
 		std::cerr << "Failed to connect to server." << std::endl;
 		connectedToServer = false;
@@ -35,19 +35,34 @@ Client::Client(sf::IpAddress _serverAddress, unsigned short _serverPort) {
 }
 
 
-sf::Socket::Status Client::SendDataToClient(int outgoingClientIndex, sf::Packet incomingPacket) {
-	//Combine client index into the data packet so it can be sent to the server
+Client::~Client() {
+	std::cout << "brr";
+	//Send message to server to tell it to remove client from vector
+	socket.setBlocking(true);
 	sf::Packet outgoingPacket;
-	outgoingPacket << outgoingClientIndex;
+	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(PacketCode::RemoveClient);
+	if (socket.send(outgoingPacket, serverAddress, serverPort) != sf::Socket::Done) {
+		std::cerr << "Failed to disconnect from server." << std::endl;
+	}
+	else {
+		std::cout << "Successfully disconnected from server.\n";
+	}
+}
+
+
+sf::Socket::Status Client::SendDataToClient(int outgoingClientIndex, PacketCode code, sf::Packet incomingPacket) {
+	//Combine client index and packet code into the data packet so it can be sent to the server
+	sf::Packet outgoingPacket;
+	outgoingPacket << outgoingClientIndex << static_cast<std::underlying_type<PacketCode>::type>(code);
 	outgoingPacket.append(incomingPacket.getData(), incomingPacket.getDataSize());
 	return socket.send(outgoingPacket, serverAddress, serverPort);
 }
 
 
-sf::Socket::Status Client::SendDataToClient(sf::Packet incomingPacket) {
+sf::Socket::Status Client::SendDataToClient(PacketCode code, sf::Packet incomingPacket) {
 	//This function can be called if there are only two clients connected to the server (in which case it will just send data to the other client).
 	int outgoingClientIndex = 1 - clientIndex; //0->1, 1->0
-	return SendDataToClient(outgoingClientIndex, incomingPacket);
+	return SendDataToClient(outgoingClientIndex, code, incomingPacket);
 }
 
 
