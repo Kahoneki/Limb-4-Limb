@@ -135,8 +135,8 @@ void TestScene::InitialiseScene() {
 
 
 void TestScene::InitialisePlayers() {
-	players[0] = new Player(2200.0f, 175.0f, 900.0f, 100, 100, 0, false);
-	players[1] = new Player(2200.0f, 175.0f, 900.0f, 100, 100, 0, true);
+	players[0] = new OnlinePlayer(2200.0f, 175.0f, 900.0f, 100, 100, 0, false);
+	players[1] = new OnlinePlayer(2200.0f, 175.0f, 900.0f, 100, 100, 0, true);
 
 	for (Player* player : players) {
 		player->setSize(sf::Vector2f(150, 275));

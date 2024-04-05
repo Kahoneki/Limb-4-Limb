@@ -93,6 +93,12 @@
     <ClCompile Include="NetworkNode.cpp">
       <Filter>Source Files\Networking</Filter>
     </ClCompile>
+    <ClCompile Include="OnlinePlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkListener.cpp">
+      <Filter>Source Files\Networking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="README.txt">
@@ -156,6 +162,12 @@
     </ClInclude>
     <ClInclude Include="TimeManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlinePlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkListener.h">
+      <Filter>Header Files\Networking</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

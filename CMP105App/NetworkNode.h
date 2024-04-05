@@ -3,11 +3,18 @@
 
 #include <SFML/Network.hpp>
 
+//Used for encoding the entity a packet of data refers to
+enum EntityIndex
+{
+	Player
+};
+
 //Used for encoding the type of data a packet contains
 enum PacketCode
 {
 	AddNetworkManager,
 	RemoveNetworkManager,
+
 	PositionChange
 };
 

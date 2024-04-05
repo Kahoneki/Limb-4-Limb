@@ -5,7 +5,7 @@
 
 
 //Used for keeping track of delta time and network ticks
-static class TimeManager
+class TimeManager
 {
 public:
 

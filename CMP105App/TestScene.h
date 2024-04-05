@@ -8,7 +8,7 @@
 #include "Framework/AudioManager.h"
 
 #include "SceneManager.h"
-#include "Player.h"
+#include "OnlinePlayer.h"
 
 class SceneManager; //Forward declaration
 
@@ -27,7 +27,7 @@ public:
 private:
 	SceneManager& sceneManager;
 
-	Player* players[2];
+	OnlinePlayer* players[2];
 	sf::Texture robotTexture;
 	sf::Texture bgTexture;
 	sf::RectangleShape background;

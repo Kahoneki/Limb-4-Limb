@@ -1,6 +1,204 @@
 ﻿  Scanning sources for module dependencies...
-  Main.cpp
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TimeManager.h(29,2): warning C4091: 'static ': ignored on left of 'TimeManager' when no variable is declared
-  (compiling source file 'Main.cpp')
+  NetworkManager.cpp
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h(11,22): error C2011: 'NetworkManager': 'class' type redefinition
+  (compiling source file 'NetworkManager.cpp')
+  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h(11,7):
+  see declaration of 'NetworkManager'
   
-  CMP105App.vcxproj -> C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\x64\Debug\CMP105App.exe
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(8,33): error C2027: use of undefined type 'NetworkManager'
+  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h(11,7):
+  see declaration of 'NetworkManager'
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(11,32): error C2027: use of undefined type 'NetworkManager'
+  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h(11,7):
+  see declaration of 'NetworkManager'
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(16,33): error C2027: use of undefined type 'NetworkManager'
+  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h(11,7):
+  see declaration of 'NetworkManager'
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(17,32): error C2027: use of undefined type 'NetworkManager'
+  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h(11,7):
+  see declaration of 'NetworkManager'
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(22,17): error C2027: use of undefined type 'NetworkManager'
+  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h(11,7):
+  see declaration of 'NetworkManager'
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(22,90): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(23,2): error C2065: 'serverAddress': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(24,2): error C2065: 'serverPort': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(26,2): error C2065: 'socket': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(31,6): error C2065: 'socket': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(31,26): error C2065: 'serverAddress': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(31,41): error C2065: 'serverPort': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(39,6): error C2065: 'socket': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(40,3): error C2065: 'connectedToServer': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(45,11): error C2065: 'networkManagerIndex': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(46,3): error C2065: 'connectedToServer': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(49,2): error C2065: 'socket': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(52,2): error C2065: 'reservedEntities': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(53,23): error C2065: 'reservedEntities': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(54,3): error C2065: 'networkListeners': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(56,1): warning C4508: '{ctor}': function should return a value; 'void' return type assumed
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(59,18): error C2027: use of undefined type 'NetworkManager'
+  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h(11,7):
+  see declaration of 'NetworkManager'
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(59,35): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(61,2): error C2065: 'socket': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(64,6): error C2065: 'socket': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(64,34): error C2065: 'serverAddress': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(64,49): error C2065: 'serverPort': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(70,1): warning C4508: '{dtor}': function should return a value; 'void' return type assumed
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(87,36): error C2027: use of undefined type 'NetworkManager'
+  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h(11,7):
+  see declaration of 'NetworkManager'
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(92,9): error C2065: 'socket': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(92,37): error C2065: 'serverAddress': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(92,52): error C2065: 'serverPort': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(96,36): error C2027: use of undefined type 'NetworkManager'
+  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h(11,7):
+  see declaration of 'NetworkManager'
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(98,40): error C2065: 'networkManagerIndex': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(104,28): error C2027: use of undefined type 'NetworkManager'
+  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h(11,7):
+  see declaration of 'NetworkManager'
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(112,6): error C2065: 'socket': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(115,7): error C2065: 'serverAddress': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(115,56): error C2065: 'serverPort': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(126,21): error C2027: use of undefined type 'NetworkManager'
+  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h(11,7):
+  see declaration of 'NetworkManager'
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp(127,9): error C2065: 'networkManagerIndex': undeclared identifier
+  Main.cpp
+  NetworkNode.cpp
+  TestScene.cpp
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(44,11): error C2065: 'p1': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(45,11): error C2065: 'p2': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(48,7): error C2065: 'p1': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(55,9): error C2065: 'p1': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(55,42): error C2065: 'p2': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(58,23): error C2065: 'p2': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(59,21): error C2065: 'p1': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(60,21): error C2065: 'p2': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(62,4): error C2065: 'p1': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(62,18): error C2065: 'p1': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(63,4): error C2065: 'p1': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(63,26): error C2065: 'p1': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(63,50): error C2065: 'p2': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,4): error C2065: 'p1': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,38): error C2065: 'p1': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,25): error C2440: '<function-style-cast>': cannot convert from 'int' to 'sf::Vector2f'
+  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,25):
+  'sf::Vector2<float>::Vector2': no overloaded function could convert all the argument types
+  	C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML\System\Vector2.hpp(77,1):
+  	could be 'sf::Vector2<float>::Vector2(sf::Vector2<float> &&)'
+  		C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,25):
+  		'sf::Vector2<float>::Vector2(sf::Vector2<float> &&)': cannot convert argument 1 from 'int' to 'sf::Vector2<float> &&'
+  			C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,57):
+  			Reason: cannot convert from 'int' to 'sf::Vector2<float>'
+  	C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML\System\Vector2.hpp(77,1):
+  	or       'sf::Vector2<float>::Vector2(const sf::Vector2<float> &)'
+  		C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,25):
+  		'sf::Vector2<float>::Vector2(const sf::Vector2<float> &)': cannot convert argument 1 from 'int' to 'const sf::Vector2<float> &'
+  			C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,57):
+  			Reason: cannot convert from 'int' to 'const sf::Vector2<float>'
+  	C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML\System\Vector2.hpp(56,5):
+  	or       'sf::Vector2<float>::Vector2(T,T)'
+          with
+          [
+              T=float
+          ]
+  		C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,25):
+  		'sf::Vector2<float>::Vector2': function does not take 1 arguments
+  	C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML\System\Vector2.hpp(47,5):
+  	or       'sf::Vector2<float>::Vector2(void)'
+  		C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,25):
+  		'sf::Vector2<float>::Vector2': function does not take 1 arguments
+  	C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML\System\Vector2.hpp(70,5):
+  	or       'sf::Vector2<float>::Vector2(const sf::Vector2<U> &)'
+  	C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,25):
+  	while trying to match the argument list '(int)'
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(67,4): error C2065: 'p2': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(67,38): error C2065: 'p2': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(67,25): error C2440: '<function-style-cast>': cannot convert from 'int' to 'sf::Vector2f'
+  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(67,25):
+  'sf::Vector2<float>::Vector2': no overloaded function could convert all the argument types
+  	C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML\System\Vector2.hpp(77,1):
+  	could be 'sf::Vector2<float>::Vector2(sf::Vector2<float> &&)'
+  		C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(67,25):
+  		'sf::Vector2<float>::Vector2(sf::Vector2<float> &&)': cannot convert argument 1 from 'int' to 'sf::Vector2<float> &&'
+  			C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(67,57):
+  			Reason: cannot convert from 'int' to 'sf::Vector2<float>'
+  	C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML\System\Vector2.hpp(77,1):
+  	or       'sf::Vector2<float>::Vector2(const sf::Vector2<float> &)'
+  		C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(67,25):
+  		'sf::Vector2<float>::Vector2(const sf::Vector2<float> &)': cannot convert argument 1 from 'int' to 'const sf::Vector2<float> &'
+  			C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(67,57):
+  			Reason: cannot convert from 'int' to 'const sf::Vector2<float>'
+  	C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML\System\Vector2.hpp(56,5):
+  	or       'sf::Vector2<float>::Vector2(T,T)'
+          with
+          [
+              T=float
+          ]
+  		C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(67,25):
+  		'sf::Vector2<float>::Vector2': function does not take 1 arguments
+  	C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML\System\Vector2.hpp(47,5):
+  	or       'sf::Vector2<float>::Vector2(void)'
+  		C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(67,25):
+  		'sf::Vector2<float>::Vector2': function does not take 1 arguments
+  	C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML\System\Vector2.hpp(70,5):
+  	or       'sf::Vector2<float>::Vector2(const sf::Vector2<U> &)'
+  	C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(67,25):
+  	while trying to match the argument list '(int)'
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(103,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(103,39): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(103,39): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(103,39): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(103,39): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(104,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(104,59): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(104,59): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(104,59): warning C4244:             T=unsigned int
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(104,59): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(138,31): error C2661: 'OnlinePlayer::OnlinePlayer': no overloaded function takes 7 arguments
+  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(138,31):
+  while trying to match the argument list '(float, float, float, int, int, int, bool)'
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(139,31): error C2661: 'OnlinePlayer::OnlinePlayer': no overloaded function takes 7 arguments
+  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(139,31):
+  while trying to match the argument list '(float, float, float, int, int, int, bool)'
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(141,15): error C2065: 'player': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(141,22): error C2143: syntax error: missing ';' before ':'
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(141,31): error C2143: syntax error: missing ';' before ')'
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(142,3): error C2065: 'player': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(143,3): error C2065: 'player': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(144,3): error C2065: 'player': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(145,3): error C2065: 'player': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(145,21): error C2065: 'player': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(145,59): error C2065: 'player': undeclared identifier
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(165,51): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(165,51): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(165,51): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(165,51): warning C4244:             T=unsigned int
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(165,51): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(169,50): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(169,50): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(169,50): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(169,50): warning C4244:             T=unsigned int
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(169,50): warning C4244:         ]
+  Generating Code...

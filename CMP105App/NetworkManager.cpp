@@ -1,5 +1,23 @@
 #include "NetworkManager.h"
+#include "NetworkListener.h"
+#include "OnlinePlayer.h"
 #include <iostream>
+#include <type_traits> //For std::is_same()
+
+
+NetworkManager& NetworkManager::getInstance() {
+	sf::IpAddress address{ "limbforlimb.duckdns.org" };
+	unsigned short port{ 6900 };
+	static NetworkManager instance(address, port);
+	return instance;
+}
+
+
+NetworkManager& NetworkManager::getInstance(sf::IpAddress _serverAddress, unsigned short _serverPort) {
+	static NetworkManager instance(_serverAddress, _serverPort);
+	return instance;
+}
+
 
 NetworkManager::NetworkManager(sf::IpAddress _serverAddress, unsigned short _serverPort) {
 	serverAddress = _serverAddress;
@@ -24,11 +42,17 @@ NetworkManager::NetworkManager(sf::IpAddress _serverAddress, unsigned short _ser
 	}
 	else {
 		std::cout << "Successfully connected to server.\n";
-		data >> NetworkManagerIndex;
+		data >> networkManagerIndex;
 		connectedToServer = true;
 	}
 
 	socket.setBlocking(false);
+
+	//Initialise networkListeners to x null pointers where x is the number of entities that hold a reserved spot within the vector
+	reservedEntities = 6;
+	for (int i{ 0 }; i < reservedEntities; ++i) {
+		networkListeners.push_back(nullptr);
+	}
 }
 
 
@@ -45,20 +69,34 @@ NetworkManager::~NetworkManager() {
 	}
 }
 
+template <typename ParentType>
+void NetworkManager::AddNetworkListener(NetworkListener<void>* nl) {
+	//Place entity in reserved spot if it's one of the reserved types (e.g. online player)
+	if (std::is_same<ParentType, OnlinePlayer>::value) {
+		networkListeners[static_cast<OnlinePlayer*>(nl->getParentReference())->getPlayerNum() - 1] = nl;
+	}
+	/*else if {
+		networkListeners[static_cast<OnlineHealthBar*>(nl->getParentReference())->getHealthBarNum() - 1] = nl;
+	}*/
+	else {
+		networkListeners.push_back(nl);
+	}
+}
 
-sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, PacketCode code, sf::Packet incomingPacket) {
-	//Combine NetworkManager index and packet code into the data packet so it can be sent to the server
+
+sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
+	//Combine Packet code, NetworkManager index, and NetworkListener index into the data packet so it can be sent to the server
 	sf::Packet outgoingPacket;
-	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(code) << outgoingNetworkManagerIndex;
+	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(packetCode) << networkListenerIndex << outgoingNetworkManagerIndex;
 	outgoingPacket.append(incomingPacket.getData(), incomingPacket.getDataSize());
 	return socket.send(outgoingPacket, serverAddress, serverPort);
 }
 
 
-sf::Socket::Status NetworkManager::SendDataToNetworkManager(PacketCode code, sf::Packet incomingPacket) {
+sf::Socket::Status NetworkManager::SendDataToNetworkManager(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
 	//This function can be called if there are only two NetworkManagers connected to the server (in which case it will just send data to the other NetworkManager).
-	int outgoingNetworkManagerIndex = 1 - NetworkManagerIndex; //0->1, 1->0
-	return SendDataToNetworkManager(outgoingNetworkManagerIndex, code, incomingPacket);
+	int outgoingNetworkManagerIndex = 1 - networkManagerIndex; //0->1, 1->0
+	return SendDataToNetworkManager(outgoingNetworkManagerIndex, networkListenerIndex, packetCode, incomingPacket);
 }
 
 
@@ -86,5 +124,5 @@ sf::Packet NetworkManager::CheckForIncomingDataFromServer() {
 }
 
 int NetworkManager::GetNetworkManagerIndex() {
-	return NetworkManagerIndex;
+	return networkManagerIndex;
 }

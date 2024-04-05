@@ -40,7 +40,7 @@ public:
 	void setStunFramesLeft(int numFrames);
 
 
-private:
+protected:
 	//----MEMBERS----//
 	//Movement
 	float acceleration; //This is vertical acceleration (upwards is positive) - there is no horizontal acceleration
