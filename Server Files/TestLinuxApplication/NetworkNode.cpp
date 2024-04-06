@@ -1,13 +1,16 @@
 #include "NetworkNode.h"
 
 
+NetworkNode::~NetworkNode()
+{
+}
+
 void NetworkNode::CheckForIncomingDataFromNetworkManager()
 {
 }
 
-sf::Packet NetworkNode::CheckForIncomingDataFromServer()
+void NetworkNode::CheckForIncomingDataFromServer()
 {
-	return sf::Packet();
 }
 
 sf::Socket::Status NetworkNode::SendDataToNetworkManager(int NetworkManagerIndex, sf::Packet packet)
