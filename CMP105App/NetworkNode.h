@@ -1,23 +1,8 @@
-#ifndef NetworkNode_H
-#define NetworkNode_H
+#ifndef NETWORKNODE_H
+#define NETWORKNODE_H
 
 #include <SFML/Network.hpp>
-
-//Used for encoding the entity a packet of data refers to
-enum EntityIndex
-{
-	Player
-};
-
-//Used for encoding the type of data a packet contains
-enum PacketCode
-{
-	AddNetworkManager,
-	RemoveNetworkManager,
-
-	PositionChange
-};
-
+#include "PacketCode.h"
 
 //Base class for inherited Server and NetworkManager class
 class NetworkNode
@@ -28,7 +13,7 @@ public:
 	virtual void CheckForIncomingDataFromNetworkManager();
 
 	//For NetworkManager class
-	virtual sf::Packet CheckForIncomingDataFromServer();
+	virtual void CheckForIncomingDataFromServer();
 	virtual sf::Socket::Status SendDataToNetworkManager(int NetworkManagerIndex, sf::Packet packet);
 	virtual sf::Socket::Status SendDataToNetworkManager(sf::Packet packet);
 

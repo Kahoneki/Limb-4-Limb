@@ -38,7 +38,7 @@ public:
 
 	sf::Socket::Status SendDataToNetworkManager(int outgoingNetworkManagerIndex, int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket);
 	sf::Socket::Status SendDataToNetworkManager(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket);
-	sf::Packet CheckForIncomingDataFromServer() override;
+	void CheckForIncomingDataFromServer() override;
 	
 	int GetNetworkManagerIndex();
 

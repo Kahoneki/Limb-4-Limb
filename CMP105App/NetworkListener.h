@@ -14,7 +14,9 @@ public:
     // Constructor
     NetworkListener(ParentType& pr) : parentReference(pr) {}
 
-    ParentType* getParentReference();
+    void InterpretData(sf::Packet incomingData) {
+        
+    }
 
 private:
     ParentType& parentReference;

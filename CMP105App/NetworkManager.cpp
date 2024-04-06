@@ -72,22 +72,6 @@ NetworkManager::~NetworkManager() {
 
 
 
-//template <typename ParentType>
-//void NetworkManager::AddNetworkListener(NetworkListener<ParentType>* nl) {
-//	//Place entity in reserved spot if it's one of the reserved types (e.g. online player)
-//	if (std::is_same<ParentType, OnlinePlayer>::value) {
-//		networkListeners[static_cast<OnlinePlayer*>(nl->getParentReference())->getPlayerNum() - 1] = nl;
-//	}
-//	/*else if {
-//		networkListeners[static_cast<OnlineHealthBar*>(nl->getParentReference())->getHealthBarNum() - 1] = nl;
-//	}*/
-//	else {
-//		networkListeners.push_back(nl);
-//	}
-//}
-
-
-
 
 sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
 	//Combine Packet code, NetworkManager index, and NetworkListener index into the data packet so it can be sent to the server
@@ -106,7 +90,7 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int networkListenerI
 
 
 //To be called every frame
-sf::Packet NetworkManager::CheckForIncomingDataFromServer() {
+void NetworkManager::CheckForIncomingDataFromServer() {
 	sf::Packet incomingData;
 
 	//Used to check that NetworkManager is in fact receiving data from the server and not, another NetworkManager, for example
@@ -114,18 +98,19 @@ sf::Packet NetworkManager::CheckForIncomingDataFromServer() {
 	unsigned short incomingPort;
 
 	//Extract data and check if it's empty
-	if (socket.receive(incomingData, incomingIp, incomingPort) != sf::Socket::Done) { return sf::Packet(); }
+	if (socket.receive(incomingData, incomingIp, incomingPort) != sf::Socket::Done) { return; }
 
 	//Ensuring data is coming from server and not another NetworkManager
 	if ((serverAddress != incomingIp) || (incomingPort != serverPort)) {
 		std::cerr << "NetworkManager (ip: " << incomingIp << ", port: " << incomingPort << ") is attempting to connect directly to another NetworkManager." << std::endl;
 		std::cerr << "NetworkManager should send data through the server instead." << std::endl;
-		return sf::Packet();
+		return;
 	}
 
-
-	return incomingData;
-
+	//Extract networkListenerIndex and send rest of packet to appropriate network listener
+	int networkListenerIndex;
+	incomingData >> networkListenerIndex;
+	networkListeners[networkListenerIndex]->InterpretPacket();
 }
 
 int NetworkManager::GetNetworkManagerIndex() {

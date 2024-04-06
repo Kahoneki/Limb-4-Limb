@@ -15,7 +15,7 @@ int main()
     node = new Server(serverIp, serverPort);
 
     while (true) {
-        node->CheckForIncomingDataFromClient();
+        node->CheckForIncomingDataFromNetworkManager();
     }
 
 

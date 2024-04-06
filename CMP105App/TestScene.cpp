@@ -29,7 +29,7 @@ TestScene::~TestScene()
 
 void TestScene::handleInput(float dt) {
 	players[0]->handleInput(dt, sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::G, sf::Keyboard::T);
-	players[1]->handleInput(dt, sf::Keyboard::I, sf::Keyboard::J, sf::Keyboard::L, sf::Keyboard::K, sf::Keyboard::Num9, sf::Keyboard::O, sf::Keyboard::P, sf::Keyboard::Num0);
+	//players[1]->handleInput(dt, sf::Keyboard::I, sf::Keyboard::J, sf::Keyboard::L, sf::Keyboard::K, sf::Keyboard::Num9, sf::Keyboard::O, sf::Keyboard::P, sf::Keyboard::Num0);
 }
 
 

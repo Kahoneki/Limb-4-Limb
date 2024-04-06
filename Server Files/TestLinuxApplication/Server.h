@@ -6,18 +6,18 @@
 #include <vector>
 
 
-struct ClientInfo
+struct NetworkManagerInfo
 {
 	sf::IpAddress ip;
 	unsigned short port;
 
-	ClientInfo(sf::IpAddress serverIp, unsigned short serverPort);
+	NetworkManagerInfo(sf::IpAddress serverIp, unsigned short serverPort);
 
-	bool operator!=(const ClientInfo& other) const {
+	bool operator!=(const NetworkManagerInfo& other) const {
 		return (ip != other.ip) || (port != other.port);
 	}
 
-	bool operator==(const ClientInfo& other) const {
+	bool operator==(const NetworkManagerInfo& other) const {
 		return (ip == other.ip) && (port == other.port);
 	}
 };
@@ -25,17 +25,17 @@ struct ClientInfo
 
 
 
-//Server class for managing clients
+//Server class for managing NetworkManagers
 class Server : public NetworkNode
 {
 
 public:
 	Server(sf::IpAddress _ip, unsigned short _port);
-	void CheckForIncomingDataFromClient() override;
+	void CheckForIncomingDataFromNetworkManager() override;
 
 
 private:
-	std::vector<ClientInfo> connectedClients;
+	std::vector<NetworkManagerInfo> connectedNetworkManagers;
 };
 
 
