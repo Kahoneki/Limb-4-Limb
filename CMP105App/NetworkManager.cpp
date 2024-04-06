@@ -1,8 +1,9 @@
 #include "NetworkManager.h"
-#include "NetworkListener.h"
-#include "OnlinePlayer.h"
+//#include "OnlinePlayer.h"
 #include <iostream>
 #include <type_traits> //For std::is_same()
+
+class OnlinePlayer;
 
 
 NetworkManager& NetworkManager::getInstance() {
@@ -69,19 +70,23 @@ NetworkManager::~NetworkManager() {
 	}
 }
 
-template <typename ParentType>
-void NetworkManager::AddNetworkListener(NetworkListener<void>* nl) {
-	//Place entity in reserved spot if it's one of the reserved types (e.g. online player)
-	if (std::is_same<ParentType, OnlinePlayer>::value) {
-		networkListeners[static_cast<OnlinePlayer*>(nl->getParentReference())->getPlayerNum() - 1] = nl;
-	}
-	/*else if {
-		networkListeners[static_cast<OnlineHealthBar*>(nl->getParentReference())->getHealthBarNum() - 1] = nl;
-	}*/
-	else {
-		networkListeners.push_back(nl);
-	}
-}
+
+
+//template <typename ParentType>
+//void NetworkManager::AddNetworkListener(NetworkListener<ParentType>* nl) {
+//	//Place entity in reserved spot if it's one of the reserved types (e.g. online player)
+//	if (std::is_same<ParentType, OnlinePlayer>::value) {
+//		networkListeners[static_cast<OnlinePlayer*>(nl->getParentReference())->getPlayerNum() - 1] = nl;
+//	}
+//	/*else if {
+//		networkListeners[static_cast<OnlineHealthBar*>(nl->getParentReference())->getHealthBarNum() - 1] = nl;
+//	}*/
+//	else {
+//		networkListeners.push_back(nl);
+//	}
+//}
+
+
 
 
 sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {

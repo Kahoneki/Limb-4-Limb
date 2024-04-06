@@ -4,6 +4,8 @@
 #include "Player.h"
 #include "NetworkListener.h"
 
+class NetworkManager;
+
 class OnlinePlayer : public Player
 {
 public:
@@ -16,7 +18,7 @@ public:
 private:
 	int playerNum; //e.g. Player 1, Player 2, etc.
 	NetworkManager& networkManager; //For sending
-	NetworkListener<OnlinePlayer> networkListener; //For receiving
+	NetworkListener<OnlinePlayer>* networkListener; //For receiving
 };
 
 #endif

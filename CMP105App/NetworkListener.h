@@ -1,18 +1,23 @@
 #ifndef NETWORKLISTENER_H
 #define NETWORKLISTENER_H
 
-#include "NetworkManager.h"
+// Forward declaration of ParentType
+template<typename ParentType>
+class NetworkListener;
+
+// Base class for polymorphism in NetworkManager::networkListeners
+class BaseNetworkListener {};
 
 template<typename ParentType>
-class NetworkListener {
+class NetworkListener : public BaseNetworkListener {
 public:
-	NetworkListener(ParentType* pr);
+    // Constructor
+    NetworkListener(ParentType& pr) : parentReference(pr) {}
 
-	ParentType* getParentReference();
+    ParentType* getParentReference();
 
 private:
-	ParentType* parentReference; //Reference to the object that this listener is attached to - type is void pointer to allow for dynamic casting to any type
+    ParentType& parentReference;
 };
-
 
 #endif

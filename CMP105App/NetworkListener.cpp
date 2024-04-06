@@ -1,10 +1,10 @@
-#include "NetworkListener.h"
+//#include "NetworkListener.h"
+//#include "NetworkManager.h"
 
-template<typename ParentType>
-NetworkListener<ParentType>::NetworkListener(ParentType* pr) {
-	NetworkManager::getInstance().AddNetworkListener<ParentType>(this);
-	parentReference = pr;
-}
+//template<typename ParentType>
+//NetworkListener<ParentType>::NetworkListener(ParentType* pr) : parentReference(pr) {
+//	NetworkManager::getInstance().AddNetworkListener<ParentType>(this);
+//}
 
-template<typename ParentType>
-ParentType* NetworkListener<ParentType>::getParentReference() { return parentReference; }
+//template<typename ParentType>
+//ParentType* NetworkListener<ParentType>::getParentReference() { return parentReference; }

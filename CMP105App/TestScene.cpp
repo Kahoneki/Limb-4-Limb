@@ -1,5 +1,6 @@
 #include "TestScene.h"
 #include "EndScreen.h"
+#include "NetworkManager.h"
 
 TestScene::TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
 {
@@ -41,8 +42,8 @@ void TestScene::update(float dt) {
 
 	//Loop through both players
 	for (int playerIndex{}; playerIndex < 2; ++playerIndex) {
-		Player* p1 = players[playerIndex]; //Defending player
-		Player* p2 = players[1-playerIndex]; //Attacking player
+		OnlinePlayer* p1 = players[playerIndex]; //Defending player
+		OnlinePlayer* p2 = players[1-playerIndex]; //Attacking player
 
 		//Defending player has stun frames left, continue to the next iteration
 		if (p1->getStunFramesLeft())
@@ -135,10 +136,10 @@ void TestScene::InitialiseScene() {
 
 
 void TestScene::InitialisePlayers() {
-	players[0] = new OnlinePlayer(2200.0f, 175.0f, 900.0f, 100, 100, 0, false);
-	players[1] = new OnlinePlayer(2200.0f, 175.0f, 900.0f, 100, 100, 0, true);
+	players[0] = new OnlinePlayer(2200.0f, 175.0f, 900.0f, 100, 100, 0, false, 1);
+	players[1] = new OnlinePlayer(2200.0f, 175.0f, 900.0f, 100, 100, 0, true, 2);
 
-	for (Player* player : players) {
+	for (OnlinePlayer* player : players) {
 		player->setSize(sf::Vector2f(150, 275));
 		player->setInput(input);
 		player->setHealth(100);
