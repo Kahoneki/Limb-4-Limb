@@ -11,13 +11,12 @@ OnlinePlayer::OnlinePlayer(float acc, float ts, float js, int hp, int prot, int 
 void OnlinePlayer::update(float dt) {
 	if (isLocal) {
 		OnlinePlayerState prevState;
-		prevState.pos = getPosition();
-		sf::Vector2f prevPosition{ getPosition() };
+		prevState.pos = static_cast<sf::Vector2i>(getPosition());
 		
 		Player::update(dt);
 		
 		OnlinePlayerState newState;
-		newState.pos = getPosition();
+		newState.pos = static_cast<sf::Vector2i>(getPosition());
 		
 		if (prevState != newState) {
 			SendUpdateDataToNetwork(prevState, newState);

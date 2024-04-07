@@ -7,7 +7,7 @@
 class NetworkManager;
 
 struct OnlinePlayerState {
-	sf::Vector2f pos;
+	sf::Vector2i pos;
 
 	bool operator==(const OnlinePlayerState& other) const {
 		return (pos == other.pos);
