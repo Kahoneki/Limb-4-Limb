@@ -182,7 +182,8 @@ void Player::update(float dt) {
 	//Lots of magic number usage - albeit well commented. This is mainly just to avoid calling getSize() every frame (though this could also be done through a constexpr)
 	
 	//Vertical
-	if (getPosition().y >= (crouched ? 431 : 375)) { //375 is the "floor", 375+getSize().x/4 = 431 when crouched
+	float epsilon = 0.3f; //If within 0.5 of boundary, snap to boundary - this is to prevent floating point precision based errors
+	if (getPosition().y >= ((crouched ? 431 : 375) + epsilon) || getPosition().y >= ((crouched ? 431 : 375) - epsilon)) { //375 is the "floor", 375+getSize().x/4 = 431 when crouched
 		setPosition(getPosition().x, (crouched ? 431 : 375));
 		isGrounded = true;
 		velocity.y = 0;

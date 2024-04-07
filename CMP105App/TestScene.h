@@ -27,7 +27,7 @@ public:
 private:
 	SceneManager& sceneManager;
 
-	Player* players[2];
+	OnlinePlayer* players[2];
 	sf::Texture robotTexture;
 	sf::Texture bgTexture;
 	sf::RectangleShape background;
