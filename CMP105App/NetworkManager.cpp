@@ -121,7 +121,9 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 	//Extract networkListenerIndex and send rest of packet to appropriate network listener
 	int networkListenerIndex;
 	incomingData >> networkListenerIndex;
-	networkListeners[networkListenerIndex]->InterpretPacket(incomingData);
+	if (networkListeners[networkListenerIndex] != nullptr) {
+		networkListeners[networkListenerIndex]->InterpretPacket(incomingData);
+	}
 }
 
 int NetworkManager::GetNetworkManagerIndex() {

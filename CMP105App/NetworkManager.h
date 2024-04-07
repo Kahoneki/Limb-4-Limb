@@ -26,7 +26,7 @@ public:
 		// Place entity in reserved spot if it's one of the reserved types (e.g. online player)
 		if (std::is_same<ParentType, OnlinePlayer>::value) {
 			NetworkListener<ParentType>* newListener{ new NetworkListener<ParentType>(parentReference) };
-			networkListeners[reservedSpot] = newListener;
+			networkListeners[reservedSpot] = new NetworkListener<ParentType>(parentReference);
 			return newListener;
 		}
 		else {
