@@ -95,7 +95,6 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkM
 sf::Socket::Status NetworkManager::SendDataToNetworkManager(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
 	//This function can be called if there are only two NetworkManagers connected to the server (in which case it will just send data to the other NetworkManager).
 	int outgoingNetworkManagerIndex = 1 - networkManagerIndex; //0->1, 1->0
-	std::cout << "\n\n\n\nNetworkManager:" << networkManagerIndex << ' ' << outgoingNetworkManagerIndex << "\n\n\n\n";
 	return SendDataToNetworkManager(outgoingNetworkManagerIndex, networkListenerIndex, packetCode, incomingPacket);
 }
 
@@ -110,6 +109,7 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 
 	//Extract data and check if it's empty
 	if (socket.receive(incomingData, incomingIp, incomingPort) != sf::Socket::Done) { return; }
+	std::cout << "i am receiving data.\n";
 
 	//Ensuring data is coming from server and not another NetworkManager
 	if ((serverAddress != incomingIp) || (incomingPort != serverPort)) {
