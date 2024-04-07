@@ -95,6 +95,7 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkM
 sf::Socket::Status NetworkManager::SendDataToNetworkManager(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
 	//This function can be called if there are only two NetworkManagers connected to the server (in which case it will just send data to the other NetworkManager).
 	int outgoingNetworkManagerIndex = 1 - networkManagerIndex; //0->1, 1->0
+	std::cout << "\n\n\n\nNetworkManager:" << networkManagerIndex << ' ' << outgoingNetworkManagerIndex << "\n\n\n\n";
 	return SendDataToNetworkManager(outgoingNetworkManagerIndex, networkListenerIndex, packetCode, incomingPacket);
 }
 

@@ -1,8 +1,8 @@
 ﻿  Scanning sources for module dependencies...
-  TestScene.cpp
-  Note: including file: C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.h
-  Note: including file:  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics.hpp
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window.hpp
+  NetworkManager.cpp
+  Note: including file: C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h
+  Note: including file:  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkNode.h
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network.hpp
   Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System.hpp
   Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Config.hpp
   Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Clock.hpp
@@ -141,145 +141,26 @@
   Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Vector2.inl
   Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Vector3.hpp
   Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Vector3.inl
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Clipboard.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Export.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Context.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/GlResource.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/ContextSettings.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Cursor.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Event.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Joystick.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Keyboard.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Mouse.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Sensor.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Touch.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/VideoMode.hpp
-  Note: including file:     C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector
-  Note: including file:      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_bit_utils.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Window.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/WindowHandle.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/WindowStyle.hpp
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/BlendMode.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Export.hpp
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/CircleShape.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Shape.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Drawable.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/RenderStates.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Transform.hpp
-  Note: including file:        C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Rect.hpp
-  Note: including file:         C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Rect.inl
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Transformable.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/VertexArray.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Vertex.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Color.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/PrimitiveType.hpp
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/ConvexShape.hpp
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Font.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Glyph.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Texture.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Image.hpp
-  Note: including file:    C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\map
-  Note: including file:     C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xtree
-  Note: including file:      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xnode_handle.h
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/RectangleShape.hpp
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/RenderTarget.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/View.hpp
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/RenderTexture.hpp
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/RenderWindow.hpp
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Shader.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Glsl.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Glsl.inl
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Sprite.hpp
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Text.hpp
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/VertexBuffer.hpp
-  Note: including file:  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework/BaseLevel.h
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\Input.h
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\AudioManager.h
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\SoundObject.h
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML\Audio.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/InputSoundFile.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/Export.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/Listener.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/Music.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundStream.hpp
-  Note: including file:        C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundSource.hpp
-  Note: including file:         C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/AlResource.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/OutputSoundFile.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/Sound.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundBuffer.hpp
-  Note: including file:       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\set
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundBufferRecorder.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundRecorder.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundFileFactory.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundFileFactory.inl
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundFileReader.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundFileWriter.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\MusicObject.h
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\GameState.h
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/Ftp.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/Export.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/TcpSocket.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/Socket.hpp
+  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/SocketHandle.hpp
+  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\shared\basetsd.h
+  Note: including file:       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector
+  Note: including file:        C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_bit_utils.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/Http.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/IpAddress.hpp
+  Note: including file:      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\istream
+  Note: including file:     C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\map
+  Note: including file:      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xtree
+  Note: including file:       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xnode_handle.h
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/Packet.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/SocketSelector.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/TcpListener.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/UdpSocket.hpp
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\PacketCode.h
+  Note: including file:  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkListener.h
   Note: including file:   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\iostream
-  Note: including file:    C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\istream
-  Note: including file:  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework/GameObject.h
-  Note: including file:  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SceneManager.h
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\MainMenu.h
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SceneManager.h
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TimeManager.h
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/Ftp.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/Export.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/TcpSocket.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/Socket.hpp
-  Note: including file:        C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/SocketHandle.hpp
-  Note: including file:         C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\shared\basetsd.h
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/Http.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/IpAddress.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/Packet.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/SocketSelector.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/TcpListener.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/UdpSocket.hpp
-  Note: including file:  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\OnlinePlayer.h
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.h
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.h
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkListener.h
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\PacketCode.h
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\BaseNetworkListener.h
-  Note: including file: C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\EndScreen.h
-  Note: including file: C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h
-  Note: including file:  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkNode.h
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(58,36): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(59,40): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(65,30): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(65,30): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(65,30): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(65,30): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(65,30): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,30): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,30): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,30): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,30): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(66,30): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(101,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(101,39): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(101,39): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(101,39): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(101,39): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(102,39): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(103,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(103,59): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(103,59): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(103,59): warning C4244:             T=unsigned int
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(103,59): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(164,51): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(164,51): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(164,51): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(164,51): warning C4244:             T=unsigned int
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(164,51): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(168,50): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(168,50): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(168,50): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(168,50): warning C4244:             T=unsigned int
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TestScene.cpp(168,50): warning C4244:         ]
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\BaseNetworkListener.h
   CMP105App.vcxproj -> C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\x64\Debug\CMP105App.exe
