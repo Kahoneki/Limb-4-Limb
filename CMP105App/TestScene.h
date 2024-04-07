@@ -16,7 +16,7 @@ class TestScene : public BaseLevel
 {
 public:
 
-	TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager, int playerNum);
+	TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager, int pn);
 	~TestScene();
 
 	void handleInput(float dt) override;
@@ -37,10 +37,12 @@ private:
 	sf::RectangleShape HealthBarBack2;
 	AudioManager audioManager;
 
+	int playerNum;
+
 	void FlipCheck();
 
 	void InitialiseScene();
-	void InitialisePlayers(int playerNum);
+	void InitialisePlayers();
 	void InitialiseHealthBars();
 };
 

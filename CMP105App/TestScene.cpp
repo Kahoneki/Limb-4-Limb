@@ -2,7 +2,7 @@
 #include "EndScreen.h"
 #include "NetworkManager.h"
 
-TestScene::TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int playerNum) : sceneManager(sm)
+TestScene::TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn) : sceneManager(sm), playerNum(pn)
 {
 	std::cout << "Loading test scene\n";
 
@@ -10,7 +10,7 @@ TestScene::TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pl
 	input = in;
 
 	InitialiseScene();
-	InitialisePlayers(playerNum);
+	InitialisePlayers();
 	InitialiseHealthBars();
 
 	std::cout << "Loaded test scene\n";
@@ -28,14 +28,14 @@ TestScene::~TestScene()
 }
 
 void TestScene::handleInput(float dt) {
-	players[0]->handleInput(dt, sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::G, sf::Keyboard::T);
+	players[playerNum-1]->handleInput(dt, sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::G, sf::Keyboard::T);
 }
 
 
 
 void TestScene::update(float dt) {
 	
-	players[0]->update(dt);
+	players[playerNum-1]->update(dt);
 	FlipCheck();
 
 	//Loop through both players
@@ -133,7 +133,7 @@ void TestScene::InitialiseScene() {
 
 
 
-void TestScene::InitialisePlayers(int playerNum) {
+void TestScene::InitialisePlayers() {
 	players[0] = new OnlinePlayer(2200.0f, 175.0f, 900.0f, 100, 100, 0, false, 1, playerNum == 1);
 	players[1] = new OnlinePlayer(2200.0f, 175.0f, 900.0f, 100, 100, 0, true, 2, playerNum == 2);
 
