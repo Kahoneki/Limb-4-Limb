@@ -77,7 +77,17 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkM
 	//Combine Packet code, NetworkManager index, and NetworkListener index into the data packet so it can be sent to the server
 	sf::Packet outgoingPacket;
 	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(packetCode) << networkListenerIndex << outgoingNetworkManagerIndex;
-	outgoingPacket.append(incomingPacket.getData(), incomingPacket.getDataSize());
+	switch (packetCode)
+	{
+
+	case (PacketCode::PositionChange):
+	{
+		sf::Vector2f pos;
+		incomingPacket >> pos.x >> pos.y;
+		outgoingPacket << pos.x << pos.y;
+	}
+
+	}
 	return socket.send(outgoingPacket, serverAddress, serverPort);
 }
 
