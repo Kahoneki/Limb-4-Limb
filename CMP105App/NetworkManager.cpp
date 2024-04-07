@@ -1,5 +1,5 @@
 #include "NetworkManager.h"
-//#include "OnlinePlayer.h"
+#include "BaseNetworkListener.h"
 #include <iostream>
 #include <type_traits> //For std::is_same()
 
@@ -110,7 +110,7 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 	//Extract networkListenerIndex and send rest of packet to appropriate network listener
 	int networkListenerIndex;
 	incomingData >> networkListenerIndex;
-	networkListeners[networkListenerIndex]->InterpretPacket();
+	networkListeners[networkListenerIndex]->InterpretPacket(incomingData);
 }
 
 int NetworkManager::GetNetworkManagerIndex() {

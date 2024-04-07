@@ -32,7 +32,7 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 
 	std::cout << '\n';
 
-	std::underlying_type<PacketCode>::type packetCode;
+	std::underlying_type_t<PacketCode> packetCode;
 	incomingData >> packetCode;
 	switch (packetCode)
 	{

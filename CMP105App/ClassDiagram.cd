@@ -66,14 +66,14 @@
   <Class Name="NetworkListener&lt;ParentType&gt;" Collapsed="true">
     <Position X="6.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAACAAAAAAAgABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAACAAAAAAACABAAAAAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>NetworkListener.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="NetworkManager" Collapsed="true">
     <Position X="3.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAoAAAAAAAAACAAAiACAAAAAAIAAAQAAIAAAAAAACI=</HashCode>
+      <HashCode>AAAoAAAAAgAAACAAAiACAAAAAAAAAAQAAIAAAAAAACI=</HashCode>
       <FileName>NetworkManager.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -154,19 +154,5 @@
       <FileName>Framework\VectorHelper.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="EntityIndex" Collapsed="true">
-    <Position X="9" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
-      <FileName>NetworkNode.h</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="PacketCode" Collapsed="true">
-    <Position X="10.75" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAABAAAAQAAAAAAAAAA=</HashCode>
-      <FileName>NetworkNode.h</FileName>
-    </TypeIdentifier>
-  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

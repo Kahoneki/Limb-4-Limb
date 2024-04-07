@@ -16,7 +16,7 @@ class TestScene : public BaseLevel
 {
 public:
 
-	TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager);
+	TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager, int playerNum);
 	~TestScene();
 
 	void handleInput(float dt) override;
@@ -40,7 +40,7 @@ private:
 	void FlipCheck();
 
 	void InitialiseScene();
-	void InitialisePlayers();
+	void InitialisePlayers(int playerNum);
 	void InitialiseHealthBars();
 };
 

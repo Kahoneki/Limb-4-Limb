@@ -161,7 +161,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="NetworkListener.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="EndScreen.cpp" />
     <ClCompile Include="Framework\Animation.cpp" />
@@ -190,6 +189,7 @@
     <Text Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseNetworkListener.h" />
     <ClInclude Include="NetworkListener.h" />
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="EndScreen.h" />
@@ -207,6 +207,7 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="NetworkNode.h" />
     <ClInclude Include="OnlinePlayer.h" />
+    <ClInclude Include="PacketCode.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="TimeManager.h" />

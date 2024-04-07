@@ -131,7 +131,6 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 					crouched = true;
 				}
 			}
-
 			if (crouched) {
 				if (!input->isKeyDown(down)) {
 					setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));

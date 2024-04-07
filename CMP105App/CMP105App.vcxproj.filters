@@ -96,9 +96,6 @@
     <ClCompile Include="OnlinePlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NetworkListener.cpp">
-      <Filter>Source Files\Networking</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="README.txt">
@@ -167,6 +164,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NetworkListener.h">
+      <Filter>Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketCode.h">
+      <Filter>Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseNetworkListener.h">
       <Filter>Header Files\Networking</Filter>
     </ClInclude>
   </ItemGroup>
