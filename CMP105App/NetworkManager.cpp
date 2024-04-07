@@ -99,7 +99,7 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int networkListenerI
 }
 
 
-//To be called every frame
+//To be called every network tick
 void NetworkManager::CheckForIncomingDataFromServer() {
 	sf::Packet incomingData;
 
