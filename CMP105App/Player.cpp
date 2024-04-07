@@ -178,30 +178,34 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 
 void Player::update(float dt) {
 
+	//Update position - operating with sf::Vector2i to avoid any potential floating point inaccuracies
+	sf::Vector2i currentPos{ static_cast<sf::Vector2i>(getPosition()) };
+
+	if (stunFramesLeft) { velocity.x = 0; }
+	currentPos.x += velocity.x * dt;
+	if (!isGrounded) {
+		currentPos.y -= ((velocity.y * dt) + (0.5 * (acceleration * dt * dt))); //s=ut+1/2(at^2)
+	}
+
 	//Boundary checks
 	//Lots of magic number usage - albeit well commented. This is mainly just to avoid calling getSize() every frame (though this could also be done through a constexpr)
 	
 	//Vertical
-	float epsilon = 0.3f; //If within 0.5 of boundary, snap to boundary - this is to prevent floating point precision based errors
-	if (getPosition().y >= ((crouched ? 431 : 375) + epsilon) || getPosition().y >= ((crouched ? 431 : 375) - epsilon)) { //375 is the "floor", 375+getSize().x/4 = 431 when crouched
-		setPosition(getPosition().x, (crouched ? 431 : 375));
+	if (currentPos.y > (crouched ? 431 : 375)) { //375 is the "floor", 375+getSize().x/4 = 431 when crouched
+		currentPos.y = (crouched ? 431 : 375);
 		isGrounded = true;
 		velocity.y = 0;
 	}
 	//No need for a "roof" check since player is not capable of reaching such a height
 
 	//Horizontal
-	if (getPosition().x < 63 || getPosition().x > 1138) { //getSize().x/2 = 63, 1200-getSize().x/2 = 1138 (not using <=/>= since velocity.x is being set to 0 and player would be stuck on edge)
-		setPosition(getPosition().x <= 63 ? 63 : 1138, getPosition().y);
+	if (currentPos.x < 63 || currentPos.x > 1138) { //getSize().x/2 = 63, 1200-getSize().x/2 = 1138 (not using <=/>= since velocity.x is being set to 0 and player would be stuck on edge)
+		currentPos.x = (currentPos.x <= 63 ? 63 : 1138);
 		velocity.x = 0;
 	}
 
 
-	//Update position
-	if (stunFramesLeft) { velocity.x = 0; }
-	float xPos = getPosition().x + velocity.x * dt;
-	float yPos = getPosition().y - ((velocity.y * dt) + (0.5 * (acceleration * dt * dt))); //s=ut+1/2(at^2)
-	setPosition(xPos, yPos);
+	setPosition(currentPos.x, currentPos.y);
 
 
 	//Handle combat

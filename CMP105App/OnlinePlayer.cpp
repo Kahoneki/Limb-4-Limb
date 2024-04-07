@@ -33,7 +33,7 @@ void OnlinePlayer::SendUpdateDataToNetwork(OnlinePlayerState prevState, OnlinePl
 
 	//Check each field to see if it has changed
 	if (prevState.pos != newState.pos) {
-		std::cout << prevState.pos.y << ' ' << newState.pos.y << '\n';
+		//std::cout << prevState.pos.y << ' ' << newState.pos.y << '\n';
 		sf::Packet outgoingPacket;
 		outgoingPacket << newState.pos.x << newState.pos.y;
 		networkManager.SendDataToNetworkManager(networkListenerIndex, PacketCode::PositionChange, outgoingPacket);
