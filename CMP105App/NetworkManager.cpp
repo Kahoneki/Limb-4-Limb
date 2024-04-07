@@ -76,7 +76,7 @@ NetworkManager::~NetworkManager() {
 sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
 	//Combine Packet code, NetworkManager index, and NetworkListener index into the data packet so it can be sent to the server
 	sf::Packet outgoingPacket;
-	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(packetCode) << networkListenerIndex << outgoingNetworkManagerIndex;
+	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(packetCode) << outgoingNetworkManagerIndex << networkListenerIndex;
 	switch (packetCode)
 	{
 
