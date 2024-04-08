@@ -6,13 +6,15 @@ enum PacketCode
 {
 	AddNetworkManager,
 	RemoveNetworkManager,
-	
-	PositionChange,
-	CrouchChange,
-	HealthChange,
-	StunFrameChange,
-	ActiveLimbChange,
-	AttackingChange
+
+	KeyChange
+
+	//PositionChange,
+	//CrouchChange,
+	//HealthChange,
+	//StunFrameChange,
+	//ActiveLimbChange,
+	//AttackingChange
 };
 
 #endif

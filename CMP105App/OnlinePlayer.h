@@ -3,6 +3,7 @@
 
 #include "Player.h"
 #include "NetworkListener.h"
+#include <map>
 
 class NetworkManager;
 
@@ -30,10 +31,13 @@ class OnlinePlayer : public Player
 public:
 	OnlinePlayer(float acc, float ts, float js, int hp, int prot, int c1, bool flip, int pn, bool local);
 	void handleInput(float dt, int up, int left, int right, int down, int jab, int kick, int sweep, int upper);
-	void update(float dt);
-	void SendUpdateDataToNetwork(OnlinePlayerState prevState, OnlinePlayerState newState);
+	//void update(float dt);
+	/*void SendUpdateDataToNetwork(OnlinePlayerState prevState, OnlinePlayerState newState);*/
+	void SendUpdateDataToNetwork(std::vector<int> changedKeys);
 
 	int getPlayerNum();
+
+	void setKeyPressed(int key, bool pressed);
 
 private:
 	bool isLocal; //True if this player is controlled by this client, false if controlled by another client
@@ -43,6 +47,8 @@ private:
 
 	OnlinePlayerState prevState;
 	OnlinePlayerState newState;
+
+	std::map<int, bool> keyIsPressed; //For non-local players
 };
 
 #endif

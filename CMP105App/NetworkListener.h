@@ -20,21 +20,29 @@ public:
 
         switch (code)
         {
-        
-        case PacketCode::PositionChange:
+
+        case PacketCode:KeyChange:
         {
-            sf::Vector2i pos;
-            incomingData >> pos.x >> pos.y;
-            parentReference.setPosition(static_cast<sf::Vector2f>(pos));
-            return;
+            bool pressed;
+            int key;
+            incomingData >> pressed >> key;
+            parentReference.setKeyPressed(key, pressed);
         }
-        case PacketCode::CrouchChange:
-        {
-            bool crouched;
-            incomingData >> crouched;
-            parentReference.setCrouched(crouched);
-            return;
-        }
+
+        //case PacketCode::PositionChange:
+        //{
+        //    sf::Vector2i pos;
+        //    incomingData >> pos.x >> pos.y;
+        //    parentReference.setPosition(static_cast<sf::Vector2f>(pos));
+        //    return;
+        //}
+        //case PacketCode::CrouchChange:
+        //{
+        //    bool crouched;
+        //    incomingData >> crouched;
+        //    parentReference.setCrouched(crouched);
+        //    return;
+        //}
         }
     }
 
