@@ -30,6 +30,7 @@ public:
         }
         case PacketCode::CrouchChange:
         {
+            std::cout << "sdfjkhsf\n";
             bool crouched;
             incomingData >> crouched;
             parentReference.setCrouched(crouched);

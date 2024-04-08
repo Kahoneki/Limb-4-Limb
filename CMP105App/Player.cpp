@@ -262,7 +262,19 @@ void Player::update(float dt) {
 
 int Player::getHealth() { return health; }
 
-void Player::setCrouched(bool val) { crouched = val; }
+void Player::setCrouched(bool val) {
+	crouched = val;
+	if (val) {
+		setSize(sf::Vector2f(getSize().x, getSize().y * 0.5));
+		setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
+		setPosition(sf::Vector2f(getPosition().x, getPosition().y + 225 / 4));
+	}
+	else {
+		setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
+		setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
+		setPosition(sf::Vector2f(getPosition().x, getPosition().y - 225 / 4));
+	}
+}
 
 void Player::setHealth(int val) { health = val; }
 
