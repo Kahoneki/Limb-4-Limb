@@ -51,17 +51,19 @@ void OnlinePlayer::update(float dt) {
 void OnlinePlayer::SendUpdateDataToNetwork(OnlinePlayerState prevState, OnlinePlayerState newState) {
 	int networkListenerIndex{ playerNum - 1 };
 
-	//Check each field to see if it has changed - yandere dev code; i dont think there's an easier way of doing this
-	if (prevState.pos != newState.pos) {
-		sf::Packet outgoingPacket;
-		outgoingPacket << newState.pos.x << newState.pos.y;
-		networkManager.SendDataToNetworkManager(networkListenerIndex, PacketCode::PositionChange, outgoingPacket);
-	}
-
+	//Check each field to see if it has changed - this looks like yandere dev code; i dont think there's an easier way of doing this
+	
+	//crouched has to come before pos
 	if (prevState.crouched != newState.crouched) {
 		sf::Packet outgoingPacket;
 		outgoingPacket << newState.crouched;
 		networkManager.SendDataToNetworkManager(networkListenerIndex, PacketCode::CrouchChange, outgoingPacket);
+	}
+
+	if (prevState.pos != newState.pos) {
+		sf::Packet outgoingPacket;
+		outgoingPacket << newState.pos.x << newState.pos.y;
+		networkManager.SendDataToNetworkManager(networkListenerIndex, PacketCode::PositionChange, outgoingPacket);
 	}
 
 	if (prevState.health != newState.health) {
