@@ -128,7 +128,7 @@ void TestScene::InitialiseScene() {
 	background.setFillColor(sf::Color::White);
 	background.setTexture(&bgTexture);
 	
-	audioManager.playMusicbyName("GuileTheme");
+	//audioManager.playMusicbyName("GuileTheme");
 }
 
 
