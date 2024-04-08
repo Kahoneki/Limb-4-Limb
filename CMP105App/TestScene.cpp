@@ -34,7 +34,6 @@ void TestScene::handleInput(float dt) {
 
 
 void TestScene::update(float dt) {
-	
 	players[playerNum-1]->update(dt);
 	FlipCheck();
 
@@ -67,6 +66,7 @@ void TestScene::update(float dt) {
 		}
 	}
 	HealthBarUpdate();
+	
 }
 
 

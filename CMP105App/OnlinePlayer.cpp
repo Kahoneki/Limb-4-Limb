@@ -7,10 +7,10 @@ OnlinePlayer::OnlinePlayer(float acc, float ts, float js, int hp, int prot, int 
 }
 
 
-
-void OnlinePlayer::update(float dt) {
+void OnlinePlayer::handleInput(float dt, int up, int left, int right, int down, int jab, int kick, int sweep, int upper) {
 	if (isLocal) {
-		OnlinePlayerState prevState;
+		
+		//Initialise prevState before calling handleInput and update
 		prevState.pos = static_cast<sf::Vector2i>(getPosition());
 		prevState.crouched = crouched;
 		prevState.health = health;
@@ -20,12 +20,19 @@ void OnlinePlayer::update(float dt) {
 			prevState.attacking[i] = attacks[i].getAttacking();
 		}
 
-		
+		Player::handleInput(dt, up, left, right, down, jab, kick, sweep, upper);
+	}
+}
+
+
+void OnlinePlayer::update(float dt) {
+	if (isLocal) {
 		Player::update(dt);
 		
-		OnlinePlayerState newState;
+		//Initialise newState after calling handleInput and update
 		newState.pos = static_cast<sf::Vector2i>(getPosition());
 		newState.crouched = crouched;
+		std::cout << ' ' << crouched << '\n';
 		newState.health = health;
 		newState.stunFramesLeft = stunFramesLeft;
 		for (int i{ 0 }; i < 4; ++i) {
@@ -33,11 +40,10 @@ void OnlinePlayer::update(float dt) {
 			newState.attacking[i] = attacks[i].getAttacking();
 		}
 		
+		//Check if state has changed this frame - if it has, send update to server
 		if (prevState != newState) {
 			SendUpdateDataToNetwork(prevState, newState);
 		}
-	
-		return;
 	}
 }
 

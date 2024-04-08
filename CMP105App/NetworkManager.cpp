@@ -109,7 +109,6 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 
 	//Extract data and check if it's empty
 	if (socket.receive(incomingData, incomingIp, incomingPort) != sf::Socket::Done) { return; }
-	std::cout << "i am receiving data.\n";
 
 	//Ensuring data is coming from server and not another NetworkManager
 	if ((serverAddress != incomingIp) || (incomingPort != serverPort)) {

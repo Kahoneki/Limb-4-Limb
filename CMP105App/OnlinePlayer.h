@@ -29,6 +29,7 @@ class OnlinePlayer : public Player
 {
 public:
 	OnlinePlayer(float acc, float ts, float js, int hp, int prot, int c1, bool flip, int pn, bool local);
+	void handleInput(float dt, int up, int left, int right, int down, int jab, int kick, int sweep, int upper);
 	void update(float dt);
 	void SendUpdateDataToNetwork(OnlinePlayerState prevState, OnlinePlayerState newState);
 
@@ -39,6 +40,9 @@ private:
 	int playerNum; //e.g. Player 1, Player 2, etc.
 	NetworkManager& networkManager; //For sending
 	NetworkListener<OnlinePlayer>* networkListener; //For receiving
+
+	OnlinePlayerState prevState;
+	OnlinePlayerState newState;
 };
 
 #endif

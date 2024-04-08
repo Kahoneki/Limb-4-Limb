@@ -1,7 +1,6 @@
 #ifndef NETWORKLISTENER_H
 #define NETWORKLISTENER_H
 
-#include <type_traits>
 #include <iostream>
 #include "PacketCode.h"
 #include "BaseNetworkListener.h"
@@ -27,12 +26,14 @@ public:
             sf::Vector2i pos;
             incomingData >> pos.x >> pos.y;
             parentReference.setPosition(static_cast<sf::Vector2f>(pos));
+            return;
         }
         case PacketCode::CrouchChange:
         {
             bool crouched;
             incomingData >> crouched;
             parentReference.setCrouched(crouched);
+            return;
         }
         }
     }
