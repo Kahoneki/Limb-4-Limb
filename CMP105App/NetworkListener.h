@@ -26,34 +26,20 @@ public:
         {
             sf::Vector2i pos;
             incomingData >> pos.x >> pos.y;
-            std::cout << "\n\n\n\nPos is: " << pos.x << ' ' << pos.y << "\n\n\n\n";
-            callChangePosition<ParentType>(pos);
+            parentReference.setPosition(static_cast<sf::Vector2f>(pos));
         }
-
+        case PacketCode::CrouchChange:
+        {
+            bool crouched;
+            incomingData >> crouched;
+            parentReference.setCrouched(crouched);
+        }
         }
     }
 
 
 private:
     ParentType& parentReference;
-
-
-    //Template functions (using SFINAE metaprogramming template techniques to check if ParentType has a specific member function so that it can be called)
-    
-    
-    //----CHANGE POSITION----//
-    //Success
-    template<typename T = ParentType, typename std::enable_if_t<std::is_same_v<decltype(std::declval<T>().setPosition(std::declval<sf::Vector2f>())), void>, int> = 0>
-    void callChangePosition(sf::Vector2i pos) {
-        std::cout << "Success\n";
-        parentReference.setPosition(static_cast<sf::Vector2f>(pos));
-    }
-    //Falback
-    template<typename T = ParentType, typename std::enable_if_t<!std::is_same_v<decltype(std::declval<T>().setPosition(std::declval<sf::Vector2f>())), void>, int> = 0>
-    void callChangePosition(sf::Vector2i pos) {
-        std::cerr << "Substitution failure reached for callChangePosition()" << std::endl;
-        return;
-    }
 };
 
 #endif

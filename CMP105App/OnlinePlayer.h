@@ -8,9 +8,20 @@ class NetworkManager;
 
 struct OnlinePlayerState {
 	sf::Vector2i pos;
+	bool crouched;
+	int health;
+	float stunFramesLeft;
+
+	bool activeLimbs[4];
+	bool attacking[4];
 
 	bool operator==(const OnlinePlayerState& other) const {
-		return (pos == other.pos);
+		return ((pos == other.pos) &&
+			    (crouched == other.crouched) &&
+				(health == other.health) &&
+				(stunFramesLeft == other.stunFramesLeft) &&
+				(activeLimbs == other.activeLimbs) &&
+			    (attacking == other.attacking));
 	}
 };
 

@@ -262,6 +262,8 @@ void Player::update(float dt) {
 
 int Player::getHealth() { return health; }
 
+void Player::setCrouched(bool val) { crouched = val; }
+
 void Player::setHealth(int val) { health = val; }
 
 bool Player::getActionable() { return actionable; }

@@ -31,6 +31,7 @@ public:
 	Attack getAttack(int index);
 
 	//Setters
+	void setCrouched(bool val);
 	void setHealth(int val);
 	void UpdateTextures(); //Call whenever there's a change to activeLimbs[]
 	void setLimbActivity(int index, bool val);

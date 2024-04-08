@@ -6,12 +6,6 @@
 #include "SFML/Network.hpp"
 #include <vector>
 
-
-//class BaseNetworkListener;
-//
-//template <typename ParentType>
-//class NetworkListener;
-
 class OnlinePlayer;
 
 class NetworkManager : public NetworkNode
