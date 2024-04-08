@@ -48,6 +48,8 @@ private:
 	OnlinePlayerState prevState;
 	OnlinePlayerState newState;
 
+	bool prevKeyState[8];
+
 	std::map<int, bool> keyIsPressed; //For non-local players
 };
 

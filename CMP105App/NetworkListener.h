@@ -21,7 +21,7 @@ public:
         switch (code)
         {
 
-        case PacketCode:KeyChange:
+        case PacketCode::KeyChange:
         {
             bool pressed;
             int key;

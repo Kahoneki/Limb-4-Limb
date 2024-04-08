@@ -4,44 +4,38 @@
 OnlinePlayer::OnlinePlayer(float acc, float ts, float js, int hp, int prot, int c1, bool flip, int pn, bool local) :
 	Player(acc, ts, js, hp, prot, c1, flip), networkManager(NetworkManager::getInstance()), playerNum(pn), networkListener(networkManager.GenerateNetworkListener<OnlinePlayer>(*this, playerNum-1)), isLocal(local)
 {
+	for (int i{ 0 }; i < 8; ++i) {
+		prevKeyState[i] = false;
+	}
 }
 
 
 void OnlinePlayer::handleInput(float dt, int up, int left, int right, int down, int jab, int kick, int sweep, int upper) {
 	if (isLocal) {
-		
-		//Initialise prevState before calling handleInput and update
-		//prevState.pos = static_cast<sf::Vector2i>(getPosition());
-		//prevState.crouched = crouched;
-		//prevState.health = health;
-		//prevState.stunFramesLeft = stunFramesLeft;
-		//for (int i{ 0 }; i < 4; ++i) {
-		//	prevState.activeLimbs[i] = activeLimbs[i];
-		//	prevState.attacking[i] = attacks[i].getAttacking();
-		//}
+
+		//Compare keys pressed this frame to keys pressed last frame, if they're different, send the differences to the network manager
 
 		int keys[8] { up, left, right, down, jab, kick, sweep, upper };
-
-		bool keysDownBefore[8];
-		for (int i{ 0 }; i < 8; ++i) {
-			keysDownBefore[i] = input->isKeyDown(keys[i]);
-		}
-
 		Player::handleInput(dt, up, left, right, down, jab, kick, sweep, upper);
-	
-		bool keysDownAfter[8];
+
+		bool currentKeyState[8];
 		for (int i{ 0 }; i < 8; ++i) {
-			keysDownAfter[i] = input->isKeyDown(keys[i]);
+			currentKeyState[i] = input->isKeyDown(keys[i]);
 		}
 
-		if (keysDownBefore != keysDownAfter) {
-			std::vector<int> changedKeys;
-			for (int i{ 0 }; i < 8; ++i) {
-				if (keysDownBefore[i] != keysDownAfter[i]) {
-					changedKeys.push_back(keys[i]);
-				}
+		std::vector<int> changedKeys;
+		for (int i{ 0 }; i < 8; ++i) {
+			if (currentKeyState[i] != prevKeyState[i]) {
+				changedKeys.push_back(keys[i]);
 			}
+		}
+
+		if (!changedKeys.empty()) {
 			SendUpdateDataToNetwork(changedKeys);
+		}
+
+		for (int i{ 0 }; i < 8; ++i) {
+			prevKeyState[i] = currentKeyState[i];
 		}
 	}
 
