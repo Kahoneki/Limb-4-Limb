@@ -32,7 +32,6 @@ void OnlinePlayer::update(float dt) {
 		//Initialise newState after calling handleInput and update
 		newState.pos = static_cast<sf::Vector2i>(getPosition());
 		newState.crouched = crouched;
-		std::cout << ' ' << crouched << '\n';
 		newState.health = health;
 		newState.stunFramesLeft = stunFramesLeft;
 		for (int i{ 0 }; i < 4; ++i) {
