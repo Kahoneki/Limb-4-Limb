@@ -28,13 +28,15 @@ TestScene::~TestScene()
 }
 
 void TestScene::handleInput(float dt) {
-	players[playerNum-1]->handleInput(dt, sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::G, sf::Keyboard::T);
+	players[playerNum - 1]->handleInput(dt, sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::G, sf::Keyboard::T);
+	players[1 - (playerNum - 1)]->handleInput(dt, sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::G, sf::Keyboard::T);
 }
 
 
 
 void TestScene::update(float dt) {
-	players[playerNum-1]->update(dt);
+	players[playerNum - 1]->update(dt);
+	players[1 - (playerNum - 1)]->update(dt);
 	FlipCheck();
 
 	//Loop through both players
