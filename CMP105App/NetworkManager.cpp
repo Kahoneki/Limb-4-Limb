@@ -80,13 +80,19 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkM
 	switch (packetCode)
 	{
 
-	case (PacketCode::PositionChange):
+	case PacketCode::PositionChange:
 	{
 		sf::Vector2f pos;
 		incomingPacket >> pos.x >> pos.y;
 		outgoingPacket << pos.x << pos.y;
+		break;
 	}
 
+	case PacketCode::CrouchChange:
+		bool crouched;
+		incomingPacket >> crouched;
+		outgoingPacket << crouched;
+		break;
 	}
 	return socket.send(outgoingPacket, serverAddress, serverPort);
 }
