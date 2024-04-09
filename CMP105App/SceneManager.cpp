@@ -1,6 +1,6 @@
 #include "SceneManager.h"
 
-SceneManager::SceneManager(sf::RenderWindow* hwnd, Input* in) {
+SceneManager::SceneManager(sf::RenderWindow* hwnd, Input* in) : timeManager(TimeManager::getInstance(240)) {
 	window = hwnd;
 	input = in;
 
@@ -19,11 +19,7 @@ void SceneManager::LoadScene(BaseLevel* level) {
 }
 
 void SceneManager::RunCurrentSceneLoop() {
-	currentScene->handleInput(deltaTime);
-	currentScene->update(deltaTime);
+	currentScene->handleInput(timeManager.getDeltaTime());
+	currentScene->update(timeManager.getDeltaTime());
 	currentScene->render();
-}
-
-void SceneManager::UpdateDeltaTime() {
-	deltaTime = clock.restart().asSeconds();
 }

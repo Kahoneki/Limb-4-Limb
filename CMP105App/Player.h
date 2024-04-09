@@ -31,6 +31,7 @@ public:
 	Attack getAttack(int index);
 
 	//Setters
+	void setCrouched(bool val);
 	void setHealth(int val);
 	void UpdateTextures(); //Call whenever there's a change to activeLimbs[]
 	void setLimbActivity(int index, bool val);
@@ -40,7 +41,7 @@ public:
 	void setStunFramesLeft(int numFrames);
 
 
-private:
+protected:
 	//----MEMBERS----//
 	//Movement
 	float acceleration; //This is vertical acceleration (upwards is positive) - there is no horizontal acceleration
@@ -52,7 +53,7 @@ private:
 	bool crouched;
 
 	//Combat
-	int health;
+	sf::Int16 health; //int16 rather than int, since sizeof(int) has to be guaranteed when sending packets
 	int protection;
 	Attack attacks[4];
 	float stunFramesLeft;

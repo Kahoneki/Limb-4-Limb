@@ -2,6 +2,7 @@
 #define SCENEMANAGER_H
 
 #include "MainMenu.h"
+#include "TimeManager.h"
 #include <vector>
 
 class SceneManager
@@ -13,16 +14,14 @@ public:
 
 	void LoadScene(BaseLevel* scene);
 	void RunCurrentSceneLoop();
-	void UpdateDeltaTime();
 
 private:
 
 	sf::RenderWindow* window;
 	Input* input;
+	TimeManager& timeManager;
 
 	BaseLevel* currentScene;
-	sf::Clock clock;
-	float deltaTime;
 };
 
 #endif

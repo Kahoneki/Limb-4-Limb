@@ -1,7 +1,8 @@
 #include "TestScene.h"
 #include "EndScreen.h"
+#include "NetworkManager.h"
 
-TestScene::TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
+TestScene::TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn) : sceneManager(sm), playerNum(pn)
 {
 	std::cout << "Loading test scene\n";
 
@@ -27,22 +28,21 @@ TestScene::~TestScene()
 }
 
 void TestScene::handleInput(float dt) {
-	players[0]->handleInput(dt, sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::G, sf::Keyboard::T);
-	players[1]->handleInput(dt, sf::Keyboard::I, sf::Keyboard::J, sf::Keyboard::L, sf::Keyboard::K, sf::Keyboard::Num9, sf::Keyboard::O, sf::Keyboard::P, sf::Keyboard::Num0);
+	players[playerNum - 1]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
+	players[1 - (playerNum - 1)]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
 }
 
 
 
 void TestScene::update(float dt) {
-	
-	players[0]->update(dt);
-	players[1]->update(dt);
+	players[playerNum - 1]->update(dt);
+	players[1 - (playerNum - 1)]->update(dt);
 	FlipCheck();
 
 	//Loop through both players
 	for (int playerIndex{}; playerIndex < 2; ++playerIndex) {
-		Player* p1 = players[playerIndex]; //Defending player
-		Player* p2 = players[1-playerIndex]; //Attacking player
+		OnlinePlayer* p1 = players[playerIndex]; //Defending player
+		OnlinePlayer* p2 = players[1-playerIndex]; //Attacking player
 
 		//Defending player has stun frames left, continue to the next iteration
 		if (p1->getStunFramesLeft())
@@ -68,6 +68,7 @@ void TestScene::update(float dt) {
 		}
 	}
 	HealthBarUpdate();
+	
 }
 
 
@@ -129,16 +130,16 @@ void TestScene::InitialiseScene() {
 	background.setFillColor(sf::Color::White);
 	background.setTexture(&bgTexture);
 	
-	audioManager.playMusicbyName("GuileTheme");
+	//audioManager.playMusicbyName("GuileTheme");
 }
 
 
 
 void TestScene::InitialisePlayers() {
-	players[0] = new Player(2200.0f, 175.0f, 900.0f, 100, 100, 0, false);
-	players[1] = new Player(2200.0f, 175.0f, 900.0f, 100, 100, 0, true);
+	players[0] = new OnlinePlayer(2200.0f, 175.0f, 900.0f, 100, 100, 0, false, 1, playerNum == 1);
+	players[1] = new OnlinePlayer(2200.0f, 175.0f, 900.0f, 100, 100, 0, true, 2, playerNum == 2);
 
-	for (Player* player : players) {
+	for (OnlinePlayer* player : players) {
 		player->setSize(sf::Vector2f(150, 275));
 		player->setInput(input);
 		player->setHealth(100);

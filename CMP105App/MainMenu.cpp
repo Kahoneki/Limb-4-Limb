@@ -54,7 +54,10 @@ void MainMenu::handleInput(float dt)
 	bool mouseOverBox = startBox.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
 	bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left) && !mousePressedLastFrame;
 	if (mouseOverBox && mouseDown) {
-		TestScene* testScene = new TestScene(window, input, sceneManager);
+		std::cout << "Player num: \n";
+		int playerNum;
+		std::cin >> playerNum;
+		TestScene* testScene = new TestScene(window, input, sceneManager, playerNum);
 		sceneManager.LoadScene(testScene);
 	}
 	mousePressedLastFrame = sf::Mouse::isButtonPressed(sf::Mouse::Left);

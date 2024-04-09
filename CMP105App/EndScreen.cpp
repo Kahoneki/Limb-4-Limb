@@ -50,7 +50,7 @@ void EndScreen::handleInput(float dt) {
 	bool mouseOverBox = restartBox.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
 	bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left) && !mousePressedLastFrame;
 	if (mouseOverBox && mouseDown) {
-		TestScene* testScene = new TestScene(window, input, sceneManager);
+		TestScene* testScene = new TestScene(window, input, sceneManager, 0); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!0 IS A TEMP VALUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		sceneManager.LoadScene(testScene);
 	}
 	mousePressedLastFrame = sf::Mouse::isButtonPressed(sf::Mouse::Left);

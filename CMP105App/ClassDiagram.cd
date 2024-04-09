@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SceneManager" Collapsed="true">
+    <Position X="12.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAEgAAAAACAAAAAIAABAIAAAAAAAAAAQ=</HashCode>
+      <FileName>SceneManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Attack" Collapsed="true">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIEACAQBAAACgAwQQAgQBQAgAIAAAAEACgEKIBAACAA=</HashCode>
+      <FileName>Attack.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OnlinePlayer" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAIEEAAAgAAAAAAAAAAAAAAAAAgEAAA=</HashCode>
+      <FileName>OnlinePlayer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AMAgJkwgEAEASQVEEABgAAEAAAAEAJQqIgAAAwAMAVg=</HashCode>
+      <FileName>Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeManager" Collapsed="true">
+    <Position X="10.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAABAQEAAAAAAAAgAkIAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>TimeManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EndScreen" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BIICAAAAAAAQAAAAAgAAAAAAAAAAAAAAAAIABAIUMAA=</HashCode>
+      <FileName>EndScreen.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainMenu" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIIAACAAAAASAAgCAAAAAAAQAAAAAAQQAAAABAAUIAA=</HashCode>
+      <FileName>MainMenu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestScene" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CIIAAAAAEAABAAAABAAAAAAAQAECgAAAIEAABAAUIAA=</HashCode>
+      <FileName>TestScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseNetworkListener" Collapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NetworkListener.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NetworkListener&lt;ParentType&gt;" Collapsed="true">
+    <Position X="6.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAACABAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>NetworkListener.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NetworkManager" Collapsed="true">
+    <Position X="3.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAoAAAAAgAAACAAAiACAAAAAAAAAAQAAIAAAAAAACI=</HashCode>
+      <FileName>NetworkManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NetworkNode" Collapsed="true">
+    <Position X="3.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAGIAABAAAAAAAAAAAAAAAIECAAAAAAA=</HashCode>
+      <FileName>NetworkNode.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Animation" Collapsed="true">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AICAAAAGsaAAAAAgkAAAAAAICAikAAAEAAAAIQAAIQA=</HashCode>
+      <FileName>Framework\Animation.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioManager" Collapsed="true">
+    <Position X="12.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAECAABAAAAQAAAAAAAEAAEAAAgAIEgAACgAAA=</HashCode>
+      <FileName>Framework\AudioManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseLevel" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAgAAAABAQAAABAIAAAgAIAUAAg=</HashCode>
+      <FileName>Framework\BaseLevel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Collision" Collapsed="true">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Framework\Collision.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Input" Collapsed="true">
+    <Position X="9" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQAQAAAAAAAAAAAAAAAAMAAFAQAQQBAAAIACACGCAA=</HashCode>
+      <FileName>Framework\Input.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObject" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CZABEAAAAAACBAEAAEAEAAAABAAAABAIAARAEAMEAAA=</HashCode>
+      <FileName>Framework\GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MusicObject" Collapsed="true">
+    <Position X="10.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAEAAAAAAAAAAAAAAAAAFAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Framework\MusicObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoundObject" Collapsed="true">
+    <Position X="14.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAggAAAAAAAAEAAAAAABAAAAAgAA=</HashCode>
+      <FileName>Framework\SoundObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TileMap" Collapsed="true">
+    <Position X="9" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAACAAAAAUAIAACEAgAAgAAAAICAgASIAA=</HashCode>
+      <FileName>Framework\TileMap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VectorHelper" Collapsed="true">
+    <Position X="12.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAQAAAAAAEAI=</HashCode>
+      <FileName>Framework\VectorHelper.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

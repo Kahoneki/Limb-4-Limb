@@ -8,7 +8,7 @@
 #include "Framework/AudioManager.h"
 
 #include "SceneManager.h"
-#include "Player.h"
+#include "OnlinePlayer.h"
 
 class SceneManager; //Forward declaration
 
@@ -16,7 +16,7 @@ class TestScene : public BaseLevel
 {
 public:
 
-	TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager);
+	TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager, int pn);
 	~TestScene();
 
 	void handleInput(float dt) override;
@@ -27,7 +27,7 @@ public:
 private:
 	SceneManager& sceneManager;
 
-	Player* players[2];
+	OnlinePlayer* players[2];
 	sf::Texture robotTexture;
 	sf::Texture bgTexture;
 	sf::RectangleShape background;
@@ -36,6 +36,8 @@ private:
 	sf::RectangleShape HealthBarBack1;
 	sf::RectangleShape HealthBarBack2;
 	AudioManager audioManager;
+
+	int playerNum;
 
 	void FlipCheck();
 
