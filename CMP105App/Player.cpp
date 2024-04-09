@@ -93,80 +93,74 @@ Player::~Player() {
 
 
 void Player::handleInput(float dt, int jump, int left, int right, int down, int jab, int kick, int sweep, int upper) {
-	//----MOVEMENT----//
-	//Handle movement if player is on ground, else they shouldn't be able to change horizontal velocity or jump
 
+	//-----COMBAT-----//
 	if (actionable) {
-		if (isGrounded) {
-			//Pressing both keys at same time or not pressing either key
-			if ((input->isKeyDown(left) && input->isKeyDown(right)) || (!input->isKeyDown(left) && (!input->isKeyDown(right)))) {
-				//Slow down to an immediate hault
-				velocity.x = 0;
+		if (!crouched) {
+			if (input->isKeyDown(kick)) {
+				setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
+				attacks[0].setAttacking(true);
 			}
-			//Pressing either left or right (but not both - case covered by above check)
-			else if (input->isKeyDown(right) || input->isKeyDown(left)) {
-				//Handle movement
-				if (input->isKeyDown(right)) {
-					velocity.x = topSpeed - (flipped * (0.3 * topSpeed));
-					blocking = flipped;
-				}
-				if (input->isKeyDown(left)) {
-					velocity.x = -topSpeed + (!flipped * (0.3 * topSpeed));
-					blocking = !flipped;
-				}
+			if (input->isKeyDown(sweep)) {
+				setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
+				attacks[1].setAttacking(true);
 			}
-			//Jumping
-			if (input->isKeyDown(jump)) {
-				isGrounded = false;
-				velocity.y = jumpSpeed;
-				velocity.x *= 1.25;
+			if (input->isKeyDown(jab)) {
+				setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
+				attacks[2].setAttacking(true);
 			}
-
-			//Ducking
-			if (input->isKeyDown(down)) {
-				if (!crouched) {
-					setSize(sf::Vector2f(getSize().x, getSize().y * 0.5));
-					setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-					setPosition(sf::Vector2f(getPosition().x, getPosition().y + 337 / 4));
-					crouched = true;
-				}
+			if (input->isKeyDown(upper)) {
+				setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
+				attacks[3].setAttacking(true);
 			}
-			if (crouched) {
-				if (!input->isKeyDown(down)) {
-					setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
-					setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-					setPosition(sf::Vector2f(getPosition().x, getPosition().y - 337 / 4));
-					crouched = false;
-				}
-			}
-
-			//-----GROUND COMBAT-----//
-			if (!crouched) {
-				if (input->isKeyDown(kick)) {
-					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
-					attacks[0].setAttacking(true);
-					velocity.x = 0;
-				}
-				if (input->isKeyDown(sweep)) {
-					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
-					attacks[1].setAttacking(true);
-					velocity.x = 0;
-				}
-				if (input->isKeyDown(jab)) {
-					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
-					attacks[2].setAttacking(true);
-					velocity.x = 0;
-				}
-				if (input->isKeyDown(upper)) {
-					setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
-					attacks[3].setAttacking(true);
-					velocity.x = 0;
-				}
-			}
-
-			velocity.y -= acceleration * dt;
 		}
 	}
+
+	//----MOVEMENT----//
+	if (isGrounded) {
+		//Pressing both keys at same time or not pressing either key
+		if ((input->isKeyDown(left) && input->isKeyDown(right)) || (!input->isKeyDown(left) && (!input->isKeyDown(right)))) {
+			//Slow down to an immediate hault
+			velocity.x = 0;
+		}
+		//Pressing either left or right (but not both - case covered by above check)
+		else if (input->isKeyDown(right) || input->isKeyDown(left)) {
+			//Handle movement
+			if (input->isKeyDown(right)) {
+				velocity.x = topSpeed - (flipped * (0.3 * topSpeed));
+				blocking = flipped;
+			}
+			if (input->isKeyDown(left)) {
+				velocity.x = -topSpeed + (!flipped * (0.3 * topSpeed));
+				blocking = !flipped;
+			}
+		}
+		//Jumping
+		if (input->isKeyDown(jump)) {
+			isGrounded = false;
+			velocity.y = jumpSpeed;
+			velocity.x *= 1.25;
+		}
+
+		//Ducking
+		if (input->isKeyDown(down)) {
+			if (!crouched) {
+				setSize(sf::Vector2f(getSize().x, getSize().y * 0.5));
+				setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
+				setPosition(sf::Vector2f(getPosition().x, getPosition().y + 337 / 4));
+				crouched = true;
+			}
+		}
+		if (crouched) {
+			if (!input->isKeyDown(down)) {
+				setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
+				setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
+				setPosition(sf::Vector2f(getPosition().x, getPosition().y - 337 / 4));
+				crouched = false;
+			}
+		}
+	}
+
 
 	//Player is in air, so bring them towards ground
 	if (!isGrounded) {
