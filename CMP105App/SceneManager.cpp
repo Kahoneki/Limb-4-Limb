@@ -1,9 +1,8 @@
 #include "SceneManager.h"
 
-SceneManager::SceneManager(sf::RenderWindow* hwnd, Input* in, TimeManager* tm) {
+SceneManager::SceneManager(sf::RenderWindow* hwnd, Input* in) : timeManager(TimeManager::getInstance(240)) {
 	window = hwnd;
 	input = in;
-	timeManager = tm;
 
 	//Start main menu
 	MainMenu* mainMenu = new MainMenu(window, input, *this);
@@ -20,7 +19,7 @@ void SceneManager::LoadScene(BaseLevel* level) {
 }
 
 void SceneManager::RunCurrentSceneLoop() {
-	currentScene->handleInput(timeManager->getDeltaTime());
-	currentScene->update(timeManager->getDeltaTime());
+	currentScene->handleInput(timeManager.getDeltaTime());
+	currentScene->update(timeManager.getDeltaTime());
 	currentScene->render();
 }

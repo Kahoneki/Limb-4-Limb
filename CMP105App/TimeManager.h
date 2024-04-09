@@ -9,7 +9,7 @@ class TimeManager
 {
 public:
 
-	TimeManager(int tps=30);
+	static TimeManager& getInstance(int tps);
 
 	//To be ran every frame in this order
 	void UpdateDeltaTime();
@@ -18,7 +18,8 @@ public:
 	float getDeltaTime();
 
 private:
-	
+	TimeManager(int tps = 30);
+
 	sf::Clock clock;
 
 	int ticksPerSecond;

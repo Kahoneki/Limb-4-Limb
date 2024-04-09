@@ -7,9 +7,9 @@ enum PacketCode
 	AddNetworkManager,
 	RemoveNetworkManager,
 
-	KeyChange
+	KeyChange,
 
-	//PositionChange,
+	PositionChange
 	//CrouchChange,
 	//HealthChange,
 	//StunFrameChange,

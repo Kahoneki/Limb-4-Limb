@@ -1,5 +1,10 @@
 #include "TimeManager.h"
 
+TimeManager& TimeManager::getInstance(int tps=30) {
+	static TimeManager instance(tps);
+	return instance;
+}
+
 TimeManager::TimeManager(int tps) {
 	ticksPerSecond = tps;
 	tickSpeed = 1 / ticksPerSecond;

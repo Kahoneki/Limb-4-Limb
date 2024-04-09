@@ -9,7 +9,7 @@ class SceneManager
 {
 
 public:
-	SceneManager(sf::RenderWindow* hwnd, Input* in, TimeManager* tm);
+	SceneManager(sf::RenderWindow* hwnd, Input* in);
 	~SceneManager();
 
 	void LoadScene(BaseLevel* scene);
@@ -19,7 +19,7 @@ private:
 
 	sf::RenderWindow* window;
 	Input* input;
-	TimeManager* timeManager;
+	TimeManager& timeManager;
 
 	BaseLevel* currentScene;
 };
