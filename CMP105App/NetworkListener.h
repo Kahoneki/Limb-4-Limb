@@ -32,7 +32,7 @@ public:
 
         case PacketCode::Verification:
         {
-            parentReference.VerifyStatus(incomingPacket);
+            parentReference.VerifyStatus(incomingData);
             break;
         }
 
