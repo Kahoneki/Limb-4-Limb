@@ -80,11 +80,13 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkM
 	switch (packetCode)
 	{
 
-	case PacketCode::PositionChange:
+	case PacketCode::Verification:
 	{
 		sf::Vector2f pos;
-		incomingPacket >> pos.x >> pos.y;
-		outgoingPacket << pos.x << pos.y;
+		sf::Int16 health;
+		bool activeLimbs[4];
+		incomingPacket >> pos.x >> pos.y >> health >> activeLimbs[0] >> activeLimbs[1] >> activeLimbs[2] >> activeLimbs[3];
+		outgoingPacket << pos.x << pos.y << health << activeLimbs[0] << activeLimbs[1] << activeLimbs[2] << activeLimbs[3];
 		break;
 	}
 

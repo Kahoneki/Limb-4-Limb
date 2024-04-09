@@ -53,7 +53,7 @@ protected:
 	bool crouched;
 
 	//Combat
-	int health;
+	sf::Int16 health; //int16 rather than int, since sizeof(int) has to be guaranteed when sending packets
 	int protection;
 	Attack attacks[4];
 	float stunFramesLeft;
