@@ -1,5 +1,5 @@
 #include "EndScreen.h"
-#include "NetworkScene.h"
+#include "LocalScene.h"
 
 EndScreen::EndScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, bool player1Win) : sceneManager(sm)
 {
@@ -50,8 +50,8 @@ void EndScreen::handleInput(float dt) {
 	bool mouseOverBox = restartBox.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
 	bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left) && !mousePressedLastFrame;
 	if (mouseOverBox && mouseDown) {
-		NetworkScene* networkScene = new NetworkScene(window, input, sceneManager, 0); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!0 IS A TEMP VALUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		sceneManager.LoadScene(networkScene);
+		LocalScene* localScene = new LocalScene(window, input, sceneManager); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!0 IS A TEMP VALUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		sceneManager.LoadScene(localScene);
 	}
 	mousePressedLastFrame = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 }

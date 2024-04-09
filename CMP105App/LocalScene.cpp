@@ -136,8 +136,8 @@ void LocalScene::InitialiseScene() {
 
 
 void LocalScene::InitialisePlayers() {
-	players[0] = new Player(3300.0f, 270.0f, 1350.0f, 100, 100, 0, false);
-	players[1] = new Player(3300.0f, 270.0f, 1350.0f, 100, 100, 0, true);
+	players[0] = new Player(3300.0f, 600.0f, 1350.0f, 100, 100, 0, false);
+	players[1] = new Player(3300.0f, 600.0f, 1350.0f, 100, 100, 0, true);
 
 	for (Player* player : players) {
 		player->setSize(sf::Vector2f(225, 412));

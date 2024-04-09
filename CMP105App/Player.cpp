@@ -186,24 +186,20 @@ void Player::update(float dt) {
 	if (!isGrounded) {
 		currentPos.y -= ((velocity.y * dt) + (0.5 * (acceleration * dt * dt))); //s=ut+1/2(at^2)
 	}
-
-	//Boundary checks
-	//Lots of magic number usage - albeit well commented. This is mainly just to avoid calling getSize() every frame (though this could also be done through a constexpr)
 	
 	//Vertical
-	if (currentPos.y > (crouched ? 646 : 562)) { //646 is the "floor", 646+getSize().y/4 = 562 when crouched
-		currentPos.y = (crouched ? 646 : 562);
+	int floorLevel{ 800 };
+	if (currentPos.y > floorLevel-getSize().y/2) {
+		currentPos.y = floorLevel-getSize().y/2;
 		isGrounded = true;
 		velocity.y = 0;
 	}
-	//No need for a "roof" check since player is not capable of reaching such a height
 
 	//Horizontal
-	if (currentPos.x < 94 || currentPos.x > 1707) { //getSize().x/2 = 94, 1920-getSize().x/2 = 1707 (not using <=/>= since velocity.x is being set to 0 and player would be stuck on edge)
-		currentPos.x = (currentPos.x <= 94 ? 94 : 1707);
+	if (currentPos.x < getSize().x/2 || currentPos.x > 1920 - getSize().x/2) { //not using <=/>= since velocity.x is being set to 0 and player would be stuck on edge
+		currentPos.x = (currentPos.x <= getSize().x/2 ? getSize().x/2 : 1920-getSize().x/2);
 		velocity.x = 0;
 	}
-
 
 	setPosition(currentPos.x, currentPos.y);
 
