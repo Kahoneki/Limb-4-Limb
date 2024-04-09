@@ -1,5 +1,6 @@
 #include "MainMenu.h"
-#include "TestScene.h"
+#include "NetworkScene.h"
+#include "LocalScene.h"
 
 MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
 {
@@ -18,9 +19,13 @@ MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneM
 	titleBox.setFillColor(sf::Color::White);
 	
 	
-	startBox.setSize(sf::Vector2f(350, 40));
-	startBox.setPosition(230, 300);
-	startBox.setFillColor(sf::Color::White);
+	localBox.setSize(sf::Vector2f(350, 40));
+	localBox.setPosition(230, 300);
+	localBox.setFillColor(sf::Color::White);
+
+	onlineBox.setSize(sf::Vector2f(350, 40));
+	onlineBox.setPosition(800, 300);
+	onlineBox.setFillColor(sf::Color::White);
 	
 	
 	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
@@ -32,11 +37,17 @@ MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneM
 	titleText.setPosition(350, 50);
 	
 	
-	startText.setFont(font);
-	startText.setString("START");
-	startText.setCharacterSize(30);
-	startText.setFillColor(sf::Color::Red);
-	startText.setPosition(230, 300);
+	localText.setFont(font);
+	localText.setString("LOCAL");
+	localText.setCharacterSize(30);
+	localText.setFillColor(sf::Color::Red);
+	localText.setPosition(230, 300);
+
+	onlineText.setFont(font);
+	onlineText.setString("ONLINE");
+	onlineText.setCharacterSize(30);
+	onlineText.setFillColor(sf::Color::Red);
+	onlineText.setPosition(800, 300);
 
 	std::cout << "Loaded main menu\n";
 }
@@ -51,14 +62,11 @@ MainMenu::~MainMenu()
 
 void MainMenu::handleInput(float dt)
 {
-	bool mouseOverBox = startBox.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
+	bool mouseOverBox = localBox.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
 	bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left) && !mousePressedLastFrame;
 	if (mouseOverBox && mouseDown) {
-		std::cout << "Player num: \n";
-		int playerNum;
-		std::cin >> playerNum;
-		TestScene* testScene = new TestScene(window, input, sceneManager, playerNum);
-		sceneManager.LoadScene(testScene);
+		LocalScene* localScene = new LocalScene(window, input, sceneManager);
+		sceneManager.LoadScene(localScene);
 	}
 	mousePressedLastFrame = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 }
@@ -69,8 +77,11 @@ void MainMenu::render()
 {
 	beginDraw();
 	window->draw(titleBox);
-	window->draw(startBox);
+	window->draw(localBox);
+	window->draw(onlineBox);
+
 	window->draw(titleText);
-	window->draw(startText);
+	window->draw(localText);
+	window->draw(onlineText);
 	endDraw();
 }

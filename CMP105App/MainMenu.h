@@ -33,9 +33,11 @@ private:
 	sf::Font font;
 	sf::RectangleShape background;
 	sf::RectangleShape titleBox;
-	sf::RectangleShape startBox;
+	sf::RectangleShape localBox;
+	sf::RectangleShape onlineBox;
 	sf::Text titleText;
-	sf::Text startText;
+	sf::Text localText;
+	sf::Text onlineText;
 };
 
 #endif
