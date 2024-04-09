@@ -97,12 +97,12 @@ void LocalScene::render()
 
 
 void LocalScene::HealthBarUpdate() {
-	int Calc1 = 4 * players[0]->getHealth();
-	int Calc2 = 4 * players[1]->getHealth();
+	int Calc1 = 6 * players[0]->getHealth();
+	int Calc2 = 6 * players[1]->getHealth();
 
-	HealthBarFront1.setSize(sf::Vector2f(Calc1, 50));
-	HealthBarFront2.setSize(sf::Vector2f(Calc2, 50));
-	HealthBarFront2.setPosition((window->getSize().x - Calc2 - 25), 25);
+	HealthBarFront1.setSize(sf::Vector2f(Calc1, HealthBarFront1.getSize().y));
+	HealthBarFront2.setSize(sf::Vector2f(Calc2, HealthBarFront1.getSize().y));
+	HealthBarFront2.setPosition((1920 - Calc2 - 37), 37);
 
 	if (players[0]->getHealth() <= 0 || players[1]->getHealth() <= 0) {
 		EndScreen* endScreen = new EndScreen(window, input, sceneManager, players[0]->getHealth() > 0);
@@ -136,17 +136,17 @@ void LocalScene::InitialiseScene() {
 
 
 void LocalScene::InitialisePlayers() {
-	players[0] = new Player(2200.0f, 175.0f, 900.0f, 100, 100, 0, false);
-	players[1] = new Player(2200.0f, 175.0f, 900.0f, 100, 100, 0, true);
+	players[0] = new Player(3300.0f, 270.0f, 1350.0f, 100, 100, 0, false);
+	players[1] = new Player(3300.0f, 270.0f, 1350.0f, 100, 100, 0, true);
 
 	for (Player* player : players) {
-		player->setSize(sf::Vector2f(150, 275));
+		player->setSize(sf::Vector2f(225, 412));
 		player->setInput(input);
 		player->setHealth(100);
 		player->setOrigin(player->getLocalBounds().width / 2.f, player->getLocalBounds().height / 2.f);
 	}
-	players[0]->setPosition(175, 375);
-	players[1]->setPosition(975, 375);
+	players[0]->setPosition(225, 562);
+	players[1]->setPosition(1462, 562);
 	players[1]->setScale(-1.0f, 1.0f);
 	players[1]->setFillColor(sf::Color::Red);
 }
@@ -154,20 +154,20 @@ void LocalScene::InitialisePlayers() {
 
 
 void LocalScene::InitialiseHealthBars() {
-	HealthBarFront1.setSize(sf::Vector2f(400, 50));
-	HealthBarFront1.setPosition(25, 25);
+	HealthBarFront1.setSize(sf::Vector2f(600, 75));
+	HealthBarFront1.setPosition(37, 37);
 	HealthBarFront1.setFillColor(sf::Color::Green);
 
-	HealthBarBack1.setSize(sf::Vector2f(400, 50));
-	HealthBarBack1.setPosition(25, 25);
+	HealthBarBack1.setSize(sf::Vector2f(600, 75));
+	HealthBarBack1.setPosition(37, 37);
 	HealthBarBack1.setFillColor(sf::Color::Red);
 
-	HealthBarFront2.setSize(sf::Vector2f(400, 50));
-	HealthBarFront2.setPosition((window->getSize().x - 425), 25);
+	HealthBarFront2.setSize(sf::Vector2f(600, 75));
+	HealthBarFront2.setPosition(1282, 37);
 	HealthBarFront2.setFillColor(sf::Color::Green);
 
-	HealthBarBack2.setSize(sf::Vector2f(400, 50));
-	HealthBarBack2.setPosition((window->getSize().x - 425), 25);
+	HealthBarBack2.setSize(sf::Vector2f(600, 75));
+	HealthBarBack2.setPosition(1282, 37);
 	HealthBarBack2.setFillColor(sf::Color::Red);
 }
 

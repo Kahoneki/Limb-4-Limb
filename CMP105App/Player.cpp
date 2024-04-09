@@ -24,10 +24,10 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 
 	for (bool& b : activeLimbs) { b = true; }
 
-	attacks[0] = Attack(2, 5, 12, 8, 60, 30, 30, 96, 8);
-	attacks[1] = Attack(5, 15, 40, 60, 60, 30, 30, 96, 18);
-	attacks[2] = Attack(4, 7, 18, 6, 60, 25, 50, -59, 5);
-	attacks[3] = Attack(2, 15, 30, 70, 60, 70, 50, -104, 20);
+	attacks[0] = Attack(2, 5,  12, 8,  90, 45,  45, 144,   8);
+	attacks[1] = Attack(5, 15, 40, 60, 90, 45,  45, 144,   18);
+	attacks[2] = Attack(4, 7,  18, 6,  90, 37,  75, -88,   5);
+	attacks[3] = Attack(2, 15, 30, 70, 90, 105, 75, -156,  20);
 
 	stunFramesLeft = 0;
 
@@ -127,7 +127,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 				if (!crouched) {
 					setSize(sf::Vector2f(getSize().x, getSize().y * 0.5));
 					setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-					setPosition(sf::Vector2f(getPosition().x, getPosition().y + 225 / 4));
+					setPosition(sf::Vector2f(getPosition().x, getPosition().y + 337 / 4));
 					crouched = true;
 				}
 			}
@@ -135,7 +135,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 				if (!input->isKeyDown(down)) {
 					setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
 					setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-					setPosition(sf::Vector2f(getPosition().x, getPosition().y - 225 / 4));
+					setPosition(sf::Vector2f(getPosition().x, getPosition().y - 337 / 4));
 					crouched = false;
 				}
 			}
@@ -191,16 +191,16 @@ void Player::update(float dt) {
 	//Lots of magic number usage - albeit well commented. This is mainly just to avoid calling getSize() every frame (though this could also be done through a constexpr)
 	
 	//Vertical
-	if (currentPos.y > (crouched ? 431 : 375)) { //375 is the "floor", 375+getSize().x/4 = 431 when crouched
-		currentPos.y = (crouched ? 431 : 375);
+	if (currentPos.y > (crouched ? 646 : 562)) { //646 is the "floor", 646+getSize().y/4 = 562 when crouched
+		currentPos.y = (crouched ? 646 : 562);
 		isGrounded = true;
 		velocity.y = 0;
 	}
 	//No need for a "roof" check since player is not capable of reaching such a height
 
 	//Horizontal
-	if (currentPos.x < 63 || currentPos.x > 1138) { //getSize().x/2 = 63, 1200-getSize().x/2 = 1138 (not using <=/>= since velocity.x is being set to 0 and player would be stuck on edge)
-		currentPos.x = (currentPos.x <= 63 ? 63 : 1138);
+	if (currentPos.x < 94 || currentPos.x > 1707) { //getSize().x/2 = 94, 1920-getSize().x/2 = 1707 (not using <=/>= since velocity.x is being set to 0 and player would be stuck on edge)
+		currentPos.x = (currentPos.x <= 94 ? 94 : 1707);
 		velocity.x = 0;
 	}
 
