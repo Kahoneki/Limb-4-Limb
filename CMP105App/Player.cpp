@@ -16,6 +16,8 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 	protection = prot;
 	characterIndex = c1;
 
+	isOnPlatform = false;
+	isTravellingThroughPlatform = false;
 	isGrounded = false;
 	actionable = true;
 	crouched = false;
@@ -278,6 +280,12 @@ int Player::getLimbRotation(int index) { return activeLimbs[index] ? aliveLimbSp
 
 Attack Player::getAttack(int index) { return attacks[index]; }
 
+bool Player::getGrounded() { return isGrounded; }
+
+bool Player::getOnPlatform() { return isOnPlatform; }
+
+bool Player::getTravellingThroughPlatform() { return isTravellingThroughPlatform; }
+
 int Player::getStunFramesLeft() { return stunFramesLeft; }
 
 bool Player::getFlipped() { return flipped; }
@@ -289,6 +297,12 @@ void Player::UpdateTextures() { updateTextures = true; }
 void Player::setFlipped(bool flip) { flipped = flip; }
 
 void Player::setStunFramesLeft(int numFrames) { stunFramesLeft = numFrames; }
+
+void Player::setGrounded(bool val) { isGrounded = val; }
+
+void Player::setOnPlatform(bool val) { isOnPlatform = val; }
+
+void Player::setTravellingThroughPlatform(bool val) { isTravellingThroughPlatform = val; }
 
 void Player::setLimbActivity(int index, bool val) { activeLimbs[index] = val; }
 

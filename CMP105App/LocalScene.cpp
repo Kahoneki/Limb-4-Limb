@@ -1,6 +1,7 @@
 #include "LocalScene.h"
 #include "EndScreen.h"
 #include "NetworkManager.h"
+#include <cmath> //For min and max
 
 LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
 {
@@ -41,10 +42,78 @@ void LocalScene::update(float dt) {
 
 	//Loop through both players
 	for (int playerIndex{}; playerIndex < 2; ++playerIndex) {
-		Player* p1 = players[playerIndex]; //Defending player
-		Player* p2 = players[1 - playerIndex]; //Attacking player
+		
+		Player* p1 = players[playerIndex];		
+		
 
-		//Defending player has stun frames left, continue to the next iteration
+		//Platform collision check - note: player origin is in centre of sprite, platform origin is at top left of sprite
+		//If player tries to hit the left, right, or bottom of platform, don't let them
+		//Logic for jumping on top of the platform / off the top of the platform:
+		//Player jumps, isGrounded=false
+		//Player intersects with top of platform, isOnPlatform=true, isGrounded=true, intersection checks no longer done
+		//Player either jumps or walks off of platform, isGrounded=false (jumping already disables isGrounded in player class so this code only needs to update it if player walks off)
+		//If isGrounded=false, isOnPlatform=false
+
+		if (!p1->getOnPlatform()) {
+			if (p1->getGlobalBounds().intersects(platform.getGlobalBounds())) {
+				float playerBottom{ p1->getPosition().y + p1->getSize().y / 2 };
+				float playerTop{ p1->getPosition().y - p1->getSize().y / 2 };
+				float playerRight{ p1->getPosition().x + p1->getSize().x / 2 };
+				float playerLeft{ p1->getPosition().x - p1->getSize().x / 2 };
+				float platformBottom{ platform.getPosition().y + platform.getSize().y };
+				float platformTop{ platform.getPosition().y };
+				float platformRight{ platform.getPosition().x + platform.getSize().x };
+				float platformLeft{ platform.getPosition().x };
+				float playerCenterX{ p1->getPosition().x };
+				float playerCenterY{ p1->getPosition().y };
+
+				if (playerRight >= platformLeft && playerCenterX < platformLeft) {
+					//Colliding on left side
+					//p1->setPosition(sf::Vector2f(platformLeft - p1->getSize().x / 2, p1->getPosition().y));
+					//p1->setVelocity(sf::Vector2f(0, p1->getVelocity().y));
+				}
+				else if (playerLeft <= platformRight && playerCenterX > platformRight) {
+					//Colliding on right side
+					//p1->setPosition(sf::Vector2f(platformRight + p1->getSize().x / 2, p1->getPosition().y));
+					//p1->setVelocity(sf::Vector2f(0, p1->getVelocity().y));
+				}
+				else if (playerBottom >= platformTop && playerCenterY < platformTop) {
+					//Colliding on top side
+					if (p1->getVelocity().y < 0) {
+						//Travelling downwards and player 
+						p1->setPosition(sf::Vector2f(p1->getPosition().x, platformTop - p1->getSize().y / 2));
+						p1->setVelocity(sf::Vector2f(p1->getVelocity().x, 0));
+						p1->setOnPlatform(true);
+						p1->setGrounded(true);
+					}
+				}
+				else if (playerTop <= platformBottom && playerCenterY > platformBottom) {
+					//Colliding on bottom side
+					//p1->setPosition(sf::Vector2f(p1->getPosition().x, platformBottom + p1->getSize().y / 2));
+					//p1->setVelocity(sf::Vector2f(p1->getVelocity().x, 0));
+					p1->setTravellingThroughPlatform(true);
+				}
+			}
+		}
+		else {
+			//Check if player has walked off platform
+			if (p1->getPosition().x + p1->getSize().x/2 < platform.getPosition().x || p1->getPosition().x - p1->getSize().x/2 > platform.getPosition().x + platform.getSize().x) {
+				p1->setGrounded(false);
+				p1->setOnPlatform(false);
+			}
+		}
+		
+		//Check if player has jumped
+		if (!p1->getGrounded()) {
+			p1->setOnPlatform(false);
+		}
+
+		
+		//Attack hitbox collision check
+		//p1 is defending player
+		Player* p2 = players[1 - playerIndex]; //p2 is attacking player
+
+		//Defending player has stun frames left, continue to the next player
 		if (p1->getStunFramesLeft())
 			continue;
 
@@ -90,6 +159,7 @@ void LocalScene::render()
 	window->draw(HealthBarBack2);
 	window->draw(HealthBarFront1);
 	window->draw(HealthBarFront2);
+	window->draw(platform);
 
 	endDraw();
 }
@@ -130,6 +200,9 @@ void LocalScene::InitialiseScene() {
 	background.setFillColor(sf::Color::White);
 	background.setTexture(&bgTexture);
 
+	platform.setSize(sf::Vector2f(800, 25));
+	platform.setPosition(sf::Vector2f(500, 550));
+
 	//audioManager.playMusicbyName("GuileTheme");
 }
 
@@ -140,7 +213,7 @@ void LocalScene::InitialisePlayers() {
 	players[1] = new Player(3300.0f, 600.0f, 1350.0f, 100, 100, 0, true);
 
 	for (Player* player : players) {
-		player->setSize(sf::Vector2f(225, 412));
+		player->setSize(sf::Vector2f(112, 206));
 		player->setInput(input);
 		player->setHealth(100);
 		player->setOrigin(player->getLocalBounds().width / 2.f, player->getLocalBounds().height / 2.f);

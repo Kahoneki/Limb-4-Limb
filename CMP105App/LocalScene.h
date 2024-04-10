@@ -44,6 +44,9 @@ private:
 	sf::RectangleShape HealthBarFront2;
 	sf::RectangleShape HealthBarBack1;
 	sf::RectangleShape HealthBarBack2;
+
+	sf::RectangleShape platform;
+
 	AudioManager audioManager;
 
 	void FlipCheck();

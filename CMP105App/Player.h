@@ -29,6 +29,9 @@ public:
 	bool getFlipped();
 	bool getBlocking();
 	Attack getAttack(int index);
+	bool getGrounded();
+	bool getOnPlatform();
+	bool getTravellingThroughPlatform();
 
 	//Setters
 	void setCrouched(bool val);
@@ -39,6 +42,9 @@ public:
 	void addLimbRotation(int index, int rotation); //Degrees
 	void setFlipped(bool flip);
 	void setStunFramesLeft(int numFrames);
+	void setGrounded(bool val);
+	void setOnPlatform(bool val);
+	void setTravellingThroughPlatform(bool val);
 
 
 protected:
@@ -47,6 +53,9 @@ protected:
 	float acceleration; //This is vertical acceleration (upwards is positive) - there is no horizontal acceleration
 	float topSpeed;
 	float jumpSpeed;
+
+	bool isOnPlatform;
+	bool isTravellingThroughPlatform;
 
 	bool isGrounded;
 	bool actionable;
