@@ -149,17 +149,17 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 	//Ducking
 	if (input->isKeyDown(down)) {
 		if (!crouched) {
-			setSize(sf::Vector2f(getSize().x, getSize().y * 0.5));
+			setSize(sf::Vector2f(getSize().x, getSize().y * 0.5f));
 			setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-			setPosition(sf::Vector2f(getPosition().x, getPosition().y + 337 / 4));
+			setPosition(sf::Vector2f(getPosition().x, getPosition().y + getSize().y / 2));
 			crouched = true;
 		}
 	}
 	if (crouched) {
 		if (!input->isKeyDown(down)) {
-			setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
+			setSize(sf::Vector2f(getSize().x, getSize().y / 0.5f));
 			setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-			setPosition(sf::Vector2f(getPosition().x, getPosition().y - 337 / 8));
+			setPosition(sf::Vector2f(getPosition().x, getPosition().y - getSize().y / 4));
 			crouched = false;
 		}
 	}
