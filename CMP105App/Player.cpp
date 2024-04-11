@@ -126,14 +126,37 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 	}
 	//Pressing either left or right (but not both - case covered by above check)
 	else if (input->isKeyDown(right) || input->isKeyDown(left)) {
-		//Handle movement
-		if (input->isKeyDown(right)) {
-			velocity.x = topSpeed - (isGrounded ? 0 : 0.7*topSpeed);
-			blocking = flipped;
+		//Handle horizontal movement
+		if (isGrounded) {
+			if (input->isKeyDown(right)) {
+				velocity.x = topSpeed;
+			}
+			if (input->isKeyDown(left)) {
+				velocity.x = -topSpeed;
+			}
 		}
-		if (input->isKeyDown(left)) {
-			velocity.x = -topSpeed + (isGrounded ? 0 : 0.7 * topSpeed);
-			blocking = !flipped;
+		//In midair, player can slightly adjust their direction
+		else {
+			if (input->isKeyDown(right)) {
+				//Jumping to the right
+				if (jumpDirection == 1) {
+					velocity.x = topSpeed;
+				}
+				//Travelling to left or straight up, but player is pressing right - let them switch direction to the right but only 30% of the regular speed
+				else {
+					velocity.x = 0.6 * topSpeed;
+				}
+			}
+			if (input->isKeyDown(left)) {
+				//Jumping to the left
+				if (jumpDirection == -1) {
+					velocity.x = -topSpeed;
+				}
+				//Travelling to right or straight up, but player is pressing right - let them switch direction to the left but only 30% of the regular speed
+				else {
+					velocity.x = 0.6 * -topSpeed;
+				}
+			}
 		}
 	}
 	if (isGrounded) {
@@ -142,6 +165,15 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			isGrounded = false;
 			velocity.y = jumpSpeed;
 			velocity.x *= 1.25;
+			if (velocity.x > 0) {
+				jumpDirection = 1;
+			}
+			else if (velocity.x < 0) {
+				jumpDirection = -1;
+			}
+			else {
+				jumpDirection = 0;
+			}
 		}
 
 	}

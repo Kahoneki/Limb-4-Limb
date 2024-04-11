@@ -57,6 +57,7 @@ protected:
 	float acceleration; //This is vertical acceleration (upwards is positive) - there is no horizontal acceleration
 	float topSpeed;
 	float jumpSpeed;
+	int jumpDirection; //-1: left, 0: up, 1: right
 
 	int currentPlatform; //Index of platform that player is currently stood on
 	bool isOnPlatform;

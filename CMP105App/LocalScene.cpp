@@ -125,11 +125,6 @@ void LocalScene::update(float dt) {
 				bool playerRightIsLeftOfPlatformLeft { p1->getPosition().x + p1->getSize().x / 2 < platforms[i].getPosition().x };
 				bool playerLeftIsRightOfPlatformRight{ p1->getPosition().x - p1->getSize().x / 2 > platforms[i].getPosition().x + platforms[i].getSize().x };
 				if ((playerRightIsLeftOfPlatformLeft || playerLeftIsRightOfPlatformRight) && p1->getCurrentPlatform() == i) {
-					if (p1->getFillColor() == sf::Color::White) {
-						std::cout << p1->getCurrentPlatform() << ' ' << i << '\n';
-						/*std::cout << "Pos: " << platforms[i].getPosition().x << ". Size: " << platforms[i].getSize().x << '\n';
-						std::cout << "Pos 2: " << platforms[p1->getCurrentPlatform()].getPosition().x << ". Size 2: " << platforms[p1->getCurrentPlatform()].getSize().x << "\n\n";*/
-					}
 					p1->setGrounded(false);
 					p1->setOnPlatform(false);
 				}
