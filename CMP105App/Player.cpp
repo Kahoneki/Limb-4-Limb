@@ -286,6 +286,8 @@ Attack Player::getAttack(int index) { return attacks[index]; }
 
 bool Player::getGrounded() { return isGrounded; }
 
+Platform& Player::getCurrentPlatform() { return currentPlatform; }
+
 bool Player::getOnPlatform() { return isOnPlatform; }
 
 bool Player::getFallingThroughPlatform() { return isFallingThroughPlatform; }
@@ -303,6 +305,8 @@ void Player::setFlipped(bool flip) { flipped = flip; }
 void Player::setStunFramesLeft(int numFrames) { stunFramesLeft = numFrames; }
 
 void Player::setGrounded(bool val) { isGrounded = val; }
+
+void Player::setCurrentPlatorm(Platform& platform) { currentPlatform = platform; }
 
 void Player::setOnPlatform(bool val) { isOnPlatform = val; }
 

@@ -46,7 +46,7 @@ void LocalScene::update(float dt) {
 		Player* p1 = players[playerIndex];
 
 		//Loop through all platforms
-		for (Platform platform : platforms) {
+		for (Platform& platform : platforms) {
 
 			//Platform collision check - note: player origin is in centre of sprite, platform origin is at top left of sprite
 
@@ -65,6 +65,7 @@ void LocalScene::update(float dt) {
 			//The above logic allows the player to go through a platform by simply tapping crouch once before falling on another platform below
 			//^(provided said platform is below the initial platform by at least one player height)^
 			//Alternatively, the player can continue holding crouch to fall through all platforms below them while they hold crouch
+
 			if (!p1->getOnPlatform()) {
 				if (!p1->getFallingThroughPlatform()) {
 					if (p1->getGlobalBounds().intersects(platform.getGlobalBounds())) {
@@ -79,10 +80,7 @@ void LocalScene::update(float dt) {
 						float playerCenterX{ p1->getPosition().x };
 						float playerCenterY{ p1->getPosition().y };
 
-						float epsilon{ 13.0f }; //Player will intersect top of platform, if the amount they intersect it by is any less than epsilon, snap them on top
-						/*if (p1->getFillColor() == sf::Color::White)
-							std::cout << playerBottom << ' ' << platformTop << ' ' << playerBottom-epsilon << ' ' << platformTop << '\n';*/
-						if (playerBottom >= platformTop && playerBottom - epsilon < platformTop) {
+						if (playerBottom >= platformTop && playerBottom < platformBottom) {
 							//Colliding on top side
 							if (p1->getVelocity().y < 0) {
 								//Travelling downwards
@@ -90,6 +88,7 @@ void LocalScene::update(float dt) {
 								p1->setVelocity(sf::Vector2f(p1->getVelocity().x, 0));
 								p1->setOnPlatform(true);
 								p1->setGrounded(true);
+								p1->setCurrentPlatorm(platform);
 							}
 						}
 						if (!platform.getPassable()) {
@@ -112,7 +111,7 @@ void LocalScene::update(float dt) {
 					}
 				}
 				//Check if player has let go of crouch while falling through platform
-				if (p1->getFallingThroughPlatform() && !p1->getCrouched()) {
+				if (p1->getFallingThroughPlatform() && !p1->getCrouched() && p1->getCurrentPlatform() == platform) {
 					//Wait until player has fully made it through the platform or has fully made it above the platform before disabling fallingThroughPlatform.
 					//If player starts crouching again in this time, they will continue to fall through platforms
 					if (p1->getPosition().y - p1->getSize().y / 2 > platform.getPosition().y + platform.getSize().y || //Player top lower than platform bottom - player has fallen through
@@ -123,12 +122,14 @@ void LocalScene::update(float dt) {
 			}
 			else {
 				//Check if player has walked off platform
-				if (p1->getPosition().x + p1->getSize().x / 2 < platform.getPosition().x || p1->getPosition().x - p1->getSize().x / 2 > platform.getPosition().x + platform.getSize().x) {
+				if (p1->getPosition().x + p1->getSize().x / 2 < platform.getPosition().x ||
+					p1->getPosition().x - p1->getSize().x / 2 > platform.getPosition().x + platform.getSize().x &&
+					p1->getCurrentPlatform() == platform) {
 					p1->setGrounded(false);
 					p1->setOnPlatform(false);
 				}
 				//Check if platform is passable and player is crouching - in which case, they should fall through the platform
-				if (platform.getPassable() && p1->getCrouched()) {
+				if (platform.getPassable() && p1->getCrouched() && p1->getCurrentPlatform() == platform) {
 					p1->setFallingThroughPlatform(true);
 					p1->setGrounded(false);
 					p1->setOnPlatform(false);
@@ -140,37 +141,34 @@ void LocalScene::update(float dt) {
 				p1->setOnPlatform(false);
 			}
 
-		if (p1->getFillColor() == sf::Color::White)
-			std::cout << std::boolalpha << p1->getGrounded() << ' ' << p1->getOnPlatform() << ' ' << p1->getFallingThroughPlatform() << '\n';
-		}
 
 
+			//Attack hitbox collision check
+			//p1 is defending player
+			Player* p2 = players[1 - playerIndex]; //p2 is attacking player
 
-		//Attack hitbox collision check
-		//p1 is defending player
-		Player* p2 = players[1 - playerIndex]; //p2 is attacking player
-
-		//Defending player has stun frames left, continue to the next player
-		if (p1->getStunFramesLeft())
-			continue;
-
-		//Loop through all limbs to see if hitboxes are colliding
-		for (int limbIndex{}; limbIndex < 4; ++limbIndex) {
-
-			//Hitbox isn't colliding, continue to next limb
-			if (!p1->getGlobalBounds().intersects(p2->getAttack(limbIndex).getHitbox().getGlobalBounds()))
+			//Defending player has stun frames left, continue to the next player
+			if (p1->getStunFramesLeft())
 				continue;
 
-			int damageAmount = p2->getAttack(limbIndex).getDamage();
-			damageAmount *= (p1->getBlocking() ? 0.1 : 1); //If defending player is blocking, only apply 10% of the damage
-			damageAmount *= (p2->getLimbActivity(limbIndex) ? 1.2 : 1); //If attacking player's limb is broken, add an extra 20% damage to the attack
+			//Loop through all limbs to see if hitboxes are colliding
+			for (int limbIndex{}; limbIndex < 4; ++limbIndex) {
 
-			p1->setHealth(p1->getHealth() - damageAmount);
-			p1->setStunFramesLeft(p1->getBlocking() ? 0 : p2->getAttack(limbIndex).getHitstun()); //If defending player isn't blocking, give them hitstun
+				//Hitbox isn't colliding, continue to next limb
+				if (!p1->getGlobalBounds().intersects(p2->getAttack(limbIndex).getHitbox().getGlobalBounds()))
+					continue;
 
-			//Move both players away from each other a bit to stop attacking player from being able to spam attacks due to player 1's hitstun
-			p1->move(sf::Vector2f(-10 + (20 * p1->getFlipped()), 0));
-			p2->move(sf::Vector2f(-10 + (20 * p2->getFlipped()), 0));
+				int damageAmount = p2->getAttack(limbIndex).getDamage();
+				damageAmount *= (p1->getBlocking() ? 0.1 : 1); //If defending player is blocking, only apply 10% of the damage
+				damageAmount *= (p2->getLimbActivity(limbIndex) ? 1.2 : 1); //If attacking player's limb is broken, add an extra 20% damage to the attack
+
+				p1->setHealth(p1->getHealth() - damageAmount);
+				p1->setStunFramesLeft(p1->getBlocking() ? 0 : p2->getAttack(limbIndex).getHitstun()); //If defending player isn't blocking, give them hitstun
+
+				//Move both players away from each other a bit to stop attacking player from being able to spam attacks due to player 1's hitstun
+				p1->move(sf::Vector2f(-10 + (20 * p1->getFlipped()), 0));
+				p2->move(sf::Vector2f(-10 + (20 * p2->getFlipped()), 0));
+			}
 		}
 	}
 	HealthBarUpdate();
@@ -238,7 +236,7 @@ void LocalScene::InitialiseScene() {
 	background.setFillColor(sf::Color::White);
 	background.setTexture(&bgTexture);
 
-	platforms[0] = Platform(500, 700, 400, 25, true);
+	platforms[0] = Platform(500, 700, 800, 25, true);
 	platforms[1] = Platform(500, 450, 400, 25, true);
 
 	//audioManager.playMusicbyName("GuileTheme");

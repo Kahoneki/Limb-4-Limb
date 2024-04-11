@@ -13,7 +13,10 @@ public:
 	bool getPassable();
 	void setPassable(bool val);
 
-	//sf::FloatRect bounds;
+	inline bool operator==(const Platform& other) const {
+		return (getPosition() == other.getPosition()) && (getSize() == other.getSize()) && (isPassable == other.isPassable);
+	}
+
 protected:
 	bool isPassable;
 };
