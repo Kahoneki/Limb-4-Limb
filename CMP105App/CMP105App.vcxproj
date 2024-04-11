@@ -180,6 +180,7 @@
     <ClCompile Include="NetworkNode.cpp" />
     <ClCompile Include="NetworkScene.cpp" />
     <ClCompile Include="OnlinePlayer.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneManager.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="NetworkScene.h" />
     <ClInclude Include="OnlinePlayer.h" />
     <ClInclude Include="PacketCode.h" />
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="TimeManager.h" />
   </ItemGroup>

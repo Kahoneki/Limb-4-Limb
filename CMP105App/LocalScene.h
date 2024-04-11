@@ -18,6 +18,7 @@
 
 #include "SceneManager.h"
 #include "OnlinePlayer.h"
+#include "Platform.h"
 
 class SceneManager; //Forward declaration
 
@@ -45,7 +46,7 @@ private:
 	sf::RectangleShape HealthBarBack1;
 	sf::RectangleShape HealthBarBack2;
 
-	sf::RectangleShape platform;
+	Platform platform;
 
 	AudioManager audioManager;
 

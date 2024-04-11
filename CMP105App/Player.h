@@ -20,6 +20,7 @@ public:
 
 
 	//Getters
+	bool getCrouched();
 	int getHealth();
 	int getProtection();
 	bool getLimbActivity(int index);
@@ -31,7 +32,7 @@ public:
 	Attack getAttack(int index);
 	bool getGrounded();
 	bool getOnPlatform();
-	bool getTravellingThroughPlatform();
+	bool getFallingThroughPlatform();
 
 	//Setters
 	void setCrouched(bool val);
@@ -44,7 +45,7 @@ public:
 	void setStunFramesLeft(int numFrames);
 	void setGrounded(bool val);
 	void setOnPlatform(bool val);
-	void setTravellingThroughPlatform(bool val);
+	void setFallingThroughPlatform(bool val);
 
 
 protected:
@@ -55,7 +56,8 @@ protected:
 	float jumpSpeed;
 
 	bool isOnPlatform;
-	bool isTravellingThroughPlatform;
+	bool isFallingThroughPlatform;
+	bool isFallingThroughPlatformReadyToBeFalse;
 
 	bool isGrounded;
 	bool actionable;

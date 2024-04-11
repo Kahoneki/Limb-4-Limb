@@ -55,43 +55,46 @@ void LocalScene::update(float dt) {
 		//If isGrounded=false, isOnPlatform=false
 
 		if (!p1->getOnPlatform()) {
-			if (p1->getGlobalBounds().intersects(platform.getGlobalBounds())) {
-				float playerBottom{ p1->getPosition().y + p1->getSize().y / 2 };
-				float playerTop{ p1->getPosition().y - p1->getSize().y / 2 };
-				float playerRight{ p1->getPosition().x + p1->getSize().x / 2 };
-				float playerLeft{ p1->getPosition().x - p1->getSize().x / 2 };
-				float platformBottom{ platform.getPosition().y + platform.getSize().y };
-				float platformTop{ platform.getPosition().y };
-				float platformRight{ platform.getPosition().x + platform.getSize().x };
-				float platformLeft{ platform.getPosition().x };
-				float playerCenterX{ p1->getPosition().x };
-				float playerCenterY{ p1->getPosition().y };
-
-				if (playerRight >= platformLeft && playerCenterX < platformLeft) {
-					//Colliding on left side
-					//p1->setPosition(sf::Vector2f(platformLeft - p1->getSize().x / 2, p1->getPosition().y));
-					//p1->setVelocity(sf::Vector2f(0, p1->getVelocity().y));
-				}
-				else if (playerLeft <= platformRight && playerCenterX > platformRight) {
-					//Colliding on right side
-					//p1->setPosition(sf::Vector2f(platformRight + p1->getSize().x / 2, p1->getPosition().y));
-					//p1->setVelocity(sf::Vector2f(0, p1->getVelocity().y));
-				}
-				else if (playerBottom >= platformTop && playerCenterY < platformTop) {
-					//Colliding on top side
-					if (p1->getVelocity().y < 0) {
-						//Travelling downwards and player 
-						p1->setPosition(sf::Vector2f(p1->getPosition().x, platformTop - p1->getSize().y / 2));
-						p1->setVelocity(sf::Vector2f(p1->getVelocity().x, 0));
-						p1->setOnPlatform(true);
-						p1->setGrounded(true);
+			if (!p1->getFallingThroughPlatform()) {
+				if (p1->getGlobalBounds().intersects(platform.getGlobalBounds())) {
+					float playerBottom{ p1->getPosition().y + p1->getSize().y / 2 };
+					float playerTop{ p1->getPosition().y - p1->getSize().y / 2 };
+					float playerRight{ p1->getPosition().x + p1->getSize().x / 2 };
+					float playerLeft{ p1->getPosition().x - p1->getSize().x / 2 };
+					float platformBottom{ platform.getPosition().y + platform.getSize().y };
+					float platformTop{ platform.getPosition().y };
+					float platformRight{ platform.getPosition().x + platform.getSize().x };
+					float platformLeft{ platform.getPosition().x };
+					float playerCenterX{ p1->getPosition().x };
+					float playerCenterY{ p1->getPosition().y };
+				
+					if (playerBottom >= platformTop && playerCenterY < platformTop) {
+						//Colliding on top side
+						if (p1->getVelocity().y < 0) {
+							//Travelling downwards
+							p1->setPosition(sf::Vector2f(p1->getPosition().x, platformTop - p1->getSize().y / 2));
+							p1->setVelocity(sf::Vector2f(p1->getVelocity().x, 0));
+							p1->setOnPlatform(true);
+							p1->setGrounded(true);
+						}
 					}
-				}
-				else if (playerTop <= platformBottom && playerCenterY > platformBottom) {
-					//Colliding on bottom side
-					//p1->setPosition(sf::Vector2f(p1->getPosition().x, platformBottom + p1->getSize().y / 2));
-					//p1->setVelocity(sf::Vector2f(p1->getVelocity().x, 0));
-					p1->setTravellingThroughPlatform(true);
+					if (!platform.getPassable()) {
+						if (playerRight >= platformLeft && playerCenterX < platformLeft) {
+							//Colliding on left side
+							p1->setPosition(sf::Vector2f(platformLeft - p1->getSize().x / 2, p1->getPosition().y));
+							p1->setVelocity(sf::Vector2f(0, p1->getVelocity().y));
+						}
+						else if (playerLeft <= platformRight && playerCenterX > platformRight) {
+							//Colliding on right side
+							p1->setPosition(sf::Vector2f(platformRight + p1->getSize().x / 2, p1->getPosition().y));
+							p1->setVelocity(sf::Vector2f(0, p1->getVelocity().y));
+						}
+						else if (playerTop <= platformBottom && playerCenterY > platformBottom) {
+							//Colliding on bottom side
+							p1->setPosition(sf::Vector2f(p1->getPosition().x, platformBottom + p1->getSize().y / 2));
+							p1->setVelocity(sf::Vector2f(p1->getVelocity().x, 0));
+						}
+					}
 				}
 			}
 		}
@@ -101,12 +104,19 @@ void LocalScene::update(float dt) {
 				p1->setGrounded(false);
 				p1->setOnPlatform(false);
 			}
+			//Check if platform is passable and player is crouching - in which case, they should fall through the platform
+			if (platform.getPassable() && p1->getCrouched()) {
+				p1->setFallingThroughPlatform(true);
+				p1->setGrounded(false);
+				p1->setOnPlatform(false);
+			}
 		}
 		
 		//Check if player has jumped
 		if (!p1->getGrounded()) {
 			p1->setOnPlatform(false);
 		}
+
 
 		
 		//Attack hitbox collision check
@@ -200,8 +210,7 @@ void LocalScene::InitialiseScene() {
 	background.setFillColor(sf::Color::White);
 	background.setTexture(&bgTexture);
 
-	platform.setSize(sf::Vector2f(800, 25));
-	platform.setPosition(sf::Vector2f(500, 550));
+	platform = Platform(500, 550, 800, 25, true);
 
 	//audioManager.playMusicbyName("GuileTheme");
 }

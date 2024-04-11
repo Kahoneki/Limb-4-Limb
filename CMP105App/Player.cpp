@@ -17,7 +17,8 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 	characterIndex = c1;
 
 	isOnPlatform = false;
-	isTravellingThroughPlatform = false;
+	isFallingThroughPlatformReadyToBeFalse = false;
+
 	isGrounded = false;
 	actionable = true;
 	crouched = false;
@@ -144,21 +145,26 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			velocity.x *= 1.25;
 		}
 
-		//Ducking
-		if (input->isKeyDown(down)) {
-			if (!crouched) {
-				setSize(sf::Vector2f(getSize().x, getSize().y * 0.5));
-				setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-				setPosition(sf::Vector2f(getPosition().x, getPosition().y + 337 / 4));
-				crouched = true;
-			}
+	}
+
+	//Ducking
+	if (input->isKeyDown(down)) {
+		if (!crouched) {
+			setSize(sf::Vector2f(getSize().x, getSize().y * 0.5));
+			setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
+			setPosition(sf::Vector2f(getPosition().x, getPosition().y + 337 / 4));
+			crouched = true;
 		}
-		if (crouched) {
-			if (!input->isKeyDown(down)) {
-				setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
-				setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-				setPosition(sf::Vector2f(getPosition().x, getPosition().y - 337 / 4));
-				crouched = false;
+	}
+	if (crouched) {
+		if (!input->isKeyDown(down)) {
+			setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
+			setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
+			setPosition(sf::Vector2f(getPosition().x, getPosition().y - 337 / 4));
+			crouched = false;
+			if (isFallingThroughPlatform) {
+				//isFallingThroughPlatform will now be disabled once player is fully under the platform
+				isFallingThroughPlatformReadyToBeFalse = true;
 			}
 		}
 	}
@@ -252,6 +258,8 @@ void Player::update(float dt) {
 
 
 
+bool Player::getCrouched() { return crouched; }
+
 int Player::getHealth() { return health; }
 
 void Player::setCrouched(bool val) {
@@ -284,7 +292,7 @@ bool Player::getGrounded() { return isGrounded; }
 
 bool Player::getOnPlatform() { return isOnPlatform; }
 
-bool Player::getTravellingThroughPlatform() { return isTravellingThroughPlatform; }
+bool Player::getFallingThroughPlatform() { return isFallingThroughPlatform; }
 
 int Player::getStunFramesLeft() { return stunFramesLeft; }
 
@@ -302,7 +310,7 @@ void Player::setGrounded(bool val) { isGrounded = val; }
 
 void Player::setOnPlatform(bool val) { isOnPlatform = val; }
 
-void Player::setTravellingThroughPlatform(bool val) { isTravellingThroughPlatform = val; }
+void Player::setFallingThroughPlatform(bool val) { isFallingThroughPlatform = val; }
 
 void Player::setLimbActivity(int index, bool val) { activeLimbs[index] = val; }
 
