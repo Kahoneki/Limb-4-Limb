@@ -38,7 +38,6 @@ void LocalScene::handleInput(float dt) {
 void LocalScene::update(float dt) {
 	players[0]->update(dt);
 	players[1]->update(dt);
-	FlipCheck();
 
 	//Loop through both players
 	for (int playerIndex{}; playerIndex < 2; ++playerIndex) {
@@ -213,18 +212,6 @@ void LocalScene::HealthBarUpdate() {
 	if (players[0]->getHealth() <= 0 || players[1]->getHealth() <= 0) {
 		EndScreen* endScreen = new EndScreen(window, input, sceneManager, players[0]->getHealth() > 0);
 		sceneManager.LoadScene(endScreen);
-	}
-}
-
-
-void LocalScene::FlipCheck() {
-	bool playersFacingOppositeDirections{ (players[0]->getScale().x == 1 && players[0]->getPosition().x > players[1]->getPosition().x) ||
-										   (players[0]->getScale().x == -1 && players[0]->getPosition().x < players[1]->getPosition().x) };
-	if (playersFacingOppositeDirections) {
-		players[0]->setFlipped(!players[0]->getFlipped());
-		players[0]->setScale(-players[0]->getScale().x, 1);
-		players[1]->setFlipped(!players[1]->getFlipped());
-		players[1]->setScale(-players[1]->getScale().x, 1);
 	}
 }
 

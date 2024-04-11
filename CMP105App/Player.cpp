@@ -231,6 +231,20 @@ void Player::update(float dt) {
 	}
 
 	setPosition(currentPos.x, currentPos.y);
+	
+
+	//Ensure player is always facing in the direction they're moving
+	if (velocity.x > 0 && getScale() == sf::Vector2f(-1, 1)) { //Moving right, facing left
+		//Make player face right
+		setScale(1, 1);
+		flipped = false;
+	}
+	else if (velocity.x < 0 && getScale() == sf::Vector2f(1, 1)) {//Moving left, facing right
+		//Make player face left
+		setScale(-1, 1);
+		flipped = true;
+	}
+	//If player is standing still, don't change the direction they're facing
 
 
 	//Handle combat
