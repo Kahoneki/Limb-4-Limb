@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Framework/GameObject.h"
+#include <iostream>
 
 class Platform : public GameObject
 {
@@ -12,10 +13,6 @@ public:
 
 	bool getPassable();
 	void setPassable(bool val);
-
-	inline bool operator==(const Platform& other) const {
-		return (getPosition() == other.getPosition()) && (getSize() == other.getSize()) && (isPassable == other.isPassable);
-	}
 
 protected:
 	bool isPassable;

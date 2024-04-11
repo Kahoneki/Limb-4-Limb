@@ -196,8 +196,8 @@
   Note: including file:   M:\GitHub\CMP105-Individual\CMP105App\Framework\Input.h
   Note: including file:  M:\GitHub\CMP105-Individual\CMP105App\Attack.h
   Note: including file:  M:\GitHub\CMP105-Individual\CMP105App\Platform.h
-  Note: including file: C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.39.33519\include\iostream
-  Note: including file:  C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.39.33519\include\istream
+  Note: including file:   C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.39.33519\include\iostream
+  Note: including file:    C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.39.33519\include\istream
   Note: including file: C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.39.33519\include\format
   Note: including file:  C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.39.33519\include\__msvc_format_ucd_tables.hpp
   Note: including file:  C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.39.33519\include\__msvc_print.hpp
@@ -209,73 +209,73 @@
   Note: including file:   C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.39.33519\include\xcharconv_ryu.h
   Note: including file:    C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.39.33519\include\xcharconv_ryu_tables.h
   Note: including file:   C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.39.33519\include\xcharconv_tables.h
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(132,27): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(132,27): warning C4244:         with
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(132,27): warning C4244:         [
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(132,27): warning C4244:             T=float
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(132,27): warning C4244:         ]
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(136,28): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(136,28): warning C4244:         with
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(136,28): warning C4244:         [
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(136,28): warning C4244:             T=float
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(136,28): warning C4244:         ]
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(185,29): warning C4244: '+=': conversion from 'T' to 'T', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(185,29): warning C4244:         with
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(185,29): warning C4244:         [
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(185,29): warning C4244:             T=float
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(185,29): warning C4244:         ]
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(185,29): warning C4244:         and
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(185,29): warning C4244:         [
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(185,29): warning C4244:             T=int
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(185,29): warning C4244:         ]
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(187,38): warning C4244: '-=': conversion from 'double' to 'T', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(187,38): warning C4244:         with
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(187,38): warning C4244:         [
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(187,38): warning C4244:             T=int
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(187,38): warning C4244:         ]
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(193,28): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(193,28): warning C4244:         with
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(193,28): warning C4244:         [
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(193,28): warning C4244:             T=float
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(193,28): warning C4244:         ]
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(193,28): warning C4244:         and
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(193,28): warning C4244:         [
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(193,28): warning C4244:             T=int
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(193,28): warning C4244:         ]
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(200,32): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(200,32): warning C4244:         with
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(200,32): warning C4244:         [
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(200,32): warning C4244:             T=float
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(200,32): warning C4244:         ]
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(200,32): warning C4244:         and
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(200,32): warning C4244:         [
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(200,32): warning C4244:             T=int
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(200,32): warning C4244:         ]
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(204,38): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(204,38): warning C4244:         with
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(204,38): warning C4244:         [
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(204,38): warning C4244:             T=int
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(204,38): warning C4244:         ]
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(204,24): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(204,24): warning C4244:         with
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(204,24): warning C4244:         [
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(204,24): warning C4244:             T=int
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(204,24): warning C4244:         ]
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(266,49): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(266,49): warning C4244:         with
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(266,49): warning C4244:         [
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(266,49): warning C4244:             T=float
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(266,49): warning C4244:         ]
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(271,49): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(271,49): warning C4244:         with
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(271,49): warning C4244:         [
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(271,49): warning C4244:             T=float
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(271,49): warning C4244:         ]
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(283,66): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(295,42): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(305,66): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(317,115): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(317,163): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(319,110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(319,153): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(131,26): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(131,26): warning C4244:         with
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(131,26): warning C4244:         [
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(131,26): warning C4244:             T=float
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(131,26): warning C4244:         ]
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(135,27): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(135,27): warning C4244:         with
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(135,27): warning C4244:         [
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(135,27): warning C4244:             T=float
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(135,27): warning C4244:         ]
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(182,29): warning C4244: '+=': conversion from 'T' to 'T', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(182,29): warning C4244:         with
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(182,29): warning C4244:         [
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(182,29): warning C4244:             T=float
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(182,29): warning C4244:         ]
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(182,29): warning C4244:         and
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(182,29): warning C4244:         [
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(182,29): warning C4244:             T=int
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(182,29): warning C4244:         ]
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(184,38): warning C4244: '-=': conversion from 'double' to 'T', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(184,38): warning C4244:         with
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(184,38): warning C4244:         [
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(184,38): warning C4244:             T=int
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(184,38): warning C4244:         ]
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(190,28): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(190,28): warning C4244:         with
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(190,28): warning C4244:         [
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(190,28): warning C4244:             T=float
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(190,28): warning C4244:         ]
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(190,28): warning C4244:         and
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(190,28): warning C4244:         [
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(190,28): warning C4244:             T=int
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(190,28): warning C4244:         ]
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(197,32): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(197,32): warning C4244:         with
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(197,32): warning C4244:         [
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(197,32): warning C4244:             T=float
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(197,32): warning C4244:         ]
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(197,32): warning C4244:         and
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(197,32): warning C4244:         [
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(197,32): warning C4244:             T=int
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(197,32): warning C4244:         ]
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(201,38): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(201,38): warning C4244:         with
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(201,38): warning C4244:         [
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(201,38): warning C4244:             T=int
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(201,38): warning C4244:         ]
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(201,24): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(201,24): warning C4244:         with
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(201,24): warning C4244:         [
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(201,24): warning C4244:             T=int
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(201,24): warning C4244:         ]
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(263,49): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(263,49): warning C4244:         with
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(263,49): warning C4244:         [
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(263,49): warning C4244:             T=float
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(263,49): warning C4244:         ]
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(268,49): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(268,49): warning C4244:         with
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(268,49): warning C4244:         [
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(268,49): warning C4244:             T=float
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(268,49): warning C4244:         ]
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(280,66): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(292,42): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(302,66): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(314,115): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(314,163): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(316,110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp(316,153): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   CMP105App.vcxproj -> M:\GitHub\CMP105-Individual\x64\Debug\CMP105App.exe

@@ -119,24 +119,24 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 	}
 
 	//----MOVEMENT----//
+	//Pressing both keys at same time or not pressing either key
+	if ((input->isKeyDown(left) && input->isKeyDown(right)) || (!input->isKeyDown(left) && (!input->isKeyDown(right)))) {
+		//Slow down to an immediate hault
+		velocity.x = 0;
+	}
+	//Pressing either left or right (but not both - case covered by above check)
+	else if (input->isKeyDown(right) || input->isKeyDown(left)) {
+		//Handle movement
+		if (input->isKeyDown(right)) {
+			velocity.x = topSpeed - (isGrounded ? 0 : 0.7*topSpeed);
+			blocking = flipped;
+		}
+		if (input->isKeyDown(left)) {
+			velocity.x = -topSpeed + (isGrounded ? 0 : 0.7 * topSpeed);
+			blocking = !flipped;
+		}
+	}
 	if (isGrounded) {
-		//Pressing both keys at same time or not pressing either key
-		if ((input->isKeyDown(left) && input->isKeyDown(right)) || (!input->isKeyDown(left) && (!input->isKeyDown(right)))) {
-			//Slow down to an immediate hault
-			velocity.x = 0;
-		}
-		//Pressing either left or right (but not both - case covered by above check)
-		else if (input->isKeyDown(right) || input->isKeyDown(left)) {
-			//Handle movement
-			if (input->isKeyDown(right)) {
-				velocity.x = topSpeed - (flipped * (0.3 * topSpeed));
-				blocking = flipped;
-			}
-			if (input->isKeyDown(left)) {
-				velocity.x = -topSpeed + (!flipped * (0.3 * topSpeed));
-				blocking = !flipped;
-			}
-		}
 		//Jumping
 		if (input->isKeyDown(jump)) {
 			isGrounded = false;
@@ -185,7 +185,7 @@ void Player::update(float dt) {
 	}
 	
 	//Vertical
-	int floorLevel{ 800 };
+	int floorLevel{ 1000 };
 	if (currentPos.y > floorLevel-getSize().y/2) {
 		currentPos.y = floorLevel-getSize().y/2;
 		isGrounded = true;
@@ -283,7 +283,7 @@ Attack Player::getAttack(int index) { return attacks[index]; }
 
 bool Player::getGrounded() { return isGrounded; }
 
-Platform& Player::getCurrentPlatform() { return currentPlatform; }
+int Player::getCurrentPlatform() { return currentPlatform; }
 
 bool Player::getOnPlatform() { return isOnPlatform; }
 
@@ -303,7 +303,7 @@ void Player::setStunFramesLeft(int numFrames) { stunFramesLeft = numFrames; }
 
 void Player::setGrounded(bool val) { isGrounded = val; }
 
-void Player::setCurrentPlatorm(Platform& platform) { currentPlatform = platform; }
+void Player::setCurrentPlatorm(int val) { currentPlatform = val; }
 
 void Player::setOnPlatform(bool val) { isOnPlatform = val; }
 

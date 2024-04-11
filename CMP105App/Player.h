@@ -32,7 +32,7 @@ public:
 	bool getBlocking();
 	Attack getAttack(int index);
 	bool getGrounded();
-	Platform& getCurrentPlatform();
+	int getCurrentPlatform();
 	bool getOnPlatform();
 	bool getFallingThroughPlatform();
 
@@ -46,7 +46,7 @@ public:
 	void setFlipped(bool flip);
 	void setStunFramesLeft(int numFrames);
 	void setGrounded(bool val);
-	void setCurrentPlatorm(Platform& platform);
+	void setCurrentPlatorm(int platform);
 	void setOnPlatform(bool val);
 	void setFallingThroughPlatform(bool val);
 
@@ -58,7 +58,7 @@ protected:
 	float topSpeed;
 	float jumpSpeed;
 
-	Platform currentPlatform; //Platform that player is currently stood on
+	int currentPlatform; //Index of platform that player is currently stood on
 	bool isOnPlatform;
 	bool isFallingThroughPlatform;
 
