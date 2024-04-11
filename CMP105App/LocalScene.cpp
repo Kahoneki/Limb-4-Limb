@@ -42,11 +42,11 @@ void LocalScene::update(float dt) {
 
 	//Loop through both players
 	for (int playerIndex{}; playerIndex < 2; ++playerIndex) {
-		
-		Player* p1 = players[playerIndex];		
-		
+
+		Player* p1 = players[playerIndex];
+
 		//Loop through all platforms
-		//for (Platform platform : platforms) {
+		for (Platform platform : platforms) {
 
 			//Platform collision check - note: player origin is in centre of sprite, platform origin is at top left of sprite
 
@@ -78,10 +78,9 @@ void LocalScene::update(float dt) {
 						float platformLeft{ platform.getPosition().x };
 						float playerCenterX{ p1->getPosition().x };
 						float playerCenterY{ p1->getPosition().y };
-				
+
 						float epsilon{ 1.0f }; //Player will intersect top of platform, if the amount they intersect it by is any less than epsilon, snap them on top
-						if (playerBottom >= platformTop && playerBottom-epsilon < platformTop) {
-							std::cout << playerBottom << ' ' << platformTop << ' ' << playerCenterY << ' ' << platformTop << '\n';
+						if (playerBottom >= platformTop && playerBottom - epsilon < platformTop) {
 							//Colliding on top side
 							if (p1->getVelocity().y < 0) {
 								//Travelling downwards
@@ -122,7 +121,7 @@ void LocalScene::update(float dt) {
 			}
 			else {
 				//Check if player has walked off platform
-				if (p1->getPosition().x + p1->getSize().x/2 < platform.getPosition().x || p1->getPosition().x - p1->getSize().x/2 > platform.getPosition().x + platform.getSize().x) {
+				if (p1->getPosition().x + p1->getSize().x / 2 < platform.getPosition().x || p1->getPosition().x - p1->getSize().x / 2 > platform.getPosition().x + platform.getSize().x) {
 					p1->setGrounded(false);
 					p1->setOnPlatform(false);
 				}
@@ -133,16 +132,18 @@ void LocalScene::update(float dt) {
 					p1->setOnPlatform(false);
 				}
 			}
-		
+
 			//Check if player has jumped
 			if (!p1->getGrounded()) {
 				p1->setOnPlatform(false);
 			}
-		
-		//}
+
+		if (p1->getFillColor() == sf::Color::White)
+			std::cout << std::boolalpha << p1->getGrounded() << ' ' << p1->getOnPlatform() << ' ' << p1->getFallingThroughPlatform() << '\n';
+		}
 
 
-		
+
 		//Attack hitbox collision check
 		//p1 is defending player
 		Player* p2 = players[1 - playerIndex]; //p2 is attacking player
@@ -171,7 +172,6 @@ void LocalScene::update(float dt) {
 		}
 	}
 	HealthBarUpdate();
-
 }
 
 
@@ -193,10 +193,9 @@ void LocalScene::render()
 	window->draw(HealthBarBack2);
 	window->draw(HealthBarFront1);
 	window->draw(HealthBarFront2);
-	/*for (int i{ 0 }; i < 2; ++i) {
+	for (int i{ 0 }; i < 2; ++i) {
 		window->draw(platforms[i]);
-	}*/
-	window->draw(platform);
+	}
 
 	endDraw();
 }
@@ -237,8 +236,8 @@ void LocalScene::InitialiseScene() {
 	background.setFillColor(sf::Color::White);
 	background.setTexture(&bgTexture);
 
-	//platforms[0] = Platform(500, 700, 400, 25, true);
-	platform = Platform(500, 450, 400, 25, true);
+	platforms[0] = Platform(500, 700, 400, 25, true);
+	platforms[1] = Platform(500, 450, 400, 25, true);
 
 	//audioManager.playMusicbyName("GuileTheme");
 }

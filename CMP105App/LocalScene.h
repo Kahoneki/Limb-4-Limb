@@ -46,7 +46,7 @@ private:
 	sf::RectangleShape HealthBarBack1;
 	sf::RectangleShape HealthBarBack2;
 
-	Platform platform;
+	Platform platforms[2];
 
 	AudioManager audioManager;
 
