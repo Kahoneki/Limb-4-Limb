@@ -162,10 +162,6 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
 			setPosition(sf::Vector2f(getPosition().x, getPosition().y - 337 / 4));
 			crouched = false;
-			if (isFallingThroughPlatform) {
-				//isFallingThroughPlatform will now be disabled once player is fully under the platform
-				isFallingThroughPlatformReadyToBeFalse = true;
-			}
 		}
 	}
 

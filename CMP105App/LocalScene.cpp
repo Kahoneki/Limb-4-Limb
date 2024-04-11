@@ -47,12 +47,22 @@ void LocalScene::update(float dt) {
 		
 
 		//Platform collision check - note: player origin is in centre of sprite, platform origin is at top left of sprite
+
+		//Logic:
+		//
 		//If player tries to hit the left, right, or bottom of platform, don't let them
 		//Logic for jumping on top of the platform / off the top of the platform:
 		//Player jumps, isGrounded=false
 		//Player intersects with top of platform, isOnPlatform=true, isGrounded=true, intersection checks no longer done
-		//Player either jumps or walks off of platform, isGrounded=false (jumping already disables isGrounded in player class so this code only needs to update it if player walks off)
+		//If player either jumps or walks off of platform, isGrounded=false (jumping already disables isGrounded in player class so this code only needs to update it if player walks off)
 		//If isGrounded=false, isOnPlatform=false
+		//
+		//If player crouches while isOnPlatform=true, isFallingThroughPlatform=true, onPlatform=false, isGrounded=false (player will start falling)
+		//If isFallingThroughPlatform=true, don't perform any collision checks
+		//If isFallingThroughPlatform=true and isCrouched=false, check if player has fallen all the way through the platform, and if they have, isFallingThroughPlatform=false
+		//The above logic allows the player to go through a platform by simply tapping crouch once before falling on another platform below
+		//^(provided said platform is below the initial platform by at least one player height)^
+		//Alternatively, the player can continue holding crouch to fall through all platforms below them while they hold crouch
 
 		if (!p1->getOnPlatform()) {
 			if (!p1->getFallingThroughPlatform()) {
@@ -95,6 +105,15 @@ void LocalScene::update(float dt) {
 							p1->setVelocity(sf::Vector2f(p1->getVelocity().x, 0));
 						}
 					}
+				}
+			}
+			//Check if player has let go of crouch while falling through platform
+			if (p1->getFallingThroughPlatform() && !p1->getCrouched()) {
+				//Wait until player has fully made it through the platform or has fully made it above the platform before disabling fallingThroughPlatform.
+				//If player starts crouching again in this time, they will continue to fall through platforms
+				if (p1->getPosition().y - p1->getSize().y / 2 > platform.getPosition().y + platform.getSize().y || //Player top lower than platform bottom - player has fallen through
+					p1->getPosition().y + p1->getSize().y / 2 < platform.getPosition().y) {						   //Player bottom higher than platform top - player has made it above
+					p1->setFallingThroughPlatform(false);
 				}
 			}
 		}
