@@ -17,7 +17,6 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 	characterIndex = c1;
 
 	isOnPlatform = false;
-	isFallingThroughPlatformReadyToBeFalse = false;
 
 	isGrounded = false;
 	actionable = true;

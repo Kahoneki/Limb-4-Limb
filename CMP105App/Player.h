@@ -61,7 +61,6 @@ protected:
 	Platform currentPlatform; //Platform that player is currently stood on
 	bool isOnPlatform;
 	bool isFallingThroughPlatform;
-	bool isFallingThroughPlatformReadyToBeFalse;
 
 	bool isGrounded;
 	bool actionable;
