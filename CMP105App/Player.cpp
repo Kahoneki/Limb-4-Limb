@@ -269,7 +269,7 @@ void Player::setCrouched(bool val) {
 		std::cout << "increasing size\n";
 		setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
 		setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-		setPosition(sf::Vector2f(getPosition().x, getPosition().y - 225 / 4));
+		setPosition(sf::Vector2f(getPosition().x, getPosition().y - 225 / 8));
 	}
 }
 
