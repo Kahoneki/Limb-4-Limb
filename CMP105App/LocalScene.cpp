@@ -79,7 +79,9 @@ void LocalScene::update(float dt) {
 						float playerCenterX{ p1->getPosition().x };
 						float playerCenterY{ p1->getPosition().y };
 
-						float epsilon{ 1.0f }; //Player will intersect top of platform, if the amount they intersect it by is any less than epsilon, snap them on top
+						float epsilon{ 13.0f }; //Player will intersect top of platform, if the amount they intersect it by is any less than epsilon, snap them on top
+						/*if (p1->getFillColor() == sf::Color::White)
+							std::cout << playerBottom << ' ' << platformTop << ' ' << playerBottom-epsilon << ' ' << platformTop << '\n';*/
 						if (playerBottom >= platformTop && playerBottom - epsilon < platformTop) {
 							//Colliding on top side
 							if (p1->getVelocity().y < 0) {

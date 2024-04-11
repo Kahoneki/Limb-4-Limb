@@ -160,7 +160,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 		if (!input->isKeyDown(down)) {
 			setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
 			setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-			setPosition(sf::Vector2f(getPosition().x, getPosition().y - 337 / 4));
+			setPosition(sf::Vector2f(getPosition().x, getPosition().y - 337 / 8));
 			crouched = false;
 		}
 	}
