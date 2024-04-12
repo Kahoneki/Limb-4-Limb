@@ -1,7 +1,6 @@
 #include "LocalScene.h"
 #include "EndScreen.h"
 #include "NetworkManager.h"
-#include <cmath> //For min and max
 
 LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
 {
@@ -19,7 +18,6 @@ LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sc
 }
 
 
-
 LocalScene::~LocalScene()
 {
 	std::cout << "Unloading test scene\n";
@@ -28,6 +26,58 @@ LocalScene::~LocalScene()
 	std::cout << "Unloaded test scene\n";
 
 }
+
+
+void LocalScene::InitialiseScene() {
+	background.setSize(sf::Vector2f(window->getSize()));
+	if (!bgTexture.loadFromFile("Assets/Background/background.png")) { std::cerr << "Couldn't load background for fight scene\n"; }
+	background.setFillColor(sf::Color::White);
+	background.setTexture(&bgTexture);
+
+	platforms[0] = Platform(450, 475, 300, 25, true);
+	platforms[1] = Platform(1070, 475, 300, 25, true);
+	platforms[2] = Platform(200, 700, 1520, 25, false); //Ground
+
+	//audioManager.playMusicbyName("GuileTheme");
+}
+
+
+void LocalScene::InitialisePlayers() {
+	players[0] = new Player(3300.0f, 600.0f, 1350.0f, 100, 100, 0, false);
+	players[1] = new Player(3300.0f, 600.0f, 1350.0f, 100, 100, 0, true);
+
+	for (Player* player : players) {
+		player->setSize(sf::Vector2f(56, 103));
+		player->setInput(input);
+		player->setHealth(100);
+		player->setOrigin(player->getLocalBounds().width / 2.f, player->getLocalBounds().height / 2.f);
+	}
+	players[0]->setPosition(300, 500);
+	players[1]->setPosition(1300, 500);
+	players[1]->setScale(-1.0f, 1.0f);
+	players[1]->setFillColor(sf::Color::Red);
+}
+
+
+void LocalScene::InitialiseHealthBars() {
+	HealthBarFront1.setSize(sf::Vector2f(600, 75));
+	HealthBarFront1.setPosition(37, 37);
+	HealthBarFront1.setFillColor(sf::Color::Green);
+
+	HealthBarBack1.setSize(sf::Vector2f(600, 75));
+	HealthBarBack1.setPosition(37, 37);
+	HealthBarBack1.setFillColor(sf::Color::Red);
+
+	HealthBarFront2.setSize(sf::Vector2f(600, 75));
+	HealthBarFront2.setPosition(1282, 37);
+	HealthBarFront2.setFillColor(sf::Color::Green);
+
+	HealthBarBack2.setSize(sf::Vector2f(600, 75));
+	HealthBarBack2.setPosition(1282, 37);
+	HealthBarBack2.setFillColor(sf::Color::Red);
+}
+
+
 
 void LocalScene::handleInput(float dt) {
 	players[0]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::T, sf::Keyboard::G);
@@ -197,6 +247,22 @@ void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPla
 }
 
 
+void LocalScene::HealthBarUpdate() {
+	int Calc1 = 6 * players[0]->getHealth();
+	int Calc2 = 6 * players[1]->getHealth();
+
+	HealthBarFront1.setSize(sf::Vector2f(Calc1, HealthBarFront1.getSize().y));
+	HealthBarFront2.setSize(sf::Vector2f(Calc2, HealthBarFront1.getSize().y));
+	HealthBarFront2.setPosition((1920 - Calc2 - 37), 37);
+
+	if (players[0]->getHealth() <= 0 || players[1]->getHealth() <= 0) {
+		EndScreen* endScreen = new EndScreen(window, input, sceneManager, players[0]->getHealth() > 0);
+		sceneManager.LoadScene(endScreen);
+	}
+}
+
+
+
 void LocalScene::render()
 {
 	beginDraw();
@@ -243,73 +309,4 @@ void LocalScene::render()
 
 
 	endDraw();
-}
-
-
-
-void LocalScene::HealthBarUpdate() {
-	int Calc1 = 6 * players[0]->getHealth();
-	int Calc2 = 6 * players[1]->getHealth();
-
-	HealthBarFront1.setSize(sf::Vector2f(Calc1, HealthBarFront1.getSize().y));
-	HealthBarFront2.setSize(sf::Vector2f(Calc2, HealthBarFront1.getSize().y));
-	HealthBarFront2.setPosition((1920 - Calc2 - 37), 37);
-
-	if (players[0]->getHealth() <= 0 || players[1]->getHealth() <= 0) {
-		EndScreen* endScreen = new EndScreen(window, input, sceneManager, players[0]->getHealth() > 0);
-		sceneManager.LoadScene(endScreen);
-	}
-}
-
-
-
-void LocalScene::InitialiseScene() {
-	background.setSize(sf::Vector2f(window->getSize()));
-	if (!bgTexture.loadFromFile("Assets/Background/background.png")) { std::cerr << "Couldn't load background for fight scene\n"; }
-	background.setFillColor(sf::Color::White);
-	background.setTexture(&bgTexture);
-
-	platforms[0] = Platform(450, 475, 300, 25, true);
-	platforms[1] = Platform(1070, 475, 300, 25, true);
-	platforms[2] = Platform(200, 700, 1520, 25, false); //Ground
-
-	//audioManager.playMusicbyName("GuileTheme");
-}
-
-
-
-void LocalScene::InitialisePlayers() {
-	players[0] = new Player(3300.0f, 600.0f, 1350.0f, 100, 100, 0, false);
-	players[1] = new Player(3300.0f, 600.0f, 1350.0f, 100, 100, 0, true);
-
-	for (Player* player : players) {
-		player->setSize(sf::Vector2f(56, 103));
-		player->setInput(input);
-		player->setHealth(100);
-		player->setOrigin(player->getLocalBounds().width / 2.f, player->getLocalBounds().height / 2.f);
-	}
-	players[0]->setPosition(300, 500);
-	players[1]->setPosition(1300, 500);
-	players[1]->setScale(-1.0f, 1.0f);
-	players[1]->setFillColor(sf::Color::Red);
-}
-
-
-
-void LocalScene::InitialiseHealthBars() {
-	HealthBarFront1.setSize(sf::Vector2f(600, 75));
-	HealthBarFront1.setPosition(37, 37);
-	HealthBarFront1.setFillColor(sf::Color::Green);
-
-	HealthBarBack1.setSize(sf::Vector2f(600, 75));
-	HealthBarBack1.setPosition(37, 37);
-	HealthBarBack1.setFillColor(sf::Color::Red);
-
-	HealthBarFront2.setSize(sf::Vector2f(600, 75));
-	HealthBarFront2.setPosition(1282, 37);
-	HealthBarFront2.setFillColor(sf::Color::Green);
-
-	HealthBarBack2.setSize(sf::Vector2f(600, 75));
-	HealthBarBack2.setPosition(1282, 37);
-	HealthBarBack2.setFillColor(sf::Color::Red);
 }
