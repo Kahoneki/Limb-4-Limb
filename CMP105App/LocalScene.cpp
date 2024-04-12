@@ -65,19 +65,19 @@ void LocalScene::update(float dt) {
 			//^(provided said platform is below the initial platform by at least one player height)^
 			//Alternatively, the player can continue holding crouch to fall through all platforms below them while they hold crouch
 
+			float playerBottom{ p1->getPosition().y + p1->getSize().y / 2 };
+			float playerTop{ p1->getPosition().y - p1->getSize().y / 2 };
+			float playerRight{ p1->getPosition().x + p1->getSize().x / 2 };
+			float playerLeft{ p1->getPosition().x - p1->getSize().x / 2 };
+			float platformBottom{ platforms[i].getPosition().y + platforms[i].getSize().y };
+			float platformTop{ platforms[i].getPosition().y };
+			float platformRight{ platforms[i].getPosition().x + platforms[i].getSize().x };
+			float platformLeft{ platforms[i].getPosition().x };
+			float playerCenterX{ p1->getPosition().x };
+			float playerCenterY{ p1->getPosition().y };
 			if (!p1->getOnPlatform()) {
 				if (!p1->getFallingThroughPlatform()) {
 					if (p1->getGlobalBounds().intersects(platforms[i].getGlobalBounds())) {
-						float playerBottom{ p1->getPosition().y + p1->getSize().y / 2 };
-						float playerTop{ p1->getPosition().y - p1->getSize().y / 2 };
-						float playerRight{ p1->getPosition().x + p1->getSize().x / 2 };
-						float playerLeft{ p1->getPosition().x - p1->getSize().x / 2 };
-						float platformBottom{ platforms[i].getPosition().y + platforms[i].getSize().y };
-						float platformTop{ platforms[i].getPosition().y };
-						float platformRight{ platforms[i].getPosition().x + platforms[i].getSize().x };
-						float platformLeft{ platforms[i].getPosition().x };
-						float playerCenterX{ p1->getPosition().x };
-						float playerCenterY{ p1->getPosition().y };
 
 						if (playerBottom >= platformTop && playerBottom < platformBottom) {
 							//Colliding on top side
@@ -109,8 +109,17 @@ void LocalScene::update(float dt) {
 						}
 					}
 				}
+				//Check if player is currently in "im falling through platforms" mode and they encounter a non-passable platform, in which case - stop their descent
+				else if (p1->getGlobalBounds().intersects(platforms[i].getGlobalBounds()) && !platforms[i].getPassable()) {
+					p1->setFallingThroughPlatform(false);
+					p1->setPosition(sf::Vector2f(p1->getPosition().x, platformTop - p1->getSize().y / 2));
+					p1->setVelocity(sf::Vector2f(p1->getVelocity().x, 0));
+					p1->setOnPlatform(true);
+					p1->setGrounded(true);
+					p1->setCurrentPlatorm(i);
+				}
 				//Check if player has let go of crouch while falling through platform
-				if (p1->getFallingThroughPlatform() && !p1->getCrouched() && p1->getCurrentPlatform() == i) {
+				else if (!p1->getCrouched() && p1->getCurrentPlatform() == i) {
 					//Wait until player has fully made it through the platform or has fully made it above the platform before disabling fallingThroughPlatform.
 					//If player starts crouching again in this time, they will continue to fall through platformss
 					if (p1->getPosition().y - p1->getSize().y / 2 > platforms[i].getPosition().y + platforms[i].getSize().y || //Player top lower than platform bottom - player has fallen through
@@ -225,7 +234,7 @@ void LocalScene::InitialiseScene() {
 
 	platforms[0] = Platform(450, 475, 300, 25, true);
 	platforms[1] = Platform(1070, 475, 300, 25, true);
-	platforms[2] = Platform(200, 700, 1520, 25, false);
+	platforms[2] = Platform(200, 700, 1520, 25, false); //Ground
 
 	//audioManager.playMusicbyName("GuileTheme");
 }

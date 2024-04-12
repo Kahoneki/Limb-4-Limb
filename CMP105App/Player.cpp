@@ -216,13 +216,13 @@ void Player::update(float dt) {
 		currentPos.y -= ((velocity.y * dt) + (0.5 * (acceleration * dt * dt))); //s=ut+1/2(at^2)
 	}
 	
-	//Vertical
-	int floorLevel{ 1000 };
-	if (currentPos.y > floorLevel-getSize().y/2) {
-		currentPos.y = floorLevel-getSize().y/2;
-		isGrounded = true;
-		velocity.y = 0;
-	}
+	//Vertical - Disabled because there's a platform which serves as the ground
+	//int floorLevel{ 1000 };
+	//if (currentPos.y > floorLevel-getSize().y/2) {
+	//	currentPos.y = floorLevel-getSize().y/2;
+	//	isGrounded = true;
+	//	velocity.y = 0;
+	//}
 
 	//Horizontal
 	if (currentPos.x < getSize().x/2 || currentPos.x > 1920 - getSize().x/2) { //not using <=/>= since velocity.x is being set to 0 and player would be stuck on edge
