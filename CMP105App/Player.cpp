@@ -13,6 +13,7 @@ Player::Player(sf::Vector2f size, float acc, float ts, float js, int hp, int pro
 	acceleration = acc;
 	topSpeed = ts;
 	jumpSpeed = js;
+	maxHealth = hp;
 	health = hp;
 	protection = prot;
 	characterIndex = c1;
@@ -34,14 +35,14 @@ Player::Player(sf::Vector2f size, float acc, float ts, float js, int hp, int pro
 	blocking = false;
 
 	for (bool& b : activeLimbs) { b = true; }
-
+	
 	//Attack-hitbox size and relative x and y positions are expressed as percentages of the player's size
 	float onePercentX{ getSize().x/100 };
 	float onePercentY{ getSize().y/100 };
-	attacks[0] = Attack(2, 5,  12, 8,  onePercentX*70, onePercentY*20,  onePercentX*30, onePercentY*40,    8);  //Kick
-	attacks[1] = Attack(5, 15, 40, 60, onePercentX*70, onePercentY*20,  onePercentX*30, onePercentY*40,   18);  //Sweep
-	attacks[2] = Attack(4, 7,  18, 6,  onePercentX*70, onePercentY*15,  onePercentX*40, onePercentY*-25,   5);  //Jab
-	attacks[3] = Attack(2, 15, 30, 70, onePercentX*55, onePercentY*45,  onePercentX*40, onePercentY*-60,  20);  //Uppercut
+	attacks[0] = Attack(2, 5,  12, 8,  sf::Vector2f(200, 400),  onePercentX*70, onePercentY*20,  onePercentX*30, onePercentY*40,    8);  //Kick
+	attacks[1] = Attack(5, 15, 40, 60, sf::Vector2f(400, 750),  onePercentX*70, onePercentY*20,  onePercentX*30, onePercentY*40,   18);  //Sweep
+	attacks[2] = Attack(4, 7,  18, 6,  sf::Vector2f(400, 200),  onePercentX*70, onePercentY*15,  onePercentX*40, onePercentY*-25,   5);  //Jab
+	attacks[3] = Attack(2, 15, 30, 70, sf::Vector2f(200, 1000), onePercentX*55, onePercentY*45,  onePercentX*40, onePercentY*-60,  20);  //Uppercut
 
 	stunFramesLeft = 0;
 
@@ -105,7 +106,6 @@ Player::~Player() {
 }
 
 
-
 void Player::handleInput(float dt, int jump, int left, int right, int down, int jab, int kick, int sweep, int upper) {
 
 	//-----COMBAT-----//
@@ -131,13 +131,15 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 	}
 
 	//----MOVEMENT----//
-	//Pressing both keys at same time or not pressing either key
-	if ((input->isKeyDown(left) && input->isKeyDown(right)) || (!input->isKeyDown(left) && (!input->isKeyDown(right)))) {
-		//Slow down to an immediate hault
-		velocity.x = 0;
+	if (!hasKnockback) {
+		//Pressing both keys at same time or not pressing either key (and doesn't have knockback)
+		if ((input->isKeyDown(left) && input->isKeyDown(right)) || (!input->isKeyDown(left) && (!input->isKeyDown(right))) ) {
+			//Slow down to an immediate hault
+			velocity.x = 0;
+		}
 	}
 	//Pressing either left or right (but not both - case covered by above check)
-	else if (input->isKeyDown(right) || input->isKeyDown(left)) {
+	if (input->isKeyDown(right) || input->isKeyDown(left)) {
 		//Handle horizontal movement
 		if (isGrounded) {
 			if (input->isKeyDown(right)) {
@@ -222,7 +224,6 @@ void Player::update(float dt) {
 	//Update position - operating with sf::Vector2i to avoid any potential floating point inaccuracies
 	sf::Vector2i currentPos{ static_cast<sf::Vector2i>(getPosition()) };
 
-	if (stunFramesLeft) { velocity.x = 0; }
 	currentPos.x += velocity.x * dt;
 	if (!isGrounded) {
 		currentPos.y -= ((velocity.y * dt) + (0.5 * (acceleration * dt * dt))); //s=ut+1/2(at^2)
@@ -248,18 +249,20 @@ void Player::update(float dt) {
 	effectiveCollider.height -= colliderShrinkage.y * 2;
 	
 
-	//Ensure player is always facing in the direction they're moving
-	if (velocity.x > 0 && getScale() == sf::Vector2f(-1, 1)) { //Moving right, facing left
-		//Make player face right
-		setScale(1, 1);
-		flipped = false;
+	//Ensure player is always facing in the direction they're moving (unless they're being knocked back)
+	if (!hasKnockback) {
+		if (velocity.x > 0 && getScale() == sf::Vector2f(-1, 1)) { //Moving right, facing left
+			//Make player face right
+			setScale(1, 1);
+			flipped = false;
+		}
+		else if (velocity.x < 0 && getScale() == sf::Vector2f(1, 1)) { //Moving left, facing right
+			//Make player face left
+			setScale(-1, 1);
+			flipped = true;
+		}
+		//If player is standing still, don't change the direction they're facing
 	}
-	else if (velocity.x < 0 && getScale() == sf::Vector2f(1, 1)) { //Moving left, facing right
-		//Make player face left
-		setScale(-1, 1);
-		flipped = true;
-	}
-	//If player is standing still, don't change the direction they're facing
 
 
 	//Handle combat
@@ -274,6 +277,11 @@ void Player::update(float dt) {
 	//Check that player is actionable and that they're not already opaque
 	if (actionable && getFillColor().a != 255) {
 		setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 255)); //Restore to full transparency
+	}
+
+	//Check if player is being knocked back but has hit the ground again
+	if (hasKnockback && isGrounded) {
+		hasKnockback = false;
 	}
 
 	//Check if limbs are to be destroyed
@@ -313,10 +321,11 @@ void Player::update(float dt) {
 }
 
 
-
 bool Player::getCrouched() { return crouched; }
 
 int Player::getHealth() { return health; }
+
+int Player::getMaxHealth() { return maxHealth; }
 
 void Player::setCrouched(bool val) {
 	crouched = val;
@@ -371,6 +380,10 @@ void Player::setCurrentPlatorm(int val) { currentPlatform = val; }
 void Player::setOnPlatform(bool val) { isOnPlatform = val; }
 
 void Player::setFallingThroughPlatform(bool val) { isFallingThroughPlatform = val; }
+
+void Player::setHasKnockback(bool val) { hasKnockback = val; }
+
+void Player::setJumpDirection(int val) { jumpDirection = val; }
 
 void Player::setLimbActivity(int index, bool val) { activeLimbs[index] = val; }
 

@@ -239,27 +239,37 @@
   Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/UdpSocket.hpp
   Note: including file: C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.h
   Note: including file:  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.h
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(237,48): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(238,52): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(244,42): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(244,42): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(244,42): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(244,42): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(244,42): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(245,42): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(245,42): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(245,42): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(245,42): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(245,42): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(254,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(254,39): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(254,39): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(254,39): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(254,39): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(255,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(255,39): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(255,39): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(255,39): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(255,39): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(256,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(241,48): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(244,52): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(254,47): warning C4244: '*=': conversion from 'double' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(254,47): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(254,47): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(254,47): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(254,47): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(255,47): warning C4244: '*=': conversion from 'double' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(255,47): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(255,47): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(255,47): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(255,47): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(258,51): warning C4244: '*=': conversion from 'double' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(258,51): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(258,51): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(258,51): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(258,51): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(259,51): warning C4244: '*=': conversion from 'double' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(259,51): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(259,51): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(259,51): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(259,51): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(300,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(300,39): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(300,39): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(300,39): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(300,39): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(301,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(301,39): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(301,39): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(301,39): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(301,39): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(302,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   CMP105App.vcxproj -> C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\x64\Debug\CMP105App.exe

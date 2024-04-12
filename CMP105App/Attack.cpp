@@ -2,18 +2,18 @@
 #include <iostream>
 
 
-// Base constructor/destructors
-
+//Constructor/destructors
 Attack::Attack() {
 }
 
-Attack::Attack(float start, float act, float rec, int hs, float w, float h, float relx, float rely, int dam) {
+Attack::Attack(float start, float act, float rec, int hs, sf::Vector2f kb, float w, float h, float relx, float rely, int dam) {
 
 	startup = start;
 	active = act;
 	recovery = rec;
 	counter = 0;
 	hitstun = hs;
+	knockback = kb;
 	attacking = false;
 	width = w;
 	height = h;
@@ -22,9 +22,9 @@ Attack::Attack(float start, float act, float rec, int hs, float w, float h, floa
 	damage = dam;
 }
 
-
 Attack::~Attack() {
 }
+
 
 void Attack::strike(float dt, float player_x, float player_y, bool flip, bool crouch) {
 
@@ -52,8 +52,8 @@ void Attack::strike(float dt, float player_x, float player_y, bool flip, bool cr
 	}
 }
 
-// Getters
 
+// Getters
 GameObject Attack::getHitbox() { return hitbox; }
 
 float Attack::getCounter() { return counter; }
@@ -70,10 +70,10 @@ bool Attack::getAttacking() { return attacking; }
 
 int Attack::getDamage() { return damage; }
 
+sf::Vector2f Attack::getKnockback() { return knockback; }
+
 
 // Setters
-
-
 void Attack::setHitbox(int width, int height, int xpos, int ypos) {
 
 	hitbox.setSize(sf::Vector2f(width, height));
@@ -83,7 +83,6 @@ void Attack::setHitbox(int width, int height, int xpos, int ypos) {
 	hitbox.setOutlineColor(sf::Color::Red);
 	hitbox.setOutlineThickness(4);
 }
-
 
 void Attack::setAttacking(bool fighting) {
 	attacking = fighting;

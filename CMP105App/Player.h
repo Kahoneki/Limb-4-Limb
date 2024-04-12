@@ -21,6 +21,7 @@ public:
 	//Getters
 	bool getCrouched();
 	int getHealth();
+	int getMaxHealth();
 	int getProtection();
 	bool getLimbActivity(int index);
 	int getLimbRotation(int index);
@@ -48,6 +49,8 @@ public:
 	void setCurrentPlatorm(int platform);
 	void setOnPlatform(bool val);
 	void setFallingThroughPlatform(bool val);
+	void setHasKnockback(bool val);
+	void setJumpDirection(int val);
 
 
 protected:
@@ -68,10 +71,12 @@ protected:
 
 	//Combat
 	sf::Int16 health; //int16 rather than int, since sizeof(int) has to be guaranteed when sending packets
+	int maxHealth;
 	int protection;
 	Attack attacks[4];
 	float stunFramesLeft;
 	bool blocking;
+	bool hasKnockback; //Is currently being knocked back
 
 	//Base
 	sf::FloatRect effectiveCollider; //This is the collider that will be used in all collision calculations - it's a bit smaller than getGlobalBounds() and is also in world-space

@@ -233,16 +233,62 @@ void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPla
 		if (!defendingPlayer->getEffectiveCollider().intersects(attackingPlayer->getAttack(limbIndex).getHitbox().getGlobalBounds()))
 			continue;
 
+		
+		//Apply damage to defending player
 		int damageAmount = attackingPlayer->getAttack(limbIndex).getDamage();
-		damageAmount *= (defendingPlayer->getBlocking() ? 0.1 : 1); //If defending player is blocking, only apply 10% of the damage
-		damageAmount *= (attackingPlayer->getLimbActivity(limbIndex) ? 1.2 : 1); //If attacking player's limb is broken, add an extra 20% damage to the attack
+
+		//If defending player is blocking, only apply 10% of the damage
+		damageAmount *= (defendingPlayer->getBlocking() ? 0.1 : 1);
+
+		//If attacking player's limb is broken, add an extra 20% damage to the attack
+		damageAmount *= (attackingPlayer->getLimbActivity(limbIndex) ? 1 : 1.2);
 
 		defendingPlayer->setHealth(defendingPlayer->getHealth() - damageAmount);
 		defendingPlayer->setStunFramesLeft(defendingPlayer->getBlocking() ? 0 : attackingPlayer->getAttack(limbIndex).getHitstun()); //If defending player isn't blocking, give them hitstun
 
-		//Move both players away from each other a bit to stop attacking player from being able to spam attacks due to player 1's hitstun
-		defendingPlayer->move(sf::Vector2f(-10 + (20 * defendingPlayer->getFlipped()), 0));
-		attackingPlayer->move(sf::Vector2f(-10 + (20 * attackingPlayer->getFlipped()), 0));
+
+		//Apply knockback to defending player
+		sf::Vector2f knockback = attackingPlayer->getAttack(limbIndex).getKnockback();
+
+		//If defending player is blocking, only apply 30% of the knockback
+		knockback.x *= (defendingPlayer->getBlocking() ? 0.3 : 1);
+		knockback.y *= (defendingPlayer->getBlocking() ? 0.3 : 1);
+
+		//If attacking player's limb is broken, add an extra 40% knockback to the attack
+		knockback.x *= (attackingPlayer->getLimbActivity(limbIndex) ? 1 : 1.4);
+		knockback.y *= (attackingPlayer->getLimbActivity(limbIndex) ? 1 : 1.4);
+
+		//Increase knockback the lower the defending player's health is using linear interpolation
+		float maxHorizontalKnockbackAmount { 3 * knockback.x };
+		float maxVerticalKnockbackAmount{ 3 * knockback.y };
+		float interp{ static_cast<float>(defendingPlayer->getHealth()) / defendingPlayer->getMaxHealth() - 1}; //Between 0 and 1
+
+		//Lerp formula: k=a+(b-a)*t : when t=0 (health low), k=a. when t=1 (health high), k=b
+		knockback.x += (knockback.x - maxHorizontalKnockbackAmount) * interp;
+		knockback.y += (knockback.y - maxVerticalKnockbackAmount) * interp;
+		std::cout << knockback.x << ' ' << knockback.y << '\n';
+		
+		//Knockback.x is positive, which will cause defending player to go to the right
+		//If defending player is to the left of attacking player, they should be sent to the left, so flip knockback.x
+		if (defendingPlayer->getPosition().x < attackingPlayer->getPosition().x) {
+			knockback.x = -knockback.x;
+		}
+
+		defendingPlayer->setVelocity(defendingPlayer->getVelocity() + knockback);
+		if (knockback.y > 0) {
+			defendingPlayer->setGrounded(false);
+		}
+		defendingPlayer->setHasKnockback(true);
+		//Adjust jump direction given new velocity
+		if (defendingPlayer->getVelocity().x < 0) {
+			defendingPlayer->setJumpDirection(-1);
+		}
+		else if (defendingPlayer->getVelocity().x > 0) {
+			defendingPlayer->setJumpDirection(1);
+		}
+		else {
+			defendingPlayer->setJumpDirection(0);
+		}
 	}
 }
 
