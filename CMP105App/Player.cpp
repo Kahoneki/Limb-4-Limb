@@ -21,6 +21,14 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 	isGrounded = false;
 	actionable = true;
 	crouched = false;
+
+	effectiveCollider = getGlobalBounds();
+	colliderShrinkage = sf::Vector2f(10, 0);
+	effectiveCollider.left += colliderShrinkage.x;
+	effectiveCollider.top += colliderShrinkage.y;
+	effectiveCollider.width -= colliderShrinkage.x * 2;
+	effectiveCollider.height -= colliderShrinkage.y * 2;
+
 	flipped = flip;
 	blocking = false;
 
@@ -231,6 +239,11 @@ void Player::update(float dt) {
 	}
 
 	setPosition(currentPos.x, currentPos.y);
+	effectiveCollider = getGlobalBounds();
+	effectiveCollider.left += colliderShrinkage.x;
+	effectiveCollider.top += colliderShrinkage.y;
+	effectiveCollider.width -= colliderShrinkage.x * 2;
+	effectiveCollider.height -= colliderShrinkage.y * 2;
 	
 
 	//Ensure player is always facing in the direction they're moving
@@ -340,6 +353,8 @@ int Player::getStunFramesLeft() { return stunFramesLeft; }
 bool Player::getFlipped() { return flipped; }
 
 bool Player::getBlocking() { return blocking;  }
+
+sf::FloatRect Player::getEffectiveCollider() { return effectiveCollider; }
 
 void Player::UpdateTextures() { updateTextures = true; }
 

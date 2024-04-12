@@ -30,6 +30,7 @@ public:
 	int getStunFramesLeft();
 	bool getFlipped();
 	bool getBlocking();
+	sf::FloatRect getEffectiveCollider();
 	Attack getAttack(int index);
 	bool getGrounded();
 	int getCurrentPlatform();
@@ -75,6 +76,8 @@ protected:
 	bool blocking;
 
 	//Base
+	sf::FloatRect effectiveCollider; //This is the collider that will be used in all collision calculations - it's a bit smaller than getGlobalBounds() and is also in world-space
+	sf::Vector2f colliderShrinkage; //Shrink bounds by removing colliderShrinkage.x pixels from each horizontal edge and colliderShrinkage.y pixels from each vertical edge
 	int characterIndex;
 	bool flipped;
 

@@ -9,6 +9,7 @@ LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sc
 
 	window = hwnd;
 	input = in;
+	debugMode = false;
 
 	InitialiseScene();
 	InitialisePlayers();
@@ -31,6 +32,13 @@ LocalScene::~LocalScene()
 void LocalScene::handleInput(float dt) {
 	players[0]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::T, sf::Keyboard::G);
 	players[1]->handleInput(dt, sf::Keyboard::O, sf::Keyboard::K, sf::Keyboard::Semicolon, sf::Keyboard::L, sf::Keyboard::LBracket, sf::Keyboard::Quote, sf::Keyboard::RBracket, sf::Keyboard::Tilde);
+
+	if (input->isKeyDown(sf::Keyboard::F3)) {
+		debugMode = true;
+	}
+	else if (input->isKeyDown(sf::Keyboard::F4)) {
+		debugMode = false;
+	}
 }
 
 
@@ -47,7 +55,7 @@ void LocalScene::update(float dt) {
 		//Loop through all platforms
 		for (int i{ 0 }; i < sizeof(platforms) / sizeof(platforms[0]); ++i) {
 
-			//Platform collision check - note: player origin is in centre of sprite, platform origin is at top left of sprite
+			//Platform collision check
 
 			//Logic:
 			//
@@ -65,10 +73,10 @@ void LocalScene::update(float dt) {
 			//^(provided said platform is below the initial platform by at least one player height)^
 			//Alternatively, the player can continue holding crouch to fall through all platforms below them while they hold crouch
 
-			float playerBottom{ p1->getPosition().y + p1->getSize().y / 2 };
-			float playerTop{ p1->getPosition().y - p1->getSize().y / 2 };
-			float playerRight{ p1->getPosition().x + p1->getSize().x / 2 };
-			float playerLeft{ p1->getPosition().x - p1->getSize().x / 2 };
+			float playerBottom{ p1->getEffectiveCollider().top + p1->getEffectiveCollider().height };
+			float playerTop{ p1->getEffectiveCollider().top };
+			float playerRight{ p1->getEffectiveCollider().left + p1->getEffectiveCollider().width };
+			float playerLeft{ p1->getEffectiveCollider().left };
 			float platformBottom{ platforms[i].getPosition().y + platforms[i].getSize().y };
 			float platformTop{ platforms[i].getPosition().y };
 			float platformRight{ platforms[i].getPosition().x + platforms[i].getSize().x };
@@ -77,7 +85,7 @@ void LocalScene::update(float dt) {
 			float playerCenterY{ p1->getPosition().y };
 			if (!p1->getOnPlatform()) {
 				if (!p1->getFallingThroughPlatform()) {
-					if (p1->getGlobalBounds().intersects(platforms[i].getGlobalBounds())) {
+					if (p1->getEffectiveCollider().intersects(platforms[i].getGlobalBounds())) {
 
 						if (playerBottom >= platformTop && playerBottom < platformBottom) {
 							//Colliding on top side
@@ -110,7 +118,7 @@ void LocalScene::update(float dt) {
 					}
 				}
 				//Check if player is currently in "im falling through platforms" mode and they encounter a non-passable platform, in which case - stop their descent
-				else if (p1->getGlobalBounds().intersects(platforms[i].getGlobalBounds()) && !platforms[i].getPassable()) {
+				else if (p1->getEffectiveCollider().intersects(platforms[i].getGlobalBounds()) && !platforms[i].getPassable()) {
 					p1->setFallingThroughPlatform(false);
 					p1->setPosition(sf::Vector2f(p1->getPosition().x, platformTop - p1->getSize().y / 2));
 					p1->setVelocity(sf::Vector2f(p1->getVelocity().x, 0));
@@ -121,17 +129,17 @@ void LocalScene::update(float dt) {
 				//Check if player has let go of crouch while falling through platform
 				else if (!p1->getCrouched() && p1->getCurrentPlatform() == i) {
 					//Wait until player has fully made it through the platform or has fully made it above the platform before disabling fallingThroughPlatform.
-					//If player starts crouching again in this time, they will continue to fall through platformss
-					if (p1->getPosition().y - p1->getSize().y / 2 > platforms[i].getPosition().y + platforms[i].getSize().y || //Player top lower than platform bottom - player has fallen through
-						p1->getPosition().y + p1->getSize().y / 2 < platforms[i].getPosition().y) {							   //Player bottom higher than platform top - player has made it above
+					//If player starts crouching again in this time, they will continue to fall through platforms
+					//Check if player top lower than platform bottom - player has fallen through; or if player bottom higher than platform top - player has made it above
+					if (playerTop > platformBottom || playerBottom < platformTop) {
 						p1->setFallingThroughPlatform(false);
 					}
 				}
 			}
 			else {
 				//Check if player has walked off platform
-				bool playerRightIsLeftOfPlatformLeft { p1->getPosition().x + p1->getSize().x / 2 < platforms[i].getPosition().x };
-				bool playerLeftIsRightOfPlatformRight{ p1->getPosition().x - p1->getSize().x / 2 > platforms[i].getPosition().x + platforms[i].getSize().x };
+				bool playerRightIsLeftOfPlatformLeft { playerRight < platformLeft };
+				bool playerLeftIsRightOfPlatformRight{ playerLeft > platformRight };
 				if ((playerRightIsLeftOfPlatformLeft || playerLeftIsRightOfPlatformRight) && p1->getCurrentPlatform() == i) {
 					p1->setGrounded(false);
 					p1->setOnPlatform(false);
@@ -163,7 +171,7 @@ void LocalScene::update(float dt) {
 			for (int limbIndex{}; limbIndex < 4; ++limbIndex) {
 
 				//Hitbox isn't colliding, continue to next limb
-				if (!p1->getGlobalBounds().intersects(p2->getAttack(limbIndex).getHitbox().getGlobalBounds()))
+				if (!p1->getEffectiveCollider().intersects(p2->getAttack(limbIndex).getHitbox().getGlobalBounds()))
 					continue;
 
 				int damageAmount = p2->getAttack(limbIndex).getDamage();
@@ -204,6 +212,31 @@ void LocalScene::render()
 	for (int i{ 0 }; i < 3; ++i) {
 		window->draw(platforms[i]);
 	}
+
+	
+	if (debugMode) {
+		for (Player* player : players) {
+		
+			sf::RectangleShape rect;
+			rect.setSize(sf::Vector2f(player->getEffectiveCollider().width, player->getEffectiveCollider().height));
+			rect.setPosition(player->getEffectiveCollider().left, player->getEffectiveCollider().top);
+			rect.setFillColor(sf::Color(0, 0, 0, 0));
+			rect.setOutlineColor(sf::Color::Red);
+			rect.setOutlineThickness(4);
+			window->draw(rect);
+		}
+		for (Platform platform : platforms) {
+			sf::RectangleShape rect;
+			rect.setSize(sf::Vector2f(platform.getGlobalBounds().width, platform.getGlobalBounds().height));
+			rect.setPosition(platform.getGlobalBounds().left, platform.getGlobalBounds().top);
+			rect.setFillColor(sf::Color(0, 0, 0, 0));
+			rect.setOutlineColor(sf::Color::Blue);
+			rect.setOutlineThickness(4);
+			window->draw(rect);
+		}
+	}
+
+
 
 	endDraw();
 }

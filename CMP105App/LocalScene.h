@@ -50,6 +50,10 @@ private:
 
 	AudioManager audioManager;
 
+
+	bool debugMode; //Shows colliders
+
+
 	void FlipCheck();
 
 	void InitialiseScene();
