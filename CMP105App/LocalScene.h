@@ -10,6 +10,7 @@
 #include "Platform.h"
 
 class SceneManager; //Forward declaration
+class Player;
 
 class LocalScene : public BaseLevel
 {

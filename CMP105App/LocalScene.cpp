@@ -1,5 +1,6 @@
 #include "LocalScene.h"
 #include "EndScreen.h"
+#include "Player.h"
 
 LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
 {
