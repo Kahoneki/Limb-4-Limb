@@ -223,9 +223,9 @@ void LocalScene::InitialiseScene() {
 	background.setFillColor(sf::Color::White);
 	background.setTexture(&bgTexture);
 
-	platforms[0] = Platform(400, 600, 300, 25, true);
-	platforms[1] = Platform(1200, 600, 300, 25, true);
-	platforms[2] = Platform(200, 800, 1600, 25, true);
+	platforms[0] = Platform(450, 475, 300, 25, true);
+	platforms[1] = Platform(1070, 475, 300, 25, true);
+	platforms[2] = Platform(200, 700, 1520, 25, false);
 
 	//audioManager.playMusicbyName("GuileTheme");
 }
@@ -242,8 +242,8 @@ void LocalScene::InitialisePlayers() {
 		player->setHealth(100);
 		player->setOrigin(player->getLocalBounds().width / 2.f, player->getLocalBounds().height / 2.f);
 	}
-	players[0]->setPosition(300, 800);
-	players[1]->setPosition(1300, 800);
+	players[0]->setPosition(300, 500);
+	players[1]->setPosition(1300, 500);
 	players[1]->setScale(-1.0f, 1.0f);
 	players[1]->setFillColor(sf::Color::Red);
 }
