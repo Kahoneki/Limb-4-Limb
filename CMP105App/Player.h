@@ -9,7 +9,7 @@ public:
 
 	//Constructor/Destructor
 	Player();
-	Player(float acc, float ts, float js, int hp, int prot, int c1, bool flip);
+	Player(sf::Vector2f size, float acc, float ts, float js, int hp, int prot, int c1, bool flip);
 	~Player();
 
 	

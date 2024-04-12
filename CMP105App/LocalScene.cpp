@@ -43,11 +43,11 @@ void LocalScene::InitialiseScene() {
 
 
 void LocalScene::InitialisePlayers() {
-	players[0] = new Player(3300.0f, 600.0f, 1350.0f, 100, 100, 0, false);
-	players[1] = new Player(3300.0f, 600.0f, 1350.0f, 100, 100, 0, true);
+	//Size should be roughly in ratio 5:9
+	players[0] = new Player(sf::Vector2f(56, 103), 3300.0f, 600.0f, 1350.0f, 100, 100, 0, false);
+	players[1] = new Player(sf::Vector2f(56, 103), 3300.0f, 600.0f, 1350.0f, 100, 100, 0, true);
 
 	for (Player* player : players) {
-		player->setSize(sf::Vector2f(56, 103));
 		player->setInput(input);
 		player->setHealth(100);
 		player->setOrigin(player->getLocalBounds().width / 2.f, player->getLocalBounds().height / 2.f);

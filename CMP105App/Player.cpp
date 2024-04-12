@@ -8,7 +8,8 @@ Player::Player() {
 //For testing losing limbs
 bool numDown = false;
 
-Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool flip) {
+Player::Player(sf::Vector2f size, float acc, float ts, float js, int hp, int prot, int c1, bool flip) {
+	setSize(size);
 	acceleration = acc;
 	topSpeed = ts;
 	jumpSpeed = js;
@@ -34,10 +35,13 @@ Player::Player(float acc, float ts, float js, int hp, int prot, int c1, bool fli
 
 	for (bool& b : activeLimbs) { b = true; }
 
-	attacks[0] = Attack(2, 5,  12, 8,  90, 45,  45, 144,   8);
-	attacks[1] = Attack(5, 15, 40, 60, 90, 45,  45, 144,   18);
-	attacks[2] = Attack(4, 7,  18, 6,  90, 37,  75, -88,   5);
-	attacks[3] = Attack(2, 15, 30, 70, 90, 105, 75, -156,  20);
+	//Attack-hitbox size and relative x and y positions are expressed as percentages of the player's size
+	float onePercentX{ getSize().x/100 };
+	float onePercentY{ getSize().y/100 };
+	attacks[0] = Attack(2, 5,  12, 8,  onePercentX*70, onePercentY*20,  onePercentX*30, onePercentY*40,    8);  //Kick
+	attacks[1] = Attack(5, 15, 40, 60, onePercentX*70, onePercentY*20,  onePercentX*30, onePercentY*40,   18);  //Sweep
+	attacks[2] = Attack(4, 7,  18, 6,  onePercentX*70, onePercentY*15,  onePercentX*40, onePercentY*-25,   5);  //Jab
+	attacks[3] = Attack(2, 15, 30, 70, onePercentX*55, onePercentY*45,  onePercentX*40, onePercentY*-60,  20);  //Uppercut
 
 	stunFramesLeft = 0;
 
@@ -224,13 +228,11 @@ void Player::update(float dt) {
 		currentPos.y -= ((velocity.y * dt) + (0.5 * (acceleration * dt * dt))); //s=ut+1/2(at^2)
 	}
 	
-	//Vertical - Disabled because there's a platform which serves as the ground
-	//int floorLevel{ 1000 };
-	//if (currentPos.y > floorLevel-getSize().y/2) {
-	//	currentPos.y = floorLevel-getSize().y/2;
-	//	isGrounded = true;
-	//	velocity.y = 0;
-	//}
+	//Vertical - check if player has fallen off map
+	int deathPlaneLevel { 1920 };
+	if (currentPos.y-getSize().y/2 > deathPlaneLevel) {
+		health = 0;
+	}
 
 	//Horizontal
 	if (currentPos.x < getSize().x/2 || currentPos.x > 1920 - getSize().x/2) { //not using <=/>= since velocity.x is being set to 0 and player would be stuck on edge
@@ -252,7 +254,7 @@ void Player::update(float dt) {
 		setScale(1, 1);
 		flipped = false;
 	}
-	else if (velocity.x < 0 && getScale() == sf::Vector2f(1, 1)) {//Moving left, facing right
+	else if (velocity.x < 0 && getScale() == sf::Vector2f(1, 1)) { //Moving left, facing right
 		//Make player face left
 		setScale(-1, 1);
 		flipped = true;

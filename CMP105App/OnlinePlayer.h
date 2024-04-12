@@ -30,7 +30,7 @@ struct OnlinePlayerState {
 class OnlinePlayer : public Player
 {
 public:
-	OnlinePlayer(float acc, float ts, float js, int hp, int prot, int c1, bool flip, int pn, bool local);
+	OnlinePlayer(sf::Vector2f size, float acc, float ts, float js, int hp, int prot, int c1, bool flip, int pn, bool local);
 	void handleInput(float dt, int up, int left, int right, int down, int jab, int kick, int sweep, int upper);
 	void update(float dt);
 	void SendUpdateDataToNetwork(std::vector<int> changedKeys);
