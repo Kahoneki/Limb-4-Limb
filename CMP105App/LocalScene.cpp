@@ -284,29 +284,31 @@ void LocalScene::render()
 		window->draw(platforms[i]);
 	}
 
-	
 	if (debugMode) {
-		for (Player* player : players) {
-			sf::RectangleShape rect;
-			rect.setSize(sf::Vector2f(player->getEffectiveCollider().width, player->getEffectiveCollider().height));
-			rect.setPosition(player->getEffectiveCollider().left, player->getEffectiveCollider().top);
-			rect.setFillColor(sf::Color(0, 0, 0, 0));
-			rect.setOutlineColor(sf::Color::Red);
-			rect.setOutlineThickness(4);
-			window->draw(rect);
-		}
-		for (Platform platform : platforms) {
-			sf::RectangleShape rect;
-			rect.setSize(sf::Vector2f(platform.getGlobalBounds().width, platform.getGlobalBounds().height));
-			rect.setPosition(platform.getGlobalBounds().left, platform.getGlobalBounds().top);
-			rect.setFillColor(sf::Color(0, 0, 0, 0));
-			rect.setOutlineColor(sf::Color::Blue);
-			rect.setOutlineThickness(4);
-			window->draw(rect);
-		}
+		DebugRender();
 	}
 
-
-
 	endDraw();
+}
+
+
+void LocalScene::DebugRender() {
+	for (Player* player : players) {
+		sf::RectangleShape rect;
+		rect.setSize(sf::Vector2f(player->getEffectiveCollider().width, player->getEffectiveCollider().height));
+		rect.setPosition(player->getEffectiveCollider().left, player->getEffectiveCollider().top);
+		rect.setFillColor(sf::Color(0, 0, 0, 0));
+		rect.setOutlineColor(sf::Color::Red);
+		rect.setOutlineThickness(4);
+		window->draw(rect);
+	}
+	for (Platform platform : platforms) {
+		sf::RectangleShape rect;
+		rect.setSize(sf::Vector2f(platform.getGlobalBounds().width, platform.getGlobalBounds().height));
+		rect.setPosition(platform.getGlobalBounds().left, platform.getGlobalBounds().top);
+		rect.setFillColor(sf::Color(0, 0, 0, 0));
+		rect.setOutlineColor(sf::Color::Blue);
+		rect.setOutlineThickness(4);
+		window->draw(rect);
+	}
 }

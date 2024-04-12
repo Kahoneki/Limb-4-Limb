@@ -51,14 +51,15 @@ private:
 	AudioManager audioManager;
 
 
-	bool debugMode; //Shows colliders
-
-	void PlatformCollisionCheck(Player* player);
-	void AttackHitboxCheck(Player* defendingPlayer, Player* attackingPlayer);
-
 	void InitialiseScene();
 	void InitialisePlayers();
 	void InitialiseHealthBars();
+
+	void PlatformCollisionCheck(Player* player);
+	void AttackHitboxCheck(Player* defendingPlayer, Player* attackingPlayer);
+	
+	bool debugMode; //Shows colliders
+	void DebugRender();
 };
 
 #endif
