@@ -1,10 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <SFML/Graphics.hpp>
 #include "Framework/GameObject.h"
 #include "Attack.h"
-#include "Platform.h"
 
 class Player : public GameObject {
 public:

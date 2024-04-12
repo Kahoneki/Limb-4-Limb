@@ -1,13 +1,8 @@
 #ifndef MAINMENU_H
 #define MAINMENU_H
 
-#include <SFML/Graphics.hpp>
 #include "Framework/BaseLevel.h"
 #include "Framework/Input.h"
-#include "Framework/GameObject.h"
-#include "Framework/AudioManager.h"
-#include "SceneManager.h"
-#include <string.h>
 #include <iostream>
 
 class SceneManager; //Forward declaration

@@ -4,20 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include "Framework/BaseLevel.h"
 #include "Framework/Input.h"
-#include "Framework/GameObject.h"
 #include "Framework/AudioManager.h"
-#include "SceneManager.h"
-#include <string.h>
 #include <iostream>
 
-#include <SFML/Graphics.hpp>
-#include "Framework/BaseLevel.h"
-#include "Framework/Input.h"
-#include "Framework/GameObject.h"
-#include "Framework/AudioManager.h"
-
-#include "SceneManager.h"
-#include "OnlinePlayer.h"
 #include "Platform.h"
 
 class SceneManager; //Forward declaration
