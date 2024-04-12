@@ -53,8 +53,8 @@ private:
 
 	bool debugMode; //Shows colliders
 
-
-	void FlipCheck();
+	void PlatformCollisionCheck(Player* player);
+	void AttackHitboxCheck(Player* defendingPlayer, Player* attackingPlayer);
 
 	void InitialiseScene();
 	void InitialisePlayers();

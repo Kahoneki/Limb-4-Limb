@@ -51,145 +51,150 @@ void LocalScene::update(float dt) {
 	for (int playerIndex{}; playerIndex < 2; ++playerIndex) {
 
 		Player* p1 = players[playerIndex];
+		Player* p2 = players[1 - playerIndex];
 
-		//Loop through all platforms
-		for (int i{ 0 }; i < sizeof(platforms) / sizeof(platforms[0]); ++i) {
+		PlatformCollisionCheck(p1);
 
-			//Platform collision check
-
-			//Logic:
-			//
-			//If player tries to hit the left, right, or bottom of platform, don't let them
-			//Logic for jumping on top of the platform / off the top of the platform:
-			//Player jumps, isGrounded=false
-			//Player intersects with top of platform, isOnPlatform=true, isGrounded=true, intersection checks no longer done
-			//If player either jumps or walks off of platform, isGrounded=false (jumping already disables isGrounded in player class so this code only needs to update it if player walks off)
-			//If isGrounded=false, isOnPlatform=false
-			//
-			//If player crouches while isOnPlatform=true, isFallingThroughPlatform=true, onPlatform=false, isGrounded=false (player will start falling)
-			//If isFallingThroughPlatform=true, don't perform any collision checks
-			//If isFallingThroughPlatform=true and isCrouched=false, check if player has fallen all the way through the platform, and if they have, isFallingThroughPlatform=false
-			//The above logic allows the player to go through a platform by simply tapping crouch once before falling on another platform below
-			//^(provided said platform is below the initial platform by at least one player height)^
-			//Alternatively, the player can continue holding crouch to fall through all platforms below them while they hold crouch
-
-			float playerBottom{ p1->getEffectiveCollider().top + p1->getEffectiveCollider().height };
-			float playerTop{ p1->getEffectiveCollider().top };
-			float playerRight{ p1->getEffectiveCollider().left + p1->getEffectiveCollider().width };
-			float playerLeft{ p1->getEffectiveCollider().left };
-			float platformBottom{ platforms[i].getPosition().y + platforms[i].getSize().y };
-			float platformTop{ platforms[i].getPosition().y };
-			float platformRight{ platforms[i].getPosition().x + platforms[i].getSize().x };
-			float platformLeft{ platforms[i].getPosition().x };
-			float playerCenterX{ p1->getPosition().x };
-			float playerCenterY{ p1->getPosition().y };
-			if (!p1->getOnPlatform()) {
-				if (!p1->getFallingThroughPlatform()) {
-					if (p1->getEffectiveCollider().intersects(platforms[i].getGlobalBounds())) {
-
-						if (playerBottom >= platformTop && playerBottom < platformBottom) {
-							//Colliding on top side
-							if (p1->getVelocity().y < 0) {
-								//Travelling downwards
-								p1->setPosition(sf::Vector2f(p1->getPosition().x, platformTop - p1->getSize().y / 2));
-								p1->setVelocity(sf::Vector2f(p1->getVelocity().x, 0));
-								p1->setOnPlatform(true);
-								p1->setGrounded(true);
-								p1->setCurrentPlatorm(i);
-							}
-						}
-						if (!platforms[i].getPassable()) {
-							if (playerRight >= platformLeft && playerCenterX < platformLeft) {
-								//Colliding on left side
-								p1->setPosition(sf::Vector2f(platformLeft - p1->getSize().x / 2, p1->getPosition().y));
-								p1->setVelocity(sf::Vector2f(0, p1->getVelocity().y));
-							}
-							else if (playerLeft <= platformRight && playerCenterX > platformRight) {
-								//Colliding on right side
-								p1->setPosition(sf::Vector2f(platformRight + p1->getSize().x / 2, p1->getPosition().y));
-								p1->setVelocity(sf::Vector2f(0, p1->getVelocity().y));
-							}
-							else if (playerTop <= platformBottom && playerCenterY > platformBottom) {
-								//Colliding on bottom side
-								p1->setPosition(sf::Vector2f(p1->getPosition().x, platformBottom + p1->getSize().y / 2));
-								p1->setVelocity(sf::Vector2f(p1->getVelocity().x, 0));
-							}
-						}
-					}
-				}
-				//Check if player is currently in "im falling through platforms" mode and they encounter a non-passable platform, in which case - stop their descent
-				else if (p1->getEffectiveCollider().intersects(platforms[i].getGlobalBounds()) && !platforms[i].getPassable()) {
-					p1->setFallingThroughPlatform(false);
-					p1->setPosition(sf::Vector2f(p1->getPosition().x, platformTop - p1->getSize().y / 2));
-					p1->setVelocity(sf::Vector2f(p1->getVelocity().x, 0));
-					p1->setOnPlatform(true);
-					p1->setGrounded(true);
-					p1->setCurrentPlatorm(i);
-				}
-				//Check if player has let go of crouch while falling through platform
-				else if (!p1->getCrouched() && p1->getCurrentPlatform() == i) {
-					//Wait until player has fully made it through the platform or has fully made it above the platform before disabling fallingThroughPlatform.
-					//If player starts crouching again in this time, they will continue to fall through platforms
-					//Check if player top lower than platform bottom - player has fallen through; or if player bottom higher than platform top - player has made it above
-					if (playerTop > platformBottom || playerBottom < platformTop) {
-						p1->setFallingThroughPlatform(false);
-					}
-				}
-			}
-			else {
-				//Check if player has walked off platform
-				bool playerRightIsLeftOfPlatformLeft { playerRight < platformLeft };
-				bool playerLeftIsRightOfPlatformRight{ playerLeft > platformRight };
-				if ((playerRightIsLeftOfPlatformLeft || playerLeftIsRightOfPlatformRight) && p1->getCurrentPlatform() == i) {
-					p1->setGrounded(false);
-					p1->setOnPlatform(false);
-				}
-				//Check if platform is passable and player is crouching - in which case, they should fall through the platform
-				if (platforms[i].getPassable() && p1->getCrouched() && (p1->getCurrentPlatform() == i)) {
-					p1->setFallingThroughPlatform(true);
-					p1->setGrounded(false);
-					p1->setOnPlatform(false);
-				}
-			}
-
-			//Check if player has jumped
-			if (!p1->getGrounded()) {
-				p1->setOnPlatform(false);
-			}
-
-
-
-			//Attack hitbox collision check
-			//p1 is defending player
-			Player* p2 = players[1 - playerIndex]; //p2 is attacking player
-
-			//Defending player has stun frames left, continue to the next player
-			if (p1->getStunFramesLeft())
-				continue;
-
-			//Loop through all limbs to see if hitboxes are colliding
-			for (int limbIndex{}; limbIndex < 4; ++limbIndex) {
-
-				//Hitbox isn't colliding, continue to next limb
-				if (!p1->getEffectiveCollider().intersects(p2->getAttack(limbIndex).getHitbox().getGlobalBounds()))
-					continue;
-
-				int damageAmount = p2->getAttack(limbIndex).getDamage();
-				damageAmount *= (p1->getBlocking() ? 0.1 : 1); //If defending player is blocking, only apply 10% of the damage
-				damageAmount *= (p2->getLimbActivity(limbIndex) ? 1.2 : 1); //If attacking player's limb is broken, add an extra 20% damage to the attack
-
-				p1->setHealth(p1->getHealth() - damageAmount);
-				p1->setStunFramesLeft(p1->getBlocking() ? 0 : p2->getAttack(limbIndex).getHitstun()); //If defending player isn't blocking, give them hitstun
-
-				//Move both players away from each other a bit to stop attacking player from being able to spam attacks due to player 1's hitstun
-				p1->move(sf::Vector2f(-10 + (20 * p1->getFlipped()), 0));
-				p2->move(sf::Vector2f(-10 + (20 * p2->getFlipped()), 0));
-			}
+		//Defending player has stun frames left, continue to the next player
+		if (p1->getStunFramesLeft())
+			continue;
+		else {
+			AttackHitboxCheck(p1, p2);
 		}
+
 	}
 	HealthBarUpdate();
 }
 
+
+void LocalScene::PlatformCollisionCheck(Player* player) {
+	//Loop through all platforms
+	for (int i{ 0 }; i < sizeof(platforms) / sizeof(platforms[0]); ++i) {
+
+		//Logic:
+		//
+		//If player tries to hit the left, right, or bottom of platform, don't let them
+		//Logic for jumping on top of the platform / off the top of the platform:
+		//Player jumps, isGrounded=false
+		//Player intersects with top of platform, isOnPlatform=true, isGrounded=true, intersection checks no longer done
+		//If player either jumps or walks off of platform, isGrounded=false (jumping already disables isGrounded in player class so this code only needs to update it if player walks off)
+		//If isGrounded=false, isOnPlatform=false
+		//
+		//If player crouches while isOnPlatform=true, isFallingThroughPlatform=true, onPlatform=false, isGrounded=false (player will start falling)
+		//If isFallingThroughPlatform=true, don't perform any collision checks
+		//If isFallingThroughPlatform=true and isCrouched=false, check if player has fallen all the way through the platform, and if they have, isFallingThroughPlatform=false
+		//The above logic allows the player to go through a platform by simply tapping crouch once before falling on another platform below
+		//^(provided said platform is below the initial platform by at least one player height)^
+		//Alternatively, the player can continue holding crouch to fall through all platforms below them while they hold crouch
+
+		float playerBottom{ player->getEffectiveCollider().top + player->getEffectiveCollider().height };
+		float playerTop{ player->getEffectiveCollider().top };
+		float playerRight{ player->getEffectiveCollider().left + player->getEffectiveCollider().width };
+		float playerLeft{ player->getEffectiveCollider().left };
+		float platformBottom{ platforms[i].getPosition().y + platforms[i].getSize().y };
+		float platformTop{ platforms[i].getPosition().y };
+		float platformRight{ platforms[i].getPosition().x + platforms[i].getSize().x };
+		float platformLeft{ platforms[i].getPosition().x };
+		float playerCenterX{ player->getPosition().x };
+		float playerCenterY{ player->getPosition().y };
+		if (!player->getOnPlatform()) {
+			if (!player->getFallingThroughPlatform()) {
+				if (player->getEffectiveCollider().intersects(platforms[i].getGlobalBounds())) {
+
+					if (playerBottom >= platformTop && playerBottom < platformBottom) {
+						//Colliding on top side
+						if (player->getVelocity().y < 0) {
+							//Travelling downwards
+							player->setPosition(sf::Vector2f(player->getPosition().x, platformTop - player->getSize().y / 2));
+							player->setVelocity(sf::Vector2f(player->getVelocity().x, 0));
+							player->setOnPlatform(true);
+							player->setGrounded(true);
+							player->setCurrentPlatorm(i);
+						}
+					}
+					if (!platforms[i].getPassable()) {
+						if (playerRight >= platformLeft && playerCenterX < platformLeft) {
+							//Colliding on left side
+							player->setPosition(sf::Vector2f(platformLeft - player->getSize().x / 2, player->getPosition().y));
+							player->setVelocity(sf::Vector2f(0, player->getVelocity().y));
+						}
+						else if (playerLeft <= platformRight && playerCenterX > platformRight) {
+							//Colliding on right side
+							player->setPosition(sf::Vector2f(platformRight + player->getSize().x / 2, player->getPosition().y));
+							player->setVelocity(sf::Vector2f(0, player->getVelocity().y));
+						}
+						else if (playerTop <= platformBottom && playerCenterY > platformBottom) {
+							//Colliding on bottom side
+							player->setPosition(sf::Vector2f(player->getPosition().x, platformBottom + player->getSize().y / 2));
+							player->setVelocity(sf::Vector2f(player->getVelocity().x, 0));
+						}
+					}
+				}
+			}
+			//Check if player is currently in "im falling through platforms" mode and they encounter a non-passable platform, in which case - stop their descent
+			else if (player->getEffectiveCollider().intersects(platforms[i].getGlobalBounds()) && !platforms[i].getPassable()) {
+				player->setFallingThroughPlatform(false);
+				player->setPosition(sf::Vector2f(player->getPosition().x, platformTop - player->getSize().y / 2));
+				player->setVelocity(sf::Vector2f(player->getVelocity().x, 0));
+				player->setOnPlatform(true);
+				player->setGrounded(true);
+				player->setCurrentPlatorm(i);
+			}
+			//Check if player has let go of crouch while falling through platform
+			else if (!player->getCrouched() && player->getCurrentPlatform() == i) {
+				//Wait until player has fully made it through the platform or has fully made it above the platform before disabling fallingThroughPlatform.
+				//If player starts crouching again in this time, they will continue to fall through platforms
+				//Check if player top lower than platform bottom - player has fallen through; or if player bottom higher than platform top - player has made it above
+				if (playerTop > platformBottom || playerBottom < platformTop) {
+					player->setFallingThroughPlatform(false);
+				}
+			}
+		}
+		else {
+			//Check if player has walked off platform
+			bool playerRightIsLeftOfPlatformLeft{ playerRight < platformLeft };
+			bool playerLeftIsRightOfPlatformRight{ playerLeft > platformRight };
+			if ((playerRightIsLeftOfPlatformLeft || playerLeftIsRightOfPlatformRight) && player->getCurrentPlatform() == i) {
+				player->setGrounded(false);
+				player->setOnPlatform(false);
+			}
+			//Check if platform is passable and player is crouching - in which case, they should fall through the platform
+			if (platforms[i].getPassable() && player->getCrouched() && (player->getCurrentPlatform() == i)) {
+				player->setFallingThroughPlatform(true);
+				player->setGrounded(false);
+				player->setOnPlatform(false);
+			}
+		}
+
+		//Check if player has jumped
+		if (!player->getGrounded()) {
+			player->setOnPlatform(false);
+		}
+	}
+}
+
+
+void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPlayer) {
+
+	//Loop through all limbs to see if hitboxes are colliding
+	for (int limbIndex{}; limbIndex < 4; ++limbIndex) {
+
+		//Hitbox isn't colliding, continue to next limb
+		if (!defendingPlayer->getEffectiveCollider().intersects(attackingPlayer->getAttack(limbIndex).getHitbox().getGlobalBounds()))
+			continue;
+
+		int damageAmount = attackingPlayer->getAttack(limbIndex).getDamage();
+		damageAmount *= (defendingPlayer->getBlocking() ? 0.1 : 1); //If defending player is blocking, only apply 10% of the damage
+		damageAmount *= (attackingPlayer->getLimbActivity(limbIndex) ? 1.2 : 1); //If attacking player's limb is broken, add an extra 20% damage to the attack
+
+		defendingPlayer->setHealth(defendingPlayer->getHealth() - damageAmount);
+		defendingPlayer->setStunFramesLeft(defendingPlayer->getBlocking() ? 0 : attackingPlayer->getAttack(limbIndex).getHitstun()); //If defending player isn't blocking, give them hitstun
+
+		//Move both players away from each other a bit to stop attacking player from being able to spam attacks due to player 1's hitstun
+		defendingPlayer->move(sf::Vector2f(-10 + (20 * defendingPlayer->getFlipped()), 0));
+		attackingPlayer->move(sf::Vector2f(-10 + (20 * attackingPlayer->getFlipped()), 0));
+	}
+}
 
 
 void LocalScene::render()
@@ -216,7 +221,6 @@ void LocalScene::render()
 	
 	if (debugMode) {
 		for (Player* player : players) {
-		
 			sf::RectangleShape rect;
 			rect.setSize(sf::Vector2f(player->getEffectiveCollider().width, player->getEffectiveCollider().height));
 			rect.setPosition(player->getEffectiveCollider().left, player->getEffectiveCollider().top);
@@ -309,4 +313,3 @@ void LocalScene::InitialiseHealthBars() {
 	HealthBarBack2.setPosition(1282, 37);
 	HealthBarBack2.setFillColor(sf::Color::Red);
 }
-
