@@ -230,11 +230,16 @@ void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPla
 	//Loop through all limbs to see if hitboxes are colliding
 	for (int limbIndex{ 0 }; limbIndex < 4; ++limbIndex) {
 
-		Attack attack{ attackingPlayer->getAttack(limbIndex) };
+		Attack& attack{ attackingPlayer->getAttack(limbIndex) };
 
-		//If attacking player is attacking and attack is in first frame of active cycle, apply self knockback regardless of whether attack is hitting defending player
-		if (attack.getAttacking() && attack.getCounter() >= attack.getStartup() + 1 && attack.getCounter() <= attack.getStartup() + 2) {
+		//If attacking player is attacking, attack is in first frame of active cycle, and self knockback hasn't been applied, apply self knockback regardless of whether attack is hitting defending player
+		if (attack.getAttacking() && (attack.getCounter() >= attack.getStartup() + 1 && attack.getCounter() <= attack.getStartup() + 2) && !attack.getSelfKnockbackApplied()) {
+			std::cout << "Applying to attacking player\n";
 			ApplyKnockbackToAttackingPlayer(defendingPlayer, attackingPlayer, limbIndex);
+			attack.setSelfKnockbackApplied(true);
+		}
+		else if (!attack.getAttacking()) {
+			attack.setSelfKnockbackApplied(false);
 		}
 
 		//Hitbox isn't colliding, continue to next limb
@@ -255,8 +260,10 @@ void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPla
 		defendingPlayer->setStunFramesLeft(defendingPlayer->getBlocking() ? 0 : attackingPlayer->getAttack(limbIndex).getHitstun()); //If defending player isn't blocking, give them hitstun
 
 
-		//Apply knockback to defending player
-		ApplyKnockbackToDefendingPlayer(defendingPlayer, attackingPlayer, limbIndex);
+		//Apply knockback to defending player if attack is in active cycle
+		if (attack.getCounter() >= attack.getStartup() + 1 && attack.getCounter() <= attack.getActive()) {
+			ApplyKnockbackToDefendingPlayer(defendingPlayer, attackingPlayer, limbIndex);
+		}
 
 	}
 }
@@ -310,8 +317,8 @@ void LocalScene::ApplyKnockbackToAttackingPlayer(Player* defendingPlayer, Player
 	sf::Vector2f knockback = attackingPlayer->getAttack(limbIndex).getSelfKnockback();
 
 	//Knockback.x is negative, which will cause attacking player to go to the left
-	//If attacking player is to the left of defending player, they should be sent to the right, so flip knockback.x
-	if (attackingPlayer->getPosition().x < defendingPlayer->getPosition().x) {
+	//If attacking player is facing to the right, they should be sent to the right, so flip knockback.x
+	if (!attackingPlayer->getFlipped()) {
 		knockback.x = -knockback.x;
 	}
 

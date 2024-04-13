@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "TimeManager.h"
 #include <iostream>
 #include <format>
 
@@ -42,7 +43,7 @@ Player::Player(sf::Vector2f size, float acc, float ts, float js, int hp, int pro
 	attacks[0] = Attack(2, 5,  12, 8,  sf::Vector2f(200, 400),  sf::Vector2f(-50, 200),   onePercentX*70, onePercentY*20,  onePercentX*30, onePercentY*40,    8);  //Kick
 	attacks[1] = Attack(5, 15, 40, 60, sf::Vector2f(400, 750),  sf::Vector2f(-200, 350),  onePercentX*70, onePercentY*20,  onePercentX*30, onePercentY*40,   18);  //Sweep
 	attacks[2] = Attack(4, 7,  18, 6,  sf::Vector2f(400, 200),  sf::Vector2f(-100, 10),   onePercentX*70, onePercentY*15,  onePercentX*40, onePercentY*-25,   5);  //Jab
-	attacks[3] = Attack(2, 15, 30, 70, sf::Vector2f(200, 1000), sf::Vector2f(-100, 300),  onePercentX*55, onePercentY*45,  onePercentX*40, onePercentY*-60,  20);  //Uppercut
+	attacks[3] = Attack(2, 15, 30, 70, sf::Vector2f(200, 800),  sf::Vector2f(-100, 800),  onePercentX*55, onePercentY*45,  onePercentX*40, onePercentY*-60,  20);  //Uppercut
 
 	stunFramesLeft = 0;
 
@@ -316,7 +317,7 @@ void Player::update(float dt) {
 		setTexture(&playerRenderTexture->getTexture());
 	}
 
-	if (stunFramesLeft > 0) { stunFramesLeft -= Attack::physicsClockFramerate * dt; }
+	if (stunFramesLeft > 0) { stunFramesLeft -= TimeManager::PhysicsClockFramerate * dt; }
 	else if (stunFramesLeft < 0) { stunFramesLeft = 0; }
 }
 
@@ -349,7 +350,7 @@ bool Player::getLimbActivity(int index) { return activeLimbs[index]; }
 
 int Player::getLimbRotation(int index) { return activeLimbs[index] ? aliveLimbSprites[index]->getRotation() : deadLimbSprites[index]->getRotation(); }
 
-Attack Player::getAttack(int index) { return attacks[index]; }
+Attack& Player::getAttack(int index) { return attacks[index]; }
 
 bool Player::getGrounded() { return isGrounded; }
 

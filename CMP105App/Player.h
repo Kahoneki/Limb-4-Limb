@@ -30,7 +30,7 @@ public:
 	bool getFlipped();
 	bool getBlocking();
 	sf::FloatRect getEffectiveCollider();
-	Attack getAttack(int index);
+	Attack& getAttack(int index);
 	bool getGrounded();
 	int getCurrentPlatform();
 	bool getOnPlatform();

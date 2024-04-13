@@ -1,4 +1,5 @@
 #include "Attack.h"
+#include "TimeManager.h"
 #include <iostream>
 
 
@@ -12,9 +13,11 @@ Attack::Attack(float start, float act, float rec, int hs, sf::Vector2f kb, sf::V
 	active = act;
 	recovery = rec;
 	counter = 0;
+	intermediateFloatCounter = 0;
 	hitstun = hs;
 	knockback = kb;
 	selfKnockback = selfKb;
+	selfKnockbackApplied = false;
 	attacking = false;
 	width = w;
 	height = h;
@@ -29,7 +32,11 @@ Attack::~Attack() {
 
 void Attack::strike(float dt, float player_x, float player_y, bool flip, bool crouch) {
 
-	counter += physicsClockFramerate*dt;
+	intermediateFloatCounter += TimeManager::PhysicsClockFramerate*dt;
+	//Check if new frame
+	if (static_cast<int>(intermediateFloatCounter) != counter) {
+		counter = static_cast<int>(intermediateFloatCounter);
+	}
 
 	// If attack is in active frames, create the hitbox
 	if (counter > startup && counter < active) {
@@ -50,6 +57,7 @@ void Attack::strike(float dt, float player_x, float player_y, bool flip, bool cr
 	if (counter > recovery) {
 		attacking = false;
 		counter = 0;
+		intermediateFloatCounter = 0;
 	}
 }
 
@@ -57,7 +65,7 @@ void Attack::strike(float dt, float player_x, float player_y, bool flip, bool cr
 // Getters
 GameObject Attack::getHitbox() { return hitbox; }
 
-float Attack::getCounter() { return counter; }
+int Attack::getCounter() { return counter; }
 
 float Attack::getStartup() { return startup; }
 
@@ -74,6 +82,8 @@ int Attack::getDamage() { return damage; }
 sf::Vector2f Attack::getKnockback() { return knockback; }
 
 sf::Vector2f Attack::getSelfKnockback() { return selfKnockback; }
+
+bool Attack::getSelfKnockbackApplied() { return selfKnockbackApplied; }
 
 
 // Setters
@@ -94,3 +104,5 @@ void Attack::setAttacking(bool fighting) {
 void Attack::setDamage(int power) { damage = power; }
 
 void Attack::setHitstun(int stun) { hitstun = stun; }
+
+void Attack::setSelfKnockbackApplied(bool val) { selfKnockbackApplied = val; }

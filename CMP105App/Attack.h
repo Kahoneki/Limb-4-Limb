@@ -17,7 +17,7 @@ public:
 	//Getters
 
 	GameObject getHitbox();
-	float getCounter();
+	int getCounter();
 	float getStartup();
 	float getActive();
 	float getRecovery();
@@ -26,19 +26,17 @@ public:
 	int getDamage();
 	sf::Vector2f getKnockback();
 	sf::Vector2f getSelfKnockback();
+	bool getSelfKnockbackApplied();
 
 	//Setters
 	void setHitbox(int width, int height, int xpos, int ypos);
 	void setAttacking(bool fighting);
 	void setDamage(int power);
 	void setHitstun(int stun);
+	void setSelfKnockbackApplied(bool val);
 
 	//Handles the actual attack
 	void strike(float dt, float player_x, float player_y, bool flip, bool crouch);
-
-
-	//Fixed framerate
-	static const int physicsClockFramerate = 30;
 
 private:
 
@@ -54,7 +52,10 @@ private:
 	float recovery;
 
 	// Counts frames when an attack happens (taking into account delta time). Used to check which state ( startup, active, recovery ) the attack is in.
-	float counter;
+	int counter;
+
+	//Counts inbetween frames - used to update counter
+	float intermediateFloatCounter;
 
 	//Number of frames opponent is stunned for
 	int hitstun;
@@ -70,6 +71,9 @@ private:
 
 	//How far the attacking player will be knocked back (positive = away from direction of attack)
 	sf::Vector2f selfKnockback;
+
+	//Bool lock - true if self knockback has already been applied
+	bool selfKnockbackApplied;
 
 
 	// Data for the hitbox
