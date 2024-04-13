@@ -48,6 +48,8 @@ private:
 
 	void PlatformCollisionCheck(Player* player);
 	void AttackHitboxCheck(Player* defendingPlayer, Player* attackingPlayer);
+	void ApplyKnockbackToDefendingPlayer(Player* defendingPlayer, Player* attackingPlayer, int limbIndex);
+	void ApplyKnockbackToAttackingPlayer(Player* defendingPlayer, Player* attackingPlayer, int limbIndex);
 	
 	bool debugMode; //Shows colliders
 	void DebugRender();

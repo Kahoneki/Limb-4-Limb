@@ -228,15 +228,22 @@ void LocalScene::PlatformCollisionCheck(Player* player) {
 void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPlayer) {
 
 	//Loop through all limbs to see if hitboxes are colliding
-	for (int limbIndex{}; limbIndex < 4; ++limbIndex) {
+	for (int limbIndex{ 0 }; limbIndex < 4; ++limbIndex) {
+
+		Attack attack{ attackingPlayer->getAttack(limbIndex) };
+
+		//If attacking player is attacking and attack is in first frame of active cycle, apply self knockback regardless of whether attack is hitting defending player
+		if (attack.getAttacking() && attack.getCounter() >= attack.getStartup() + 1 && attack.getCounter() <= attack.getStartup() + 2) {
+			ApplyKnockbackToAttackingPlayer(defendingPlayer, attackingPlayer, limbIndex);
+		}
 
 		//Hitbox isn't colliding, continue to next limb
-		if (!defendingPlayer->getEffectiveCollider().intersects(attackingPlayer->getAttack(limbIndex).getHitbox().getGlobalBounds()))
+		if (!defendingPlayer->getEffectiveCollider().intersects(attack.getHitbox().getGlobalBounds()))
 			continue;
 
 		
 		//Apply damage to defending player
-		int damageAmount = attackingPlayer->getAttack(limbIndex).getDamage();
+		int damageAmount = attack.getDamage();
 
 		//If defending player is blocking, only apply 10% of the damage
 		damageAmount *= (defendingPlayer->getBlocking() ? 0.1 : 1);
@@ -249,48 +256,83 @@ void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPla
 
 
 		//Apply knockback to defending player
-		sf::Vector2f knockback = attackingPlayer->getAttack(limbIndex).getKnockback();
+		ApplyKnockbackToDefendingPlayer(defendingPlayer, attackingPlayer, limbIndex);
 
-		//If defending player is blocking, only apply 30% of the knockback
-		knockback.x *= (defendingPlayer->getBlocking() ? 0.3 : 1);
-		knockback.y *= (defendingPlayer->getBlocking() ? 0.3 : 1);
-
-		//If attacking player's limb is broken, add an extra 40% knockback to the attack
-		knockback.x *= (attackingPlayer->getLimbActivity(limbIndex) ? 1 : 1.4);
-		knockback.y *= (attackingPlayer->getLimbActivity(limbIndex) ? 1 : 1.4);
-
-		//Increase knockback the lower the defending player's health is using linear interpolation
-		float maxHorizontalKnockbackAmount { 3 * knockback.x };
-		float maxVerticalKnockbackAmount{ 3 * knockback.y };
-		float interp{ static_cast<float>(defendingPlayer->getHealth()) / defendingPlayer->getMaxHealth() - 1}; //Between 0 and 1
-
-		//Lerp formula: k=a+(b-a)*t : when t=0 (health low), k=a. when t=1 (health high), k=b
-		knockback.x += (knockback.x - maxHorizontalKnockbackAmount) * interp;
-		knockback.y += (knockback.y - maxVerticalKnockbackAmount) * interp;
-		
-		//Knockback.x is positive, which will cause defending player to go to the right
-		//If defending player is to the left of attacking player, they should be sent to the left, so flip knockback.x
-		if (defendingPlayer->getPosition().x < attackingPlayer->getPosition().x) {
-			knockback.x = -knockback.x;
-		}
-
-		defendingPlayer->setVelocity(defendingPlayer->getVelocity() + knockback);
-		if (knockback.y > 0) {
-			defendingPlayer->setGrounded(false);
-		}
-		defendingPlayer->setHasKnockback(true);
-		//Adjust jump direction given new velocity
-		if (defendingPlayer->getVelocity().x < 0) {
-			defendingPlayer->setJumpDirection(-1);
-		}
-		else if (defendingPlayer->getVelocity().x > 0) {
-			defendingPlayer->setJumpDirection(1);
-		}
-		else {
-			defendingPlayer->setJumpDirection(0);
-		}
 	}
 }
+
+void LocalScene::ApplyKnockbackToDefendingPlayer(Player* defendingPlayer, Player* attackingPlayer, int limbIndex) {
+	
+	sf::Vector2f knockback = attackingPlayer->getAttack(limbIndex).getKnockback();
+
+	//If defending player is blocking, only apply 30% of the knockback
+	knockback.x *= (defendingPlayer->getBlocking() ? 0.3 : 1);
+	knockback.y *= (defendingPlayer->getBlocking() ? 0.3 : 1);
+
+	//If attacking player's limb is broken, add an extra 40% knockback to the attack
+	knockback.x *= (attackingPlayer->getLimbActivity(limbIndex) ? 1 : 1.4);
+	knockback.y *= (attackingPlayer->getLimbActivity(limbIndex) ? 1 : 1.4);
+
+	//Increase knockback the lower the defending player's health is using linear interpolation
+	float maxHorizontalKnockbackAmount{ 3 * knockback.x };
+	float maxVerticalKnockbackAmount{ 3 * knockback.y };
+	float interp{ static_cast<float>(defendingPlayer->getHealth()) / defendingPlayer->getMaxHealth() - 1 }; //Between 0 and 1
+
+	//Lerp formula: k=a+(b-a)*t : when t=0 (health low), k=a. when t=1 (health high), k=b
+	knockback.x += (knockback.x - maxHorizontalKnockbackAmount) * interp;
+	knockback.y += (knockback.y - maxVerticalKnockbackAmount) * interp;
+
+	//Knockback.x is positive, which will cause defending player to go to the right
+	//If defending player is to the left of attacking player, they should be sent to the left, so flip knockback.x
+	if (defendingPlayer->getPosition().x < attackingPlayer->getPosition().x) {
+		knockback.x = -knockback.x;
+	}
+
+	defendingPlayer->setVelocity(defendingPlayer->getVelocity() + knockback);
+	if (knockback.y > 0) {
+		defendingPlayer->setGrounded(false);
+	}
+	defendingPlayer->setHasKnockback(true);
+	//Adjust jump direction given new velocity
+	if (defendingPlayer->getVelocity().x < 0) {
+		defendingPlayer->setJumpDirection(-1);
+	}
+	else if (defendingPlayer->getVelocity().x > 0) {
+		defendingPlayer->setJumpDirection(1);
+	}
+	else {
+		defendingPlayer->setJumpDirection(0);
+	}
+}
+
+void LocalScene::ApplyKnockbackToAttackingPlayer(Player* defendingPlayer, Player* attackingPlayer, int limbIndex) {
+
+	sf::Vector2f knockback = attackingPlayer->getAttack(limbIndex).getSelfKnockback();
+
+	//Knockback.x is negative, which will cause attacking player to go to the left
+	//If attacking player is to the left of defending player, they should be sent to the right, so flip knockback.x
+	if (attackingPlayer->getPosition().x < defendingPlayer->getPosition().x) {
+		knockback.x = -knockback.x;
+	}
+
+	attackingPlayer->setVelocity(attackingPlayer->getVelocity() + knockback);
+	if (knockback.y > 0) {
+		attackingPlayer->setGrounded(false);
+	}
+	attackingPlayer->setHasKnockback(true);
+
+	//Adjust jump direction given new velocity
+	if (attackingPlayer->getVelocity().x < 0) {
+		attackingPlayer->setJumpDirection(-1);
+	}
+	else if (attackingPlayer->getVelocity().x > 0) {
+		attackingPlayer->setJumpDirection(1);
+	}
+	else {
+		attackingPlayer->setJumpDirection(0);
+	}
+}
+
 
 
 void LocalScene::HealthBarUpdate() {

@@ -39,10 +39,10 @@ Player::Player(sf::Vector2f size, float acc, float ts, float js, int hp, int pro
 	//Attack-hitbox size and relative x and y positions are expressed as percentages of the player's size
 	float onePercentX{ getSize().x/100 };
 	float onePercentY{ getSize().y/100 };
-	attacks[0] = Attack(2, 5,  12, 8,  sf::Vector2f(200, 400),  onePercentX*70, onePercentY*20,  onePercentX*30, onePercentY*40,    8);  //Kick
-	attacks[1] = Attack(5, 15, 40, 60, sf::Vector2f(400, 750),  onePercentX*70, onePercentY*20,  onePercentX*30, onePercentY*40,   18);  //Sweep
-	attacks[2] = Attack(4, 7,  18, 6,  sf::Vector2f(400, 200),  onePercentX*70, onePercentY*15,  onePercentX*40, onePercentY*-25,   5);  //Jab
-	attacks[3] = Attack(2, 15, 30, 70, sf::Vector2f(200, 1000), onePercentX*55, onePercentY*45,  onePercentX*40, onePercentY*-60,  20);  //Uppercut
+	attacks[0] = Attack(2, 5,  12, 8,  sf::Vector2f(200, 400),  sf::Vector2f(-50, 200),   onePercentX*70, onePercentY*20,  onePercentX*30, onePercentY*40,    8);  //Kick
+	attacks[1] = Attack(5, 15, 40, 60, sf::Vector2f(400, 750),  sf::Vector2f(-200, 350),  onePercentX*70, onePercentY*20,  onePercentX*30, onePercentY*40,   18);  //Sweep
+	attacks[2] = Attack(4, 7,  18, 6,  sf::Vector2f(400, 200),  sf::Vector2f(-100, 10),   onePercentX*70, onePercentY*15,  onePercentX*40, onePercentY*-25,   5);  //Jab
+	attacks[3] = Attack(2, 15, 30, 70, sf::Vector2f(200, 1000), sf::Vector2f(-100, 300),  onePercentX*55, onePercentY*45,  onePercentX*40, onePercentY*-60,  20);  //Uppercut
 
 	stunFramesLeft = 0;
 
@@ -192,7 +192,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 
 	}
 
-	//Ducking
+	//Crouching
 	if (input->isKeyDown(down)) {
 		if (!crouched) {
 			setSize(sf::Vector2f(getSize().x, getSize().y * 0.5f));
@@ -358,6 +358,8 @@ int Player::getCurrentPlatform() { return currentPlatform; }
 bool Player::getOnPlatform() { return isOnPlatform; }
 
 bool Player::getFallingThroughPlatform() { return isFallingThroughPlatform; }
+
+bool Player::getHasKnockback() { return hasKnockback; }
 
 int Player::getStunFramesLeft() { return stunFramesLeft; }
 

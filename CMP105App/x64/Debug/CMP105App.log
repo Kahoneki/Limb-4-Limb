@@ -1,271 +1,275 @@
 ﻿  Scanning sources for module dependencies...
-  Player.cpp
-  Note: including file: C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.h
-  Note: including file:  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework/GameObject.h
-  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML\Graphics.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Config.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Clock.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Export.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Time.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Err.hpp
-  Note: including file:       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\ostream
-  Note: including file:        C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\yvals_core.h
-  Note: including file:         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vcruntime.h
-  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\sal.h
-  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\concurrencysal.h
-  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vadefs.h
-  Note: including file:         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xkeycheck.h
-  Note: including file:        C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\ios
-  Note: including file:         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xlocnum
-  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\climits
-  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\limits.h
-  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cmath
-  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\yvals.h
-  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\crtdbg.h
-  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt.h
-  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vcruntime_new_debug.h
-  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vcruntime_new.h
-  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\crtdefs.h
-  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\use_ansi.h
-  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cstdlib
-  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\math.h
-  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_math.h
-  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\stdlib.h
-  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_malloc.h
-  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_search.h
-  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\stddef.h
-  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wstdlib.h
-  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xtr1common
-  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\intrin0.h
-  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\intrin0.inl.h
-  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xutility
-  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_iter_core.hpp
-  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility
-  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\initializer_list
-  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cstddef
-  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\type_traits
-  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cstdint
-  Note: including file:                C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\stdint.h
-  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\concepts
-  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\compare
-  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cstring
-  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\string.h
-  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_memory.h
-  Note: including file:               C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_memcpy_s.h
-  Note: including file:                C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\errno.h
-  Note: including file:                C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vcruntime_string.h
-  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wstring.h
-  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cstdio
-  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\stdio.h
-  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wstdio.h
-  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_stdio_config.h
-  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\iterator
-  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\iosfwd
-  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cwchar
-  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\wchar.h
-  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wconio.h
-  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wctype.h
-  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wdirect.h
-  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wio.h
-  Note: including file:               C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_share.h
-  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wprocess.h
-  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wtime.h
-  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\sys/stat.h
-  Note: including file:               C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\sys/types.h
-  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\streambuf
-  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xiosbase
-  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\share.h
-  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\system_error
-  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_system_error_abi.hpp
-  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cerrno
-  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\stdexcept
-  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\exception
-  Note: including file:               C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\malloc.h
-  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vcruntime_exception.h
-  Note: including file:                C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\eh.h
-  Note: including file:                 C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_terminate.h
-  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring
-  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_sanitizer_annotate_container.hpp
-  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xmemory
-  Note: including file:                C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\limits
-  Note: including file:                 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cfloat
-  Note: including file:                  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\float.h
-  Note: including file:                C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\new
-  Note: including file:                C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xatomic.h
-  Note: including file:                C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\tuple
-  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xpolymorphic_allocator.h
-  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xcall_once.h
-  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xerrc.h
-  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\atomic
-  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xatomic_wait.h
-  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xthreads.h
-  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xtimec.h
-  Note: including file:                C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\ctime
-  Note: including file:                 C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\time.h
-  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xlocale
-  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory
-  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\typeinfo
-  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vcruntime_typeinfo.h
-  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xfacet
-  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xlocinfo
-  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_xlocinfo_types.hpp
-  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cctype
-  Note: including file:               C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\ctype.h
-  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\clocale
-  Note: including file:               C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\locale.h
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/FileInputStream.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/InputStream.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/NonCopyable.hpp
-  Note: including file:       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\string
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Lock.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/MemoryInputStream.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Mutex.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Sleep.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/String.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Utf.hpp
-  Note: including file:        C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\algorithm
-  Note: including file:        C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\locale
-  Note: including file:         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xlocbuf
-  Note: including file:         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xlocmes
-  Note: including file:         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xlocmon
-  Note: including file:         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xloctime
-  Note: including file:        C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Utf.inl
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/String.inl
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Thread.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Thread.inl
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/ThreadLocal.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/ThreadLocalPtr.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/ThreadLocalPtr.inl
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Vector2.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Vector2.inl
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Vector3.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Vector3.inl
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Clipboard.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Export.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Context.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/GlResource.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/ContextSettings.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Cursor.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Event.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Joystick.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Keyboard.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Mouse.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Sensor.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Touch.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/VideoMode.hpp
-  Note: including file:      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector
-  Note: including file:       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_bit_utils.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Window.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/WindowHandle.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/WindowStyle.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/BlendMode.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Export.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/CircleShape.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Shape.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Drawable.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/RenderStates.hpp
-  Note: including file:        C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Transform.hpp
-  Note: including file:         C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Rect.hpp
-  Note: including file:          C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Rect.inl
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Transformable.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/VertexArray.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Vertex.hpp
-  Note: including file:        C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Color.hpp
-  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/PrimitiveType.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/ConvexShape.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Font.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Glyph.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Texture.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Image.hpp
-  Note: including file:     C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\map
-  Note: including file:      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xtree
-  Note: including file:       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xnode_handle.h
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/RectangleShape.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/RenderTarget.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/View.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/RenderTexture.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/RenderWindow.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Shader.hpp
-  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Glsl.hpp
-  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Glsl.inl
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Sprite.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Text.hpp
-  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/VertexBuffer.hpp
+  LocalScene.cpp
+  Note: including file: C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.h
+  Note: including file:  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics.hpp
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Config.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Clock.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Export.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Time.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Err.hpp
+  Note: including file:      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\ostream
+  Note: including file:       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\yvals_core.h
+  Note: including file:        C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vcruntime.h
+  Note: including file:         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\sal.h
+  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\concurrencysal.h
+  Note: including file:         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vadefs.h
+  Note: including file:        C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xkeycheck.h
+  Note: including file:       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\ios
+  Note: including file:        C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xlocnum
+  Note: including file:         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\climits
+  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\limits.h
+  Note: including file:         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cmath
+  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\yvals.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\crtdbg.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt.h
+  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vcruntime_new_debug.h
+  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vcruntime_new.h
+  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\crtdefs.h
+  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\use_ansi.h
+  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cstdlib
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\math.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_math.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\stdlib.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_malloc.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_search.h
+  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\stddef.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wstdlib.h
+  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xtr1common
+  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\intrin0.h
+  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\intrin0.inl.h
+  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xutility
+  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_iter_core.hpp
+  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility
+  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\initializer_list
+  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cstddef
+  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\type_traits
+  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cstdint
+  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\stdint.h
+  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\concepts
+  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\compare
+  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cstring
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\string.h
+  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_memory.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_memcpy_s.h
+  Note: including file:               C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\errno.h
+  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vcruntime_string.h
+  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wstring.h
+  Note: including file:         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cstdio
+  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\stdio.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wstdio.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_stdio_config.h
+  Note: including file:         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\iterator
+  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\iosfwd
+  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cwchar
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\wchar.h
+  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wconio.h
+  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wctype.h
+  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wdirect.h
+  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wio.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_share.h
+  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wprocess.h
+  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_wtime.h
+  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\sys/stat.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\sys/types.h
+  Note: including file:         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\streambuf
+  Note: including file:          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xiosbase
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\share.h
+  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\system_error
+  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_system_error_abi.hpp
+  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cerrno
+  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\stdexcept
+  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\exception
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\malloc.h
+  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vcruntime_exception.h
+  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\eh.h
+  Note: including file:                C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\corecrt_terminate.h
+  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring
+  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_sanitizer_annotate_container.hpp
+  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xmemory
+  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\limits
+  Note: including file:                C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cfloat
+  Note: including file:                 C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\float.h
+  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\new
+  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xatomic.h
+  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\tuple
+  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xpolymorphic_allocator.h
+  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xcall_once.h
+  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xerrc.h
+  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\atomic
+  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xatomic_wait.h
+  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xthreads.h
+  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xtimec.h
+  Note: including file:               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\ctime
+  Note: including file:                C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\time.h
+  Note: including file:           C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xlocale
+  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory
+  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\typeinfo
+  Note: including file:              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vcruntime_typeinfo.h
+  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xfacet
+  Note: including file:            C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xlocinfo
+  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_xlocinfo_types.hpp
+  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\cctype
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\ctype.h
+  Note: including file:             C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\clocale
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\locale.h
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/FileInputStream.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/InputStream.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/NonCopyable.hpp
+  Note: including file:      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\string
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Lock.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/MemoryInputStream.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Mutex.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Sleep.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/String.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Utf.hpp
+  Note: including file:       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\algorithm
+  Note: including file:       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\locale
+  Note: including file:        C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xlocbuf
+  Note: including file:        C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xlocmes
+  Note: including file:        C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xlocmon
+  Note: including file:        C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xloctime
+  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Utf.inl
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/String.inl
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Thread.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Thread.inl
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/ThreadLocal.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/ThreadLocalPtr.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/ThreadLocalPtr.inl
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Vector2.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Vector2.inl
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Vector3.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/System/Vector3.inl
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Clipboard.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Export.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Context.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/GlResource.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/ContextSettings.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Cursor.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Event.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Joystick.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Keyboard.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Mouse.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Sensor.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Touch.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/VideoMode.hpp
+  Note: including file:     C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector
+  Note: including file:      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_bit_utils.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/Window.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/WindowHandle.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Window/WindowStyle.hpp
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/BlendMode.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Export.hpp
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/CircleShape.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Shape.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Drawable.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/RenderStates.hpp
+  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Transform.hpp
+  Note: including file:        C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Rect.hpp
+  Note: including file:         C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Rect.inl
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Transformable.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/VertexArray.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Vertex.hpp
+  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Color.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/PrimitiveType.hpp
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/ConvexShape.hpp
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Font.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Glyph.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Texture.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Image.hpp
+  Note: including file:    C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\map
+  Note: including file:     C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xtree
+  Note: including file:      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xnode_handle.h
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/RectangleShape.hpp
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/RenderTarget.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/View.hpp
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/RenderTexture.hpp
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/RenderWindow.hpp
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Shader.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Glsl.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Glsl.inl
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Sprite.hpp
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/Text.hpp
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Graphics/VertexBuffer.hpp
+  Note: including file:  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework/BaseLevel.h
   Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\Input.h
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\AudioManager.h
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\SoundObject.h
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML\Audio.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/InputSoundFile.hpp
+  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/Export.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/Listener.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/Music.hpp
+  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundStream.hpp
+  Note: including file:        C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundSource.hpp
+  Note: including file:         C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/AlResource.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/OutputSoundFile.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/Sound.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundBuffer.hpp
+  Note: including file:       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\set
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundBufferRecorder.hpp
+  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundRecorder.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundFileFactory.hpp
+  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundFileFactory.inl
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundFileReader.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Audio/SoundFileWriter.hpp
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\MusicObject.h
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\GameState.h
+  Note: including file:   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\iostream
+  Note: including file:    C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\istream
+  Note: including file:  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Platform.h
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework/GameObject.h
+  Note: including file: C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\EndScreen.h
+  Note: including file:  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SceneManager.h
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\MainMenu.h
+  Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TimeManager.h
+  Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/Ftp.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/Export.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/TcpSocket.hpp
+  Note: including file:       C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/Socket.hpp
+  Note: including file:        C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/SocketHandle.hpp
+  Note: including file:         C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\shared\basetsd.h
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/Http.hpp
+  Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/IpAddress.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/Packet.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/SocketSelector.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/TcpListener.hpp
+  Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SFML\include\SFML/Network/UdpSocket.hpp
+  Note: including file: C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.h
   Note: including file:  C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.h
-  Note: including file: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\iostream
-  Note: including file:  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\istream
-  Note: including file: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\format
-  Note: including file:  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_format_ucd_tables.hpp
-  Note: including file:  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_print.hpp
-  Note: including file:   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xfilesystem_abi.h
-  Note: including file:  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\bit
-  Note: including file:  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\charconv
-  Note: including file:   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xbit_ops.h
-  Note: including file:   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xcharconv.h
-  Note: including file:   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xcharconv_ryu.h
-  Note: including file:    C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xcharconv_ryu_tables.h
-  Note: including file:   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xcharconv_tables.h
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(161,23): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(161,23): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(161,23): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(161,23): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(161,23): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(171,23): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(171,23): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(171,23): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(171,23): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(171,23): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(227,29): warning C4244: '+=': conversion from 'T' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(227,29): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(227,29): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(227,29): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(227,29): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(227,29): warning C4244:         and
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(227,29): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(227,29): warning C4244:             T=int
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(227,29): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(229,38): warning C4244: '-=': conversion from 'double' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(229,38): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(229,38): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(229,38): warning C4244:             T=int
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(229,38): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(240,32): warning C4244: '=': conversion from 'T' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(240,32): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(240,32): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(240,32): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(240,32): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(240,32): warning C4244:         and
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(240,32): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(240,32): warning C4244:             T=int
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(240,32): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(244,38): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(244,38): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(244,38): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(244,38): warning C4244:             T=int
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(244,38): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(244,24): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(244,24): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(244,24): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(244,24): warning C4244:             T=int
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(244,24): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(333,49): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(333,49): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(333,49): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(333,49): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(333,49): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(338,49): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(338,49): warning C4244:         with
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(338,49): warning C4244:         [
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(338,49): warning C4244:             T=float
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(338,49): warning C4244:         ]
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(350,66): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(362,42): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(374,66): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(390,115): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(390,163): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(392,110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp(392,153): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(249,48): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(252,52): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(269,46): warning C4244: '*=': conversion from 'double' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(269,46): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(269,46): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(269,46): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(269,46): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(270,46): warning C4244: '*=': conversion from 'double' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(270,46): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(270,46): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(270,46): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(270,46): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(273,50): warning C4244: '*=': conversion from 'double' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(273,50): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(273,50): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(273,50): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(273,50): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(274,50): warning C4244: '*=': conversion from 'double' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(274,50): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(274,50): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(274,50): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(274,50): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(342,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(342,39): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(342,39): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(342,39): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(342,39): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(343,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(343,39): warning C4244:         with
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(343,39): warning C4244:         [
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(343,39): warning C4244:             T=float
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(343,39): warning C4244:         ]
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp(344,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   CMP105App.vcxproj -> C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\x64\Debug\CMP105App.exe

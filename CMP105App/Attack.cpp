@@ -6,7 +6,7 @@
 Attack::Attack() {
 }
 
-Attack::Attack(float start, float act, float rec, int hs, sf::Vector2f kb, float w, float h, float relx, float rely, int dam) {
+Attack::Attack(float start, float act, float rec, int hs, sf::Vector2f kb, sf::Vector2f selfKb, float w, float h, float relx, float rely, int dam) {
 
 	startup = start;
 	active = act;
@@ -14,6 +14,7 @@ Attack::Attack(float start, float act, float rec, int hs, sf::Vector2f kb, float
 	counter = 0;
 	hitstun = hs;
 	knockback = kb;
+	selfKnockback = selfKb;
 	attacking = false;
 	width = w;
 	height = h;
@@ -71,6 +72,8 @@ bool Attack::getAttacking() { return attacking; }
 int Attack::getDamage() { return damage; }
 
 sf::Vector2f Attack::getKnockback() { return knockback; }
+
+sf::Vector2f Attack::getSelfKnockback() { return selfKnockback; }
 
 
 // Setters

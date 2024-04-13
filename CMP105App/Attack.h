@@ -10,7 +10,7 @@ public:
 
 	//Constructor/Destructor
 	Attack();
-	Attack(float start, float act, float rec, int hs, sf::Vector2f kb, float w, float h, float relx, float rely, int dam);
+	Attack(float start, float act, float rec, int hs, sf::Vector2f kb, sf::Vector2f selfKb, float w, float h, float relx, float rely, int dam);
 	~Attack();
 
 
@@ -25,6 +25,7 @@ public:
 	bool getAttacking();
 	int getDamage();
 	sf::Vector2f getKnockback();
+	sf::Vector2f getSelfKnockback();
 
 	//Setters
 	void setHitbox(int width, int height, int xpos, int ypos);
@@ -58,15 +59,17 @@ private:
 	//Number of frames opponent is stunned for
 	int hitstun;
 
-
 	// Checks if the player is mid attack
 	bool attacking;
 #
 	//Damage of the attack
 	int damage;
 
-	//How far the defending player will be knocked back (positive = away from attacking player)
+	//How far the defending player will be knocked back (positive = away from direction of attack)
 	sf::Vector2f knockback;
+
+	//How far the attacking player will be knocked back (positive = away from direction of attack)
+	sf::Vector2f selfKnockback;
 
 
 	// Data for the hitbox
