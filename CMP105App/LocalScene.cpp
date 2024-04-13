@@ -34,9 +34,10 @@ void LocalScene::InitialiseScene() {
 	background.setFillColor(sf::Color::White);
 	background.setTexture(&bgTexture);
 
-	platforms[0] = Platform(450, 475, 300, 25, true);
-	platforms[1] = Platform(1070, 475, 300, 25, true);
-	platforms[2] = Platform(200, 700, 1520, 25, false); //Ground
+	platforms[0] = Platform(450, 675, 300, 25, true);   //Bottom left
+	platforms[1] = Platform(1170, 675, 300, 25, true);  //Bottom right
+	platforms[2] = Platform(800, 475, 320, 25, true);   //Top
+	platforms[3] = Platform(200, 875, 1520, 25, false); //Ground
 
 	//audioManager.playMusicbyName("GuileTheme");
 }
@@ -52,8 +53,8 @@ void LocalScene::InitialisePlayers() {
 		player->setHealth(100);
 		player->setOrigin(player->getLocalBounds().width / 2.f, player->getLocalBounds().height / 2.f);
 	}
-	players[0]->setPosition(300, 500);
-	players[1]->setPosition(1300, 500);
+	players[0]->setPosition(325, 0);
+	players[1]->setPosition(1270, 0);
 	players[1]->setScale(-1.0f, 1.0f);
 	players[1]->setFillColor(sf::Color::Red);
 }
@@ -266,7 +267,6 @@ void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPla
 		//Lerp formula: k=a+(b-a)*t : when t=0 (health low), k=a. when t=1 (health high), k=b
 		knockback.x += (knockback.x - maxHorizontalKnockbackAmount) * interp;
 		knockback.y += (knockback.y - maxVerticalKnockbackAmount) * interp;
-		std::cout << knockback.x << ' ' << knockback.y << '\n';
 		
 		//Knockback.x is positive, which will cause defending player to go to the right
 		//If defending player is to the left of attacking player, they should be sent to the left, so flip knockback.x
@@ -326,7 +326,7 @@ void LocalScene::render()
 	window->draw(HealthBarBack2);
 	window->draw(HealthBarFront1);
 	window->draw(HealthBarFront2);
-	for (int i{ 0 }; i < 3; ++i) {
+	for (int i{ 0 }; i < sizeof(platforms)/sizeof(platforms[0]); ++i) {
 		window->draw(platforms[i]);
 	}
 

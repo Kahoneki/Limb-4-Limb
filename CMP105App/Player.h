@@ -38,6 +38,7 @@ public:
 
 	//Setters
 	void setCrouched(bool val);
+	void setStandupPosition(sf::Vector2f val);
 	void setHealth(int val);
 	void UpdateTextures(); //Call whenever there's a change to activeLimbs[]
 	void setLimbActivity(int index, bool val);

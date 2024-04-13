@@ -205,7 +205,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 		if (!input->isKeyDown(down)) {
 			setSize(sf::Vector2f(getSize().x, getSize().y / 0.5f));
 			setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-			setPosition(sf::Vector2f(getPosition().x, getPosition().y - getSize().y / 4));
+			setPosition(sf::Vector2f(getPosition().x, (getPosition().y - getSize().y / 4) + 1)); //Adding 1 to account for floating-point rounding error that causes player to go up 1 pixel every time
 			crouched = false;
 		}
 	}
