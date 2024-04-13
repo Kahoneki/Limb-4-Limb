@@ -101,13 +101,13 @@ void LocalScene::update(float dt) {
 	//Loop through both players
 	for (int playerIndex{}; playerIndex < 2; ++playerIndex) {
 
-		Player* p1 = players[playerIndex];
-		Player* p2 = players[1 - playerIndex];
+		Player* p1 = players[playerIndex];	   //Defending player
+		Player* p2 = players[1 - playerIndex]; //Attacking player
 
 		PlatformCollisionCheck(p1);
 
-		//Defending player has stun frames left, continue to the next player
-		if (p1->getStunFramesLeft())
+		//Defending player has invincibility frames left, continue to the next player
+		if (p1->getInvincibilityFramesLeft())
 			continue;
 		else {
 			AttackHitboxCheck(p1, p2);
@@ -257,7 +257,7 @@ void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPla
 		damageAmount *= (attackingPlayer->getLimbActivity(limbIndex) ? 1 : 1.2);
 
 		defendingPlayer->setHealth(defendingPlayer->getHealth() - damageAmount);
-		defendingPlayer->setStunFramesLeft(defendingPlayer->getBlocking() ? 0 : attackingPlayer->getAttack(limbIndex).getHitstun()); //If defending player isn't blocking, give them hitstun
+		defendingPlayer->setInvincibilityFramesLeft(defendingPlayer->getBlocking() ? 0 : attackingPlayer->getAttack(limbIndex).getInvincibilityFrames()); //If defending player isn't blocking, give them invincibilityFrames
 
 
 		//Apply knockback to defending player if attack is in active cycle

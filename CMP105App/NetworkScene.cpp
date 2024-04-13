@@ -45,8 +45,8 @@ void NetworkScene::update(float dt) {
 		OnlinePlayer* p1 = players[playerIndex]; //Defending player
 		OnlinePlayer* p2 = players[1-playerIndex]; //Attacking player
 
-		//Defending player has stun frames left, continue to the next iteration
-		if (p1->getStunFramesLeft())
+		//Defending player has invincibility frames left, continue to the next iteration
+		if (p1->getInvincibilityFramesLeft())
 			continue;
 
 		//Loop through all limbs to see if hitboxes are colliding
@@ -61,9 +61,9 @@ void NetworkScene::update(float dt) {
 			damageAmount *= (p2->getLimbActivity(limbIndex) ? 1.2 : 1); //If attacking player's limb is broken, add an extra 20% damage to the attack
 			
 			p1->setHealth(p1->getHealth() - damageAmount);
-			p1->setStunFramesLeft(p1->getBlocking() ? 0 : p2->getAttack(limbIndex).getHitstun()); //If defending player isn't blocking, give them hitstun
+			p1->setInvincibilityFramesLeft(p1->getBlocking() ? 0 : p2->getAttack(limbIndex).getInvincibilityFrames()); //If defending player isn't blocking, give them invincibilityFrames
 			
-			//Move both players away from each other a bit to stop attacking player from being able to spam attacks due to player 1's hitstun
+			//Move both players away from each other a bit to stop attacking player from being able to spam attacks due to player 1's invincibilityFrames
 			p1->move(sf::Vector2f(-10 + (20 * p1->getFlipped()), 0));
 			p2->move(sf::Vector2f(-10 + (20 * p2->getFlipped()), 0));
 		}

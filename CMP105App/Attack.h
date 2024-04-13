@@ -21,7 +21,7 @@ public:
 	float getStartup();
 	float getActive();
 	float getRecovery();
-	int getHitstun();
+	int getInvincibilityFrames();
 	bool getAttacking();
 	int getDamage();
 	sf::Vector2f getKnockback();
@@ -32,7 +32,7 @@ public:
 	void setHitbox(int width, int height, int xpos, int ypos);
 	void setAttacking(bool fighting);
 	void setDamage(int power);
-	void setHitstun(int stun);
+	void setInvincibilityFrames(int stun);
 	void setSelfKnockbackApplied(bool val);
 
 	//Handles the actual attack
@@ -58,7 +58,7 @@ private:
 	float intermediateFloatCounter;
 
 	//Number of frames opponent is stunned for
-	int hitstun;
+	int invincibilityFrames;
 
 	// Checks if the player is mid attack
 	bool attacking;

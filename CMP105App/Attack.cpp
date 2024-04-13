@@ -14,7 +14,7 @@ Attack::Attack(float start, float act, float rec, int hs, sf::Vector2f kb, sf::V
 	recovery = rec;
 	counter = 0;
 	intermediateFloatCounter = 0;
-	hitstun = hs;
+	invincibilityFrames = hs;
 	knockback = kb;
 	selfKnockback = selfKb;
 	selfKnockbackApplied = false;
@@ -73,7 +73,7 @@ float Attack::getActive() { return active; }
 
 float Attack::getRecovery() { return recovery; }
 
-int Attack::getHitstun(){ return hitstun; }
+int Attack::getInvincibilityFrames(){ return invincibilityFrames; }
 
 bool Attack::getAttacking() { return attacking; }
 
@@ -103,6 +103,6 @@ void Attack::setAttacking(bool fighting) {
 
 void Attack::setDamage(int power) { damage = power; }
 
-void Attack::setHitstun(int stun) { hitstun = stun; }
+void Attack::setInvincibilityFrames(int stun) { invincibilityFrames = stun; }
 
 void Attack::setSelfKnockbackApplied(bool val) { selfKnockbackApplied = val; }

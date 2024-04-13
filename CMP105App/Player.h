@@ -26,7 +26,7 @@ public:
 	bool getLimbActivity(int index);
 	int getLimbRotation(int index);
 	bool getActionable();
-	int getStunFramesLeft();
+	int getInvincibilityFramesLeft();
 	bool getFlipped();
 	bool getBlocking();
 	sf::FloatRect getEffectiveCollider();
@@ -45,7 +45,7 @@ public:
 	void setLimbRotation(int index, int rotation); //Degrees
 	void addLimbRotation(int index, int rotation); //Degrees
 	void setFlipped(bool flip);
-	void setStunFramesLeft(int numFrames);
+	void setInvincibilityFramesLeft(int numFrames);
 	void setGrounded(bool val);
 	void setCurrentPlatorm(int platform);
 	void setOnPlatform(bool val);
@@ -75,7 +75,7 @@ protected:
 	int maxHealth;
 	int protection;
 	Attack attacks[4];
-	float stunFramesLeft;
+	float invincibilityFramesLeft;
 	bool blocking;
 	bool hasKnockback; //Is currently being knocked back
 

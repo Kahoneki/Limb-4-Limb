@@ -45,7 +45,7 @@ Player::Player(sf::Vector2f size, float acc, float ts, float js, int hp, int pro
 	attacks[2] = Attack(4, 7,  18, 6,  sf::Vector2f(400, 200),  sf::Vector2f(-100, 10),   onePercentX*70, onePercentY*15,  onePercentX*40, onePercentY*-25,   5);  //Jab
 	attacks[3] = Attack(2, 15, 30, 70, sf::Vector2f(200, 800),  sf::Vector2f(-100, 800),  onePercentX*55, onePercentY*45,  onePercentX*40, onePercentY*-60,  20);  //Uppercut
 
-	stunFramesLeft = 0;
+	invincibilityFramesLeft = 0;
 
 
 	//Create render texture for player
@@ -113,19 +113,15 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 	if (actionable) {
 		if (!crouched) {
 			if (input->isKeyDown(kick)) {
-				setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
 				attacks[0].setAttacking(true);
 			}
 			if (input->isKeyDown(sweep)) {
-				setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
 				attacks[1].setAttacking(true);
 			}
 			if (input->isKeyDown(jab)) {
-				setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
 				attacks[2].setAttacking(true);
 			}
 			if (input->isKeyDown(upper)) {
-				setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
 				attacks[3].setAttacking(true);
 			}
 		}
@@ -265,18 +261,18 @@ void Player::update(float dt) {
 		//If player is standing still, don't change the direction they're facing
 	}
 
-
-	//Handle combat
-	actionable = !stunFramesLeft;
-
+	actionable = true;
 	for (int i{}; i < 4; ++i) {
 		if (attacks[i].getAttacking()) {
 			attacks[i].strike(dt, getPosition().x, getPosition().y, flipped, crouched);
 			actionable = false;
 		}
 	}
-	//Check that player is actionable and that they're not already opaque
-	if (actionable && getFillColor().a != 255) {
+	
+	if (invincibilityFramesLeft && getFillColor().a != 128) {
+		setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128)); //Make transparent
+	}
+	else if (!invincibilityFramesLeft && getFillColor().a != 255) {
 		setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 255)); //Restore to full transparency
 	}
 
@@ -317,8 +313,8 @@ void Player::update(float dt) {
 		setTexture(&playerRenderTexture->getTexture());
 	}
 
-	if (stunFramesLeft > 0) { stunFramesLeft -= TimeManager::PhysicsClockFramerate * dt; }
-	else if (stunFramesLeft < 0) { stunFramesLeft = 0; }
+	if (invincibilityFramesLeft > 0) { invincibilityFramesLeft -= TimeManager::PhysicsClockFramerate * dt; }
+	else if (invincibilityFramesLeft < 0) { invincibilityFramesLeft = 0; }
 }
 
 
@@ -362,7 +358,7 @@ bool Player::getFallingThroughPlatform() { return isFallingThroughPlatform; }
 
 bool Player::getHasKnockback() { return hasKnockback; }
 
-int Player::getStunFramesLeft() { return stunFramesLeft; }
+int Player::getInvincibilityFramesLeft() { return invincibilityFramesLeft; }
 
 bool Player::getFlipped() { return flipped; }
 
@@ -374,7 +370,7 @@ void Player::UpdateTextures() { updateTextures = true; }
 
 void Player::setFlipped(bool flip) { flipped = flip; }
 
-void Player::setStunFramesLeft(int numFrames) { stunFramesLeft = numFrames; }
+void Player::setInvincibilityFramesLeft(int numFrames) { invincibilityFramesLeft = numFrames; }
 
 void Player::setGrounded(bool val) { isGrounded = val; }
 

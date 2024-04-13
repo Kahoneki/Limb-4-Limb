@@ -12,7 +12,7 @@ struct OnlinePlayerState {
 	sf::Vector2i pos;
 	bool crouched;
 	int health;
-	float stunFramesLeft;
+	float invincibilityFramesLeft;
 
 	bool activeLimbs[4];
 	bool attacking[4];
@@ -21,7 +21,7 @@ struct OnlinePlayerState {
 		return ((pos == other.pos) &&
 			    (crouched == other.crouched) &&
 				(health == other.health) &&
-				(stunFramesLeft == other.stunFramesLeft) &&
+				(invincibilityFramesLeft == other.invincibilityFramesLeft) &&
 				(activeLimbs == other.activeLimbs) &&
 			    (attacking == other.attacking));
 	}
