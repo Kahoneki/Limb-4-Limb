@@ -14,7 +14,7 @@ public:
 
 	
 	//Pipeline
-	void handleInput(float dt, int up, int left, int right, int down, int jab, int kick, int sweep, int upper);
+	void handleInput(float dt, int up, int left, int right, int down, int dodge, int jab, int kick, int sweep, int upper);
 	void update(float dt) override;
 
 

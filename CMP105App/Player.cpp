@@ -115,7 +115,7 @@ Player::~Player() {
 }
 
 
-void Player::handleInput(float dt, int jump, int left, int right, int down, int jab, int kick, int sweep, int upper) {
+void Player::handleInput(float dt, int jump, int left, int right, int down, int dodge, int jab, int kick, int sweep, int upper) {
 
 	if (dodgeFramesLeft) { actionable = false; }
 
@@ -261,7 +261,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 
 	//Dodging
 	if (!dodgeCooldownFramesLeft && !dodgeButtonPressed) {
-		if (input->isKeyDown(sf::Keyboard::LShift) && mostRecentDirectionKeycode != -1) {
+		if (input->isKeyDown(dodge) && mostRecentDirectionKeycode != -1) {
 			dodgeButtonPressed = true;
 			if (mostRecentDirectionKeycode == left) {
 				dodgeFramesLeft = totalDodgeFrames;
@@ -273,7 +273,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			}
 		}
 	}
-	if (dodgeButtonPressed && !input->isKeyDown(sf::Keyboard::LShift) && !dodgeFramesLeft) {
+	if (dodgeButtonPressed && !input->isKeyDown(dodge) && !dodgeFramesLeft) {
 		dodgeButtonPressed = false;
 	}
 
@@ -311,11 +311,11 @@ void Player::update(float dt) {
 		health = 0;
 	}
 
-	//Horizontal
-	if (currentPos.x < getSize().x/2 || currentPos.x > 1920 - getSize().x/2) { //not using <=/>= since velocity.x is being set to 0 and player would be stuck on edge
-		currentPos.x = (currentPos.x <= getSize().x/2 ? getSize().x/2 : 1920-getSize().x/2);
-		velocity.x = 0;
-	}
+	////Horizontal
+	//if (currentPos.x < getSize().x/2 || currentPos.x > 1920 - getSize().x/2) { //not using <=/>= since velocity.x is being set to 0 and player would be stuck on edge
+	//	currentPos.x = (currentPos.x <= getSize().x/2 ? getSize().x/2 : 1920-getSize().x/2);
+	//	velocity.x = 0;
+	//}
 
 	setPosition(currentPos.x, currentPos.y);
 	effectiveCollider = getGlobalBounds();
