@@ -234,7 +234,6 @@ void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPla
 
 		//If attacking player is attacking, attack is in first frame of active cycle, and self knockback hasn't been applied, apply self knockback regardless of whether attack is hitting defending player
 		if (attack.getAttacking() && (attack.getCounter() >= attack.getStartup() + 1 && attack.getCounter() <= attack.getStartup() + 2) && !attack.getSelfKnockbackApplied()) {
-			std::cout << "Applying to attacking player\n";
 			ApplyKnockbackToAttackingPlayer(defendingPlayer, attackingPlayer, limbIndex);
 			attack.setSelfKnockbackApplied(true);
 		}

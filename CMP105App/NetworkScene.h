@@ -1,16 +1,16 @@
 #ifndef TESTSCENE_H
 #define TESTSCENE_H
 
-#include <SFML/Graphics.hpp>
+
 #include "Framework/BaseLevel.h"
 #include "Framework/Input.h"
-#include "Framework/GameObject.h"
+
 #include "Framework/AudioManager.h"
+#include "Platform.h"
 
-#include "SceneManager.h"
-#include "OnlinePlayer.h"
-
-class SceneManager; //Forward declaration
+//Forward declarations
+class SceneManager;
+class OnlinePlayer;
 
 class NetworkScene : public BaseLevel
 {
@@ -35,15 +35,24 @@ private:
 	sf::RectangleShape HealthBarFront2;
 	sf::RectangleShape HealthBarBack1;
 	sf::RectangleShape HealthBarBack2;
+	
+	Platform platforms[4];
+
 	AudioManager audioManager;
 
 	int playerNum;
 
-	void FlipCheck();
-
 	void InitialiseScene();
 	void InitialisePlayers();
 	void InitialiseHealthBars();
+
+	void PlatformCollisionCheck(OnlinePlayer* player);
+	void AttackHitboxCheck(OnlinePlayer* defendingPlayer, OnlinePlayer* attackingPlayer);
+	void ApplyKnockbackToDefendingPlayer(OnlinePlayer* defendingPlayer, OnlinePlayer* attackingPlayer, int limbIndex);
+	void ApplyKnockbackToAttackingPlayer(OnlinePlayer* defendingPlayer, OnlinePlayer* attackingPlayer, int limbIndex);
+
+	bool debugMode; //Shows colliders
+	void DebugRender();
 };
 
 #endif
