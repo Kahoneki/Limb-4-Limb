@@ -45,8 +45,8 @@ void NetworkScene::InitialiseScene() {
 
 void NetworkScene::InitialisePlayers() {
 	//Size should be roughly in ratio 5:9
-	players[0] = new OnlinePlayer(sf::Vector2f(150, 275), 2200.0f, 175.0f, 900.0f, 100, 100, 0, false, 1, playerNum == 1);
-	players[1] = new OnlinePlayer(sf::Vector2f(150, 275), 2200.0f, 175.0f, 900.0f, 100, 100, 0, true, 2, playerNum == 2);
+	players[0] = new OnlinePlayer(sf::Vector2f(56, 103), 2200.0f, 175.0f, 900.0f, 100, 100, 0, false, 1, playerNum == 1);
+	players[1] = new OnlinePlayer(sf::Vector2f(56, 103), 2200.0f, 175.0f, 900.0f, 100, 100, 0, true, 2, playerNum == 2);
 
 	for (OnlinePlayer* player : players) {
 		player->setInput(input);

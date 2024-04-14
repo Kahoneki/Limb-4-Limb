@@ -23,8 +23,8 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 		int keys[9] { jump, left, right, down, dodge, jab, kick, sweep, upper };
 		Player::handleInput(dt, jump, left, right, down, dodge, jab, kick, sweep, upper);
 
-		bool currentKeyState[8];
-		for (int i{ 0 }; i < 8; ++i) {
+		bool currentKeyState[9];
+		for (int i{ 0 }; i < sizeof(keys)/sizeof(keys[0]); ++i) {
 			currentKeyState[i] = input->isKeyDown(keys[i]);
 		}
 
@@ -51,16 +51,16 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 		//-----COMBAT-----//
 		if (actionable) {
 			if (!crouched) {
-				if (input->isKeyDown(kick)) {
+				if (keyIsPressed[jab]) {
 					attacks[0].setAttacking(true);
 				}
-				if (input->isKeyDown(sweep)) {
+				if (keyIsPressed[sweep]) {
 					attacks[1].setAttacking(true);
 				}
-				if (input->isKeyDown(jab)) {
+				if (keyIsPressed[jab]) {
 					attacks[2].setAttacking(true);
 				}
-				if (input->isKeyDown(upper)) {
+				if (keyIsPressed[upper]) {
 					attacks[3].setAttacking(true);
 				}
 			}
@@ -69,10 +69,10 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 
 		directionKeycodesThisFrame.clear();
 
-		if (input->isKeyDown(left)) {
+		if (keyIsPressed[left]) {
 			directionKeycodesThisFrame.push_back(left);
 		}
-		if (input->isKeyDown(right)) {
+		if (keyIsPressed[right]) {
 			directionKeycodesThisFrame.push_back(right);
 		}
 
@@ -96,19 +96,19 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 
 		//----MOVEMENT----//
 		//Pressing either left or right (but not both - case covered by above check)
-		if (input->isKeyDown(right) || input->isKeyDown(left)) {
+		if (keyIsPressed[right] || keyIsPressed[left]) {
 			//Handle horizontal movement
 			if (isGrounded && !dodgeFramesLeft) {
-				if (input->isKeyDown(right)) {
+				if (keyIsPressed[right]) {
 					velocity.x = topSpeed;
 				}
-				if (input->isKeyDown(left)) {
+				if (keyIsPressed[left]) {
 					velocity.x = -topSpeed;
 				}
 			}
 			//In midair, player can slightly adjust their direction
 			else if (!dodgeFramesLeft) {
-				if (input->isKeyDown(right)) {
+				if (keyIsPressed[right]) {
 					//Jumping to the right
 					if (jumpDirection == 1) {
 						velocity.x = topSpeed;
@@ -118,7 +118,7 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 						velocity.x = 0.6 * topSpeed;
 					}
 				}
-				if (input->isKeyDown(left)) {
+				if (keyIsPressed[left]) {
 					//Jumping to the left
 					if (jumpDirection == -1) {
 						velocity.x = -topSpeed;
@@ -133,13 +133,13 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 
 		if (!hasKnockback && !dodgeFramesLeft) {
 			//Pressing both keys at same time or not pressing either key (and doesn't have knockback)
-			if ((input->isKeyDown(left) && input->isKeyDown(right)) || (!input->isKeyDown(left) && (!input->isKeyDown(right)))) {
+			if ((keyIsPressed[left] && keyIsPressed[right]) || (!keyIsPressed[left] && (!keyIsPressed[right]))) {
 				//Slow down to an immediate hault
 				velocity.x = 0;
 
 			}
 			//Pressing both keys at the same time, the player should be facing to their most recent key press
-			if (input->isKeyDown(left) && input->isKeyDown(right) && !dodgeFramesLeft) {
+			if (keyIsPressed[left] && keyIsPressed[right] && !dodgeFramesLeft) {
 				if (flipped && mostRecentDirectionKeycode == right) {
 					flipped = false;
 					setScale(1, 1);
@@ -153,7 +153,7 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 
 		if (isGrounded && !dodgeFramesLeft) {
 			//Jumping
-			if (input->isKeyDown(jump)) {
+			if (keyIsPressed[jump]) {
 				isGrounded = false;
 				velocity.y = jumpSpeed;
 				velocity.x *= 1.25;
@@ -171,7 +171,7 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 		}
 
 		//Crouching
-		if (input->isKeyDown(down) && !dodgeFramesLeft) {
+		if (keyIsPressed[down] && !dodgeFramesLeft) {
 			if (!crouched) {
 				setSize(sf::Vector2f(getSize().x, getSize().y * 0.5f));
 				setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
@@ -180,7 +180,7 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 			}
 		}
 		if (crouched && !dodgeFramesLeft) {
-			if (!input->isKeyDown(down)) {
+			if (!keyIsPressed[down]) {
 				setSize(sf::Vector2f(getSize().x, getSize().y / 0.5f));
 				setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
 				setPosition(sf::Vector2f(getPosition().x, (getPosition().y - getSize().y / 4) + 1)); //Adding 1 to account for floating-point rounding error that causes player to go up 1 pixel every time
@@ -190,7 +190,7 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 
 		//Dodging
 		if (!dodgeCooldownFramesLeft && !dodgeButtonPressed) {
-			if (input->isKeyDown(dodge) && mostRecentDirectionKeycode != -1) {
+			if (keyIsPressed[dodge] && mostRecentDirectionKeycode != -1) {
 				dodgeButtonPressed = true;
 				if (mostRecentDirectionKeycode == left) {
 					dodgeFramesLeft = totalDodgeFrames;
@@ -202,7 +202,7 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 				}
 			}
 		}
-		if (dodgeButtonPressed && !input->isKeyDown(dodge) && !dodgeFramesLeft) {
+		if (dodgeButtonPressed && !keyIsPressed[dodge] && !dodgeFramesLeft) {
 			dodgeButtonPressed = false;
 		}
 
