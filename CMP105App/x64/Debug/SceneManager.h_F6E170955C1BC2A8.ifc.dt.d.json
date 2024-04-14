@@ -223,7 +223,21 @@
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.39.33519\\include\\iostream",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.39.33519\\include\\istream",
             "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\framework\\gameobject.h",
-            "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\scenemanager.h"
+            "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\scenemanager.h",
+            "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\timemanager.h",
+            "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\sfml\\include\\sfml\\network.hpp",
+            "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\sfml\\include\\sfml\\network\\ftp.hpp",
+            "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\sfml\\include\\sfml\\network\\export.hpp",
+            "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\sfml\\include\\sfml\\network\\tcpsocket.hpp",
+            "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\sfml\\include\\sfml\\network\\socket.hpp",
+            "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\sfml\\include\\sfml\\network\\sockethandle.hpp",
+            "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22621.0\\shared\\basetsd.h",
+            "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\sfml\\include\\sfml\\network\\http.hpp",
+            "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\sfml\\include\\sfml\\network\\ipaddress.hpp",
+            "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\sfml\\include\\sfml\\network\\packet.hpp",
+            "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\sfml\\include\\sfml\\network\\socketselector.hpp",
+            "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\sfml\\include\\sfml\\network\\tcplistener.hpp",
+            "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\sfml\\include\\sfml\\network\\udpsocket.hpp"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

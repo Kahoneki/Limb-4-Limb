@@ -12,12 +12,12 @@
 
 class SceneManager; //Forward declaration
 
-class TestScene : public BaseLevel
+class NetworkScene : public BaseLevel
 {
 public:
 
-	TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager, int pn);
-	~TestScene();
+	NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager, int pn);
+	~NetworkScene();
 
 	void handleInput(float dt) override;
 	void update(float dt) override;

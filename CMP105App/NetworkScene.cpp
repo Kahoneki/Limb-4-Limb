@@ -1,13 +1,14 @@
-#include "TestScene.h"
+#include "NetworkScene.h"
 #include "EndScreen.h"
 #include "NetworkManager.h"
 
-TestScene::TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn) : sceneManager(sm), playerNum(pn)
+NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn) : sceneManager(sm)
 {
 	std::cout << "Loading test scene\n";
 
 	window = hwnd;
 	input = in;
+	playerNum = pn;
 
 	InitialiseScene();
 	InitialisePlayers();
@@ -18,7 +19,7 @@ TestScene::TestScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn
 
 
 
-TestScene::~TestScene()
+NetworkScene::~NetworkScene()
 {
 	std::cout << "Unloading test scene\n";
 	delete players[0];
@@ -27,14 +28,14 @@ TestScene::~TestScene()
 
 }
 
-void TestScene::handleInput(float dt) {
-	players[playerNum - 1]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
-	players[1 - (playerNum - 1)]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
+void NetworkScene::handleInput(float dt) {
+	players[playerNum - 1]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
+	players[1 - (playerNum - 1)]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
 }
 
 
 
-void TestScene::update(float dt) {
+void NetworkScene::update(float dt) {
 	players[playerNum - 1]->update(dt);
 	players[1 - (playerNum - 1)]->update(dt);
 	FlipCheck();
@@ -44,8 +45,8 @@ void TestScene::update(float dt) {
 		OnlinePlayer* p1 = players[playerIndex]; //Defending player
 		OnlinePlayer* p2 = players[1-playerIndex]; //Attacking player
 
-		//Defending player has stun frames left, continue to the next iteration
-		if (p1->getStunFramesLeft())
+		//Defending player has invincibility frames left, continue to the next iteration
+		if (p1->getInvincibilityFramesLeft())
 			continue;
 
 		//Loop through all limbs to see if hitboxes are colliding
@@ -60,9 +61,9 @@ void TestScene::update(float dt) {
 			damageAmount *= (p2->getLimbActivity(limbIndex) ? 1.2 : 1); //If attacking player's limb is broken, add an extra 20% damage to the attack
 			
 			p1->setHealth(p1->getHealth() - damageAmount);
-			p1->setStunFramesLeft(p1->getBlocking() ? 0 : p2->getAttack(limbIndex).getHitstun()); //If defending player isn't blocking, give them hitstun
+			p1->setInvincibilityFramesLeft(p1->getBlocking() ? 0 : p2->getAttack(limbIndex).getInvincibilityFrames()); //If defending player isn't blocking, give them invincibilityFrames
 			
-			//Move both players away from each other a bit to stop attacking player from being able to spam attacks due to player 1's hitstun
+			//Move both players away from each other a bit to stop attacking player from being able to spam attacks due to player 1's invincibilityFrames
 			p1->move(sf::Vector2f(-10 + (20 * p1->getFlipped()), 0));
 			p2->move(sf::Vector2f(-10 + (20 * p2->getFlipped()), 0));
 		}
@@ -73,7 +74,7 @@ void TestScene::update(float dt) {
 
 
 
-void TestScene::render()
+void NetworkScene::render()
 {
 	beginDraw();
 	
@@ -96,7 +97,7 @@ void TestScene::render()
 
 
 
-void TestScene::HealthBarUpdate() {
+void NetworkScene::HealthBarUpdate() {
 	int Calc1 = 4 * players[0]->getHealth();
 	int Calc2 = 4 * players[1]->getHealth();
 
@@ -111,7 +112,7 @@ void TestScene::HealthBarUpdate() {
 }
 
 
-void TestScene::FlipCheck() {
+void NetworkScene::FlipCheck() {
 	bool playersFacingOppositeDirections { (players[0]->getScale().x == 1 && players[0]->getPosition().x > players[1]->getPosition().x) ||
 		                                   (players[0]->getScale().x == -1 && players[0]->getPosition().x < players[1]->getPosition().x) };
 	if (playersFacingOppositeDirections) {
@@ -124,7 +125,7 @@ void TestScene::FlipCheck() {
 
 
 
-void TestScene::InitialiseScene() {
+void NetworkScene::InitialiseScene() {
 	background.setSize(sf::Vector2f(window->getSize()));
 	if (!bgTexture.loadFromFile("Assets/Background/background.png")) { std::cerr << "Couldn't load background for fight scene\n"; }
 	background.setFillColor(sf::Color::White);
@@ -135,12 +136,11 @@ void TestScene::InitialiseScene() {
 
 
 
-void TestScene::InitialisePlayers() {
-	players[0] = new OnlinePlayer(2200.0f, 175.0f, 900.0f, 100, 100, 0, false, 1, playerNum == 1);
-	players[1] = new OnlinePlayer(2200.0f, 175.0f, 900.0f, 100, 100, 0, true, 2, playerNum == 2);
+void NetworkScene::InitialisePlayers() {
+	players[0] = new OnlinePlayer(sf::Vector2f(150, 275), 2200.0f, 175.0f, 900.0f, 100, 100, 0, false, 1, playerNum == 1);
+	players[1] = new OnlinePlayer(sf::Vector2f(150, 275), 2200.0f, 175.0f, 900.0f, 100, 100, 0, true, 2, playerNum == 2);
 
 	for (OnlinePlayer* player : players) {
-		player->setSize(sf::Vector2f(150, 275));
 		player->setInput(input);
 		player->setHealth(100);
 		player->setOrigin(player->getLocalBounds().width / 2.f, player->getLocalBounds().height / 2.f);
@@ -153,7 +153,7 @@ void TestScene::InitialisePlayers() {
 
 
 
-void TestScene::InitialiseHealthBars() {
+void NetworkScene::InitialiseHealthBars() {
 	HealthBarFront1.setSize(sf::Vector2f(400, 50));
 	HealthBarFront1.setPosition(25, 25);
 	HealthBarFront1.setFillColor(sf::Color::Green);

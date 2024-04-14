@@ -12,7 +12,7 @@ struct OnlinePlayerState {
 	sf::Vector2i pos;
 	bool crouched;
 	int health;
-	float stunFramesLeft;
+	float invincibilityFramesLeft;
 
 	bool activeLimbs[4];
 	bool attacking[4];
@@ -21,7 +21,7 @@ struct OnlinePlayerState {
 		return ((pos == other.pos) &&
 			    (crouched == other.crouched) &&
 				(health == other.health) &&
-				(stunFramesLeft == other.stunFramesLeft) &&
+				(invincibilityFramesLeft == other.invincibilityFramesLeft) &&
 				(activeLimbs == other.activeLimbs) &&
 			    (attacking == other.attacking));
 	}
@@ -30,8 +30,8 @@ struct OnlinePlayerState {
 class OnlinePlayer : public Player
 {
 public:
-	OnlinePlayer(float acc, float ts, float js, int hp, int prot, int c1, bool flip, int pn, bool local);
-	void handleInput(float dt, int up, int left, int right, int down, int jab, int kick, int sweep, int upper);
+	OnlinePlayer(sf::Vector2f size, float acc, float ts, float js, int hp, int prot, int c1, bool flip, int pn, bool local);
+	void handleInput(float dt, int jump, int left, int right, int down, int dodge, int jab, int kick, int sweep, int upper);
 	void update(float dt);
 	void SendUpdateDataToNetwork(std::vector<int> changedKeys);
 	void VerifyStatus(sf::Packet verificationPacket);
@@ -54,7 +54,7 @@ private:
 	OnlinePlayerState prevState;
 	OnlinePlayerState newState;
 
-	bool prevKeyState[8];
+	bool prevKeyState[9];
 
 	std::map<int, bool> keyIsPressed; //For non-local players
 };
