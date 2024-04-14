@@ -29,8 +29,8 @@ NetworkScene::~NetworkScene()
 }
 
 void NetworkScene::handleInput(float dt) {
-	players[playerNum - 1]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
-	players[1 - (playerNum - 1)]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
+	players[playerNum - 1]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
+	players[1 - (playerNum - 1)]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
 }
 
 

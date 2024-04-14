@@ -12,6 +12,7 @@ bool numDown = false;
 Player::Player(sf::Vector2f size, float acc, float ts, float js, int hp, int prot, int c1, bool flip) {
 	setSize(size);
 	acceleration = acc;
+	terminalVelocity = -1500.0f;
 	topSpeed = ts;
 	jumpSpeed = js;
 	maxHealth = hp;
@@ -24,6 +25,13 @@ Player::Player(sf::Vector2f size, float acc, float ts, float js, int hp, int pro
 	isGrounded = false;
 	actionable = true;
 	crouched = false;
+
+	totalDodgeFrames = 6.0f;
+	dodgeFramesLeft = 0;
+	dodgeCooldownFrames = 10.0f;
+	dodgeCooldownFramesLeft = 0;
+	dodgeButtonPressed = false;
+	dodgeVelocity = 1000.0f;
 
 	effectiveCollider = getGlobalBounds();
 	colliderShrinkage = sf::Vector2f(10, 0);
@@ -107,7 +115,9 @@ Player::~Player() {
 }
 
 
-void Player::handleInput(float dt, int jump, int left, int right, int down, int jab, int kick, int sweep, int upper) {
+void Player::handleInput(float dt, int jump, int left, int right, int down, int dodge, int jab, int kick, int sweep, int upper) {
+
+	if (dodgeFramesLeft) { actionable = false; }
 
 	//-----COMBAT-----//
 	if (actionable) {
@@ -127,18 +137,39 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 		}
 	}
 
-	//----MOVEMENT----//
-	if (!hasKnockback) {
-		//Pressing both keys at same time or not pressing either key (and doesn't have knockback)
-		if ((input->isKeyDown(left) && input->isKeyDown(right)) || (!input->isKeyDown(left) && (!input->isKeyDown(right))) ) {
-			//Slow down to an immediate hault
-			velocity.x = 0;
+
+	directionKeycodesThisFrame.clear();
+
+	if (input->isKeyDown(left)) {
+		directionKeycodesThisFrame.push_back(left);
+	}
+	if (input->isKeyDown(right)) {
+		directionKeycodesThisFrame.push_back(right);
+	}
+
+	if (directionKeycodesThisFrame.empty()) {
+		mostRecentDirectionKeycode = -1;
+	}
+	else if (directionKeycodesLastFrame != directionKeycodesThisFrame) {
+		//Most recent key press will be the item in directionKeycodesThisFrame that isn't in directionKeycodesLastFrame (not taking into account multiple keys being pressed down on the same frame)
+		for (int kc : directionKeycodesThisFrame) {
+			if (std::find(directionKeycodesLastFrame.begin(), directionKeycodesLastFrame.end(), kc) == directionKeycodesLastFrame.end()) {
+				//kc was pressed this frame but wasn't pressed last frame, it is the most recent key press
+				mostRecentDirectionKeycode = kc;
+			}
 		}
 	}
+
+	directionKeycodesLastFrame = directionKeycodesThisFrame;
+
+
+
+
+	//----MOVEMENT----//
 	//Pressing either left or right (but not both - case covered by above check)
 	if (input->isKeyDown(right) || input->isKeyDown(left)) {
 		//Handle horizontal movement
-		if (isGrounded) {
+		if (isGrounded && !dodgeFramesLeft) {
 			if (input->isKeyDown(right)) {
 				velocity.x = topSpeed;
 			}
@@ -147,7 +178,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			}
 		}
 		//In midair, player can slightly adjust their direction
-		else {
+		else if (!dodgeFramesLeft) {
 			if (input->isKeyDown(right)) {
 				//Jumping to the right
 				if (jumpDirection == 1) {
@@ -170,7 +201,28 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			}
 		}
 	}
-	if (isGrounded) {
+	
+	if (!hasKnockback && !dodgeFramesLeft) {
+		//Pressing both keys at same time or not pressing either key (and doesn't have knockback)
+		if ((input->isKeyDown(left) && input->isKeyDown(right)) || (!input->isKeyDown(left) && (!input->isKeyDown(right))) ) {
+			//Slow down to an immediate hault
+			velocity.x = 0;
+
+		}
+	//Pressing both keys at the same time, the player should be facing to their most recent key press
+	if (input->isKeyDown(left) && input->isKeyDown(right) && !dodgeFramesLeft) {
+		if (flipped && mostRecentDirectionKeycode == right) {
+			flipped = false;
+			setScale(1, 1);
+		}
+		else if (!flipped && mostRecentDirectionKeycode == left) {
+			flipped = true;
+			setScale(-1, 1);
+		}
+	}
+	}
+
+	if (isGrounded && !dodgeFramesLeft) {
 		//Jumping
 		if (input->isKeyDown(jump)) {
 			isGrounded = false;
@@ -190,7 +242,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 	}
 
 	//Crouching
-	if (input->isKeyDown(down)) {
+	if (input->isKeyDown(down) && !dodgeFramesLeft) {
 		if (!crouched) {
 			setSize(sf::Vector2f(getSize().x, getSize().y * 0.5f));
 			setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
@@ -198,7 +250,7 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 			crouched = true;
 		}
 	}
-	if (crouched) {
+	if (crouched && !dodgeFramesLeft) {
 		if (!input->isKeyDown(down)) {
 			setSize(sf::Vector2f(getSize().x, getSize().y / 0.5f));
 			setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
@@ -207,10 +259,31 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 		}
 	}
 
+	//Dodging
+	if (!dodgeCooldownFramesLeft && !dodgeButtonPressed) {
+		if (input->isKeyDown(dodge) && mostRecentDirectionKeycode != -1) {
+			dodgeButtonPressed = true;
+			if (mostRecentDirectionKeycode == left) {
+				dodgeFramesLeft = totalDodgeFrames;
+				setVelocity(-dodgeVelocity, getVelocity().y);
+			}
+			else if (mostRecentDirectionKeycode == right) {
+				dodgeFramesLeft = totalDodgeFrames;
+				setVelocity(dodgeVelocity, getVelocity().y);
+			}
+		}
+	}
+	if (dodgeButtonPressed && !input->isKeyDown(dodge) && !dodgeFramesLeft) {
+		dodgeButtonPressed = false;
+	}
+
 
 	//Player is in air, so bring them towards ground
-	if (!isGrounded) {
+	if (!isGrounded && !(velocity.y == terminalVelocity)) {
 		velocity.y -= acceleration * dt;
+	}
+	if (velocity.y < terminalVelocity) {
+		velocity.y = terminalVelocity;
 	}
 
 }
@@ -223,7 +296,13 @@ void Player::update(float dt) {
 
 	currentPos.x += velocity.x * dt;
 	if (!isGrounded) {
-		currentPos.y -= ((velocity.y * dt) + (0.5 * (acceleration * dt * dt))); //s=ut+1/2(at^2)
+		//Player has reached terminal velocity, just move them down a fixed amount
+		if (velocity.y <= terminalVelocity) {
+			currentPos.y -= velocity.y * dt;
+		}
+		else {
+			currentPos.y -= ((velocity.y * dt) + (0.5 * (acceleration * dt * dt))); //s=ut+1/2(at^2)
+		}
 	}
 	
 	//Vertical - check if player has fallen off map
@@ -232,11 +311,11 @@ void Player::update(float dt) {
 		health = 0;
 	}
 
-	//Horizontal
-	if (currentPos.x < getSize().x/2 || currentPos.x > 1920 - getSize().x/2) { //not using <=/>= since velocity.x is being set to 0 and player would be stuck on edge
-		currentPos.x = (currentPos.x <= getSize().x/2 ? getSize().x/2 : 1920-getSize().x/2);
-		velocity.x = 0;
-	}
+	////Horizontal
+	//if (currentPos.x < getSize().x/2 || currentPos.x > 1920 - getSize().x/2) { //not using <=/>= since velocity.x is being set to 0 and player would be stuck on edge
+	//	currentPos.x = (currentPos.x <= getSize().x/2 ? getSize().x/2 : 1920-getSize().x/2);
+	//	velocity.x = 0;
+	//}
 
 	setPosition(currentPos.x, currentPos.y);
 	effectiveCollider = getGlobalBounds();
@@ -269,10 +348,10 @@ void Player::update(float dt) {
 		}
 	}
 	
-	if (invincibilityFramesLeft && getFillColor().a != 128) {
+	if ((invincibilityFramesLeft || dodgeFramesLeft) && getFillColor().a != 128) {
 		setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128)); //Make transparent
 	}
-	else if (!invincibilityFramesLeft && getFillColor().a != 255) {
+	else if (!(invincibilityFramesLeft || dodgeFramesLeft) && getFillColor().a != 255) {
 		setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 255)); //Restore to full transparency
 	}
 
@@ -315,6 +394,16 @@ void Player::update(float dt) {
 
 	if (invincibilityFramesLeft > 0) { invincibilityFramesLeft -= TimeManager::PhysicsClockFramerate * dt; }
 	else if (invincibilityFramesLeft < 0) { invincibilityFramesLeft = 0; }
+	
+	if (dodgeFramesLeft > 0) { dodgeFramesLeft -= TimeManager::PhysicsClockFramerate * dt; }
+	else if (dodgeFramesLeft < 0) {
+		dodgeFramesLeft = 0;
+		velocity.x = 0;
+		dodgeCooldownFramesLeft = dodgeCooldownFrames;
+	}
+
+	if (dodgeCooldownFramesLeft > 0) { dodgeCooldownFramesLeft -= TimeManager::PhysicsClockFramerate * dt; }
+	else if (dodgeCooldownFramesLeft < 0) { dodgeCooldownFramesLeft = 0; }
 }
 
 

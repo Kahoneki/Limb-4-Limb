@@ -15,13 +15,13 @@ OnlinePlayer::OnlinePlayer(sf::Vector2f size, float acc, float ts, float js, int
 }
 
 
-void OnlinePlayer::handleInput(float dt, int up, int left, int right, int down, int jab, int kick, int sweep, int upper) {
+void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down, int dodge, int jab, int kick, int sweep, int upper) {
 	if (isLocal) {
 
 		//Compare keys pressed this frame to keys pressed last frame, if they're different, send the differences to the network manager
 
-		int keys[8] { up, left, right, down, jab, kick, sweep, upper };
-		Player::handleInput(dt, up, left, right, down, jab, kick, sweep, upper);
+		int keys[9] { jump, left, right, down, dodge, jab, kick, sweep, upper };
+		Player::handleInput(dt, jump, left, right, down, dodge, jab, kick, sweep, upper);
 
 		bool currentKeyState[8];
 		for (int i{ 0 }; i < 8; ++i) {
@@ -29,7 +29,7 @@ void OnlinePlayer::handleInput(float dt, int up, int left, int right, int down, 
 		}
 
 		std::vector<int> changedKeys;
-		for (int i{ 0 }; i < 8; ++i) {
+		for (int i{ 0 }; i < sizeof(keys)/sizeof(keys[0]); ++i) {
 			if (currentKeyState[i] != prevKeyState[i]) {
 				changedKeys.push_back(keys[i]);
 			}
@@ -39,88 +39,180 @@ void OnlinePlayer::handleInput(float dt, int up, int left, int right, int down, 
 			SendUpdateDataToNetwork(changedKeys);
 		}
 
-		for (int i{ 0 }; i < 8; ++i) {
+		for (int i{ 0 }; i < sizeof(keys)/sizeof(keys[0]); ++i) {
 			prevKeyState[i] = currentKeyState[i];
 		}
 	}
 
 
 	else {
+		if (dodgeFramesLeft) { actionable = false; }
+
+		//-----COMBAT-----//
 		if (actionable) {
-			if (isGrounded) {
-				//Pressing both keys at same time or not pressing either key
-				if ((keyIsPressed[left] && keyIsPressed[right]) || (!keyIsPressed[left] && (!keyIsPressed[right]))) {
-					//Slow down to an immediate hault
-					velocity.x = 0;
+			if (!crouched) {
+				if (input->isKeyDown(kick)) {
+					attacks[0].setAttacking(true);
 				}
-				//Pressing either left or right (but not both - case covered by above check)
-				else if (keyIsPressed[right] || keyIsPressed[left]) {
-					//Handle movement
-					if (keyIsPressed[right]) {
-						velocity.x = topSpeed - (flipped * (0.3 * topSpeed));
-						blocking = flipped;
-					}
-					if (keyIsPressed[left]) {
-						velocity.x = -topSpeed + (!flipped * (0.3 * topSpeed));
-						blocking = !flipped;
-					}
+				if (input->isKeyDown(sweep)) {
+					attacks[1].setAttacking(true);
 				}
-				//Jumping
-				if (keyIsPressed[up]) {
-					isGrounded = false;
-					velocity.y = jumpSpeed;
-					velocity.x *= 1.25;
+				if (input->isKeyDown(jab)) {
+					attacks[2].setAttacking(true);
 				}
-
-				//Ducking
-				if (keyIsPressed[down]) {
-					if (!crouched) {
-						setSize(sf::Vector2f(getSize().x, getSize().y * 0.5));
-						setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-						setPosition(sf::Vector2f(getPosition().x, getPosition().y + 225 / 4));
-						crouched = true;
-					}
+				if (input->isKeyDown(upper)) {
+					attacks[3].setAttacking(true);
 				}
-				if (crouched) {
-					if (!keyIsPressed[down]) {
-						setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
-						setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-						setPosition(sf::Vector2f(getPosition().x, getPosition().y - 225 / 4));
-						crouched = false;
-					}
-				}
-
-				//-----GROUND COMBAT-----//
-				if (!crouched) {
-					if (keyIsPressed[kick]) {
-						setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
-						attacks[0].setAttacking(true);
-						velocity.x = 0;
-					}
-					if (keyIsPressed[sweep]) {
-						setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
-						attacks[1].setAttacking(true);
-						velocity.x = 0;
-					}
-					if (keyIsPressed[jab]) {
-						setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
-						attacks[2].setAttacking(true);
-						velocity.x = 0;
-					}
-					if (keyIsPressed[upper]) {
-						setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128));
-						attacks[3].setAttacking(true);
-						velocity.x = 0;
-					}
-				}
-
-				velocity.y -= acceleration * dt;
 			}
 		}
 
+
+		directionKeycodesThisFrame.clear();
+
+		if (input->isKeyDown(left)) {
+			directionKeycodesThisFrame.push_back(left);
+		}
+		if (input->isKeyDown(right)) {
+			directionKeycodesThisFrame.push_back(right);
+		}
+
+		if (directionKeycodesThisFrame.empty()) {
+			mostRecentDirectionKeycode = -1;
+		}
+		else if (directionKeycodesLastFrame != directionKeycodesThisFrame) {
+			//Most recent key press will be the item in directionKeycodesThisFrame that isn't in directionKeycodesLastFrame (not taking into account multiple keys being pressed down on the same frame)
+			for (int kc : directionKeycodesThisFrame) {
+				if (std::find(directionKeycodesLastFrame.begin(), directionKeycodesLastFrame.end(), kc) == directionKeycodesLastFrame.end()) {
+					//kc was pressed this frame but wasn't pressed last frame, it is the most recent key press
+					mostRecentDirectionKeycode = kc;
+				}
+			}
+		}
+
+		directionKeycodesLastFrame = directionKeycodesThisFrame;
+
+
+
+
+		//----MOVEMENT----//
+		//Pressing either left or right (but not both - case covered by above check)
+		if (input->isKeyDown(right) || input->isKeyDown(left)) {
+			//Handle horizontal movement
+			if (isGrounded && !dodgeFramesLeft) {
+				if (input->isKeyDown(right)) {
+					velocity.x = topSpeed;
+				}
+				if (input->isKeyDown(left)) {
+					velocity.x = -topSpeed;
+				}
+			}
+			//In midair, player can slightly adjust their direction
+			else if (!dodgeFramesLeft) {
+				if (input->isKeyDown(right)) {
+					//Jumping to the right
+					if (jumpDirection == 1) {
+						velocity.x = topSpeed;
+					}
+					//Travelling to left or straight up, but player is pressing right - let them switch direction to the right but only 30% of the regular speed
+					else {
+						velocity.x = 0.6 * topSpeed;
+					}
+				}
+				if (input->isKeyDown(left)) {
+					//Jumping to the left
+					if (jumpDirection == -1) {
+						velocity.x = -topSpeed;
+					}
+					//Travelling to right or straight up, but player is pressing right - let them switch direction to the left but only 30% of the regular speed
+					else {
+						velocity.x = 0.6 * -topSpeed;
+					}
+				}
+			}
+		}
+
+		if (!hasKnockback && !dodgeFramesLeft) {
+			//Pressing both keys at same time or not pressing either key (and doesn't have knockback)
+			if ((input->isKeyDown(left) && input->isKeyDown(right)) || (!input->isKeyDown(left) && (!input->isKeyDown(right)))) {
+				//Slow down to an immediate hault
+				velocity.x = 0;
+
+			}
+			//Pressing both keys at the same time, the player should be facing to their most recent key press
+			if (input->isKeyDown(left) && input->isKeyDown(right) && !dodgeFramesLeft) {
+				if (flipped && mostRecentDirectionKeycode == right) {
+					flipped = false;
+					setScale(1, 1);
+				}
+				else if (!flipped && mostRecentDirectionKeycode == left) {
+					flipped = true;
+					setScale(-1, 1);
+				}
+			}
+		}
+
+		if (isGrounded && !dodgeFramesLeft) {
+			//Jumping
+			if (input->isKeyDown(jump)) {
+				isGrounded = false;
+				velocity.y = jumpSpeed;
+				velocity.x *= 1.25;
+				if (velocity.x > 0) {
+					jumpDirection = 1;
+				}
+				else if (velocity.x < 0) {
+					jumpDirection = -1;
+				}
+				else {
+					jumpDirection = 0;
+				}
+			}
+
+		}
+
+		//Crouching
+		if (input->isKeyDown(down) && !dodgeFramesLeft) {
+			if (!crouched) {
+				setSize(sf::Vector2f(getSize().x, getSize().y * 0.5f));
+				setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
+				setPosition(sf::Vector2f(getPosition().x, getPosition().y + getSize().y / 2));
+				crouched = true;
+			}
+		}
+		if (crouched && !dodgeFramesLeft) {
+			if (!input->isKeyDown(down)) {
+				setSize(sf::Vector2f(getSize().x, getSize().y / 0.5f));
+				setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
+				setPosition(sf::Vector2f(getPosition().x, (getPosition().y - getSize().y / 4) + 1)); //Adding 1 to account for floating-point rounding error that causes player to go up 1 pixel every time
+				crouched = false;
+			}
+		}
+
+		//Dodging
+		if (!dodgeCooldownFramesLeft && !dodgeButtonPressed) {
+			if (input->isKeyDown(dodge) && mostRecentDirectionKeycode != -1) {
+				dodgeButtonPressed = true;
+				if (mostRecentDirectionKeycode == left) {
+					dodgeFramesLeft = totalDodgeFrames;
+					setVelocity(-dodgeVelocity, getVelocity().y);
+				}
+				else if (mostRecentDirectionKeycode == right) {
+					dodgeFramesLeft = totalDodgeFrames;
+					setVelocity(dodgeVelocity, getVelocity().y);
+				}
+			}
+		}
+		if (dodgeButtonPressed && !input->isKeyDown(dodge) && !dodgeFramesLeft) {
+			dodgeButtonPressed = false;
+		}
+
+
 		//Player is in air, so bring them towards ground
-		if (!isGrounded) {
+		if (!isGrounded && !(velocity.y == terminalVelocity)) {
 			velocity.y -= acceleration * dt;
+		}
+		if (velocity.y < terminalVelocity) {
+			velocity.y = terminalVelocity;
 		}
 	}
 }
