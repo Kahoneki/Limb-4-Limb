@@ -1,6 +1,7 @@
 #include "MainMenu.h"
 #include "NetworkScene.h"
 #include "LocalScene.h"
+#include "SceneManager.h"
 
 MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
 {
@@ -62,11 +63,18 @@ MainMenu::~MainMenu()
 
 void MainMenu::handleInput(float dt)
 {
-	bool mouseOverBox = localBox.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
+	bool mouseOverLocalBox = localBox.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
+	bool mouseOverOnlineBox = onlineBox.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
 	bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left) && !mousePressedLastFrame;
-	if (mouseOverBox && mouseDown) {
-		LocalScene* localScene = new LocalScene(window, input, sceneManager);
-		sceneManager.LoadScene(localScene);
+	if (mouseDown) {
+		if (mouseOverLocalBox) {
+			LocalScene* localScene = new LocalScene(window, input, sceneManager);
+			sceneManager.LoadScene(localScene);
+		}
+		else if (mouseOverOnlineBox) {
+			NetworkScene* networkScene = new NetworkScene(window, input, sceneManager, 0);
+			sceneManager.LoadScene(networkScene);
+		}
 	}
 	mousePressedLastFrame = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 }
