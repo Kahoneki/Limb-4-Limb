@@ -58,7 +58,8 @@ protected:
 	//----MEMBERS----//
 	//Movement
 	float acceleration; //This is vertical acceleration (upwards is positive) - there is no horizontal acceleration
-	float topSpeed;
+	float terminalVelocity; //Vertical
+	float topSpeed; //Horizontal
 	float jumpSpeed;
 	int jumpDirection; //-1: left, 0: up, 1: right
 
@@ -70,6 +71,13 @@ protected:
 	bool actionable;
 	bool crouched;
 
+	float totalDodgeFrames; //Number of frames that a dodge lasts for
+	float dodgeFramesLeft; //Number of frames left in dodge
+	float dodgeCooldownFrames; //How long will the player have to wait before they can dodge again?
+	float dodgeCooldownFramesLeft; //How many frames does the player have until they can dodge again?
+	bool dodgeButtonPressed; //Used in conjunction with dodgeFramesLeft to see if the player can dodge again, player will have to let go of dodge before they can dodge again
+	float dodgeVelocity; //Will overwrite any preexisting velocity in direction of dodge and in direction opposite of dodge
+
 	//Combat
 	sf::Int16 health; //int16 rather than int, since sizeof(int) has to be guaranteed when sending packets
 	int maxHealth;
@@ -78,6 +86,9 @@ protected:
 	float invincibilityFramesLeft;
 	bool blocking;
 	bool hasKnockback; //Is currently being knocked back
+	std::vector<int> directionKeycodesLastFrame;
+	std::vector<int> directionKeycodesThisFrame;
+	int mostRecentDirectionKeycode; //Keycode of the most recently pressed key (will be reset when a new direction key is pressed, will be -1 if no direction key is held down)
 
 	//Base
 	sf::FloatRect effectiveCollider; //This is the collider that will be used in all collision calculations - it's a bit smaller than getGlobalBounds() and is also in world-space
