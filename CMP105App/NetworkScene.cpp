@@ -45,8 +45,8 @@ void NetworkScene::InitialiseScene() {
 
 void NetworkScene::InitialisePlayers() {
 	//Size should be roughly in ratio 5:9
-	players[0] = new OnlinePlayer(sf::Vector2f(56, 103), 2200.0f, 175.0f, 900.0f, 100, 100, 0, false, 1, playerNum == 1);
-	players[1] = new OnlinePlayer(sf::Vector2f(56, 103), 2200.0f, 175.0f, 900.0f, 100, 100, 0, true, 2, playerNum == 2);
+	players[0] = new OnlinePlayer(sf::Vector2f(56, 103), 3300.0f, 600.0f, 1350.0f, 100, 100, 0, false, 1, playerNum == 1);
+	players[1] = new OnlinePlayer(sf::Vector2f(56, 103), 3300.0f, 600.0f, 1350.0f, 100, 100, 0, true, 2, playerNum == 2);
 
 	for (OnlinePlayer* player : players) {
 		player->setInput(input);
@@ -81,8 +81,8 @@ void NetworkScene::InitialiseHealthBars() {
 
 
 void NetworkScene::handleInput(float dt) {
-	players[playerNum - 1]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
-	players[1 - (playerNum - 1)]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
+	players[0]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
+	players[1]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
 
 	if (input->isKeyDown(sf::Keyboard::F3)) {
 		debugMode = true;

@@ -72,7 +72,7 @@ void MainMenu::handleInput(float dt)
 			sceneManager.LoadScene(localScene);
 		}
 		else if (mouseOverOnlineBox) {
-			NetworkScene* networkScene = new NetworkScene(window, input, sceneManager, 0);
+			NetworkScene* networkScene = new NetworkScene(window, input, sceneManager, 1);
 			sceneManager.LoadScene(networkScene);
 		}
 	}

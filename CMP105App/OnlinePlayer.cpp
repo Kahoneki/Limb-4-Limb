@@ -9,7 +9,8 @@ OnlinePlayer::OnlinePlayer(sf::Vector2f size, float acc, float ts, float js, int
 	playerNum = pn;
 	isLocal = local;
 	networkListener = networkManager.GenerateNetworkListener<OnlinePlayer>(*this, playerNum - 1);
-	for (int i{ 0 }; i < 8; ++i) {
+
+	for (int i{ 0 }; i < sizeof(prevKeyState)/sizeof(prevKeyState[0]); ++i) {
 		prevKeyState[i] = false;
 	}
 }
@@ -24,12 +25,12 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 		Player::handleInput(dt, jump, left, right, down, dodge, jab, kick, sweep, upper);
 
 		bool currentKeyState[9];
-		for (int i{ 0 }; i < sizeof(keys)/sizeof(keys[0]); ++i) {
+		for (int i{ 0 }; i < sizeof(currentKeyState)/sizeof(currentKeyState[0]); ++i) {
 			currentKeyState[i] = input->isKeyDown(keys[i]);
 		}
 
 		std::vector<int> changedKeys;
-		for (int i{ 0 }; i < sizeof(keys)/sizeof(keys[0]); ++i) {
+		for (int i{ 0 }; i < sizeof(currentKeyState)/sizeof(currentKeyState[0]); ++i) {
 			if (currentKeyState[i] != prevKeyState[i]) {
 				changedKeys.push_back(keys[i]);
 			}
@@ -39,7 +40,7 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 			SendUpdateDataToNetwork(changedKeys);
 		}
 
-		for (int i{ 0 }; i < sizeof(keys)/sizeof(keys[0]); ++i) {
+		for (int i{ 0 }; i < sizeof(prevKeyState)/sizeof(prevKeyState[0]); ++i) {
 			prevKeyState[i] = currentKeyState[i];
 		}
 	}
@@ -223,7 +224,7 @@ void OnlinePlayer::update(float dt) {
 	if (!isLocal) {
 		return;
 	}
-
+	
 	verificationPacketTimer += timeManager.getDeltaTime();
 	if (verificationPacketTimer >= verificationPacketCooldown) {
 		verificationPacketTimer = 0;
