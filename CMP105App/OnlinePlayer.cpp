@@ -5,7 +5,7 @@ OnlinePlayer::OnlinePlayer(sf::Vector2f size, float acc, float ts, float js, int
 	Player(size, acc, ts, js, hp, prot, c1, flip), networkManager(NetworkManager::getInstance()), timeManager (TimeManager::getInstance(240))
 {
 	verificationPacketTimer = 0;
-	verificationPacketCooldown = 10;
+	verificationPacketCooldown = 0.1f;
 	playerNum = pn;
 	isLocal = local;
 	networkListener = networkManager.GenerateNetworkListener<OnlinePlayer>(*this, playerNum - 1);
@@ -47,6 +47,11 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 
 
 	else {
+		for (const auto& a : keyIsPressed) {
+			if (a.second) {
+				std::cout << a.first << " is enabled\n";
+			}
+		}
 		if (dodgeFramesLeft) { actionable = false; }
 
 		//-----COMBAT-----//
@@ -270,6 +275,9 @@ void OnlinePlayer::VerifyStatus(sf::Packet verificationPacket) {
 
 int OnlinePlayer::getPlayerNum() { return playerNum; }
 
+
+
 void OnlinePlayer::setKeyPressed(int key, bool pressed) {
+	std::cout << key << " is " << pressed << '\n';
 	keyIsPressed[key] = pressed;
 }

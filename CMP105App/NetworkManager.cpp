@@ -2,6 +2,7 @@
 #include "BaseNetworkListener.h"
 #include <iostream>
 #include <type_traits> //For std::is_same()
+#include <ctime>
 
 class OnlinePlayer;
 
@@ -101,6 +102,8 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkM
 
 	}
 	
+	std::time_t ms = std::time(nullptr);
+	std::cout << "Send: " << ms << " milliseconds since the epoch\n";
 	return socket.send(outgoingPacket, serverAddress, serverPort);
 }
 
@@ -121,9 +124,10 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 	unsigned short incomingPort;
 
 	//Extract data and check if it's empty
-	std::cout << "I AM RECEIVING DATA\n";
 	if (socket.receive(incomingData, incomingIp, incomingPort) != sf::Socket::Done) { return; }
 
+	std::time_t ms = std::time(nullptr);
+	std::cout << "Receive: " << ms << " milliseconds since the epoch\n";
 
 	//Ensuring data is coming from server and not another NetworkManager
 	if ((serverAddress != incomingIp) || (incomingPort != serverPort)) {
