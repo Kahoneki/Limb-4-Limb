@@ -6,7 +6,11 @@ enum PacketCode
 {
 	AddNetworkManager,
 	RemoveNetworkManager,
-	PositionChange
+	KeyChange,
+	Verification,
+	Nums,
+	PositionChange,
+	CrouchChange
 };
 
 #endif

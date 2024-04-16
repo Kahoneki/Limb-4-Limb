@@ -18,7 +18,7 @@ public:
 	virtual sf::Socket::Status SendDataToNetworkManager(sf::Packet packet);
 
 protected:
-	sf::UdpSocket socket;
+	sf::TcpSocket socket;
 
 	sf::IpAddress serverAddress;
 	unsigned short serverPort;

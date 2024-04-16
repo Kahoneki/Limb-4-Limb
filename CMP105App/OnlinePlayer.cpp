@@ -5,7 +5,7 @@ OnlinePlayer::OnlinePlayer(sf::Vector2f size, float acc, float ts, float js, int
 	Player(size, acc, ts, js, hp, prot, c1, flip), networkManager(NetworkManager::getInstance()), timeManager (TimeManager::getInstance(240))
 {
 	verificationPacketTimer = 0;
-	verificationPacketCooldown = 0.1f;
+	verificationPacketCooldown = 100.0f;
 	playerNum = pn;
 	isLocal = local;
 	networkListener = networkManager.GenerateNetworkListener<OnlinePlayer>(*this, playerNum - 1);

@@ -2,7 +2,7 @@
 #include "BaseNetworkListener.h"
 #include <iostream>
 #include <type_traits> //For std::is_same()
-#include <ctime>
+#include <chrono>
 
 class OnlinePlayer;
 
@@ -27,24 +27,20 @@ NetworkManager::NetworkManager(sf::IpAddress _serverAddress, unsigned short _ser
 
 	socket.setBlocking(true);
 
-	//Send test packet to server to be added to server's list of connected NetworkManagers
-	sf::Packet packet;
-	packet << PacketCode::AddNetworkManager;
-	if (socket.send(packet, serverAddress, serverPort) != sf::Socket::Done) {
+	//Connect to server
+	if (socket.connect(serverAddress, serverPort) != sf::Socket::Done) {
 		std::cerr << "Failed to send connection request to server." << std::endl;
 	}
 	
 	//Get NetworkManager index from server
-	sf::IpAddress tempIp;
-	unsigned short tempPort;
-	sf::Packet data;
-	if (socket.receive(data, tempIp, tempPort) != sf::Socket::Done) {
+	sf::Packet incomingData;
+	if (socket.receive(incomingData) != sf::Socket::Done) {
 		connectedToServer = false;
 		std::cerr << "Failed to connect to server." << std::endl;
 	}
 	else {
 		std::cout << "Successfully connected to server.\n";
-		data >> networkManagerIndex;
+		incomingData >> networkManagerIndex;
 		connectedToServer = true;
 	}
 
@@ -63,7 +59,7 @@ NetworkManager::~NetworkManager() {
 	socket.setBlocking(true);
 	sf::Packet outgoingPacket;
 	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(PacketCode::RemoveNetworkManager);
-	if (socket.send(outgoingPacket, serverAddress, serverPort) != sf::Socket::Done) {
+	if (socket.send(outgoingPacket) != sf::Socket::Done) {
 		std::cerr << "Failed to disconnect from server." << std::endl;
 	}
 	else {
@@ -101,15 +97,15 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkM
 	}
 
 	}
-	
-	std::time_t ms = std::time(nullptr);
+	using namespace std::chrono;
+	uint64_t ms = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 	std::cout << "Send: " << ms << " milliseconds since the epoch\n";
-	return socket.send(outgoingPacket, serverAddress, serverPort);
+	return socket.send(outgoingPacket);
 }
 
 
 sf::Socket::Status NetworkManager::SendDataToNetworkManager(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
-	//This function can be called if there are only two NetworkManagers connected to the server (in which case it will just send data to the other NetworkManager).
+	//This function can be used if there are only two NetworkManagers connected to the server (in which case it will just send data to the other NetworkManager).
 	int outgoingNetworkManagerIndex = 1 - networkManagerIndex; //0->1, 1->0
 	return SendDataToNetworkManager(outgoingNetworkManagerIndex, networkListenerIndex, packetCode, incomingPacket);
 }
@@ -119,22 +115,12 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int networkListenerI
 void NetworkManager::CheckForIncomingDataFromServer() {
 	sf::Packet incomingData;
 
-	//Used to check that NetworkManager is in fact receiving data from the server and not, another NetworkManager, for example
-	sf::IpAddress incomingIp;
-	unsigned short incomingPort;
-
 	//Extract data and check if it's empty
-	if (socket.receive(incomingData, incomingIp, incomingPort) != sf::Socket::Done) { return; }
+	if (socket.receive(incomingData) != sf::Socket::Done) { return; }
 
-	std::time_t ms = std::time(nullptr);
+	using namespace std::chrono;
+	uint64_t ms = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 	std::cout << "Receive: " << ms << " milliseconds since the epoch\n";
-
-	//Ensuring data is coming from server and not another NetworkManager
-	if ((serverAddress != incomingIp) || (incomingPort != serverPort)) {
-		std::cerr << "NetworkManager (ip: " << incomingIp << ", port: " << incomingPort << ") is attempting to connect directly to another NetworkManager." << std::endl;
-		std::cerr << "NetworkManager should send data through the server instead." << std::endl;
-		return;
-	}
 
 	//Extract networkListenerIndex and send rest of packet to appropriate network listener
 	int networkListenerIndex;
@@ -146,4 +132,14 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 
 int NetworkManager::GetNetworkManagerIndex() {
 	return networkManagerIndex;
+}
+
+void NetworkManager::sendNums() {
+	for (int i{ 1 }; i <= 1000; ++i) {
+		sf::Packet p;
+		sf::Packet outgoingPacket;
+		outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(PacketCode::Nums) << 1 << i;
+		socket.send(outgoingPacket);
+		std::cout << i << '\n';
+	}
 }

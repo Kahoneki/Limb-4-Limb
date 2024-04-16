@@ -2,6 +2,7 @@
 #include "SFML/Network.hpp"
 
 #include "Server.h"
+#include "TimeManager.h"
 
 int main()
 {
@@ -11,13 +12,16 @@ int main()
     sf::IpAddress serverIp{ "limbforlimb.duckdns.org" };
     unsigned short serverPort{ 6900 };
 
-    NetworkNode* node;
-    node = new Server(serverIp, serverPort);
+    Server* server;
+    server = new Server(serverIp, serverPort);
+    TimeManager& timeManager = TimeManager::getInstance(240);
 
     while (true) {
-        node->CheckForIncomingDataFromNetworkManager();
+        if (timeManager.UpdateAndCheckNetworkTickStatus()) {
+            server->CheckForIncomingConnectionRequests();
+            server->CheckForIncomingDataFromNetworkManager();
+        }
     }
-
 
     return 0;
 }

@@ -36,6 +36,10 @@ public:
 	
 	int GetNetworkManagerIndex();
 
+
+	void sendNums();
+
+
 private:
 	NetworkManager(sf::IpAddress _serverAddress, unsigned short _serverPort);
 

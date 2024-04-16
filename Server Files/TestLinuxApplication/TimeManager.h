@@ -5,27 +5,30 @@
 
 
 //Used for keeping track of delta time and network ticks
-static class TimeManager
+class TimeManager
 {
 public:
 
-	TimeManager(int tps=30);
+	static TimeManager& getInstance(int tps);
 
 	//To be ran every frame in this order
 	void UpdateDeltaTime();
 	bool UpdateAndCheckNetworkTickStatus(); //Updates timeThroughTick and returns if tick has been passed (timeThroughTick >= tickSpeed)
-	
+
 	float getDeltaTime();
 
+	static constexpr int PhysicsClockFramerate{ 30 };
+
 private:
-	
+	TimeManager(int tps = 30);
+
 	sf::Clock clock;
 
-	static int ticksPerSecond;
-	static float tickSpeed;
-	static float timeThroughTick; //Used for keeping track of how far through the current tick the game is
+	int ticksPerSecond;
+	float tickSpeed;
+	float timeThroughTick; //Used for keeping track of how far through the current tick the game is
 
-	static float deltaTime;
+	float deltaTime;
 };
 
 #endif

@@ -9,7 +9,8 @@ enum PacketCode
 
 	KeyChange,
 
-	Verification
+	Verification,
+	Nums
 
 	//PositionChange
 	//CrouchChange,
