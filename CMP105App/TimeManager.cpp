@@ -6,6 +6,9 @@ TimeManager& TimeManager::getInstance(int tps=30) {
 }
 
 TimeManager::TimeManager(int tps) {
+	frameSpeed = 1 / PhysicsClockFramerate;
+	timeThroughFrame = 0;
+
 	ticksPerSecond = tps;
 	tickSpeed = 1 / ticksPerSecond;
 	timeThroughTick = 0;
@@ -13,8 +16,14 @@ TimeManager::TimeManager(int tps) {
 	deltaTime = 0;
 }
 
-void TimeManager::UpdateDeltaTime() {
+bool TimeManager::UpdateDeltaTimeAndCheckForNewFrame() {
 	deltaTime = clock.restart().asSeconds();
+	timeThroughFrame += deltaTime;
+	if (timeThroughFrame >= frameSpeed) {
+		timeThroughFrame = 0;
+		return true;
+	}
+	return false;
 }
 
 bool TimeManager::UpdateAndCheckNetworkTickStatus() {
