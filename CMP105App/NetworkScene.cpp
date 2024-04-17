@@ -9,6 +9,8 @@ NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, 
 	window = hwnd;
 	input = in;
 	playerNum = pn;
+	timeUntilPlayersShouldStartUpdate = 0.5f;
+	playerStartUpdateTimeCountdown = timeUntilPlayersShouldStartUpdate;
 
 	InitialiseScene();
 	InitialisePlayers();
@@ -95,8 +97,14 @@ void NetworkScene::handleInput(float dt) {
 
 
 void NetworkScene::update(float dt) {
-	players[0]->update(dt);
-	players[1]->update(dt);
+
+	if (playerStartUpdateTimeCountdown > 0) {
+		playerStartUpdateTimeCountdown -= dt;
+	}
+	else {
+		players[0]->update(dt);
+		players[1]->update(dt);
+	}
 
 	//Loop through both players
 	for (int playerIndex{}; playerIndex < 2; ++playerIndex) {

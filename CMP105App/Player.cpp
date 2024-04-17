@@ -404,6 +404,9 @@ void Player::update(float dt) {
 
 	if (dodgeCooldownFramesLeft > 0) { dodgeCooldownFramesLeft -= TimeManager::PhysicsClockFramerate * dt; }
 	else if (dodgeCooldownFramesLeft < 0) { dodgeCooldownFramesLeft = 0; }
+
+
+	std::cout << "Pos: " << getPosition().x << ' ' << getPosition().y << '\n';
 }
 
 

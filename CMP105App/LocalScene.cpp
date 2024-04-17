@@ -9,6 +9,8 @@ LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sc
 	window = hwnd;
 	input = in;
 	debugMode = false;
+	timeUntilPlayersShouldStartUpdate = 0.5f;
+	playerStartUpdateTimeCountdown = timeUntilPlayersShouldStartUpdate;
 
 	InitialiseScene();
 	InitialisePlayers();
@@ -95,8 +97,15 @@ void LocalScene::handleInput(float dt) {
 
 
 void LocalScene::update(float dt) {
-	players[0]->update(dt);
-	players[1]->update(dt);
+
+	if (playerStartUpdateTimeCountdown > 0) {
+		playerStartUpdateTimeCountdown -= dt;
+	}
+	else {
+		players[0]->update(dt);
+		players[1]->update(dt);
+	}
+
 
 	//Loop through both players
 	for (int playerIndex{}; playerIndex < 2; ++playerIndex) {

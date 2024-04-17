@@ -40,6 +40,10 @@ private:
 
 	AudioManager audioManager;
 
+	//To stop players from falling through platforms at startup - ensure the scene is fully loaded before updating players
+	float timeUntilPlayersShouldStartUpdate; //In seconds
+	float playerStartUpdateTimeCountdown;
+
 	int playerNum;
 
 	void InitialiseScene();
