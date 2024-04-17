@@ -34,6 +34,7 @@ public:
 	void handleInput(float dt, int jump, int left, int right, int down, int dodge, int jab, int kick, int sweep, int upper);
 	void update(float dt);
 	void SendUpdateDataToNetwork(std::vector<int> changedKeys);
+	void SendUpdateDataToNetwork(sf::Vector2f newPosition);
 	void VerifyStatus(sf::Packet verificationPacket);
 
 	int getPlayerNum();
@@ -54,7 +55,9 @@ private:
 	OnlinePlayerState prevState;
 	OnlinePlayerState newState;
 
-	bool prevKeyState[9];
+	bool prevKeyState[6];
+
+	sf::Vector2f prevPosition;
 
 	std::map<int, bool> keyIsPressed; //For non-local players
 };

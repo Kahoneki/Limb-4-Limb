@@ -21,10 +21,10 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 
 		//Compare keys pressed this frame to keys pressed last frame, if they're different, send the differences to the network manager
 
-		int keys[9] { jump, left, right, down, dodge, jab, kick, sweep, upper };
+		int keys[6] { down, dodge, jab, kick, sweep, upper };
 		Player::handleInput(dt, jump, left, right, down, dodge, jab, kick, sweep, upper);
 
-		bool currentKeyState[9];
+		bool currentKeyState[6];
 		for (int i{ 0 }; i < sizeof(currentKeyState)/sizeof(currentKeyState[0]); ++i) {
 			currentKeyState[i] = input->isKeyDown(keys[i]);
 		}
@@ -42,6 +42,11 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 
 		for (int i{ 0 }; i < sizeof(prevKeyState)/sizeof(prevKeyState[0]); ++i) {
 			prevKeyState[i] = currentKeyState[i];
+		}
+
+		//Check if position has changed - send this change to the server
+		if (prevPosition != getPosition()) {
+			SendUpdateDataToNetwork(getPosition());
 		}
 	}
 
@@ -100,81 +105,81 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 
 
 
-		//----MOVEMENT----//
-		//Pressing either left or right (but not both - case covered by above check)
-		if (keyIsPressed[right] || keyIsPressed[left]) {
-			//Handle horizontal movement
-			if (isGrounded && !dodgeFramesLeft) {
-				if (keyIsPressed[right]) {
-					velocity.x = topSpeed;
-				}
-				if (keyIsPressed[left]) {
-					velocity.x = -topSpeed;
-				}
-			}
-			//In midair, player can slightly adjust their direction
-			else if (!dodgeFramesLeft) {
-				if (keyIsPressed[right]) {
-					//Jumping to the right
-					if (jumpDirection == 1) {
-						velocity.x = topSpeed;
-					}
-					//Travelling to left or straight up, but player is pressing right - let them switch direction to the right but only 30% of the regular speed
-					else {
-						velocity.x = 0.6 * topSpeed;
-					}
-				}
-				if (keyIsPressed[left]) {
-					//Jumping to the left
-					if (jumpDirection == -1) {
-						velocity.x = -topSpeed;
-					}
-					//Travelling to right or straight up, but player is pressing right - let them switch direction to the left but only 30% of the regular speed
-					else {
-						velocity.x = 0.6 * -topSpeed;
-					}
-				}
-			}
-		}
+		////----MOVEMENT----//
+		////Pressing either left or right (but not both - case covered by above check)
+		//if (keyIsPressed[right] || keyIsPressed[left]) {
+		//	//Handle horizontal movement
+		//	if (isGrounded && !dodgeFramesLeft) {
+		//		if (keyIsPressed[right]) {
+		//			velocity.x = topSpeed;
+		//		}
+		//		if (keyIsPressed[left]) {
+		//			velocity.x = -topSpeed;
+		//		}
+		//	}
+		//	//In midair, player can slightly adjust their direction
+		//	else if (!dodgeFramesLeft) {
+		//		if (keyIsPressed[right]) {
+		//			//Jumping to the right
+		//			if (jumpDirection == 1) {
+		//				velocity.x = topSpeed;
+		//			}
+		//			//Travelling to left or straight up, but player is pressing right - let them switch direction to the right but only 30% of the regular speed
+		//			else {
+		//				velocity.x = 0.6 * topSpeed;
+		//			}
+		//		}
+		//		if (keyIsPressed[left]) {
+		//			//Jumping to the left
+		//			if (jumpDirection == -1) {
+		//				velocity.x = -topSpeed;
+		//			}
+		//			//Travelling to right or straight up, but player is pressing right - let them switch direction to the left but only 30% of the regular speed
+		//			else {
+		//				velocity.x = 0.6 * -topSpeed;
+		//			}
+		//		}
+		//	}
+		//}
 
-		if (!hasKnockback && !dodgeFramesLeft) {
-			//Pressing both keys at same time or not pressing either key (and doesn't have knockback)
-			if ((keyIsPressed[left] && keyIsPressed[right]) || (!keyIsPressed[left] && (!keyIsPressed[right]))) {
-				//Slow down to an immediate hault
-				velocity.x = 0;
+		//if (!hasKnockback && !dodgeFramesLeft) {
+		//	//Pressing both keys at same time or not pressing either key (and doesn't have knockback)
+		//	if ((keyIsPressed[left] && keyIsPressed[right]) || (!keyIsPressed[left] && (!keyIsPressed[right]))) {
+		//		//Slow down to an immediate hault
+		//		velocity.x = 0;
 
-			}
-			//Pressing both keys at the same time, the player should be facing to their most recent key press
-			if (keyIsPressed[left] && keyIsPressed[right] && !dodgeFramesLeft) {
-				if (flipped && mostRecentDirectionKeycode == right) {
-					flipped = false;
-					setScale(1, 1);
-				}
-				else if (!flipped && mostRecentDirectionKeycode == left) {
-					flipped = true;
-					setScale(-1, 1);
-				}
-			}
-		}
+		//	}
+		//	//Pressing both keys at the same time, the player should be facing to their most recent key press
+		//	if (keyIsPressed[left] && keyIsPressed[right] && !dodgeFramesLeft) {
+		//		if (flipped && mostRecentDirectionKeycode == right) {
+		//			flipped = false;
+		//			setScale(1, 1);
+		//		}
+		//		else if (!flipped && mostRecentDirectionKeycode == left) {
+		//			flipped = true;
+		//			setScale(-1, 1);
+		//		}
+		//	}
+		//}
 
-		if (isGrounded && !dodgeFramesLeft) {
-			//Jumping
-			if (keyIsPressed[jump]) {
-				isGrounded = false;
-				velocity.y = jumpSpeed;
-				velocity.x *= 1.25;
-				if (velocity.x > 0) {
-					jumpDirection = 1;
-				}
-				else if (velocity.x < 0) {
-					jumpDirection = -1;
-				}
-				else {
-					jumpDirection = 0;
-				}
-			}
+		//if (isGrounded && !dodgeFramesLeft) {
+		//	//Jumping
+		//	if (keyIsPressed[jump]) {
+		//		isGrounded = false;
+		//		velocity.y = jumpSpeed;
+		//		velocity.x *= 1.25;
+		//		if (velocity.x > 0) {
+		//			jumpDirection = 1;
+		//		}
+		//		else if (velocity.x < 0) {
+		//			jumpDirection = -1;
+		//		}
+		//		else {
+		//			jumpDirection = 0;
+		//		}
+		//	}
 
-		}
+		//}
 
 		//Crouching
 		if (keyIsPressed[down] && !dodgeFramesLeft) {
@@ -213,13 +218,13 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 		}
 
 
-		//Player is in air, so bring them towards ground
-		if (!isGrounded && !(velocity.y == terminalVelocity)) {
-			velocity.y -= acceleration * dt;
-		}
-		if (velocity.y < terminalVelocity) {
-			velocity.y = terminalVelocity;
-		}
+		////Player is in air, so bring them towards ground
+		//if (!isGrounded && !(velocity.y == terminalVelocity)) {
+		//	velocity.y -= acceleration * dt;
+		//}
+		//if (velocity.y < terminalVelocity) {
+		//	velocity.y = terminalVelocity;
+		//}
 	}
 }
 
@@ -259,6 +264,14 @@ void OnlinePlayer::SendUpdateDataToNetwork(std::vector<int> changedKeys) {
 		outgoingPacket << pressed << key;
 		networkManager.SendDataToNetworkManager(networkListenerIndex, PacketCode::KeyChange, outgoingPacket);
 	}
+}
+
+void OnlinePlayer::SendUpdateDataToNetwork(sf::Vector2f newPosition) {
+	int networkListenerIndex{ playerNum - 1 };
+
+	sf::Packet outgoingPacket;
+	outgoingPacket << newPosition.x << newPosition.y;
+	networkManager.SendDataToNetworkManager(networkListenerIndex, PacketCode::PositionChange, outgoingPacket);
 }
 
 

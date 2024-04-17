@@ -77,6 +77,35 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 			
 			break;
 		}
+		case PacketCode::PositionChange:
+		{
+			std::cout << "PacketCode: PositionChange\n";
+
+
+			//Separate packet, networkManagerIndex, and networkListenerIndex from incoming data
+			int networkManagerIndex;
+			int networkListenerIndex;
+			sf::Vector2f pos;
+			incomingData >> networkManagerIndex >> networkListenerIndex >> pos.x >> pos.y;
+			std::cout << pos.x << ' ' << pos.y << '\n';
+
+			//Add networkListenerIndex, packetCode, and data to outgoingData
+			sf::Packet outgoingData;
+			outgoingData << networkListenerIndex << packetCode << pos.x << pos.y;
+
+			//Validate data (make sure NetworkManager is trying to send data to an ip+port that is in the array and make sure NetworkManager isn't trying to send themselves data. possibly other checks also.)
+			if ((networkManagerIndex >= connectedNetworkManagers.size()) || (connectedNetworkManagers[networkManagerIndex].getRemoteAddress() == connectedNetworkManagers[i].getRemoteAddress())) {
+				std::cerr << "NetworkManager (ip: " << connectedNetworkManagers[i].getRemoteAddress() << ", " << connectedNetworkManagers[i].getRemotePort() << ") tried to send a message to an invalid NetworkManager (ip: "
+					<< connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << ", " << connectedNetworkManagers[networkManagerIndex].getRemotePort() << ")!" << std::endl;
+				continue;
+			}
+
+			//Send data to NetworkManager
+			std::cout << "\n\n( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << "\n\n";
+			connectedNetworkManagers[networkManagerIndex].send(outgoingData);
+
+			break;
+		}
 		}
 	}
 
@@ -108,35 +137,6 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 	//	std::cout << "PacketCode: RemoveNetworkManager\n";
 	//	std::cout << "NetworkManager (ip: " << incomingNetworkManager.ip << ", " << incomingNetworkManager.port << ") disconnected from server.\n";
 	//	connectedNetworkManagers.erase(std::find(connectedNetworkManagers.begin(), connectedNetworkManagers.end(), incomingNetworkManager));
-	//	return;
-	//}
-	//case PacketCode::PositionChange:
-	//{
-	//	std::cout << "PacketCode: PositionChange\n";
-
-
-	//	//Separate packet, networkManagerIndex, and networkListenerIndex from incoming data
-	//	int networkManagerIndex;
-	//	int networkListenerIndex;
-	//	sf::Vector2i pos;
-	//	incomingData >> networkManagerIndex >> networkListenerIndex >> pos.x >> pos.y;
-	//	std::cout << pos.x << ' ' << pos.y << '\n';
-
-	//	//Add networkListenerIndex, packetCode, and data to outgoingData
-	//	sf::Packet outgoingData;
-	//	outgoingData << networkListenerIndex << packetCode << pos.x << pos.y;
-
-	//	//Validate data (make sure NetworkManager is trying to send data to an ip+port that is in the array and make sure NetworkManager isn't trying to send themselves data. possibly other checks also.)
-	//	if ((networkManagerIndex >= connectedNetworkManagers.size()) || (connectedNetworkManagers[networkManagerIndex] == incomingNetworkManager)) {
-	//		std::cerr << "NetworkManager (ip: " << incomingNetworkManager.ip << ", " << incomingNetworkManager.port << ") tried to send a message to an invalid NetworkManager (ip: "
-	//			      << connectedNetworkManagers[networkManagerIndex].ip << ", " << connectedNetworkManagers[networkManagerIndex].port << ")!" << std::endl;
-	//		return;
-	//	}
-
-	//	//Send data to NetworkManager
-	//	std::cout << "\n\n( " << incomingNetworkManagerAddress << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[networkManagerIndex].ip << "\n\n";
-	//	socket.send(outgoingData, connectedNetworkManagers[networkManagerIndex].ip, connectedNetworkManagers[networkManagerIndex].port);
-
 	//	return;
 	//}
 	//case PacketCode::CrouchChange:

@@ -96,6 +96,14 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkM
 		break;
 	}
 
+	case PacketCode::PositionChange:
+	{
+		sf::Vector2f pos;
+		incomingPacket >> pos.x >> pos.y;
+		outgoingPacket << pos.x << pos.y;
+		break;
+	}
+
 	}
 	using namespace std::chrono;
 	uint64_t ms = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();

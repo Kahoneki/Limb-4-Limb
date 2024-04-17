@@ -36,6 +36,13 @@ public:
             break;
         }
 
+        case PacketCode::PositionChange:
+        {
+            sf::Vector2f pos;
+            incomingData >> pos.x >> pos.y;
+            parentReference.setPosition(pos);
+        }
+
         }
     }
 
