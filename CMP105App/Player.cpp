@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "TimeManager.h"
-#include <iostream>
 #include <format>
+#include <iostream>
 
 Player::Player() {
 }
@@ -447,6 +447,10 @@ bool Player::getFallingThroughPlatform() { return isFallingThroughPlatform; }
 
 bool Player::getHasKnockback() { return hasKnockback; }
 
+int Player::getJumpSpeed() { return jumpSpeed; }
+
+int Player::getTopSpeed() { return topSpeed; }
+
 int Player::getInvincibilityFramesLeft() { return invincibilityFramesLeft; }
 
 bool Player::getFlipped() { return flipped; }
@@ -472,6 +476,10 @@ void Player::setFallingThroughPlatform(bool val) { isFallingThroughPlatform = va
 void Player::setHasKnockback(bool val) { hasKnockback = val; }
 
 void Player::setJumpDirection(int val) { jumpDirection = val; }
+
+void Player::setJumpSpeed(int val) { jumpSpeed = val; }
+
+void Player::setTopSpeed(int val) { topSpeed = val; }
 
 void Player::setLimbActivity(int index, bool val) { activeLimbs[index] = val; }
 

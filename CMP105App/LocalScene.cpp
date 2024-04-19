@@ -1,6 +1,7 @@
 #include "LocalScene.h"
 #include "EndScreen.h"
 #include "Player.h"
+#include <random>
 
 LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
 {
@@ -9,6 +10,9 @@ LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sc
 	window = hwnd;
 	input = in;
 	debugMode = false;
+	minItemBoxCooldownTime = 15;
+	maxItemBoxCooldownTime = 30;
+	timeUntilNextItemBox = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
 
 	InitialiseScene();
 	InitialisePlayers();
@@ -115,6 +119,16 @@ void LocalScene::update(float dt) {
 
 	}
 	HealthBarUpdate();
+	
+}
+
+
+
+void LocalScene::ItemBoxCollisionCheck(Player* player) {
+	if (player->getEffectiveCollider().intersects(itemBox.getGlobalBounds())) {
+		itemBox.ApplyToPlayer(*player);
+		itemBox = ItemBox(); //eh?
+	}
 }
 
 

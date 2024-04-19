@@ -36,6 +36,8 @@ public:
 	bool getOnPlatform();
 	bool getFallingThroughPlatform();
 	bool getHasKnockback();
+	int getJumpSpeed();
+	int getTopSpeed();
 
 	//Setters
 	void setCrouched(bool val);
@@ -52,6 +54,8 @@ public:
 	void setFallingThroughPlatform(bool val);
 	void setHasKnockback(bool val);
 	void setJumpDirection(int val);
+	void setJumpSpeed(int val);
+	void setTopSpeed(int val);
 
 
 protected:
