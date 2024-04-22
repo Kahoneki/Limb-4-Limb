@@ -8,7 +8,7 @@ bool charInCharacterSet(char character, const char* characterSet);
 InputBox::InputBox() {}
 
 InputBox::InputBox(sf::Vector2f pos, sf::Vector2f size, sf::Color fillCol, sf::Color txCol, float txSize, sf::Font& txFont, int maxLen, const char* acceptableChars, const char* defaultTxt, bool asterisks, sf::Color activeCol)
-	: TextBox(pos, size, fillCol, txCol, txSize, txFont, displayText.c_str())
+	: TextBox(pos, size, fillCol, txCol, txSize, txFont, defaultTxt)
 {
 	maxLength = maxLen;
 	acceptableCharacters = acceptableChars;
@@ -27,7 +27,7 @@ InputBox::InputBox(sf::Vector2f pos, sf::Vector2f size, sf::Color fillCol, sf::C
 }
 
 InputBox::InputBox(float posX, float posY, float sizeX, float sizeY, sf::Color fillCol, sf::Color txCol, float txSize, sf::Font& txFont, int maxLen, const char* acceptableChars, const char* defaultTxt, bool asterisks, sf::Color activeCol)
-	: TextBox(posX, posY, sizeX, sizeY, fillCol, txCol, txSize, txFont, displayText.c_str())
+	: TextBox(posX, posY, sizeX, sizeY, fillCol, txCol, txSize, txFont, defaultTxt)
 {
 	maxLength = maxLen;
 	acceptableCharacters = acceptableChars;
@@ -120,7 +120,6 @@ void InputBox::processEvents(float dt, sf::Vector2f mousePos) {
 bool charInCharacterSet(char character, const char* characterSet) {
 	//Loop through all characters in acceptable character list to see if provided character matches any of them (incr pointer until null pointer is reached)
 	for (char c{ *characterSet }; c != '\0'; c = *++characterSet) {
-		//std::cout << character << ' ' << c << '\n';
 		if (character == c) { return true; }
 	}
 	//No match found

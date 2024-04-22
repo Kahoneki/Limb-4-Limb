@@ -26,8 +26,13 @@ private:
 	sf::Font font;
 	sf::RectangleShape background;
 	
-	InputBox usernameBox;
+	bool mousePressedLastFrame;
 
+	InputBox usernameBox;
+	TextBox registerButton; //To confirm registration
+	TextBox backButton;
+	TextBox statusBar; //For displaying status to user - e.g.: connecting to server, generating uuid, username invalid, etc.
+	bool displayStatusBar;
 };
 
 #endif

@@ -16,9 +16,13 @@ MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneM
 	background.setFillColor(sf::Color::Black);
 	
 	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
+
 	title = TextBox(350, 50, 520, 60, sf::Color::White, sf::Color::Red, 50, font, "LOSING LIMBS GAME");
-	online = TextBox(800, 300, 350, 40, sf::Color::White, sf::Color::Red, 30, font, "ONLINE");
+	
 	local = TextBox(230, 300, 350, 40, sf::Color::White, sf::Color::Red, 30, font, "LOCAL");
+	online = TextBox(800, 300, 350, 40, sf::Color::White, sf::Color::Red, 30, font, "ONLINE");
+	registration = TextBox(230, 500, 350, 40, sf::Color::White, sf::Color::Red, 30, font, "REGISTER");
+	login = TextBox(800, 500, 350, 40, sf::Color::White, sf::Color::Red, 30, font, "LOGIN");
 
 	std::cout << "Loaded main menu\n";
 }
@@ -33,19 +37,34 @@ MainMenu::~MainMenu()
 
 void MainMenu::handleInput(float dt)
 {
-	bool mouseOverLocalBox = local.box.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
-	bool mouseOverOnlineBox = online.box.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
+	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
+	
+	bool mouseOverLocalBox = local.box.getGlobalBounds().contains(mousePos);
+	bool mouseOverOnlineBox = online.box.getGlobalBounds().contains(mousePos);
+	bool mouseOverRegistrationBox = registration.box.getGlobalBounds().contains(mousePos);
+	bool mouseOverLoginBox = login.box.getGlobalBounds().contains(mousePos);
+
 	bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left) && !mousePressedLastFrame;
 	if (mouseDown) {
 		if (mouseOverLocalBox) {
-			//TEMP - THIS IS CLEARLY WRONG
+			LocalScene* localScene = new LocalScene(window, input, sceneManager);
+			sceneManager.LoadScene(localScene);
+		}
+		else if (mouseOverOnlineBox) {
+			int playerNum{}; //Temp
+			std::cout << "Player num (1 or 2): ";
+			std::cin >> playerNum;
+			NetworkScene* networkScene = new NetworkScene(window, input, sceneManager, playerNum);
+			sceneManager.LoadScene(networkScene);
+		}
+		else if (mouseOverRegistrationBox) {
 			RegistrationScreen* registrationScreen = new RegistrationScreen(window, input, sceneManager);
 			sceneManager.LoadScene(registrationScreen);
 		}
-		else if (mouseOverOnlineBox) {
-			NetworkScene* networkScene = new NetworkScene(window, input, sceneManager, 1);
-			sceneManager.LoadScene(networkScene);
-		}
+		/*else if (mouseOverLoginBox) {
+			LoginScreen* loginScreen = new LoginScreen(window, input, sceneManager);
+			sceneManager.LoadScene(loginScreen);
+		}*/
 	}
 	mousePressedLastFrame = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 }
@@ -58,5 +77,7 @@ void MainMenu::render()
 	window->draw(title);
 	window->draw(local);
 	window->draw(online);
+	window->draw(registration);
+	window->draw(login);
 	endDraw();
 }

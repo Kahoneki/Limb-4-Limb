@@ -30,6 +30,8 @@ private:
 	TextBox title;
 	TextBox local;
 	TextBox online;
+	TextBox registration;
+	TextBox login;
 };
 
 #endif
