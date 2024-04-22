@@ -4,6 +4,7 @@
 #include "Framework/BaseLevel.h"
 #include "Framework/Input.h"
 #include <iostream>
+#include "TextBox.h"
 
 class SceneManager; //Forward declaration
 
@@ -18,21 +19,17 @@ public:
 	void update(float dt) override;
 	void render() override;
 
-	void InitialiseMainMenu();
-
 private:
 	SceneManager& sceneManager;
 	
 	bool mousePressedLastFrame;
 	
-	sf::Font font;
 	sf::RectangleShape background;
-	sf::RectangleShape titleBox;
-	sf::RectangleShape localBox;
-	sf::RectangleShape onlineBox;
-	sf::Text titleText;
-	sf::Text localText;
-	sf::Text onlineText;
+	
+	sf::Font font;
+	TextBox title;
+	TextBox local;
+	TextBox online;
 };
 
 #endif

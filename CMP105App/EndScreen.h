@@ -23,12 +23,11 @@ private:
 
 	SceneManager& sceneManager;
 
-	sf::Font font;
 	sf::RectangleShape background;
-	sf::RectangleShape winBox;
-	sf::RectangleShape restartBox;
-	sf::Text winText;
-	sf::Text restartText;
+
+	sf::Font font;
+	TextBox win;
+	TextBox restart;
 
 	bool mousePressedLastFrame;
 };

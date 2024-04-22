@@ -161,6 +161,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="InputBox.cpp" />
     <ClCompile Include="LocalScene.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="EndScreen.cpp" />
@@ -182,8 +183,10 @@
     <ClCompile Include="OnlinePlayer.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RegistrationScreen.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneManager.h" />
+    <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -192,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseNetworkListener.h" />
+    <ClInclude Include="InputBox.h" />
     <ClInclude Include="LocalScene.h" />
     <ClInclude Include="NetworkListener.h" />
     <ClInclude Include="NetworkManager.h" />
@@ -214,6 +218,9 @@
     <ClInclude Include="PacketCode.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RegistrationScreen.h" />
+    <ClInclude Include="TextBox.h" />
+    <ClInclude Include="AssetManager.h" />
     <ClInclude Include="TimeManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

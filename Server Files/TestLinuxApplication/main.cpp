@@ -1,27 +1,48 @@
 #include <cstdio>
 #include "SFML/Network.hpp"
+#include "sqlite3.h"
 
 #include "Server.h"
 #include "TimeManager.h"
+#include <iostream>
+
+void InitialiseDatabase();
 
 int main()
 {
     printf("hello from %s!\n", "TestLinuxApplication");
 
-
     sf::IpAddress serverIp{ "limbforlimb.duckdns.org" };
     unsigned short serverPort{ 6900 };
 
-    Server* server;
-    server = new Server(serverIp, serverPort);
-    TimeManager& timeManager = TimeManager::getInstance(240);
+    Server* server{ new Server(serverIp, serverPort) };
+    TimeManager& timeManager { TimeManager::getInstance(240) };
+    InitialiseDatabase();
 
     while (true) {
         if (timeManager.UpdateAndCheckNetworkTickStatus()) {
             server->CheckForIncomingConnectionRequests();
             server->CheckForIncomingDataFromNetworkManager();
-        }
+	    }
     }
 
     return 0;
+}
+
+
+void InitialiseDatabase() {
+    //Open database
+    sqlite3* db;
+    sqlite3_stmt* stmt;
+    sqlite3_open("LimbForLimbDatabase.db", &db);
+
+    //Add AccountInfo table if it doesn't already exist
+    char* err;
+    int returnCode{ sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS AccountInfo(Username varchar(16) NOT NULL, UUID INT NOT NULL, PRIMARY KEY (Username));", NULL, NULL, &err) };
+    if (returnCode != SQLITE_OK) {
+        std::cerr << "Error creating account info table: " << err << std::endl;
+    }
+    else {
+        std::cout << "Successfully created account info table\n";
+    }
 }

@@ -4,7 +4,7 @@
 EndScreen::EndScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, bool player1Win) : sceneManager(sm)
 {
 
-	std::cout << "Loading end screen.\n";
+	std::cout << "Loading end screen\n";
 
 	window = hwnd;
 	input = in;
@@ -13,44 +13,23 @@ EndScreen::EndScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, bool p
 	background.setPosition(0, 0);
 	background.setFillColor(sf::Color::Black);
 
-
-	winBox.setSize(sf::Vector2f(520, 60));
-	winBox.setPosition(350, 50);
-	winBox.setFillColor(sf::Color::White);
-
-
-	restartBox.setSize(sf::Vector2f(350, 40));
-	restartBox.setPosition(230, 300);
-	restartBox.setFillColor(sf::Color::White);
-
 	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
+	win = TextBox(350, 50, 520, 60, sf::Color::White, sf::Color::Red, 50, font, player1Win ? "PLAYER 1 WINS!" : "PLAYER 2 WINS");
+	restart = TextBox(230, 300, 350, 40, sf::Color::White, sf::Color::Red, 30, font, "RESTART");
 
-	winText.setFont(font);
-	winText.setString(player1Win ? "PLAYER 1 WINS!" : "PLAYER 2 WINS!");
-	winText.setCharacterSize(50);
-	winText.setFillColor(sf::Color::Red);
-	winText.setPosition(350, 50);
-
-
-	restartText.setFont(font);
-	restartText.setString("RESTART");
-	restartText.setCharacterSize(30);
-	restartText.setFillColor(sf::Color::Red);
-	restartText.setPosition(230, 300);
-
-	std::cout << "Loaded end screen.\n";
+	std::cout << "Loaded end screen\n";
 }
 
 EndScreen::~EndScreen() {
-	std::cout << "Unloading end screen.\n";
+	std::cout << "Unloading end screen\n";
 	std::cout << "Unloaded end screen\n";
 }
 
 void EndScreen::handleInput(float dt) {
-	bool mouseOverBox = restartBox.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
+	bool mouseOverBox = restart.box.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
 	bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left) && !mousePressedLastFrame;
 	if (mouseOverBox && mouseDown) {
-		LocalScene* localScene = new LocalScene(window, input, sceneManager); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!0 IS A TEMP VALUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		LocalScene* localScene = new LocalScene(window, input, sceneManager); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!TEMP: SCENE NEEDS TO DEPEND ON WHAT SCENE USER CAME FROM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		sceneManager.LoadScene(localScene);
 	}
 	mousePressedLastFrame = sf::Mouse::isButtonPressed(sf::Mouse::Left);
@@ -62,10 +41,8 @@ void EndScreen::render()
 {
 	beginDraw();
 	
-	window->draw(winBox);
-	window->draw(restartBox);
-	window->draw(winText);
-	window->draw(restartText);
+	window->draw(win);
+	window->draw(restart);
 	
 	endDraw();
 }

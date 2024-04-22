@@ -47,6 +47,7 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 		//Check if position has changed - send this change to the server
 		if (prevPosition != getPosition()) {
 			SendUpdateDataToNetwork(getPosition());
+			prevPosition = getPosition();
 		}
 	}
 
@@ -218,13 +219,13 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 		}
 
 
-		////Player is in air, so bring them towards ground
-		//if (!isGrounded && !(velocity.y == terminalVelocity)) {
-		//	velocity.y -= acceleration * dt;
-		//}
-		//if (velocity.y < terminalVelocity) {
-		//	velocity.y = terminalVelocity;
-		//}
+		//Player is in air, so bring them towards ground
+		if (!isGrounded && !(velocity.y == terminalVelocity)) {
+			velocity.y -= acceleration * dt;
+		}
+		if (velocity.y < terminalVelocity) {
+			velocity.y = terminalVelocity;
+		}
 	}
 }
 

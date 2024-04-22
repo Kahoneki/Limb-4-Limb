@@ -2,6 +2,7 @@
 #include "NetworkScene.h"
 #include "LocalScene.h"
 #include "SceneManager.h"
+#include "RegistrationScreen.h"
 
 MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
 {
@@ -14,41 +15,10 @@ MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneM
 	background.setPosition(0, 0);
 	background.setFillColor(sf::Color::Black);
 	
-	
-	titleBox.setSize(sf::Vector2f(520, 60));
-	titleBox.setPosition(350, 50);
-	titleBox.setFillColor(sf::Color::White);
-	
-	
-	localBox.setSize(sf::Vector2f(350, 40));
-	localBox.setPosition(230, 300);
-	localBox.setFillColor(sf::Color::White);
-
-	onlineBox.setSize(sf::Vector2f(350, 40));
-	onlineBox.setPosition(800, 300);
-	onlineBox.setFillColor(sf::Color::White);
-	
-	
 	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
-	
-	titleText.setFont(font);
-	titleText.setString("LOSING LIMBS GAME");
-	titleText.setCharacterSize(50);
-	titleText.setFillColor(sf::Color::Red);
-	titleText.setPosition(350, 50);
-	
-	
-	localText.setFont(font);
-	localText.setString("LOCAL");
-	localText.setCharacterSize(30);
-	localText.setFillColor(sf::Color::Red);
-	localText.setPosition(230, 300);
-
-	onlineText.setFont(font);
-	onlineText.setString("ONLINE");
-	onlineText.setCharacterSize(30);
-	onlineText.setFillColor(sf::Color::Red);
-	onlineText.setPosition(800, 300);
+	title = TextBox(350, 50, 520, 60, sf::Color::White, sf::Color::Red, 50, font, "LOSING LIMBS GAME");
+	online = TextBox(800, 300, 350, 40, sf::Color::White, sf::Color::Red, 30, font, "ONLINE");
+	local = TextBox(230, 300, 350, 40, sf::Color::White, sf::Color::Red, 30, font, "LOCAL");
 
 	std::cout << "Loaded main menu\n";
 }
@@ -63,13 +33,14 @@ MainMenu::~MainMenu()
 
 void MainMenu::handleInput(float dt)
 {
-	bool mouseOverLocalBox = localBox.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
-	bool mouseOverOnlineBox = onlineBox.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
+	bool mouseOverLocalBox = local.box.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
+	bool mouseOverOnlineBox = online.box.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
 	bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left) && !mousePressedLastFrame;
 	if (mouseDown) {
 		if (mouseOverLocalBox) {
-			LocalScene* localScene = new LocalScene(window, input, sceneManager);
-			sceneManager.LoadScene(localScene);
+			//TEMP - THIS IS CLEARLY WRONG
+			RegistrationScreen* registrationScreen = new RegistrationScreen(window, input, sceneManager);
+			sceneManager.LoadScene(registrationScreen);
 		}
 		else if (mouseOverOnlineBox) {
 			NetworkScene* networkScene = new NetworkScene(window, input, sceneManager, 1);
@@ -84,12 +55,8 @@ void MainMenu::update(float dt) {}
 void MainMenu::render()
 {
 	beginDraw();
-	window->draw(titleBox);
-	window->draw(localBox);
-	window->draw(onlineBox);
-
-	window->draw(titleText);
-	window->draw(localText);
-	window->draw(onlineText);
+	window->draw(title);
+	window->draw(local);
+	window->draw(online);
 	endDraw();
 }

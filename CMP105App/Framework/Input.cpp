@@ -135,3 +135,23 @@ bool Input::isRightMousePressed()
 	return false;
 }
 
+bool Input::getTextEntered()
+{
+	return textEntered;
+}
+
+void Input::setTextEntered(bool val)
+{
+	textEntered = val;
+}
+
+sf::Uint32 Input::getText()
+{
+	return text;
+}
+
+void Input::setText(sf::Uint32 val)
+{
+	text = val;
+}
+

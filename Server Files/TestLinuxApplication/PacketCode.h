@@ -4,9 +4,10 @@
 //Used for encoding the type of data a packet contains
 enum PacketCode
 {
-	AddNetworkManager,
 	RemoveNetworkManager,
-	
+	AccountRegistrationRequest,
+	AccountLoginRequest,
+
 	KeyChange,
 	
 	Verification,

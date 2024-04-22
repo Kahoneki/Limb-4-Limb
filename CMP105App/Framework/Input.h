@@ -6,6 +6,8 @@
 #pragma once
 #include <vector>
 
+#include <SFML/Graphics.hpp> //For sf::Uint32
+
 class Input
 {
 public:
@@ -42,6 +44,12 @@ public:
 	void setRightMouse(MouseState state);
 	bool isRightMouseDown();
 	bool isRightMousePressed();
+
+	//Functions are for handling text entered
+	bool getTextEntered();
+	void setTextEntered(bool val);
+	sf::Uint32 getText();
+	void setText(sf::Uint32 val);
 	
 private:
 	// Array of booleans representing keys (pressed = true, released = false)
@@ -49,4 +57,7 @@ private:
 	std::vector<int> pressed;
 	// Mouse variable
 	Mouse mouse;
+
+	sf::Uint32 text;
+	bool textEntered;
 };
