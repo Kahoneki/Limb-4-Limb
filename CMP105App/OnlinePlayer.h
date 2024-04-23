@@ -2,11 +2,13 @@
 #define ONLINEPLAYER_H
 
 #include "Player.h"
-#include "NetworkListener.h"
 #include "TimeManager.h"
 #include <map>
 
 class NetworkManager;
+
+template<typename ParentType>
+class NetworkListener;
 
 struct OnlinePlayerState {
 	sf::Vector2i pos;

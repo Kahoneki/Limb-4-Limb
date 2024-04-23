@@ -11,13 +11,11 @@ enum PacketCode
 
 	Verification,
 	PositionChange,
-	Nums
+	Nums,
 
-	//CrouchChange,
-	//HealthChange,
-	//StunFrameChange,
-	//ActiveLimbChange,
-	//AttackingChange
+	Username,
+	UsernameAvailabilityStatus,
+	UUID
 };
 
 #endif

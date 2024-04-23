@@ -33,16 +33,17 @@ int main()
 void InitialiseDatabase() {
     //Open database
     sqlite3* db;
-    sqlite3_stmt* stmt;
     sqlite3_open("LimbForLimbDatabase.db", &db);
 
     //Add AccountInfo table if it doesn't already exist
     char* err;
-    int returnCode{ sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS AccountInfo(Username varchar(16) NOT NULL, UUID INT NOT NULL, PRIMARY KEY (Username));", NULL, NULL, &err) };
+    int returnCode{ sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS AccountInfo(Username varchar(20) NOT NULL, UUID BIGINT UNSIGNED NOT NULL, PRIMARY KEY (Username));", NULL, NULL, &err) };
     if (returnCode != SQLITE_OK) {
         std::cerr << "Error creating account info table: " << err << std::endl;
     }
     else {
         std::cout << "Successfully created account info table\n";
     }
+
+    sqlite3_close(db);
 }

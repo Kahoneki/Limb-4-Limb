@@ -128,4 +128,4 @@ bool charInCharacterSet(char character, const char* characterSet) {
 
 
 
-const char* InputBox::getTypedText() { return typedText.c_str(); }
+std::string InputBox::getTypedText() { return typedText; }

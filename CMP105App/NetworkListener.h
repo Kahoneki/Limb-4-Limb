@@ -6,21 +6,24 @@
 #include "BaseNetworkListener.h"
 #include "SFML/Network.hpp"
 
+#include "OnlinePlayer.h"
+#include "RegistrationScreen.h"
+
+
 template<typename ParentType>
-class NetworkListener : public BaseNetworkListener {
+class NetworkListener {};
+
+template<>
+class NetworkListener<OnlinePlayer> : public BaseNetworkListener {
 public:
-    // Constructor
-    NetworkListener(ParentType& pr) : parentReference(pr) {}
+    NetworkListener(OnlinePlayer& pr) : parentReference(pr) {}
 
-
-    //Apply data to parent
     void InterpretPacket(sf::Packet incomingData) {
         std::underlying_type_t<PacketCode> code;
         incomingData >> code;
 
         switch (code)
         {
-
         case PacketCode::KeyChange:
         {
             bool pressed;
@@ -29,26 +32,62 @@ public:
             parentReference.setKeyPressed(key, pressed);
             break;
         }
-
+        
         case PacketCode::Verification:
         {
             parentReference.VerifyStatus(incomingData);
             break;
         }
-
+        
         case PacketCode::PositionChange:
         {
             sf::Vector2f pos;
             incomingData >> pos.x >> pos.y;
             parentReference.setPosition(pos);
+            break;
         }
-
+        
         }
     }
 
+private:
+    OnlinePlayer& parentReference;
+};
+
+
+
+template<>
+class NetworkListener<RegistrationScreen> : public BaseNetworkListener {
+public:
+    NetworkListener(RegistrationScreen& pr) : parentReference(pr) {}
+
+    void InterpretPacket(sf::Packet incomingData) {
+        std::underlying_type_t<PacketCode> code;
+        incomingData >> code;
+
+        switch (code)
+        {
+        case PacketCode::UsernameAvailabilityStatus:
+        {
+            sf::Int8 available;
+            incomingData >> available;
+            parentReference.setUsernameAvailable(available);
+            break;
+        }
+
+        case PacketCode::UUID:
+        {
+            sf::Uint64 uuid;
+            incomingData >> uuid;
+            parentReference.setUUID(uuid);
+            break;
+        }
+        }
+    }
 
 private:
-    ParentType& parentReference;
+    RegistrationScreen& parentReference;
 };
+
 
 #endif

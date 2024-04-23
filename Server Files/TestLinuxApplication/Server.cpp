@@ -1,6 +1,9 @@
 #include "Server.h"
 #include <algorithm> //For std::find
 #include <iostream>
+#include <random>
+
+#include <string>
 
 #include "sqlite3.h"
 
@@ -60,9 +63,79 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 			connectedNetworkManagers.erase(i);
 			break;
 		}
-		case PacketCode::AccountRegistrationRequest:
+		case PacketCode::Username:
 		{
-			std::cout << "PacketCode: AccountRegistrationRequest\n";
+			std::cout << "PacketCode: Username\n";
+			int networkListenerIndex;
+			std::string username;
+			incomingData >> networkListenerIndex >> username;
+
+			//Open database
+			sqlite3* db;
+			sqlite3_open("LimbForLimbDatabase.db", &db);
+
+			std::string usernameTakenQuery{ "SELECT EXISTS(SELECT 1 FROM AccountInfo WHERE Username = ?);"};
+
+			//Compile statement
+			sqlite3_stmt* stmt;
+			if (sqlite3_prepare_v2(db, usernameTakenQuery.c_str(), -1, &stmt, NULL) != SQLITE_OK) {
+				std::cerr << "Error preparing statement:" << sqlite3_errmsg(db) << std::endl;
+				continue;
+			}
+
+			//Bind username to statement
+			sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
+
+			//Run statement
+			int result = sqlite3_step(stmt);
+			sqlite3_finalize(stmt);
+
+			//Send username availability back to network manager
+			sf::Int8 usernameAvailability{ -1 };
+			if (result == SQLITE_ROW) {
+				//Username found
+				usernameAvailability = 0;
+			}
+			else if (result == SQLITE_DONE) {
+				//Username not found
+				usernameAvailability = 1;
+			}
+			else {
+				//Error
+				std::cerr << "Unable to parse result, result value is: " << result << '\n';
+			}
+
+			{
+				//Add networkListenerIndex, packetCode, and data to outgoingData
+				sf::Packet outgoingData;
+				packetCode = PacketCode::UsernameAvailabilityStatus;
+				outgoingData << networkListenerIndex << packetCode << usernameAvailability;
+
+				//Send data to NetworkManager
+				std::cout << "\n\n( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[i].getRemoteAddress() << "\n\n";
+				connectedNetworkManagers[i].send(outgoingData);
+			}
+
+
+			//Generate unique random UUID - note on collision: https://lemire.me/blog/2019/12/12/are-64-bit-random-identifiers-free-from-collision/
+
+			std::cout << "PacketCode: UUID\n";
+
+			std::random_device rd;
+			std::mt19937_64 gen(rd());
+			std::uniform_int_distribution<uint64_t> dis;
+
+			sf::Uint64 uuid{ dis(gen) };
+
+			{
+				sf::Packet outgoingData;
+				packetCode = PacketCode::UUID;
+				outgoingData << networkListenerIndex << packetCode << uuid;
+
+				//Send data to NetworkManager
+				std::cout << "\n\n( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[i].getRemoteAddress() << "\n\n";
+				connectedNetworkManagers[i].send(outgoingData);
+			}
 
 			break;
 		}

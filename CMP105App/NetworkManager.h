@@ -11,6 +11,18 @@ class OnlinePlayer;
 class NetworkManager : public NetworkNode
 {
 public:
+
+
+	//Entities that hold a reserved spot in the networkListeners vector, this is to ensure that, e.g.:, players 1 and 2 are always in indices 0 and 1 and in the correct order
+	static const enum ReservedEntityIndexTable
+	{
+		PLAYER_1,
+		PLAYER_2,
+		REGISTRATION_SCREEN,
+		NUM_RESERVED_ENTITIES //Size of this enum - must be last
+	};
+
+
 	static NetworkManager& getInstance();
 	static NetworkManager& getInstance(sf::IpAddress _serverAddress, unsigned short _serverPort);
 	~NetworkManager();
@@ -32,12 +44,13 @@ public:
 
 	sf::Socket::Status SendDataToNetworkManager(int outgoingNetworkManagerIndex, int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket);
 	sf::Socket::Status SendDataToNetworkManager(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket);
+	sf::Socket::Status SendDataToServer(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket);
 	void CheckForIncomingDataFromServer() override;
 	
-	int GetNetworkManagerIndex();
+	int getNetworkManagerIndex();
+	bool getConnectedToServer();
 
-
-	void sendNums();
+	void sendNums(); //Debug - for determining packet loss
 
 
 private:
@@ -46,7 +59,6 @@ private:
 	bool connectedToServer;
 	int networkManagerIndex;
 	
-	int reservedEntities; //Number of entities that hold a reserved spot in the networkListeners vector, this is to ensure that, e.g.:, players 1-4 are always in indices 0-3 and in the correct order
 	std::vector<BaseNetworkListener*> networkListeners;
 };
 

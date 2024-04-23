@@ -47,8 +47,7 @@ NetworkManager::NetworkManager(sf::IpAddress _serverAddress, unsigned short _ser
 	socket.setBlocking(false);
 
 	//Initialise networkListeners to x null pointers where x is the number of entities that hold a reserved spot within the vector
-	reservedEntities = 6;
-	for (int i{ 0 }; i < reservedEntities; ++i) {
+	for (int i{ 0 }; i < ReservedEntityIndexTable::NUM_RESERVED_ENTITIES; ++i) {
 		networkListeners.push_back(nullptr);
 	}
 }
@@ -103,7 +102,6 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkM
 		outgoingPacket << pos.x << pos.y;
 		break;
 	}
-
 	}
 	using namespace std::chrono;
 	uint64_t ms = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
@@ -116,6 +114,28 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int networkListenerI
 	//This function can be used if there are only two NetworkManagers connected to the server (in which case it will just send data to the other NetworkManager).
 	int outgoingNetworkManagerIndex = 1 - networkManagerIndex; //0->1, 1->0
 	return SendDataToNetworkManager(outgoingNetworkManagerIndex, networkListenerIndex, packetCode, incomingPacket);
+}
+
+
+sf::Socket::Status NetworkManager::SendDataToServer(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
+	//This function is to be used if the network manager is sending data to the server, but not necessarily to be passed on to another network manager
+	sf::Packet outgoingPacket;
+	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(packetCode) << networkListenerIndex;
+	switch (packetCode)
+	{
+	case PacketCode::Username:
+	{
+		std::string username;
+		incomingPacket >> username;
+		std::cout << "NetworkManager: " << username << '\n';
+		outgoingPacket << username;
+		break;
+	}
+	}
+	using namespace std::chrono;
+	uint64_t ms = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+	std::cout << "Send: " << ms << " milliseconds since the epoch\n";
+	return socket.send(outgoingPacket);
 }
 
 
@@ -138,9 +158,11 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 	}
 }
 
-int NetworkManager::GetNetworkManagerIndex() {
+int NetworkManager::getNetworkManagerIndex() {
 	return networkManagerIndex;
 }
+
+bool NetworkManager::getConnectedToServer() { return connectedToServer; }
 
 void NetworkManager::sendNums() {
 	for (int i{ 1 }; i <= 1000; ++i) {

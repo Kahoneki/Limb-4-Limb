@@ -4,15 +4,18 @@
 //Used for encoding the type of data a packet contains
 enum PacketCode
 {
+	AddNetworkManager,
 	RemoveNetworkManager,
-	AccountRegistrationRequest,
-	AccountLoginRequest,
 
 	KeyChange,
-	
+
 	Verification,
 	PositionChange,
-	Nums
+	Nums,
+
+	Username,
+	UsernameAvailabilityStatus,
+	UUID
 };
 
 #endif

@@ -16,7 +16,7 @@ public:
 	void processEvents(float dt, sf::Vector2f mousePos); //To be called every frame
 	void resize();
 
-	const char* getTypedText();
+	std::string getTypedText();
 
 	//Used to index into AcceptableCharacterPresets
 	static enum AcceptableCharacterPreset
