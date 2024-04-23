@@ -1,27 +1,28 @@
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\InputBox.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\InputBox.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\LocalScene.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\NetworkManager.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\EndScreen.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\EndScreen.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\Animation.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\Animation.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\AudioManager.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\AudioManager.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\BaseLevel.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\BaseLevel.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\Collision.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\Collision.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\Input.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\Input.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\GameObject.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\GameObject.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\Attack.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\MusicObject.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\MusicObject.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\SoundObject.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\SoundObject.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\TileMap.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\TileMap.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\VectorHelper.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\VectorHelper.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Main.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\Main.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\MainMenu.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\MainMenu.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkNode.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\NetworkNode.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkScene.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\NetworkScene.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\OnlinePlayer.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\OnlinePlayer.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Platform.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\Platform.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\Player.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\RegistrationScreen.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\RegistrationScreen.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SceneManager.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\SceneManager.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SceneManager.h;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\SceneManager.h.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TextBox.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\TextBox.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TimeManager.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Debug\TimeManager.obj
+M:\GitHub\CMP105-Individual\CMP105App\Button.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\Button.obj
+M:\GitHub\CMP105-Individual\CMP105App\InputBox.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\InputBox.obj
+M:\GitHub\CMP105-Individual\CMP105App\LocalScene.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\LocalScene.obj
+M:\GitHub\CMP105-Individual\CMP105App\NetworkManager.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\NetworkManager.obj
+M:\GitHub\CMP105-Individual\CMP105App\EndScreen.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\EndScreen.obj
+M:\GitHub\CMP105-Individual\CMP105App\Framework\Animation.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\Animation.obj
+M:\GitHub\CMP105-Individual\CMP105App\Framework\AudioManager.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\AudioManager.obj
+M:\GitHub\CMP105-Individual\CMP105App\Framework\BaseLevel.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\BaseLevel.obj
+M:\GitHub\CMP105-Individual\CMP105App\Framework\Collision.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\Collision.obj
+M:\GitHub\CMP105-Individual\CMP105App\Framework\Input.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\Input.obj
+M:\GitHub\CMP105-Individual\CMP105App\Framework\GameObject.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\GameObject.obj
+M:\GitHub\CMP105-Individual\CMP105App\Attack.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\Attack.obj
+M:\GitHub\CMP105-Individual\CMP105App\Framework\MusicObject.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\MusicObject.obj
+M:\GitHub\CMP105-Individual\CMP105App\Framework\SoundObject.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\SoundObject.obj
+M:\GitHub\CMP105-Individual\CMP105App\Framework\TileMap.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\TileMap.obj
+M:\GitHub\CMP105-Individual\CMP105App\Framework\VectorHelper.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\VectorHelper.obj
+M:\GitHub\CMP105-Individual\CMP105App\Main.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\Main.obj
+M:\GitHub\CMP105-Individual\CMP105App\MainMenu.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\MainMenu.obj
+M:\GitHub\CMP105-Individual\CMP105App\NetworkNode.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\NetworkNode.obj
+M:\GitHub\CMP105-Individual\CMP105App\NetworkScene.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\NetworkScene.obj
+M:\GitHub\CMP105-Individual\CMP105App\OnlinePlayer.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\OnlinePlayer.obj
+M:\GitHub\CMP105-Individual\CMP105App\Platform.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\Platform.obj
+M:\GitHub\CMP105-Individual\CMP105App\Player.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\Player.obj
+M:\GitHub\CMP105-Individual\CMP105App\RegistrationScreen.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\RegistrationScreen.obj
+M:\GitHub\CMP105-Individual\CMP105App\SceneManager.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\SceneManager.obj
+M:\GitHub\CMP105-Individual\CMP105App\SceneManager.h;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\SceneManager.h.obj
+M:\GitHub\CMP105-Individual\CMP105App\TextBox.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\TextBox.obj
+M:\GitHub\CMP105-Individual\CMP105App\TimeManager.cpp;M:\GitHub\CMP105-Individual\CMP105App\x64\Debug\TimeManager.obj

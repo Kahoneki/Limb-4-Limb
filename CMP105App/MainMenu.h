@@ -5,6 +5,8 @@
 #include "Framework/Input.h"
 #include <iostream>
 #include "TextBox.h"
+#include "Button.h"
+#include <functional>
 
 class SceneManager; //Forward declaration
 
@@ -14,6 +16,8 @@ public:
 
 	MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager);
 	~MainMenu();
+
+	void InitialiseCallbacks();
 
 	void handleInput(float dt) override;
 	void update(float dt) override;
@@ -28,10 +32,17 @@ private:
 	
 	sf::Font font;
 	TextBox title;
-	TextBox local;
-	TextBox online;
-	TextBox registration;
-	TextBox login;
+
+	Button local;
+	Button online;
+	Button registration;
+	Button login;
+
+	//Callbacks
+	std::function<void(void)> onLocalButtonClick;
+	std::function<void(void)> onOnlineButtonClick;
+	std::function<void(void)> onRegistrationButtonClick;
+	std::function<void(void)> onLoginButtonClick;
 };
 
 #endif
