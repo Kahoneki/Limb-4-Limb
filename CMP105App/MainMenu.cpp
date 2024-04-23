@@ -4,6 +4,9 @@
 #include "SceneManager.h"
 #include "RegistrationScreen.h"
 
+#include "ColourPallete.h"
+
+
 MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
 {
 	std::cout << "Loading main menu\n";
@@ -11,23 +14,23 @@ MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneM
 	window = hwnd;
 	input = in;
 	
-	background.setSize(sf::Vector2f(1200, 675));
+	background.setSize(sf::Vector2f(1920, 1080));
 	background.setPosition(0, 0);
-	background.setFillColor(sf::Color::Black);
+	background.setFillColor(BACKGROUNDCOLOUR);
 	
 	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
 
-	title = TextBox(350, 50, 520, 60, sf::Color::White, sf::Color::Red, 50, font, "LOSING LIMBS GAME");
+	title = TextBox(350, 50, 520, 60, INACTIVEBOXCOLOUR, TEXTCOLOUR, 50, font, "LOSING LIMBS GAME");
 	
-	local = TextBox(230, 300, 350, 40, sf::Color::White, sf::Color::Red, 30, font, "LOCAL");
-	online = TextBox(800, 300, 350, 40, sf::Color::White, sf::Color::Red, 30, font, "ONLINE");
-	registration = TextBox(230, 500, 350, 40, sf::Color::White, sf::Color::Red, 30, font, "REGISTER");
-	login = TextBox(800, 500, 350, 40, sf::Color::White, sf::Color::Red, 30, font, "LOGIN");
+	InitialiseCallbacks();
+	local = Button(230, 300, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onLocalButtonClick, "LOCAL");
+	online = Button(800, 300, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onOnlineButtonClick, "ONLINE");
+	registration = Button(230, 500, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onRegistrationButtonClick, "REGISTER");
+	login = Button(800, 500, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onLoginButtonClick, "LOGIN");
+
 
 	std::cout << "Loaded main menu\n";
 }
-
-
 
 MainMenu::~MainMenu()
 {
@@ -35,45 +38,48 @@ MainMenu::~MainMenu()
 	std::cout << "Unloaded main menu\n";
 }
 
-void MainMenu::handleInput(float dt)
-{
-	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
+void MainMenu::InitialiseCallbacks() {
+	onLocalButtonClick = [this]() {
+		LocalScene* localScene = new LocalScene(window, input, sceneManager);
+		sceneManager.LoadScene(localScene);
+	};
 	
-	bool mouseOverLocalBox = local.box.getGlobalBounds().contains(mousePos);
-	bool mouseOverOnlineBox = online.box.getGlobalBounds().contains(mousePos);
-	bool mouseOverRegistrationBox = registration.box.getGlobalBounds().contains(mousePos);
-	bool mouseOverLoginBox = login.box.getGlobalBounds().contains(mousePos);
+	onOnlineButtonClick = [this]() {
+		int playerNum{}; //Temp
+		std::cout << "Player num (1 or 2): ";
+		std::cin >> playerNum;
+		NetworkScene* networkScene = new NetworkScene(window, input, sceneManager, playerNum);
+		sceneManager.LoadScene(networkScene);
+	};
 
-	bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left) && !mousePressedLastFrame;
-	if (mouseDown) {
-		if (mouseOverLocalBox) {
-			LocalScene* localScene = new LocalScene(window, input, sceneManager);
-			sceneManager.LoadScene(localScene);
-		}
-		else if (mouseOverOnlineBox) {
-			int playerNum{}; //Temp
-			std::cout << "Player num (1 or 2): ";
-			std::cin >> playerNum;
-			NetworkScene* networkScene = new NetworkScene(window, input, sceneManager, playerNum);
-			sceneManager.LoadScene(networkScene);
-		}
-		else if (mouseOverRegistrationBox) {
-			RegistrationScreen* registrationScreen = new RegistrationScreen(window, input, sceneManager);
-			sceneManager.LoadScene(registrationScreen);
-		}
-		/*else if (mouseOverLoginBox) {
-			LoginScreen* loginScreen = new LoginScreen(window, input, sceneManager);
-			sceneManager.LoadScene(loginScreen);
-		}*/
-	}
-	mousePressedLastFrame = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+	onRegistrationButtonClick = [this]() {
+		RegistrationScreen* registrationScreen = new RegistrationScreen(window, input, sceneManager);
+		sceneManager.LoadScene(registrationScreen);
+	};
+
+	onLoginButtonClick = [this]() {
+		std::cout << "LOGIN SCREEN NOT YET IMPLEMENTED\n";
+	};
 }
 
-void MainMenu::update(float dt) {}
+
+
+void MainMenu::handleInput(float dt) {}
+
+void MainMenu::update(float dt) {
+	
+	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
+
+	local.processEvents(mousePos);
+	online.processEvents(mousePos);
+	registration.processEvents(mousePos);
+	login.processEvents(mousePos);
+}
 
 void MainMenu::render()
 {
 	beginDraw();
+	window->draw(background);
 	window->draw(title);
 	window->draw(local);
 	window->draw(online);
