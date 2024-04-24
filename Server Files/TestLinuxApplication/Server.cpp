@@ -12,10 +12,12 @@ Server::Server(sf::IpAddress _ip, unsigned short _port) {
 	serverAddress = _ip;
 	serverPort = _port;
 
-	listener.setBlocking(false);
+	listener.setBlocking(true);
 
 	if (listener.listen(serverPort) != sf::Socket::Done) { std::cerr << "Server failed to bind to port " << serverPort << std::endl; }
 	else { std::cout << "Server successfully bound to port " << serverPort << '\n'; }
+
+	listener.setBlocking(false);
 }
 
 
@@ -70,6 +72,9 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 			std::string username;
 			incomingData >> networkListenerIndex >> username;
 
+			std::cout << "NetworkListenerIndex: " << networkListenerIndex << '\n';
+			std::cout << "Username: " << username << '\n';
+
 			//Open database
 			sqlite3* db;
 			sqlite3_open("LimbForLimbDatabase.db", &db);
@@ -77,32 +82,28 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 			std::string usernameTakenQuery{ "SELECT EXISTS(SELECT 1 FROM AccountInfo WHERE Username = ?);"};
 
 			//Compile statement
-			sqlite3_stmt* stmt;
-			if (sqlite3_prepare_v2(db, usernameTakenQuery.c_str(), -1, &stmt, NULL) != SQLITE_OK) {
+			sqlite3_stmt* usernameTakenStmt;
+			if (sqlite3_prepare_v2(db, usernameTakenQuery.c_str(), -1, &usernameTakenStmt, NULL) != SQLITE_OK) {
 				std::cerr << "Error preparing statement:" << sqlite3_errmsg(db) << std::endl;
+				//Dont forget to close the database
+				sqlite3_close(db);
 				continue;
 			}
 
 			//Bind username to statement
-			sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
+			sqlite3_bind_text(usernameTakenStmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
 
 			//Run statement
-			int result = sqlite3_step(stmt);
-			sqlite3_finalize(stmt);
+			int result = sqlite3_step(usernameTakenStmt);
 
 			//Send username availability back to network manager
 			sf::Int8 usernameAvailability{ -1 };
 			if (result == SQLITE_ROW) {
-				//Username found
-				usernameAvailability = 0;
-			}
-			else if (result == SQLITE_DONE) {
-				//Username not found
-				usernameAvailability = 1;
+				usernameAvailability = !sqlite3_column_int(usernameTakenStmt, 0);
 			}
 			else {
 				//Error
-				std::cerr << "Unable to parse result, result value is: " << result << '\n';
+				std::cerr << "Unable to parse result, result value is: " << result << std::endl;
 			}
 
 			{
@@ -112,10 +113,20 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 				outgoingData << networkListenerIndex << packetCode << usernameAvailability;
 
 				//Send data to NetworkManager
-				std::cout << "\n\n( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[i].getRemoteAddress() << "\n\n";
+				std::cout << "( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[i].getRemoteAddress() << '\n';
 				connectedNetworkManagers[i].send(outgoingData);
 			}
+			sqlite3_finalize(usernameTakenStmt);
 
+
+			if (usernameAvailability != 1) {
+			
+				std::cout << "Username " << username << " is unavailable.\n\n\n\n";
+
+				//Dont forget to close the database
+				sqlite3_close(db);
+				continue;
+			}
 
 			//Generate unique random UUID - note on collision: https://lemire.me/blog/2019/12/12/are-64-bit-random-identifiers-free-from-collision/
 
@@ -126,6 +137,7 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 			std::uniform_int_distribution<uint64_t> dis;
 
 			sf::Uint64 uuid{ dis(gen) };
+			std::cout << "UUID: " << uuid << '\n';
 
 			{
 				sf::Packet outgoingData;
@@ -133,9 +145,50 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 				outgoingData << networkListenerIndex << packetCode << uuid;
 
 				//Send data to NetworkManager
-				std::cout << "\n\n( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[i].getRemoteAddress() << "\n\n";
+				std::cout << "( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[i].getRemoteAddress() << '\n';
 				connectedNetworkManagers[i].send(outgoingData);
 			}
+
+			//Add username + uuid to account table
+			sqlite3_exec(db, "START TRANSACTION;", NULL, NULL, NULL);
+			std::string insertQuery{ "INSERT INTO AccountInfo (Username, UUID) VALUES (?, ?);"};
+			sqlite3_stmt* insertStmt;
+			
+			//Compile
+			if (sqlite3_prepare_v2(db, insertQuery.c_str(), -1, &insertStmt, NULL) != SQLITE_OK) {
+				std::cerr << "Error preparing statement: " << sqlite3_errmsg(db) << std::endl;
+
+				//Dont forget to close the database
+				sqlite3_close(db);
+
+				continue;
+			}
+
+			//Bind params
+			sqlite3_bind_text(insertStmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
+			sqlite3_bind_text(insertStmt, 2, std::to_string(uuid).c_str(), -1, SQLITE_TRANSIENT);
+
+			//Execute statement
+			if (sqlite3_step(insertStmt) != SQLITE_DONE) {
+				std::cerr << "Error executing statement: " << sqlite3_errmsg(db) << std::endl;
+
+				//Dont forget to close the database
+				sqlite3_close(db);
+
+				continue;
+			}
+
+			std::cout << "User " << username << " with UUID " << uuid << " was successfully added to the table.\n";
+
+			sqlite3_finalize(insertStmt);
+			sqlite3_exec(db, "COMMIT;", NULL, NULL, NULL);
+
+			//Dont forget to close the database
+			sqlite3_close(db);
+
+
+			std::cout << "\n\n\n\n";
+
 
 			break;
 		}

@@ -17,7 +17,6 @@ public:
 	MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager);
 	~MainMenu();
 
-	void InitialiseCallbacks();
 
 	void handleInput(float dt) override;
 	void update(float dt) override;
@@ -39,6 +38,7 @@ private:
 	Button login;
 
 	//Callbacks
+	void InitialiseCallbacks();
 	std::function<void(void)> onLocalButtonClick;
 	std::function<void(void)> onOnlineButtonClick;
 	std::function<void(void)> onRegistrationButtonClick;

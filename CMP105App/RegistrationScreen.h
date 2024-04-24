@@ -6,8 +6,11 @@
 #include <iostream>
 
 #include "InputBox.h"
+#include "Button.h"
 
-class SceneManager; //Forward declaration
+
+//Forward declarations
+class SceneManager;
 
 template<typename ParentType>
 class NetworkListener;
@@ -35,8 +38,15 @@ private:
 	bool mousePressedLastFrame;
 
 	InputBox usernameBox;
-	TextBox registerButton; //To confirm registration
-	TextBox backButton;
+	
+	Button registerButton; //To confirm registration
+	Button backButton;
+
+	//Callbacks
+	void InitialiseCallbacks();
+	std::function<void(void)> onRegisterButtonClick;
+	std::function<void(void)> onBackButtonClick;
+
 	TextBox statusBar; //For displaying status to user - e.g.: connecting to server, generating uuid, username invalid, etc.
 	bool displayStatusBar;
 

@@ -2,6 +2,7 @@
 #include "MainMenu.h"
 #include "SceneManager.h"
 #include "NetworkManager.h"
+#include "ColourPallete.h"
 #include <fstream>
 
 RegistrationScreen::RegistrationScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
@@ -11,9 +12,9 @@ RegistrationScreen::RegistrationScreen(sf::RenderWindow* hwnd, Input* in, SceneM
 	window = hwnd;
 	input = in;
 
-	background.setSize(sf::Vector2f(1200, 675));
+	background.setSize(sf::Vector2f(1920, 1080));
 	background.setPosition(0, 0);
-	background.setFillColor(sf::Color::Black);
+	background.setFillColor(BACKGROUNDCOLOUR);
 
 	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
 	
@@ -21,13 +22,14 @@ RegistrationScreen::RegistrationScreen(sf::RenderWindow* hwnd, Input* in, SceneM
 	
 	minUsernameLength = 4;
 	maxUsernameLength = 20;
-	usernameBox = InputBox(230, 300, 350, 40, sf::Color::White, sf::Color::Red, 30, font, maxUsernameLength, InputBox::AcceptableCharacterPresets[InputBox::AcceptableCharacterPreset::ALPHANUMERIC], "Username", false, sf::Color::Green);
+	usernameBox = InputBox(230, 300, 350, 40, INACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, maxUsernameLength, InputBox::AcceptableCharacterPresets[InputBox::AcceptableCharacterPreset::ALPHANUMERIC], "Username", false, ACTIVEBOXCOLOUR);
 	usernameBox.setInput(input);
 	usernameBox.setWindow(window);
 
-	registerButton = TextBox(1500, 800, 350, 40, sf::Color::White, sf::Color::Red, 30, font, "Register");
-	backButton = TextBox(100, 100, 30, 30, sf::Color::White, sf::Color::Red, 30, font, "<-");
-	statusBar = TextBox(230, 800, 700, 40, sf::Color::White, sf::Color::Red, 30, font, "");
+	InitialiseCallbacks();
+	registerButton = Button(1500, 800, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onRegisterButtonClick, "Register");
+	backButton = Button(100, 100, 30, 30, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onBackButtonClick, "<-");
+	statusBar = TextBox(230, 800, 700, 40, INACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, "");
 	displayStatusBar = false;
 
 
@@ -39,60 +41,53 @@ RegistrationScreen::RegistrationScreen(sf::RenderWindow* hwnd, Input* in, SceneM
 	std::cout << "Loaded registration screen\n";
 }
 
-
 RegistrationScreen::~RegistrationScreen()
 {
 	std::cout << "Unloading registration screen\n";
 	std::cout << "Unloaded registration screen\n";
 }
 
+void RegistrationScreen::InitialiseCallbacks() {
+	onRegisterButtonClick = [this]() {
+		if (!awaitServerResponses) {
+			displayStatusBar = true;
+			if (checkClientSideUsernameValidity()) {
+				awaitServerResponses = true;
+				statusBar.text.setString("Connecting to server...\n");
+				render();
+				NetworkManager& networkManager{ NetworkManager::getInstance() };
+				networkListener = networkManager.GenerateNetworkListener<RegistrationScreen>(*this, networkListenerIndex);
+
+				/*std::string usernameStd{ usernameBox.getTypedText() };
+				sf::String usernameSf{ usernameStd };
+				std::cout << usernameSf.getData() << '\n';*/
+				sf::Packet outgoingPacket;
+				std::string username{ usernameBox.getTypedText() };
+				//std::cout << "RegistrationScreen: " << username << '\n';
+				outgoingPacket << username;
+				//std::string usernameOut;
+				//outgoingPacket >> usernameOut;
+				//std::cout << "After extraction: " << usernameOut << '\n';
+				NetworkManager::getInstance().SendDataToServer(networkListenerIndex, PacketCode::Username, outgoingPacket);
+				//outgoingPacket >> username;
+				//std::cout << "After extraction: " << username << '\n';
+			}
+		}
+	};
+
+
+	onBackButtonClick = [this]() {
+		MainMenu* mainMenu = new MainMenu(window, input, sceneManager);
+		sceneManager.LoadScene(mainMenu);
+	};
+}
+
 
 void RegistrationScreen::handleInput(float dt) {
 	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
 	usernameBox.processEvents(dt, mousePos);
-
-	bool mouseOverRegisterButton{ registerButton.box.getGlobalBounds().contains(mousePos) };
-	bool mouseOverBackButton{ backButton.box.getGlobalBounds().contains(mousePos) };
-
-	bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left) && !mousePressedLastFrame;
-
-	if (mouseDown) {
-		if (mouseOverRegisterButton && !awaitServerResponses) {
-			displayStatusBar = true;
-			if (checkClientSideUsernameValidity()) {
-				awaitServerResponses = true;
-				NetworkManager& networkManager{ NetworkManager::getInstance() };
-				while (!networkManager.getConnectedToServer()) {
-					statusBar.text.setString("Connecting to server...\n");
-					render();
-				}
-				networkListener = networkManager.GenerateNetworkListener<RegistrationScreen>(*this);
-				if (uuid != 0) {
-					//Write UUID to file
-					std::ofstream uuidFile(usernameBox.getTypedText() + ".uuid");
-					// Check if the file is opened successfully
-					if (uuidFile.is_open()) {
-						// Write the string representation of sf::Uint64 to the file
-						uuidFile << std::to_string(uuid) << std::endl;
-
-						// Close the file
-						uuidFile.close();
-
-						std::cout << "UUID successfully written to output file" << std::endl;
-					}
-					else {
-						std::cerr << "Failed to open output file for writing" << std::endl;
-					}
-				}
-			}
-		}
-		else if (mouseOverBackButton) {
-			MainMenu* mainMenu = new MainMenu(window, input, sceneManager);
-			sceneManager.LoadScene(mainMenu);
-		}
-	}
-
-	mousePressedLastFrame = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+	registerButton.processEvents(mousePos);
+	backButton.processEvents(mousePos);
 }
 
 
@@ -106,12 +101,42 @@ void RegistrationScreen::update(float dt) {
 		else if (usernameAvailable == 0) {
 			statusBar.text.setString("Username not available.");
 			awaitServerResponses = false;
+			usernameAvailable = -1;
 			return;
 		}
 
 		//Username available
-		statusBar.text.setString("Getting UUID.");
+		statusBar.text.setString("Getting UUID...");
 
+		if (uuid == 0) {
+			//Server hasn't responded yet
+			NetworkManager::getInstance().CheckForIncomingDataFromServer();
+			return;
+		}
+
+		else {
+			awaitServerResponses = false;
+			usernameAvailable = -1;
+			uuid = 0;
+			//Write UUID to file
+			statusBar.text.setString("Writing UUID...");
+			render();
+			std::ofstream uuidFile(usernameBox.getTypedText() + ".uuid");
+			// Check if the file is opened successfully
+			if (uuidFile.is_open()) {
+				// Write the string representation of sf::Uint64 to the file
+				uuidFile << std::to_string(uuid) << std::endl;
+
+				// Close the file
+				uuidFile.close();
+
+				std::cout << "UUID successfully written to output file" << std::endl;
+				statusBar.text.setString("Account successfully created!");
+			}
+			else {
+				std::cerr << "Failed to open output file for writing" << std::endl;
+			}
+		}
 	}
 }
 
@@ -119,6 +144,7 @@ void RegistrationScreen::update(float dt) {
 void RegistrationScreen::render()
 {
 	beginDraw();
+	window->draw(background);
 	window->draw(usernameBox);
 	window->draw(registerButton);
 	window->draw(backButton);
@@ -131,7 +157,7 @@ void RegistrationScreen::render()
 
 bool RegistrationScreen::checkClientSideUsernameValidity() {
 	if (usernameBox.getTypedText().length() < minUsernameLength) {
-		statusBar.text.setString("Username must be longer than " + std::to_string(minUsernameLength) + " characters");
+		statusBar.text.setString("Username must be at least " + std::to_string(minUsernameLength) + " characters");
 		return false;
 	}
 	else if (usernameBox.getTypedText().length() > maxUsernameLength) {
@@ -144,21 +170,15 @@ bool RegistrationScreen::checkClientSideUsernameValidity() {
 
 
 void RegistrationScreen::sendUsernameToServer() {
-	NetworkManager& networkManager{ NetworkManager::getInstance() };
-	while (!networkManager.getConnectedToServer()) {
-		statusBar.text.setString("Connecting to server...\n");
-		render();
-	}
-	networkListener = networkManager.GenerateNetworkListener<RegistrationScreen>(*this);
 	statusBar.text.setString("Validating username...\n");
 	render();
 	sf::Packet outgoingPacket;
 	outgoingPacket << usernameBox.getTypedText();
 	std::cout << "RegistrationScreen: " << usernameBox.getTypedText() << '\n';
-	networkManager.SendDataToServer(networkListenerIndex, PacketCode::Username, outgoingPacket);
+	NetworkManager::getInstance().SendDataToServer(networkListenerIndex, PacketCode::Username, outgoingPacket);
 	while (usernameAvailable == -1) {
 		//Server hasn't responded yet
-		networkManager.CheckForIncomingDataFromServer();
+		NetworkManager::getInstance().CheckForIncomingDataFromServer();
 	}
 	//Server has responded
 	if (usernameAvailable == 0) {
@@ -174,7 +194,7 @@ void RegistrationScreen::sendUsernameToServer() {
 	}
 
 	while (uuid == 0) {
-		networkManager.CheckForIncomingDataFromServer();
+		NetworkManager::getInstance().CheckForIncomingDataFromServer();
 		//Server hasn't responded yet
 	}
 	statusBar.text.setString("Account registered!");

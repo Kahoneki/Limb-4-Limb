@@ -154,6 +154,7 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 	int networkListenerIndex;
 	incomingData >> networkListenerIndex;
 	if (networkListeners[networkListenerIndex] != nullptr) {
+		std::cout << "IM NOT NULL YIPPEE!!\n";
 		networkListeners[networkListenerIndex]->InterpretPacket(incomingData);
 	}
 }
