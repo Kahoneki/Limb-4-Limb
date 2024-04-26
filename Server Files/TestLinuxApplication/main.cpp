@@ -36,14 +36,28 @@ void InitialiseDatabase() {
     sqlite3_open("LimbForLimbDatabase.db", &db);
 
     //Add AccountInfo table if it doesn't already exist
-    char* err;
-    int returnCode{ sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS AccountInfo(Username varchar(20) NOT NULL, UUID BIGINT UNSIGNED NOT NULL, PRIMARY KEY (Username));", NULL, NULL, &err) };
-    if (returnCode != SQLITE_OK) {
-        std::cerr << "Error creating account info table: " << err << std::endl;
-    }
-    else {
-        std::cout << "Successfully created account info table\n";
+    {
+        char* err;
+        int returnCode{ sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS AccountInfo(Username varchar(20) NOT NULL, UUID BIGINT UNSIGNED NOT NULL, PRIMARY KEY (Username));", NULL, NULL, &err) };
+        if (returnCode != SQLITE_OK) {
+            std::cerr << "Error creating account info table: " << err << std::endl;
+        }
+        else {
+            std::cout << "Successfully created account info table\n";
+        }
     }
 
+    //Add account ranking table if it doesn't already exist
+    {
+        sqlite3_exec(db, "PRAGMA foreign_keys = ON;", NULL, NULL, NULL);
+        char* err;
+        int returnCode{ sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS AccountRanking(Username varchar(20) NOT NULL, Ranking INT NOT NULL, PRIMARY KEY(Username), FOREIGN KEY(Username) REFERENCES AccountInfo(Username));", NULL, NULL, &err) };
+        if (returnCode != SQLITE_OK) {
+            std::cerr << "Error creating account rankings table: " << err << std::endl;
+        }
+        else {
+            std::cout << "Successfully created account rankings table\n";
+        }
+    }
     sqlite3_close(db);
 }

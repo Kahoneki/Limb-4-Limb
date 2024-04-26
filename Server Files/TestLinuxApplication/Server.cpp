@@ -72,12 +72,13 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 			std::string username;
 			incomingData >> networkListenerIndex >> username;
 
-			std::cout << "NetworkListenerIndex: " << networkListenerIndex << '\n';
-			std::cout << "Username: " << username << '\n';
-
 			//Open database
 			sqlite3* db;
 			sqlite3_open("LimbForLimbDatabase.db", &db);
+
+
+
+			//----PART 1: CHECK IF USERNAME IS ALREADY TAKEN----//
 
 			std::string usernameTakenQuery{ "SELECT EXISTS(SELECT 1 FROM AccountInfo WHERE Username = ?);"};
 
@@ -99,7 +100,7 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 			//Send username availability back to network manager
 			sf::Int8 usernameAvailability{ -1 };
 			if (result == SQLITE_ROW) {
-				usernameAvailability = !sqlite3_column_int(usernameTakenStmt, 0);
+				usernameAvailability = !sqlite3_column_int(usernameTakenStmt, 0); //0 if username doesn't exist, 1 if username does exist. Negate it so it instead represents if username is available
 			}
 			else {
 				//Error
@@ -113,7 +114,7 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 				outgoingData << networkListenerIndex << packetCode << usernameAvailability;
 
 				//Send data to NetworkManager
-				std::cout << "( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[i].getRemoteAddress() << '\n';
+				std::cout << "This packet is being sent to network manager at ip " << connectedNetworkManagers[i].getRemoteAddress() << '\n';
 				connectedNetworkManagers[i].send(outgoingData);
 			}
 			sqlite3_finalize(usernameTakenStmt);
@@ -128,7 +129,10 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 				continue;
 			}
 
-			//Generate unique random UUID - note on collision: https://lemire.me/blog/2019/12/12/are-64-bit-random-identifiers-free-from-collision/
+
+
+			//----PART 2: GENERATE UNIQUE RANDOM UUID----//
+			//(note on collision: https://lemire.me/blog/2019/12/12/are-64-bit-random-identifiers-free-from-collision/)
 
 			std::cout << "PacketCode: UUID\n";
 
@@ -139,23 +143,13 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 			sf::Uint64 uuid{ dis(gen) };
 			std::cout << "UUID: " << uuid << '\n';
 
-			{
-				sf::Packet outgoingData;
-				packetCode = PacketCode::UUID;
-				outgoingData << networkListenerIndex << packetCode << uuid;
-
-				//Send data to NetworkManager
-				std::cout << "( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[i].getRemoteAddress() << '\n';
-				connectedNetworkManagers[i].send(outgoingData);
-			}
-
-			//Add username + uuid to account table
+			//Add username + uuid to account info table
 			sqlite3_exec(db, "START TRANSACTION;", NULL, NULL, NULL);
-			std::string insertQuery{ "INSERT INTO AccountInfo (Username, UUID) VALUES (?, ?);"};
-			sqlite3_stmt* insertStmt;
+			std::string aiInsertQuery{ "INSERT INTO AccountInfo (Username, UUID) VALUES (?, ?);"};
+			sqlite3_stmt* aiInsertStmt;
 			
 			//Compile
-			if (sqlite3_prepare_v2(db, insertQuery.c_str(), -1, &insertStmt, NULL) != SQLITE_OK) {
+			if (sqlite3_prepare_v2(db, aiInsertQuery.c_str(), -1, &aiInsertStmt, NULL) != SQLITE_OK) {
 				std::cerr << "Error preparing statement: " << sqlite3_errmsg(db) << std::endl;
 
 				//Dont forget to close the database
@@ -165,11 +159,11 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 			}
 
 			//Bind params
-			sqlite3_bind_text(insertStmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
-			sqlite3_bind_text(insertStmt, 2, std::to_string(uuid).c_str(), -1, SQLITE_TRANSIENT);
+			sqlite3_bind_text(aiInsertStmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
+			sqlite3_bind_text(aiInsertStmt, 2, std::to_string(uuid).c_str(), -1, SQLITE_TRANSIENT);
 
 			//Execute statement
-			if (sqlite3_step(insertStmt) != SQLITE_DONE) {
+			if (sqlite3_step(aiInsertStmt) != SQLITE_DONE) {
 				std::cerr << "Error executing statement: " << sqlite3_errmsg(db) << std::endl;
 
 				//Dont forget to close the database
@@ -178,17 +172,178 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 				continue;
 			}
 
-			std::cout << "User " << username << " with UUID " << uuid << " was successfully added to the table.\n";
+			std::cout << "User " << username << " with UUID " << uuid << " was successfully added to the account info table.\n";
 
-			sqlite3_finalize(insertStmt);
+			sqlite3_finalize(aiInsertStmt);
+			sqlite3_exec(db, "COMMIT;", NULL, NULL, NULL);
+
+
+
+			//----PART 3: ADD ACCOUNT TO ACCOUNT RANKING TABLE----//
+			
+			sf::Int32 ranking{ 1000 }; //Starting ranking
+
+			sqlite3_exec(db, "START TRANSACTION;", NULL, NULL, NULL);
+			std::string arInsertQuery{ "INSERT INTO AccountRanking (Username, Ranking) VALUES (?, ?)" };
+			sqlite3_stmt* arInsertStmt;
+
+			//Compile
+			if (sqlite3_prepare_v2(db, arInsertQuery.c_str(), -1, &arInsertStmt, NULL) != SQLITE_OK) {
+				std::cerr << "Error preparing statement: " << sqlite3_errmsg(db) << std::endl;
+
+				//Dont forget to close the database
+				sqlite3_close(db);
+
+				continue;
+			}
+
+			//Bind params
+			sqlite3_bind_text(arInsertStmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
+			sqlite3_bind_text(arInsertStmt, 2, std::to_string(ranking).c_str(), -1, SQLITE_TRANSIENT);
+
+			//Execute statement
+			if (sqlite3_step(arInsertStmt) != SQLITE_DONE) {
+				std::cerr << "Error executing statement: " << sqlite3_errmsg(db) << std::endl;
+
+				//Dont forget to close the database
+				sqlite3_close(db);
+
+				continue;
+			}
+
+			std::cout << "User " << username << " with ranking " << ranking << " was successfully added to the account ranking table.\n";
+
+			sqlite3_finalize(arInsertStmt);
 			sqlite3_exec(db, "COMMIT;", NULL, NULL, NULL);
 
 			//Dont forget to close the database
 			sqlite3_close(db);
 
 
+
+			//----PART 4: SEND BACK UUID TO CLIENT----//
+			{
+				sf::Packet outgoingData;
+				packetCode = PacketCode::UUID;
+				outgoingData << networkListenerIndex << packetCode << uuid;
+				
+				//Send data to NetworkManager
+				std::cout << "This packet is being sent to network manager at ip " << connectedNetworkManagers[i].getRemoteAddress() << '\n';
+				connectedNetworkManagers[i].send(outgoingData);
+			}
+
 			std::cout << "\n\n\n\n";
 
+
+			break;
+		}
+		case PacketCode::Login:
+		{
+			std::cout << "PacketCode: Login\n";
+			int networkListenerIndex;
+			std::string username;
+			sf::Uint64 uuid;
+
+			incomingData >> networkListenerIndex >> username >> uuid;
+
+			//Open database
+			sqlite3* db;
+			sqlite3_open("LimbForLimbDatabase.db", &db);
+
+
+
+			//----PART 1: CHECK IF USERNAME EXISTS IN ACCOUNT INFO TABLE----//
+
+			std::string credentialsCorrectQuery{ "SELECT EXISTS(SELECT 1 FROM AccountInfo WHERE Username = ? AND UUID = ?);" };
+
+			//Compile statement
+			sqlite3_stmt* credentialsCorrectStmt;
+			if (sqlite3_prepare_v2(db, credentialsCorrectQuery.c_str(), -1, &credentialsCorrectStmt, NULL) != SQLITE_OK) {
+				std::cerr << "Error preparing statement:" << sqlite3_errmsg(db) << std::endl;
+				//Dont forget to close the database
+				sqlite3_close(db);
+				continue;
+			}
+
+			//Bind username to statement
+			sqlite3_bind_text(credentialsCorrectStmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
+
+			//Run statement
+			int credentialsCorrectResult{ sqlite3_step(credentialsCorrectStmt) };
+
+			//Send username availability back to network manager
+			sf::Int8 credentialsCorrect{ -1 };
+			if (credentialsCorrectResult == SQLITE_ROW) {
+				credentialsCorrect = sqlite3_column_int(credentialsCorrectStmt, 0); //0 if credentials don't exist, 1 if credentials do exist
+				std::cout << credentialsCorrect << '\n';
+			}
+			else {
+				//Error
+				std::cerr << "Unable to parse result, result value is: " << credentialsCorrectResult << std::endl;
+				continue;
+			}
+
+			{
+				//Add networkListenerIndex, packetCode, and data to outgoingData
+				sf::Packet outgoingData;
+				packetCode = PacketCode::LoginStatus;
+				outgoingData << networkListenerIndex << packetCode << credentialsCorrect;
+
+				//Send data to NetworkManager
+				std::cout << "This packet is being sent to network manager at ip " << connectedNetworkManagers[i].getRemoteAddress() << '\n';
+				connectedNetworkManagers[i].send(outgoingData);
+			}
+			sqlite3_finalize(credentialsCorrectStmt);
+
+
+			if (credentialsCorrect != 1) {
+
+				std::cout << "Matching credentials not found.\n\n\n\n";
+
+				//Dont forget to close the database
+				sqlite3_close(db);
+				continue;
+			}
+
+
+
+			//----PART 2: SEND RANKING TO CLIENT----//
+			
+			std::string rankingQuery{ "SELECT Ranking FROM AccountRanking WHERE Username = ?;" };
+
+			//Compile statement
+			sqlite3_stmt* rankingStmt;
+			if (sqlite3_prepare_v2(db, rankingQuery.c_str(), -1, &rankingStmt, NULL) != SQLITE_OK) {
+				std::cerr << "Error preparing statement:" << sqlite3_errmsg(db) << std::endl;
+				//Dont forget to close the database
+				sqlite3_close(db);
+				continue;
+			}
+
+			//Bind username to statement
+			sqlite3_bind_text(rankingStmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
+
+			//Run statement
+			sqlite3_step(rankingStmt);
+
+			//Send ranking back to network manager
+			sf::Int32 ranking{ sqlite3_column_int(rankingStmt, 0) };
+
+			{
+				//Add networkListenerIndex, packetCode, and data to outgoingData
+				sf::Packet outgoingData;
+				packetCode = PacketCode::Ranking;
+				outgoingData << networkListenerIndex << packetCode << ranking;
+
+				//Send data to NetworkManager
+				std::cout << "This packet is being sent to network manager at ip " << connectedNetworkManagers[i].getRemoteAddress() << '\n';
+				connectedNetworkManagers[i].send(outgoingData);
+			}
+
+			sqlite3_finalize(rankingStmt);
+			
+			//Dont forget to close the database
+			sqlite3_close(db);
 
 			break;
 		}
@@ -251,149 +406,4 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 		}
 		}
 	}
-
-	//NetworkManagerInfo incomingNetworkManager {incomingNetworkManagerAddress, incomingNetworkManagerPort};
-
-	//std::underlying_type_t<PacketCode> packetCode;
-	//incomingData >> packetCode;
-	//switch (packetCode)
-	//{
-	//case PacketCode::AddNetworkManager:
-	//{
-	//	std::cout << "PacketCode: AddNetworkManager\n";
-	//	//Double check that NetworkManager isn't already in vector
-	//	if (std::find(connectedNetworkManagers.begin(), connectedNetworkManagers.end(), incomingNetworkManager) != connectedNetworkManagers.end()) { return; }
-	//	connectedNetworkManagers.push_back(incomingNetworkManager);
-	//	std::cout << "NetworkManager (ip: " << incomingNetworkManager.ip << ", " << incomingNetworkManager.port << ") connected to server.\n";
-
-	//	//Send NetworkManager index back to NetworkManager
-	//	sf::Packet data;
-	//	data << (int)connectedNetworkManagers.size() - 1;
-	//	if (socket.send(data, incomingNetworkManager.ip, incomingNetworkManager.port) != sf::Socket::Done) { std::cerr << "Failed to send NetworkManager index to NetworkManager." << std::endl; }
-	//	else { std::cerr << "Successfully sent NetworkManager index to NetworkManager.\n"; }
-
-	//	return;
-	//}
-
-	//case PacketCode::RemoveNetworkManager:
-	//{
-	//	std::cout << "PacketCode: RemoveNetworkManager\n";
-	//	std::cout << "NetworkManager (ip: " << incomingNetworkManager.ip << ", " << incomingNetworkManager.port << ") disconnected from server.\n";
-	//	connectedNetworkManagers.erase(std::find(connectedNetworkManagers.begin(), connectedNetworkManagers.end(), incomingNetworkManager));
-	//	return;
-	//}
-	//case PacketCode::CrouchChange:
-	//{
-	//	std::cout << "PacketCode: CrouchChange\n";
-
-	//	//Separate packet, networkManagerIndex, and networkListenerIndex from incoming data
-	//	int networkManagerIndex;
-	//	int networkListenerIndex;
-	//	bool crouched;
-	//	incomingData >> networkManagerIndex >> networkListenerIndex >> crouched;
-	//	std::cout << crouched << '\n';
-
-	//	//Add networkListenerIndex, packetCode, and data to outgoingData
-	//	sf::Packet outgoingData;
-	//	outgoingData << networkListenerIndex << packetCode << crouched;
-
-	//	//Validate data (make sure NetworkManager is trying to send data to an ip+port that is in the array and make sure NetworkManager isn't trying to send themselves data. possibly other checks also.)
-	//	if ((networkManagerIndex >= connectedNetworkManagers.size()) || (connectedNetworkManagers[networkManagerIndex] == incomingNetworkManager)) {
-	//		std::cerr << "NetworkManager (ip: " << incomingNetworkManager.ip << ", " << incomingNetworkManager.port << ") tried to send a message to an invalid NetworkManager (ip: "
-	//			      << connectedNetworkManagers[networkManagerIndex].ip << ", " << connectedNetworkManagers[networkManagerIndex].port << ")!" << std::endl;
-	//		return;
-	//	}
-
-	//	//Send data to NetworkManager
-	//	std::cout << "\n\n( " << incomingNetworkManagerAddress << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[networkManagerIndex].ip << "\n\n";
-	//	socket.send(outgoingData, connectedNetworkManagers[networkManagerIndex].ip, connectedNetworkManagers[networkManagerIndex].port);
-
-	//	return;
-	//}
-	//case PacketCode::KeyChange:
-	//{
-	//	std::cout << "PacketCode: KeyChange\n";
-
-	//	//Separate packet, networkManagerIndex, and networkListenerIndex from incoming data
-	//	int networkManagerIndex;
-	//	int networkListenerIndex;
-	//	int key;
-	//	bool pressed;
-	//	incomingData >> networkManagerIndex >> networkListenerIndex >> pressed >> key;
-
-	//	//Add networkListenerIndex, packetCode, and data to outgoingData
-	//	sf::Packet outgoingData;
-	//	outgoingData << networkListenerIndex << packetCode << pressed << key;
-
-	//	//Validate data (make sure NetworkManager is trying to send data to an ip+port that is in the array and make sure NetworkManager isn't trying to send themselves data. possibly other checks also.)
-	//	if ((networkManagerIndex >= connectedNetworkManagers.size()) || (connectedNetworkManagers[networkManagerIndex] == incomingNetworkManager)) {
-	//		std::cerr << "NetworkManager (ip: " << incomingNetworkManager.ip << ", " << incomingNetworkManager.port << ") tried to send a message to an invalid NetworkManager (ip: "
-	//			      << connectedNetworkManagers[networkManagerIndex].ip << ", " << connectedNetworkManagers[networkManagerIndex].port << ")!" << std::endl;
-	//		return;
-	//	}
-
-	//	//Send data to NetworkManager
-	//	std::cout << "\n\n( " << incomingNetworkManagerAddress << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[networkManagerIndex].ip << "\n\n";
-	//	socket.send(outgoingData, connectedNetworkManagers[networkManagerIndex].ip, connectedNetworkManagers[networkManagerIndex].port);
-
-	//	return;
-	//}
-	//case PacketCode::Verification:
-	//{
-	//	std::cout << "PacketCode: Verification\n";
-
-	//	//Separate packet, networkManagerIndex, and networkListenerIndex from incoming data
-	//	int networkManagerIndex;
-	//	int networkListenerIndex;
-	//	sf::Vector2f pos;
-	//	sf::Int16 health;
-	//	bool activeLimbs[4];
-	//	incomingData >> networkManagerIndex >> networkListenerIndex >> pos.x >> pos.y >> health >> activeLimbs[0] >> activeLimbs[1] >> activeLimbs[2] >> activeLimbs[3];
-
-	//	//Add networkListenerIndex, packetCode, and data to outgoingData
-	//	sf::Packet outgoingData;
-	//	outgoingData << networkListenerIndex << packetCode << pos.x << pos.y << health << activeLimbs[0] << activeLimbs[1] << activeLimbs[2] << activeLimbs[3];
-
-	//	//Validate data (make sure NetworkManager is trying to send data to an ip+port that is in the array and make sure NetworkManager isn't trying to send themselves data. possibly other checks also.)
-	//	if ((networkManagerIndex >= connectedNetworkManagers.size()) || (connectedNetworkManagers[networkManagerIndex] == incomingNetworkManager)) {
-	//		std::cerr << "NetworkManager (ip: " << incomingNetworkManager.ip << ", " << incomingNetworkManager.port << ") tried to send a message to an invalid NetworkManager (ip: "
-	//			      << connectedNetworkManagers[networkManagerIndex].ip << ", " << connectedNetworkManagers[networkManagerIndex].port << ")!" << std::endl;
-	//		return;
-	//	}
-
-	//	//Send data to NetworkManager
-	//	std::cout << "\n\n( " << incomingNetworkManagerAddress << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[networkManagerIndex].ip << "\n\n";
-	//	socket.send(outgoingData, connectedNetworkManagers[networkManagerIndex].ip, connectedNetworkManagers[networkManagerIndex].port);
-
-	//	return;
-	//}
-	//case PacketCode::Nums:
-	//{
-	//	int networkManagerIndex;
-	//	int num;
-	//	incomingData >> networkManagerIndex >> num;
-	//	std::cout << num << '\n';
-
-	//	//Add networkListenerIndex, packetCode, and data to outgoingData
-	//	sf::Packet outgoingData;
-	//	outgoingData << packetCode << num;
-
-	//	//Validate data (make sure NetworkManager is trying to send data to an ip+port that is in the array and make sure NetworkManager isn't trying to send themselves data. possibly other checks also.)
-	//	if ((networkManagerIndex >= connectedNetworkManagers.size()) || (connectedNetworkManagers[networkManagerIndex] == incomingNetworkManager)) {
-	//		std::cerr << "NetworkManager (ip: " << incomingNetworkManager.ip << ", " << incomingNetworkManager.port << ") tried to send a message to an invalid NetworkManager (ip: "
-	//			      << connectedNetworkManagers[networkManagerIndex].ip << ", " << connectedNetworkManagers[networkManagerIndex].port << ")!" << std::endl;
-	//		return;
-	//	}
-
-	//	//Send data to NetworkManager
-	//	std::cout << "\n\n( " << incomingNetworkManagerAddress << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[networkManagerIndex].ip << "\n\n";
-	//	socket.send(outgoingData, connectedNetworkManagers[networkManagerIndex].ip, connectedNetworkManagers[networkManagerIndex].port);
-
-	//	return;
-	//}
-
-
-
-	//std::cout << "\n\nPacket code uninterpretable.\n\n";
-	//}
 }

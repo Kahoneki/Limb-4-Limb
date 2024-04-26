@@ -8,6 +8,7 @@
 
 #include "OnlinePlayer.h"
 #include "RegistrationScreen.h"
+#include "LoginScreen.h"
 
 
 template<typename ParentType>
@@ -87,6 +88,41 @@ public:
 
 private:
     RegistrationScreen& parentReference;
+};
+
+
+
+template<>
+class NetworkListener<LoginScreen> : public BaseNetworkListener {
+public:
+    NetworkListener(LoginScreen& pr) : parentReference(pr) {}
+
+    void InterpretPacket(sf::Packet incomingData) {
+        std::underlying_type_t<PacketCode> code;
+        incomingData >> code;
+
+        switch (code)
+        {
+        case PacketCode::UsernameAvailabilityStatus:
+        {
+            sf::Int8 available;
+            incomingData >> available;
+            parentReference.setLoginStatus(available);
+            break;
+        }
+
+        case PacketCode::UUID:
+        {
+            sf::Int32 ranking;
+            incomingData >> ranking;
+            parentReference.setRanking(ranking);
+            break;
+        }
+        }
+    }
+
+private:
+    LoginScreen& parentReference;
 };
 
 

@@ -19,6 +19,7 @@ public:
 		PLAYER_1,
 		PLAYER_2,
 		REGISTRATION_SCREEN,
+		LOGIN_SCREEN,
 		NUM_RESERVED_ENTITIES //Size of this enum - must be last
 	};
 

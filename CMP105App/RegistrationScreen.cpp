@@ -58,19 +58,10 @@ void RegistrationScreen::InitialiseCallbacks() {
 				NetworkManager& networkManager{ NetworkManager::getInstance() };
 				networkListener = networkManager.GenerateNetworkListener<RegistrationScreen>(*this, networkListenerIndex);
 
-				/*std::string usernameStd{ usernameBox.getTypedText() };
-				sf::String usernameSf{ usernameStd };
-				std::cout << usernameSf.getData() << '\n';*/
 				sf::Packet outgoingPacket;
 				std::string username{ usernameBox.getTypedText() };
-				//std::cout << "RegistrationScreen: " << username << '\n';
 				outgoingPacket << username;
-				//std::string usernameOut;
-				//outgoingPacket >> usernameOut;
-				//std::cout << "After extraction: " << usernameOut << '\n';
-				NetworkManager::getInstance().SendDataToServer(networkListenerIndex, PacketCode::Username, outgoingPacket);
-				//outgoingPacket >> username;
-				//std::cout << "After extraction: " << username << '\n';
+				networkManager.SendDataToServer(networkListenerIndex, PacketCode::Username, outgoingPacket);
 			}
 		}
 	};
@@ -132,6 +123,7 @@ void RegistrationScreen::update(float dt) {
 
 				std::cout << "UUID successfully written to output file" << std::endl;
 				statusBar.text.setString("Account successfully created!");
+
 			}
 			else {
 				std::cerr << "Failed to open output file for writing" << std::endl;
@@ -166,39 +158,6 @@ bool RegistrationScreen::checkClientSideUsernameValidity() {
 		return false;
 	}
 	return true;
-}
-
-
-void RegistrationScreen::sendUsernameToServer() {
-	statusBar.text.setString("Validating username...\n");
-	render();
-	sf::Packet outgoingPacket;
-	outgoingPacket << usernameBox.getTypedText();
-	std::cout << "RegistrationScreen: " << usernameBox.getTypedText() << '\n';
-	NetworkManager::getInstance().SendDataToServer(networkListenerIndex, PacketCode::Username, outgoingPacket);
-	while (usernameAvailable == -1) {
-		//Server hasn't responded yet
-		NetworkManager::getInstance().CheckForIncomingDataFromServer();
-	}
-	//Server has responded
-	if (usernameAvailable == 0) {
-		//Not available
-		statusBar.text.setString("Username not available.");
-		render();
-		return;
-	}
-	else if (usernameAvailable == 1) {
-		//Available
-		statusBar.text.setString("Getting UUID");
-		render();
-	}
-
-	while (uuid == 0) {
-		NetworkManager::getInstance().CheckForIncomingDataFromServer();
-		//Server hasn't responded yet
-	}
-	statusBar.text.setString("Account registered!");
-	render();
 }
 
 

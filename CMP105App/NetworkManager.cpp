@@ -127,9 +127,15 @@ sf::Socket::Status NetworkManager::SendDataToServer(int networkListenerIndex, Pa
 	{
 		std::string username;
 		incomingPacket >> username;
-		std::cout << "NetworkManager: " << username << '\n';
 		outgoingPacket << username;
 		break;
+	}
+	case PacketCode::Login:
+	{
+		std::string username;
+		sf::Uint64 uuid;
+		incomingPacket >> username >> uuid;
+		outgoingPacket << username << uuid;
 	}
 	}
 	using namespace std::chrono;
@@ -154,7 +160,6 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 	int networkListenerIndex;
 	incomingData >> networkListenerIndex;
 	if (networkListeners[networkListenerIndex] != nullptr) {
-		std::cout << "IM NOT NULL YIPPEE!!\n";
 		networkListeners[networkListenerIndex]->InterpretPacket(incomingData);
 	}
 }

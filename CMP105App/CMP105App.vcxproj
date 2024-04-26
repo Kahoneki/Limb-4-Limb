@@ -161,9 +161,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AccountManager.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="InputBox.cpp" />
     <ClCompile Include="LocalScene.cpp" />
+    <ClCompile Include="LoginScreen.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="EndScreen.cpp" />
     <ClCompile Include="Framework\Animation.cpp" />
@@ -195,11 +197,13 @@
     <Text Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AccountManager.h" />
     <ClInclude Include="BaseNetworkListener.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ColourPallete.h" />
     <ClInclude Include="InputBox.h" />
     <ClInclude Include="LocalScene.h" />
+    <ClInclude Include="LoginScreen.h" />
     <ClInclude Include="NetworkListener.h" />
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="EndScreen.h" />

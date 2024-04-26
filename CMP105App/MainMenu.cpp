@@ -3,7 +3,7 @@
 #include "LocalScene.h"
 #include "SceneManager.h"
 #include "RegistrationScreen.h"
-
+#include "LoginScreen.h"
 #include "ColourPallete.h"
 
 
@@ -58,7 +58,8 @@ void MainMenu::InitialiseCallbacks() {
 	};
 
 	onLoginButtonClick = [this]() {
-		std::cout << "LOGIN SCREEN NOT YET IMPLEMENTED\n";
+		LoginScreen* loginScreen = new LoginScreen(window, input, sceneManager);
+		sceneManager.LoadScene(loginScreen);
 	};
 }
 

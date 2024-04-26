@@ -13,9 +13,13 @@ enum PacketCode
 	PositionChange,
 	Nums,
 
-	Username,
-	UsernameAvailabilityStatus,
-	UUID
+	Username, //From client
+	UsernameAvailabilityStatus, //From server
+	UUID, //From server
+
+	Login, //From client
+	LoginStatus, //From server
+	Ranking //From server
 };
 
 #endif
