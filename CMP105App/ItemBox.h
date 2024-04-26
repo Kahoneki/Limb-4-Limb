@@ -25,7 +25,8 @@ class ItemBox : public GameObject
 {
 public:
 	ItemBox();
-	bool ApplyToPlayer(Player& player); //To be called when player collides with item box
+	void ApplyToPlayer(Player& player); //To be called when player collides with item box
+	void update(float dt);
 
 private:
 	float riskReward; //Between 0 (no risk, no reward) to 1 (full risk, full reward) - this will determine how much impact an item box has - visually represented by the colour of the box
@@ -33,6 +34,8 @@ private:
 	ItemDrop goodDrops[2];
 	ItemDrop badDrops[2];
 	ItemDrop drop;
+
+	float velocity; //Vertical velocity - item box has no horizontal velocity
 };
 
 #endif

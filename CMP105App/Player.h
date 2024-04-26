@@ -3,6 +3,7 @@
 
 #include "Framework/GameObject.h"
 #include "Attack.h"
+#include "ItemBox.h" //For item drop
 
 class Player : public GameObject {
 public:
@@ -93,6 +94,10 @@ protected:
 	std::vector<int> directionKeycodesLastFrame;
 	std::vector<int> directionKeycodesThisFrame;
 	int mostRecentDirectionKeycode; //Keycode of the most recently pressed key (will be reset when a new direction key is pressed, will be -1 if no direction key is held down)
+
+	//Effects
+	ItemDrop effect;
+
 
 	//Base
 	sf::FloatRect effectiveCollider; //This is the collider that will be used in all collision calculations - it's a bit smaller than getGlobalBounds() and is also in world-space

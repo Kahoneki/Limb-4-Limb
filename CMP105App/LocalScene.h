@@ -41,11 +41,14 @@ private:
 
 	Platform platforms[4];
 
-	ItemBox itemBox;
+	ItemBox* itemBox;
 	//Time between item boxes is random, but...
 	float minItemBoxCooldownTime; //This is the min amount of time
 	float maxItemBoxCooldownTime; //and this is the max amount of time
 	float timeUntilNextItemBox; //Initially some random value between minItemBoxCooldownTime and maxItemBoxCooldownTime, but will count down until 0
+	
+	float itemBoxAbilityCooldownTime; //Time that player will have the ability for
+	float timeUntilAbilityEnds; //Counts down until 0
 
 	AudioManager audioManager;
 

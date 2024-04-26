@@ -161,6 +161,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ItemBox.cpp" />
     <ClCompile Include="LocalScene.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="EndScreen.cpp" />
@@ -192,6 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseNetworkListener.h" />
+    <ClInclude Include="ItemBox.h" />
     <ClInclude Include="LocalScene.h" />
     <ClInclude Include="NetworkListener.h" />
     <ClInclude Include="NetworkManager.h" />

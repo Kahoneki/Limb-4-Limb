@@ -9,6 +9,7 @@ sf::Color LerpColour(sf::Color colourA, sf::Color colourB, float interp);
 ItemBox::ItemBox() {
 
 	setSize(sf::Vector2f(30,30));
+	setPosition(rand() % (1920 - static_cast<int>(getSize().x)), 0); //Spawn at top of screen in a random horizontal position
 
 	chanceOfBeingGood = 70;
 	int riskRewardMultiplier{ 4 }; //Scale the risk-reward by the multiplier
@@ -29,29 +30,39 @@ ItemBox::ItemBox() {
 	//Determine if good or bad and choose random drop to assign to item box
 	randVal = static_cast<float>(rand()) / RAND_MAX;
 	drop = (randVal <= chanceOfBeingGood) ? (goodDrops[rand() % sizeof(goodDrops)/sizeof(goodDrops[0])]) : (badDrops[rand() % sizeof(badDrops) / sizeof(badDrops[0])]);
+
+
+	velocity = 100.0f;
 }
 
 
 
-bool ItemBox::ApplyToPlayer(Player& player) {
+void ItemBox::ApplyToPlayer(Player& player) {
 	
 	//Give player the item drop
 	switch (drop)
 	{
 	case JumpIncrease:
-		player.setJumpSpeed(player.getJumpSpeed() * (riskReward));
+		player.setJumpSpeed(player.getJumpSpeed() * (riskReward / 5));
 		break;
 	case SpeedIncrease:
 		player.setTopSpeed(player.getTopSpeed() * (riskReward));
 		break;
 	case JumpDecrease:
-		player.setJumpSpeed(player.getJumpSpeed() / (riskReward));
+		player.setJumpSpeed(player.getJumpSpeed() / (riskReward / 5));
 		break;
 	case SpeedDecrease:
 		player.setTopSpeed(player.getTopSpeed() / (riskReward));
 		break;
 	}
 }
+
+
+
+void ItemBox::update(float dt) {
+	setPosition(getPosition().x, getPosition().y + velocity * dt);
+}
+
 
 
 
