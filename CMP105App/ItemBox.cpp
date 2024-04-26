@@ -11,8 +11,9 @@ ItemBox::ItemBox() {
 	setSize(sf::Vector2f(30,30));
 
 	chanceOfBeingGood = 70;
+	int riskRewardMultiplier{ 4 }; //Scale the risk-reward by the multiplier
 	float randVal { static_cast<float>(rand()) / RAND_MAX};
-	riskReward = randVal;
+	riskReward = randVal*riskRewardMultiplier;
 
 	//Green = low risk, low reward. Red = high risk, high reward
 	setFillColor(LerpColour(sf::Color::Green, sf::Color::Red, riskReward));
@@ -27,7 +28,7 @@ ItemBox::ItemBox() {
 
 	//Determine if good or bad and choose random drop to assign to item box
 	randVal = static_cast<float>(rand()) / RAND_MAX;
-	drop = randVal <= chanceOfBeingGood ? goodDrops[rand() % sizeof(goodDrops)/sizeof(goodDrops[0])] : badDrops[rand() % sizeof(badDrops) / sizeof(badDrops[0])];
+	drop = (randVal <= chanceOfBeingGood) ? (goodDrops[rand() % sizeof(goodDrops)/sizeof(goodDrops[0])]) : (badDrops[rand() % sizeof(badDrops) / sizeof(badDrops[0])]);
 }
 
 
@@ -38,16 +39,16 @@ bool ItemBox::ApplyToPlayer(Player& player) {
 	switch (drop)
 	{
 	case JumpIncrease:
-		player.setJumpSpeed(player.getJumpSpeed() * (4 * riskReward));
+		player.setJumpSpeed(player.getJumpSpeed() * (riskReward));
 		break;
 	case SpeedIncrease:
-		player.setTopSpeed(player.getTopSpeed() * (4 * riskReward));
+		player.setTopSpeed(player.getTopSpeed() * (riskReward));
 		break;
 	case JumpDecrease:
-		player.setJumpSpeed(player.getJumpSpeed() / (4 * riskReward));
+		player.setJumpSpeed(player.getJumpSpeed() / (riskReward));
 		break;
 	case SpeedDecrease:
-		player.setTopSpeed(player.getTopSpeed() / (4 * riskReward));
+		player.setTopSpeed(player.getTopSpeed() / (riskReward));
 		break;
 	}
 }
