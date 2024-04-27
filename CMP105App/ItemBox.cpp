@@ -12,7 +12,7 @@ ItemBox::ItemBox() {
 	setPosition(rand() % (1920 - static_cast<int>(getSize().x)), 0); //Spawn at top of screen in a random horizontal position
 
 	chanceOfBeingGood = 70;
-	int riskRewardMultiplier{ 4 }; //Scale the risk-reward by the multiplier
+	int riskRewardMultiplier{ 2 }; //Scale the risk-reward by the multiplier
 	float randVal { static_cast<float>(rand()) / RAND_MAX};
 	riskReward = randVal*riskRewardMultiplier;
 
@@ -43,18 +43,22 @@ void ItemBox::ApplyToPlayer(Player& player) {
 	switch (drop)
 	{
 	case JumpIncrease:
-		player.setJumpSpeed(player.getJumpSpeed() * (riskReward / 5));
+		player.setJumpSpeed(player.getJumpSpeed() / (riskReward / 20));
 		break;
 	case SpeedIncrease:
-		player.setTopSpeed(player.getTopSpeed() * (riskReward));
-		break;
-	case JumpDecrease:
-		player.setJumpSpeed(player.getJumpSpeed() / (riskReward / 5));
-		break;
-	case SpeedDecrease:
 		player.setTopSpeed(player.getTopSpeed() / (riskReward));
 		break;
+	case JumpDecrease:
+		player.setJumpSpeed(player.getJumpSpeed() * (riskReward / 20));
+		break;
+	case SpeedDecrease:
+		player.setTopSpeed(player.getTopSpeed() * (riskReward));
+		break;
 	}
+
+	player.setHasEffect(true);
+	Effect effect{ drop, riskReward };
+	player.setEffect(effect);
 }
 
 

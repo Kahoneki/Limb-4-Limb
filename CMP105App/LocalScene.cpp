@@ -14,7 +14,7 @@ LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sc
 	//timeUntilNextItemBox = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
 	timeUntilNextItemBox = 0;
 
-	itemBoxAbilityCooldownTime = 10;
+	
 
 	itemBox = nullptr;
 
@@ -144,6 +144,8 @@ void LocalScene::update(float dt) {
 				timeUntilNextItemBox = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
 			}
 		}
+
+
 	}
 
 	HealthBarUpdate();
@@ -153,11 +155,10 @@ void LocalScene::update(float dt) {
 
 
 void LocalScene::ItemBoxCollisionCheck(Player* player) {
-	if (player->getEffectiveCollider().intersects(itemBox->getGlobalBounds())) {
+	if (player->getEffectiveCollider().intersects(itemBox->getGlobalBounds()) && !player->getHasEffect()) {
 		itemBox->ApplyToPlayer(*player);
 		delete itemBox;
 		itemBox = nullptr;
-		timeUntilAbilityEnds = itemBoxAbilityCooldownTime;
 	}
 }
 

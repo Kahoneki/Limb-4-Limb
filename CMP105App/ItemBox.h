@@ -20,6 +20,12 @@ enum ItemDrop
 	END_OF_BAD_DROPS
 };
 
+struct Effect
+{
+	ItemDrop itemDrop;
+	float riskReward;
+};
+
 
 class ItemBox : public GameObject
 {

@@ -3,7 +3,7 @@
 
 #include "Framework/GameObject.h"
 #include "Attack.h"
-#include "ItemBox.h" //For item drop
+#include "ItemBox.h" //For ItemDrop enum
 
 class Player : public GameObject {
 public:
@@ -39,6 +39,7 @@ public:
 	bool getHasKnockback();
 	int getJumpSpeed();
 	int getTopSpeed();
+	bool getHasEffect();
 
 	//Setters
 	void setCrouched(bool val);
@@ -57,6 +58,8 @@ public:
 	void setJumpDirection(int val);
 	void setJumpSpeed(int val);
 	void setTopSpeed(int val);
+	void setEffect(Effect val);
+	void setHasEffect(bool val);
 
 
 protected:
@@ -96,7 +99,12 @@ protected:
 	int mostRecentDirectionKeycode; //Keycode of the most recently pressed key (will be reset when a new direction key is pressed, will be -1 if no direction key is held down)
 
 	//Effects
-	ItemDrop effect;
+	Effect effect;
+	float effectCooldownTime;
+	float timeUntilEffectEnds;
+	bool hasEffect;
+	float defaultJumpSpeed;
+	float defaultTopSpeed;
 
 
 	//Base
