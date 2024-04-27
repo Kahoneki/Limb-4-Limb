@@ -3,6 +3,7 @@
 #include "SceneManager.h"
 #include "NetworkManager.h"
 #include "ColourPallete.h"
+#include "AccountManager.h"
 #include <fstream>
 
 RegistrationScreen::RegistrationScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
@@ -122,6 +123,10 @@ void RegistrationScreen::update(float dt) {
 
 				std::cout << "UUID successfully written to output file" << std::endl;
 				statusBar.text.setString("Account successfully created!");
+
+				//Log in user
+				AccountManager& accountManager{ AccountManager::getInstance() };
+				accountManager.setValues(usernameBox.getTypedText(), 1000);
 
 			}
 			else {

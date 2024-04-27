@@ -268,4 +268,5 @@ C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App
   Note: including file: C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\ColourPallete.h
   Note: including file: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\fstream
   Note: including file:  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_filebuf.hpp
+  LINK : C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\x64\Debug\CMP105App.exe not found or not built by the last incremental link; performing full link
   CMP105App.vcxproj -> C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\x64\Debug\CMP105App.exe
