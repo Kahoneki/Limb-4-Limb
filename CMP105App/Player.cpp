@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "TimeManager.h"
-#include <iostream>
 #include <format>
+#include <iostream>
 
 Player::Player() {
 }
@@ -98,6 +98,11 @@ Player::Player(sf::Vector2f size, float acc, float ts, float js, int hp, int pro
 	updateTextures = false;
 	blocking = false;
 
+	effectCooldownTime = 10;
+	timeUntilEffectEnds = 0;
+	hasEffect = false;
+	defaultJumpSpeed = jumpSpeed;
+	defaultTopSpeed = topSpeed;
 }
 
 Player::~Player() {
@@ -404,6 +409,30 @@ void Player::update(float dt) {
 
 	if (dodgeCooldownFramesLeft > 0) { dodgeCooldownFramesLeft -= TimeManager::PhysicsClockFramerate * dt; }
 	else if (dodgeCooldownFramesLeft < 0) { dodgeCooldownFramesLeft = 0; }
+
+
+
+
+	if (hasEffect) {
+		timeUntilEffectEnds -= dt;
+	}
+	if (timeUntilEffectEnds <= 0) {
+		
+		hasEffect = false;
+
+		//Revert player to regular stats
+		switch (effect.itemDrop) {
+		case ItemDrop::JumpDecrease:
+		case ItemDrop::JumpIncrease:
+			jumpSpeed = defaultJumpSpeed;
+			break;
+		
+		case ItemDrop::SpeedDecrease:
+		case ItemDrop::SpeedIncrease:
+			topSpeed = defaultTopSpeed;
+			break;
+		}
+	}
 }
 
 
@@ -447,6 +476,12 @@ bool Player::getFallingThroughPlatform() { return isFallingThroughPlatform; }
 
 bool Player::getHasKnockback() { return hasKnockback; }
 
+int Player::getJumpSpeed() { return jumpSpeed; }
+
+int Player::getTopSpeed() { return topSpeed; }
+
+bool Player::getHasEffect() { return hasEffect; }
+
 int Player::getInvincibilityFramesLeft() { return invincibilityFramesLeft; }
 
 bool Player::getFlipped() { return flipped; }
@@ -472,6 +507,17 @@ void Player::setFallingThroughPlatform(bool val) { isFallingThroughPlatform = va
 void Player::setHasKnockback(bool val) { hasKnockback = val; }
 
 void Player::setJumpDirection(int val) { jumpDirection = val; }
+
+void Player::setJumpSpeed(int val) { jumpSpeed = val; }
+
+void Player::setTopSpeed(int val) { topSpeed = val; }
+
+void Player::setEffect(Effect val) { effect = val; }
+
+void Player::setHasEffect(bool val) {
+	timeUntilEffectEnds = effectCooldownTime;
+	hasEffect = val;
+}
 
 void Player::setLimbActivity(int index, bool val) { activeLimbs[index] = val; }
 

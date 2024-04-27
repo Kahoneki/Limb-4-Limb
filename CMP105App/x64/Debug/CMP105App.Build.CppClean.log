@@ -1,43 +1,50 @@
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\vc143.pdb
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\vc143.idb
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\scenemanager.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\player.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\onlineplayer.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\networkscene.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\mainmenu.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\main.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\localscene.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\endscreen.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\attack.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\platform.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\networknode.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\vectorhelper.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\tilemap.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\soundobject.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\musicobject.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\gameobject.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\input.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\collision.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\baselevel.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\audiomanager.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\animation.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\networkmanager.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\timemanager.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\scenemanager.h.ifc
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\scenemanager.h.ifc.d.json
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\scenemanager.h.obj
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\x64\debug\cmp105app.exe
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\x64\debug\cmp105app.pdb
+m:\github\cmp105-individual\cmp105app\x64\debug\vc143.pdb
+m:\github\cmp105-individual\cmp105app\x64\debug\vc143.idb
+m:\github\cmp105-individual\cmp105app\x64\debug\platform.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\onlineplayer.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\networkscene.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\networknode.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\mainmenu.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\main.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\vectorhelper.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\tilemap.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\soundobject.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\musicobject.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\attack.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\gameobject.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\input.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\collision.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\baselevel.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\audiomanager.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\animation.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\endscreen.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\networkmanager.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\localscene.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\timemanager.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\scenemanager.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\player.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\scenemanager.h.ifc
+m:\github\cmp105-individual\cmp105app\x64\debug\scenemanager.h.ifc.d.json
+m:\github\cmp105-individual\cmp105app\x64\debug\scenemanager.h.obj
+m:\github\cmp105-individual\cmp105app\x64\debug\itembox.obj
+m:\github\cmp105-individual\x64\debug\cmp105app.exe
+m:\github\cmp105-individual\x64\debug\cmp105app.pdb
 c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\scenemanager.h.module.json
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\cmp105app.ilk
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\cl.command.1.tlog
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\cl.items.tlog
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\cl.read.1.tlog
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\cl.write.1.tlog
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\link.command.1.tlog
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\link.read.1.tlog
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\link.secondary.1.tlog
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\link.write.1.tlog
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\cmp105app_md.tlog\cl.command.1.tlog
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\cmp105app_md.tlog\microsoft.build.cpptasks.cl.read.1.tlog
-c:\users\shiny\desktop\code\github repository clones\cmp105-individual\cmp105app\x64\debug\cmp105app_md.tlog\microsoft.build.cpptasks.cl.write.1.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\scenemanager.h.module.json
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app.ilk
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\cl.command.1.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\cl.items.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\cl.read.1.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\cl.write.1.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\link-cvtres.read.1.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\link-cvtres.write.1.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\link-rc.read.1.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\link-rc.write.1.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\link.command.1.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\link.read.1.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\link.read.2.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\link.secondary.1.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app.tlog\link.write.1.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app_md.tlog\cl.command.1.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app_md.tlog\microsoft.build.cpptasks.cl.read.1.tlog
+m:\github\cmp105-individual\cmp105app\x64\debug\cmp105app_md.tlog\microsoft.build.cpptasks.cl.write.1.tlog
