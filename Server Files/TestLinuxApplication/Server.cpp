@@ -13,9 +13,11 @@ Server::Server(sf::IpAddress _ip, unsigned short _port) {
 	serverPort = _port;
 
 	listener.setBlocking(true);
+	while (listener.listen(serverPort) != sf::Socket::Done) {}
+	/*if (listener.listen(serverPort) != sf::Socket::Done) { std::cerr << "Server failed to bind to port " << serverPort << std::endl; }
+	else { std::cout << "Server successfully bound to port " << serverPort << '\n'; }*/
 
-	if (listener.listen(serverPort) != sf::Socket::Done) { std::cerr << "Server failed to bind to port " << serverPort << std::endl; }
-	else { std::cout << "Server successfully bound to port " << serverPort << '\n'; }
+	std::cout << "Server successfully bound to port.\n";
 
 	listener.setBlocking(false);
 }
@@ -255,6 +257,7 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 			//----PART 1: CHECK IF USERNAME EXISTS IN ACCOUNT INFO TABLE----//
 
 			std::string credentialsCorrectQuery{ "SELECT EXISTS(SELECT 1 FROM AccountInfo WHERE Username = ? AND UUID = ?);" };
+			//std::string credentialsCorrectQuery{ "SELECT * FROM AccountInfo;" };
 
 			//Compile statement
 			sqlite3_stmt* credentialsCorrectStmt;
@@ -265,23 +268,28 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 				continue;
 			}
 
-			//Bind username to statement
+			//Bind username and uuid to statement
 			sqlite3_bind_text(credentialsCorrectStmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
+			sqlite3_bind_text(credentialsCorrectStmt, 2, std::to_string(uuid).c_str(), -1, SQLITE_TRANSIENT);
 
 			//Run statement
 			int credentialsCorrectResult{ sqlite3_step(credentialsCorrectStmt) };
+
+			//std::cout << "User: " << sqlite3_column_blob(credentialsCorrectStmt, 0) << '\n';
+			//std::cout << "UUID: " << sqlite3_column_int64(credentialsCorrectStmt, 1) << '\n';
+
 
 			//Send username availability back to network manager
 			sf::Int8 credentialsCorrect{ -1 };
 			if (credentialsCorrectResult == SQLITE_ROW) {
 				credentialsCorrect = sqlite3_column_int(credentialsCorrectStmt, 0); //0 if credentials don't exist, 1 if credentials do exist
-				std::cout << credentialsCorrect << '\n';
 			}
 			else {
 				//Error
 				std::cerr << "Unable to parse result, result value is: " << credentialsCorrectResult << std::endl;
 				continue;
 			}
+			std::cout << "Credentials correct is: " << static_cast<int>(credentialsCorrect) << '\n';
 
 			{
 				//Add networkListenerIndex, packetCode, and data to outgoingData

@@ -1,8 +1,8 @@
 #include "NetworkManager.h"
 #include "BaseNetworkListener.h"
 #include <iostream>
-#include <type_traits> //For std::is_same()
-#include <chrono>
+#include <type_traits> //For std::underlying_type<T>
+#include <chrono> //For epoch timestamps
 
 class OnlinePlayer;
 
@@ -10,13 +10,61 @@ class OnlinePlayer;
 NetworkManager& NetworkManager::getInstance() {
 	sf::IpAddress address{ "limbforlimb.duckdns.org" };
 	unsigned short port{ 6900 };
+	
 	static NetworkManager instance(address, port);
+	if (!instance.connectedToServer) {
+		instance.socket.setBlocking(true);
+
+		//Connect to server
+		if (instance.socket.connect(instance.serverAddress, instance.serverPort) != sf::Socket::Done) {
+			std::cerr << "Failed to send connection request to server." << std::endl;
+		}
+
+		//Get NetworkManager index from server
+		sf::Packet incomingData;
+		if (instance.socket.receive(incomingData) != sf::Socket::Done) {
+			instance.connectedToServer = false;
+			std::cerr << "Failed to connect to server." << std::endl;
+		}
+		else {
+			std::cout << "Successfully connected to server.\n";
+			incomingData >> instance.networkManagerIndex;
+			instance.connectedToServer = true;
+		}
+
+		instance.socket.setBlocking(false);
+	}
 	return instance;
+	
 }
 
 
 NetworkManager& NetworkManager::getInstance(sf::IpAddress _serverAddress, unsigned short _serverPort) {
 	static NetworkManager instance(_serverAddress, _serverPort);
+
+	if (!instance.connectedToServer) {
+		instance.socket.setBlocking(true);
+
+		//Connect to server
+		if (instance.socket.connect(instance.serverAddress, instance.serverPort) != sf::Socket::Done) {
+			std::cerr << "Failed to send connection request to server." << std::endl;
+		}
+
+		//Get NetworkManager index from server
+		sf::Packet incomingData;
+		if (instance.socket.receive(incomingData) != sf::Socket::Done) {
+			instance.connectedToServer = false;
+			std::cerr << "Failed to connect to server." << std::endl;
+		}
+		else {
+			std::cout << "Successfully connected to server.\n";
+			incomingData >> instance.networkManagerIndex;
+			instance.connectedToServer = true;
+		}
+
+		instance.socket.setBlocking(false);
+	}
+
 	return instance;
 }
 
@@ -103,8 +151,8 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkM
 		break;
 	}
 	}
-	using namespace std::chrono;
-	uint64_t ms = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+	namespace c = std::chrono;
+	uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
 	std::cout << "Send: " << ms << " milliseconds since the epoch\n";
 	return socket.send(outgoingPacket);
 }

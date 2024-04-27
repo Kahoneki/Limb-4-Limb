@@ -7,7 +7,7 @@
 #include "ColourPallete.h"
 
 
-MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
+MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), accountManager(AccountManager::getInstance())
 {
 	std::cout << "Loading main menu\n";
 
@@ -27,6 +27,15 @@ MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneM
 	online = Button(800, 300, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onOnlineButtonClick, "ONLINE");
 	registration = Button(230, 500, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onRegistrationButtonClick, "REGISTER");
 	login = Button(800, 500, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onLoginButtonClick, "LOGIN");
+
+	username = TextBox(50, 950, 500, 40, INACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, "");
+	ranking = TextBox(50, 1000, 500, 40, INACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, "");
+
+	if (accountManager.getUsername() != "N/A") {
+		//User is signed in
+		username.text.setString(accountManager.getUsername());
+		ranking.text.setString(std::to_string(accountManager.getRanking()));
+	}
 
 
 	std::cout << "Loaded main menu\n";
@@ -86,5 +95,12 @@ void MainMenu::render()
 	window->draw(online);
 	window->draw(registration);
 	window->draw(login);
+
+	if (accountManager.getUsername() != "N/A") { //N/A is default value
+		//Player is signed in
+		window->draw(username);
+		window->draw(ranking);
+	}
+
 	endDraw();
 }

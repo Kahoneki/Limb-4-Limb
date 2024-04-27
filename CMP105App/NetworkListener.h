@@ -80,6 +80,7 @@ public:
         {
             sf::Uint64 uuid;
             incomingData >> uuid;
+            std::cout << "INCOMING UUID: " << uuid << '\n';
             parentReference.setUUID(uuid);
             break;
         }
@@ -103,7 +104,7 @@ public:
 
         switch (code)
         {
-        case PacketCode::UsernameAvailabilityStatus:
+        case PacketCode::LoginStatus:
         {
             sf::Int8 available;
             incomingData >> available;
@@ -111,7 +112,7 @@ public:
             break;
         }
 
-        case PacketCode::UUID:
+        case PacketCode::Ranking:
         {
             sf::Int32 ranking;
             incomingData >> ranking;

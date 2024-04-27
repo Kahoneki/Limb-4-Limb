@@ -108,7 +108,6 @@ void RegistrationScreen::update(float dt) {
 		else {
 			awaitServerResponses = false;
 			usernameAvailable = -1;
-			uuid = 0;
 			//Write UUID to file
 			statusBar.text.setString("Writing UUID...");
 			render();

@@ -30,18 +30,15 @@ public:
 	
 	template <typename ParentType>
 	NetworkListener<ParentType>* GenerateNetworkListener(ParentType& parentReference, int reservedSpot = -1) {
-		// Place entity in reserved spot if it's one of the reserved types (e.g. online player)
-		if (std::is_same<ParentType, OnlinePlayer>::value) {
-			NetworkListener<ParentType>* newListener{ new NetworkListener<ParentType>(parentReference) };
-			networkListeners[reservedSpot] = newListener;
-			return newListener;
-		}
-		else if (std::is_same<ParentType, RegistrationScreen>::value) {
+		// Place entity in reserved spot if reservedSpot param provided
+		if (reservedSpot != -1) {
+			//Reserved spot param provided
 			NetworkListener<ParentType>* newListener{ new NetworkListener<ParentType>(parentReference) };
 			networkListeners[reservedSpot] = newListener;
 			return newListener;
 		}
 		else {
+			//Reserved spot param not provided
 			NetworkListener<ParentType>* newListener{ new NetworkListener<ParentType>(parentReference) };
 			networkListeners.push_back(newListener);
 			return newListener;

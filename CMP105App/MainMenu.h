@@ -6,6 +6,7 @@
 #include <iostream>
 #include "TextBox.h"
 #include "Button.h"
+#include "AccountManager.h"
 #include <functional>
 
 class SceneManager; //Forward declaration
@@ -31,6 +32,11 @@ private:
 	
 	sf::Font font;
 	TextBox title;
+	
+	//Will only be displayed if player is logged in
+	TextBox username;
+	TextBox ranking;
+	AccountManager& accountManager;
 
 	Button local;
 	Button online;

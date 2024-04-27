@@ -38,6 +38,7 @@ LoginScreen::LoginScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : 
 	awaitServerResponses = false;
 	networkListenerIndex = NetworkManager::ReservedEntityIndexTable::LOGIN_SCREEN;
 	loginStatus = -1;
+	ranking = -1;
 
 	std::cout << "Loaded login screen\n";
 }
@@ -98,7 +99,8 @@ bool LoginScreen::checkClientSideUsernameValidity() {
 	std::ifstream uuidFile(filename);
 	std::string readData;
 	std::getline(uuidFile, readData);
-	uuid = std::stoi(readData);
+	uuid = std::stoull(readData);
+	std::cout << uuid << '\n';
 
 	return true;
 }
@@ -114,6 +116,7 @@ void LoginScreen::handleInput(float dt) {
 
 void LoginScreen::update(float dt) {
 	if (awaitServerResponses) {
+	//std::cout << static_cast<int>(loginStatus) << '\n';
 		if (loginStatus == -1) {
 			//Server hasn't responded yet
 			NetworkManager::getInstance().CheckForIncomingDataFromServer();
@@ -137,6 +140,8 @@ void LoginScreen::update(float dt) {
 			return;
 		}
 
+		statusBar.text.setString("Login successful!");
+
 		//Username has responded with account's ranking
 		awaitServerResponses = false;
 		AccountManager::getInstance().setValues(username, ranking);
@@ -159,5 +164,5 @@ void LoginScreen::render()
 	endDraw();
 }
 
-void LoginScreen::setLoginStatus(bool val) { loginStatus = val; }
+void LoginScreen::setLoginStatus(bool val) { std::cout << "VAL: " << val << '\n'; loginStatus = val; }
 void LoginScreen::setRanking(int val) { ranking = val; };
