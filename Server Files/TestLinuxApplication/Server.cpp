@@ -25,9 +25,11 @@ Server::Server(sf::IpAddress _ip, unsigned short _port) {
 
 void Server::CheckForIncomingConnectionRequests() {
 	//Create new socket and check if there's a connection request
+	//std::cout << "Size of vector before: " << connectedNetworkManagers.size() << '\n';
 	connectedNetworkManagers[connectedNetworkManagers.size()].setBlocking(false);
+	//std::cout << "Size of vector after: " << connectedNetworkManagers.size() << '\n';
 	if (listener.accept(connectedNetworkManagers[connectedNetworkManagers.size()-1]) == sf::Socket::Done) {
-
+		std::cout << "Size of vector in if: " << connectedNetworkManagers.size() << '\n';
 		//Check if socket is already connected by searching through all ips
 		int foundIndex{ -1 };
 		for (int i{ 0 }; i < connectedNetworkManagers.size(); ++i) {
@@ -38,7 +40,6 @@ void Server::CheckForIncomingConnectionRequests() {
 
 		std::cout << "Accepted socket at ip: " << connectedNetworkManagers[connectedNetworkManagers.size()-1].getRemoteAddress() << ", port: " << connectedNetworkManagers[connectedNetworkManagers.size()-1].getRemotePort() << '\n';
 
-		std::cout << "Size of vector: " << connectedNetworkManagers.size() << '\n';
 
 		//Send network manager index back to network manager
 		sf::Packet outgoingPacket;
@@ -49,6 +50,7 @@ void Server::CheckForIncomingConnectionRequests() {
 	else {
 		//No connection request, remove from map
 		connectedNetworkManagers.erase(connectedNetworkManagers.size() - 1);
+		//std::cout << "Size of vector after else: " << connectedNetworkManagers.size() << '\n';
 	}
 }
 

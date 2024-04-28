@@ -11,59 +11,63 @@ NetworkManager& NetworkManager::getInstance() {
 	sf::IpAddress address{ "84.8.144.190" };
 	unsigned short port{ 6900 };
 	
+	std::cout << "Calling getInstance\n";
+
 	static NetworkManager instance(address, port);
-	if (!instance.connectedToServer) {
-		instance.socket.setBlocking(true);
+	//std::cout << "Connected to server: " << instance.connectedToServer << '\n';
+	//if (!instance.connectedToServer) {
+	//	std::cout << "connected to server is false\n";
+	//	instance.socket.setBlocking(true);
 
-		//Connect to server
-		if (instance.socket.connect(instance.serverAddress, instance.serverPort) != sf::Socket::Done) {
-			std::cerr << "Failed to send connection request to server." << std::endl;
-		}
+	//	//Connect to server
+	//	if (instance.socket.connect(instance.serverAddress, instance.serverPort) != sf::Socket::Done) {
+	//		std::cerr << "Failed to send connection request to server." << std::endl;
+	//	}
 
-		//Get NetworkManager index from server
-		sf::Packet incomingData;
-		if (instance.socket.receive(incomingData) != sf::Socket::Done) {
-			instance.connectedToServer = false;
-			std::cerr << "Failed to connect to server." << std::endl;
-		}
-		else {
-			std::cout << "Successfully connected to server.\n";
-			incomingData >> instance.networkManagerIndex;
-			instance.connectedToServer = true;
-		}
+	//	//Get NetworkManager index from server
+	//	sf::Packet incomingData;
+	//	if (instance.socket.receive(incomingData) != sf::Socket::Done) {
+	//		instance.connectedToServer = false;
+	//		std::cerr << "Failed to connect to server." << std::endl;
+	//	}
+	//	else {
+	//		std::cout << "Successfully connected to server.\n";
+	//		incomingData >> instance.networkManagerIndex;
+	//		instance.connectedToServer = true;
+	//	}
 
-		instance.socket.setBlocking(false);
-	}
+	//	instance.socket.setBlocking(false);
+	//}
 	return instance;
 	
 }
 
 
 NetworkManager& NetworkManager::getInstance(sf::IpAddress _serverAddress, unsigned short _serverPort) {
-	static NetworkManager instance(_serverAddress, _serverPort);
+	static NetworkManager instance(_serverAddress, _serverPort);	
 
-	if (!instance.connectedToServer) {
-		instance.socket.setBlocking(true);
+	//if (!instance.connectedToServer) {
+	//	instance.socket.setBlocking(true);
 
-		//Connect to server
-		if (instance.socket.connect(instance.serverAddress, instance.serverPort) != sf::Socket::Done) {
-			std::cerr << "Failed to send connection request to server." << std::endl;
-		}
+	//	//Connect to server
+	//	if (instance.socket.connect(instance.serverAddress, instance.serverPort) != sf::Socket::Done) {
+	//		std::cerr << "Failed to send connection request to server." << std::endl;
+	//	}
 
-		//Get NetworkManager index from server
-		sf::Packet incomingData;
-		if (instance.socket.receive(incomingData) != sf::Socket::Done) {
-			instance.connectedToServer = false;
-			std::cerr << "Failed to connect to server." << std::endl;
-		}
-		else {
-			std::cout << "Successfully connected to server.\n";
-			incomingData >> instance.networkManagerIndex;
-			instance.connectedToServer = true;
-		}
+	//	//Get NetworkManager index from server
+	//	sf::Packet incomingData;
+	//	if (instance.socket.receive(incomingData) != sf::Socket::Done) {
+	//		instance.connectedToServer = false;
+	//		std::cerr << "Failed to connect to server." << std::endl;
+	//	}
+	//	else {
+	//		std::cout << "Successfully connected to server.\n";
+	//		incomingData >> instance.networkManagerIndex;
+	//		instance.connectedToServer = true;
+	//	}
 
-		instance.socket.setBlocking(false);
-	}
+	//	instance.socket.setBlocking(false);
+	//}
 
 	return instance;
 }
