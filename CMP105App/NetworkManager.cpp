@@ -8,7 +8,7 @@ class OnlinePlayer;
 
 
 NetworkManager& NetworkManager::getInstance() {
-	sf::IpAddress address{ "limbforlimb.duckdns.org" };
+	sf::IpAddress address{ "84.8.144.190" };
 	unsigned short port{ 6900 };
 	
 	static NetworkManager instance(address, port);
@@ -160,6 +160,7 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkM
 
 sf::Socket::Status NetworkManager::SendDataToNetworkManager(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
 	//This function can be used if there are only two NetworkManagers connected to the server (in which case it will just send data to the other NetworkManager).
+	std::cout << "NMI: " << networkManagerIndex << '\n';
 	int outgoingNetworkManagerIndex = 1 - networkManagerIndex; //0->1, 1->0
 	return SendDataToNetworkManager(outgoingNetworkManagerIndex, networkListenerIndex, packetCode, incomingPacket);
 }

@@ -38,6 +38,8 @@ void Server::CheckForIncomingConnectionRequests() {
 
 		std::cout << "Accepted socket at ip: " << connectedNetworkManagers[connectedNetworkManagers.size()-1].getRemoteAddress() << ", port: " << connectedNetworkManagers[connectedNetworkManagers.size()-1].getRemotePort() << '\n';
 
+		std::cout << "Size of vector: " << connectedNetworkManagers.size() << '\n';
+
 		//Send network manager index back to network manager
 		sf::Packet outgoingPacket;
 		int networkManagerIndex{ static_cast<int>(connectedNetworkManagers.size() - 1) };
@@ -393,11 +395,12 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 			int networkListenerIndex;
 			sf::Vector2f pos;
 			incomingData >> networkManagerIndex >> networkListenerIndex >> pos.x >> pos.y;
-			std::cout << pos.x << ' ' << pos.y << '\n';
 
 			//Add networkListenerIndex, packetCode, and data to outgoingData
 			sf::Packet outgoingData;
 			outgoingData << networkListenerIndex << packetCode << pos.x << pos.y;
+
+			std::cout << "NMI: " << networkManagerIndex << '\n' << "NLI: " << networkListenerIndex << '\n' << "IP: " << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << '\n';
 
 			//Validate data (make sure NetworkManager is trying to send data to an ip+port that is in the array and make sure NetworkManager isn't trying to send themselves data. possibly other checks also.)
 			if ((networkManagerIndex >= connectedNetworkManagers.size()) || (connectedNetworkManagers[networkManagerIndex].getRemoteAddress() == connectedNetworkManagers[i].getRemoteAddress())) {
