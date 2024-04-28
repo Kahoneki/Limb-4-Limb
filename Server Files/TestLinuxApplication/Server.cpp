@@ -37,6 +37,15 @@ void Server::CheckForIncomingConnectionRequests() {
 				foundIndex = i;
 			}
 		}
+		if (foundIndex != -1) {
+			std::cout << "Socket at ip: " << connectedNetworkManagers[foundIndex].getRemoteAddress() << " is already connected.\n";
+			//Send already pre-established network manager index back to network manager
+			sf::Packet outgoingPacket;
+			int networkManagerIndex{ static_cast<int>(foundIndex) };
+			outgoingPacket << networkManagerIndex;
+			connectedNetworkManagers[connectedNetworkManagers.size() - 1].send(outgoingPacket);
+			return;
+		}
 
 		std::cout << "Accepted socket at ip: " << connectedNetworkManagers[connectedNetworkManagers.size()-1].getRemoteAddress() << ", port: " << connectedNetworkManagers[connectedNetworkManagers.size()-1].getRemotePort() << '\n';
 

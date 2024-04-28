@@ -77,31 +77,35 @@ NetworkManager::NetworkManager(sf::IpAddress _serverAddress, unsigned short _ser
 	serverAddress = _serverAddress;
 	serverPort = _serverPort;
 
-	socket.setBlocking(true);
 
-	//Connect to server
-	if (socket.connect(serverAddress, serverPort) != sf::Socket::Done) {
-		std::cerr << "Failed to send connection request to server." << std::endl;
-	}
+	if (!connectedToServer) {
+		socket.setBlocking(true);
+
+		//Connect to server
+		if (socket.connect(serverAddress, serverPort) != sf::Socket::Done) {
+			std::cerr << "Failed to send connection request to server." << std::endl;
+		}
 	
-	//Get NetworkManager index from server
-	sf::Packet incomingData;
-	if (socket.receive(incomingData) != sf::Socket::Done) {
-		connectedToServer = false;
-		std::cerr << "Failed to connect to server." << std::endl;
-	}
-	else {
-		std::cout << "Successfully connected to server.\n";
-		incomingData >> networkManagerIndex;
-		connectedToServer = true;
+		//Get NetworkManager index from server
+		sf::Packet incomingData;
+		if (socket.receive(incomingData) != sf::Socket::Done) {
+			connectedToServer = false;
+			std::cerr << "Failed to connect to server." << std::endl;
+		}
+		else {
+			std::cout << "Successfully connected to server.\n";
+			incomingData >> networkManagerIndex;
+			connectedToServer = true;
+		}
+
+		socket.setBlocking(false);
+
+		//Initialise networkListeners to x null pointers where x is the number of entities that hold a reserved spot within the vector
+		for (int i{ 0 }; i < ReservedEntityIndexTable::NUM_RESERVED_ENTITIES; ++i) {
+			networkListeners.push_back(nullptr);
+		}
 	}
 
-	socket.setBlocking(false);
-
-	//Initialise networkListeners to x null pointers where x is the number of entities that hold a reserved spot within the vector
-	for (int i{ 0 }; i < ReservedEntityIndexTable::NUM_RESERVED_ENTITIES; ++i) {
-		networkListeners.push_back(nullptr);
-	}
 }
 
 
