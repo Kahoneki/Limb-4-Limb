@@ -78,7 +78,7 @@ NetworkManager::NetworkManager(sf::IpAddress _serverAddress, unsigned short _ser
 	serverPort = _serverPort;
 
 
-	if (!connectedToServer) {
+	//if (!connectedToServer) {
 		socket.setBlocking(true);
 
 		//Connect to server
@@ -104,7 +104,7 @@ NetworkManager::NetworkManager(sf::IpAddress _serverAddress, unsigned short _ser
 		for (int i{ 0 }; i < ReservedEntityIndexTable::NUM_RESERVED_ENTITIES; ++i) {
 			networkListeners.push_back(nullptr);
 		}
-	}
+	//}
 
 }
 

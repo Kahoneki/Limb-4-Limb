@@ -1,6 +1,7 @@
 #include "NetworkScene.h"
 #include "EndScreen.h"
 #include "OnlinePlayer.h"
+#include "NetworkManager.h"
 
 NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn) : sceneManager(sm)
 {
@@ -123,6 +124,10 @@ void NetworkScene::update(float dt) {
 
 	}
 	HealthBarUpdate();
+
+	if (TimeManager::getInstance(240).UpdateAndCheckNetworkTickStatus()) {
+		NetworkManager::getInstance().CheckForIncomingDataFromServer();
+	}
 }
 
 
