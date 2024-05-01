@@ -106,7 +106,9 @@ void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, i
 		sf::Vector2f pos;
 		incomingPacket >> pos.x >> pos.y;
 		outgoingPacket << pos.x << pos.y;
+		udpSocket.setBlocking(true);
 		udpSocket.send(outgoingPacket, serverAddress, serverPort);
+		udpSocket.setBlocking(true);
 		break;
 	}
 	}
