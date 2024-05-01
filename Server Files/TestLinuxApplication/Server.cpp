@@ -37,6 +37,10 @@ void Server::CheckForIncomingConnectionRequests() {
 		int networkManagerIndex{ static_cast<int>(connectedNetworkManagers.size() - 1) };
 		outgoingPacket << networkManagerIndex;
 		connectedNetworkManagers[connectedNetworkManagers.size() - 1].send(outgoingPacket);
+
+		sf::Packet p;
+		p << 5;
+		udpSocket.send(p, connectedNetworkManagers[networkManagerIndex].getRemoteAddress, connectedNetworkManagers[networkManagerIndex].getRemotePort());
 	}
 	else {
 		//No connection request, remove from map
@@ -405,6 +409,8 @@ void Server::CheckForIncomingUDPData() {
 	case PacketCode::PositionChange:
 	{
 
+		std::cout << "PacketCode: PositionChange\n";
+
 		//Separate packet, networkManagerIndex, and networkListenerIndex from incoming data
 		int networkManagerIndex;
 		int networkListenerIndex;
@@ -423,6 +429,7 @@ void Server::CheckForIncomingUDPData() {
 
 		//Send data to NetworkManager
 		udpSocket.send(outgoingData, connectedNetworkManagers[networkManagerIndex].getRemoteAddress(), connectedNetworkManagers[networkManagerIndex].getRemotePort());
+		std::cout << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << ' ' << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << '\n';
 
 		break;
 	}

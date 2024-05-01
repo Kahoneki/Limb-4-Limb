@@ -158,17 +158,17 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 		sf::Packet incomingData;
 
 		//Extract data and check if it's empty
-		if (tcpSocket.receive(incomingData) != sf::Socket::Done) { return; }
+		if (tcpSocket.receive(incomingData) == sf::Socket::Done) {
+			namespace c = std::chrono;
+			uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
+			std::cout << "TCP Receive: " << ms << " milliseconds since the epoch\n";
 
-		namespace c = std::chrono;
-		uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
-		std::cout << "TCP Receive: " << ms << " milliseconds since the epoch\n";
-
-		//Extract networkListenerIndex and send rest of packet to appropriate network listener
-		int networkListenerIndex;
-		incomingData >> networkListenerIndex;
-		if (networkListeners[networkListenerIndex] != nullptr) {
-			networkListeners[networkListenerIndex]->InterpretPacket(incomingData);
+			//Extract networkListenerIndex and send rest of packet to appropriate network listener
+			int networkListenerIndex;
+			incomingData >> networkListenerIndex;
+			if (networkListeners[networkListenerIndex] != nullptr) {
+				networkListeners[networkListenerIndex]->InterpretPacket(incomingData);
+			}
 		}
 	}
 	//----------------//
@@ -179,19 +179,17 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 		sf::Packet incomingData;
 
 		//Extract data and check if it's empty
-		if (udpSocket.receive(incomingData, serverAddress, serverPort) != sf::Socket::Done) { return; }
+		if (udpSocket.receive(incomingData, serverAddress, serverPort) == sf::Socket::Done) {		
+			namespace c = std::chrono;
+			uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
+			std::cout << "UDP Receive: " << ms << " milliseconds since the epoch\n";
 
-		if (tcpSocket.receive(incomingData) != sf::Socket::Done) { return; }
-
-		namespace c = std::chrono;
-		uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
-		std::cout << "UDP Receive: " << ms << " milliseconds since the epoch\n";
-
-		//Extract networkListenerIndex and send rest of packet to appropriate network listener
-		int networkListenerIndex;
-		incomingData >> networkListenerIndex;
-		if (networkListeners[networkListenerIndex] != nullptr) {
-			networkListeners[networkListenerIndex]->InterpretPacket(incomingData);
+			//Extract networkListenerIndex and send rest of packet to appropriate network listener
+			int networkListenerIndex;
+			incomingData >> networkListenerIndex;
+			if (networkListeners[networkListenerIndex] != nullptr) {
+				networkListeners[networkListenerIndex]->InterpretPacket(incomingData);
+			}
 		}
 	}
 	//----------------//
