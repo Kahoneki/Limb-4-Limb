@@ -47,6 +47,7 @@ NetworkManager::NetworkManager(sf::IpAddress _serverAddress, unsigned short _ser
 	}
 
 	tcpSocket.setBlocking(false);
+	udpSocket.setBlocking(false);
 
 	//Initialise networkListeners to x null pointers where x is the number of entities that hold a reserved spot within the vector
 	for (int i{ 0 }; i < ReservedEntityIndexTable::NUM_RESERVED_ENTITIES; ++i) {

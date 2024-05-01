@@ -217,12 +217,6 @@
   Note: including file:      C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\Input.h
   Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.h
   Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TimeManager.h
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\OnlinePlayer.h(27,18): warning C5056: operator '==': deprecated for array types
-  (compiling source file 'NetworkManager.cpp')
-  
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\OnlinePlayer.h(28,19): warning C5056: operator '==': deprecated for array types
-  (compiling source file 'NetworkManager.cpp')
-  
   Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\RegistrationScreen.h
   Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework/BaseLevel.h
   Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\AudioManager.h
@@ -249,9 +243,6 @@ C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App
   Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\GameState.h
   Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\InputBox.h
   Note: including file:     C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TextBox.h
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\InputBox.h(28,3): warning C4091: 'static ': ignored on left of 'InputBox::AcceptableCharacterPreset' when no variable is declared
-  (compiling source file 'NetworkManager.cpp')
-  
   Note: including file:    C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Button.h
   Note: including file:     C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\functional
   Note: including file:      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\unordered_map
@@ -259,9 +250,6 @@ C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App
   Note: including file:        C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\list
   Note: including file:        C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xbit_ops.h
   Note: including file:   C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LoginScreen.h
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h(24,3): warning C4091: 'static ': ignored on left of 'const NetworkManager::ReservedEntityIndexTable' when no variable is declared
-  (compiling source file 'NetworkManager.cpp')
-  
   Note: including file: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\chrono
   Note: including file:  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\__msvc_chrono.hpp
   Note: including file:   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\ratio
@@ -280,5 +268,17 @@ C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App
   Note: including file:    C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xcharconv_ryu.h
   Note: including file:     C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xcharconv_ryu_tables.h
   Note: including file:    C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xcharconv_tables.h
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\OnlinePlayer.h(27,18): warning C5056: operator '==': deprecated for array types
+  (compiling source file 'NetworkManager.cpp')
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\OnlinePlayer.h(28,19): warning C5056: operator '==': deprecated for array types
+  (compiling source file 'NetworkManager.cpp')
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\InputBox.h(28,3): warning C4091: 'static ': ignored on left of 'InputBox::AcceptableCharacterPreset' when no variable is declared
+  (compiling source file 'NetworkManager.cpp')
+  
+C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.h(24,3): warning C4091: 'static ': ignored on left of 'const NetworkManager::ReservedEntityIndexTable' when no variable is declared
+  (compiling source file 'NetworkManager.cpp')
+  
   Note: including file:  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\iomanip
   CMP105App.vcxproj -> C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\x64\Debug\CMP105App.exe

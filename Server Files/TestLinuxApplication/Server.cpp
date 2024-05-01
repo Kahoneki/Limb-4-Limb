@@ -37,10 +37,6 @@ void Server::CheckForIncomingConnectionRequests() {
 		int networkManagerIndex{ static_cast<int>(connectedNetworkManagers.size() - 1) };
 		outgoingPacket << networkManagerIndex;
 		connectedNetworkManagers[connectedNetworkManagers.size() - 1].send(outgoingPacket);
-
-		sf::Packet p;
-		p << 5;
-		udpSocket.send(p, connectedNetworkManagers[networkManagerIndex].getRemoteAddress, connectedNetworkManagers[networkManagerIndex].getRemotePort());
 	}
 	else {
 		//No connection request, remove from map
