@@ -22,7 +22,8 @@ int main()
     while (true) {
         if (timeManager.UpdateAndCheckNetworkTickStatus()) {
             server->CheckForIncomingConnectionRequests();
-            server->CheckForIncomingDataFromNetworkManager();
+            server->CheckForIncomingTCPData();
+            server->CheckForIncomingUDPData();
 	    }
     }
 

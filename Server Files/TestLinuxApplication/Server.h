@@ -6,7 +6,7 @@
 #include <map>
 
 //Server class for managing NetworkManagers
-class Server : public NetworkNode
+class Server
 {
 
 public:
@@ -14,12 +14,18 @@ public:
 
 	//----To be called every network tick//
 	void CheckForIncomingConnectionRequests();
-	void CheckForIncomingDataFromNetworkManager() override;
+	void CheckForIncomingTCPData();
+	void CheckForIncomingUDPData();
 	//----//
 
 private:
-	sf::TcpListener listener;
-	std::map<int, sf::TcpSocket> connectedNetworkManagers;
+	sf::IpAddress serverAddress;
+	unsigned short serverPort;
+
+	sf::TcpListener tcpListener;
+	sf::TcpSocket tcpSocket;
+	sf::UdpSocket udpSocket;
+	std::map<int, sf::TcpSocket> connectedNetworkManagers; //Using a map instead of a vector for the unique property that map[map.size()] will create a new item, this is to work around sockets not being copyable
 };
 
 

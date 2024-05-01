@@ -8,7 +8,7 @@
 
 class OnlinePlayer;
 
-class NetworkManager : public NetworkNode
+class NetworkManager
 {
 public:
 
@@ -45,10 +45,10 @@ public:
 		}
 	}
 
-	sf::Socket::Status SendDataToNetworkManager(int outgoingNetworkManagerIndex, int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket);
-	sf::Socket::Status SendDataToNetworkManager(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket);
-	sf::Socket::Status SendDataToServer(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket);
-	void CheckForIncomingDataFromServer() override;
+	void SendDataToNetworkManager(int outgoingNetworkManagerIndex, int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket);
+	void SendDataToNetworkManager(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket);
+	void SendDataToServer(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket);
+	void CheckForIncomingDataFromServer();
 	
 	int getNetworkManagerIndex();
 	bool getConnectedToServer();
@@ -58,6 +58,12 @@ public:
 
 private:
 	NetworkManager(sf::IpAddress _serverAddress, unsigned short _serverPort);
+
+	sf::TcpSocket tcpSocket;
+	sf::UdpSocket udpSocket;
+
+	sf::IpAddress serverAddress;
+	unsigned short serverPort;
 
 	bool connectedToServer;
 	int networkManagerIndex;

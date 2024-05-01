@@ -12,74 +12,31 @@ Server::Server(sf::IpAddress _ip, unsigned short _port) {
 	serverAddress = _ip;
 	serverPort = _port;
 
-	listener.setBlocking(true);
-	while (listener.listen(serverPort) != sf::Socket::Done) {}
-	/*if (listener.listen(serverPort) != sf::Socket::Done) { std::cerr << "Server failed to bind to port " << serverPort << std::endl; }
-	else { std::cout << "Server successfully bound to port " << serverPort << '\n'; }*/
+	//Assign tcp listener to port
+	tcpListener.setBlocking(true);
+	while (tcpListener.listen(serverPort) != sf::Socket::Done) {}
+	std::cout << "TCP successfully assigned to port.\n";
+	tcpListener.setBlocking(false);
 
-	std::cout << "Server successfully bound to port.\n";
+	//Bind udp socket to port
+	udpSocket.setBlocking(true);
+	while (udpSocket.bind(serverPort) != sf::Socket::Done) {}
+	std::cout << "UDP successfully bound to port.\n";
+	udpSocket.setBlocking(false);
 
-	listener.setBlocking(false);
 }
-
-
-//void Server::CheckForIncomingConnectionRequests() {
-//	//Create new socket and check if there's a connection request
-//	//std::cout << "Size of vector before: " << connectedNetworkManagers.size() << '\n';
-//	connectedNetworkManagers[connectedNetworkManagers.size()].setBlocking(false);
-//	//std::cout << "Size of vector after: " << connectedNetworkManagers.size() << '\n';
-//	if (listener.accept(connectedNetworkManagers[connectedNetworkManagers.size()-1]) == sf::Socket::Done) {
-//		std::cout << "Size of vector in if: " << connectedNetworkManagers.size() << '\n';
-//		//Check if socket is already connected by searching through all ips
-//		int foundIndex{ -1 };
-//		for (int i{ 0 }; i < connectedNetworkManagers.size(); ++i) {
-//			if (connectedNetworkManagers[i].getRemoteAddress() == connectedNetworkManagers[connectedNetworkManagers.size() - 1].getRemoteAddress()) {
-//				foundIndex = i;
-//			}
-//		}
-//		if (foundIndex != -1) {
-//			std::cout << "Socket at ip: " << connectedNetworkManagers[foundIndex].getRemoteAddress() << " is already connected.\n";
-//
-//			//Remove socket from end of map
-//			connectedNetworkManagers.erase(connectedNetworkManagers.size() - 1);
-//
-//			//Send already pre-established network manager index back to network manager
-//			sf::Packet outgoingPacket;
-//			int networkManagerIndex{ static_cast<int>(foundIndex) };
-//			outgoingPacket << networkManagerIndex;
-//			connectedNetworkManagers[foundIndex].send(outgoingPacket);
-//			return;
-//		}
-//
-//		std::cout << "Accepted socket at ip: " << connectedNetworkManagers[connectedNetworkManagers.size()-1].getRemoteAddress() << ", port: " << connectedNetworkManagers[connectedNetworkManagers.size()-1].getRemotePort() << '\n';
-//
-//
-//		//Send network manager index back to network manager
-//		sf::Packet outgoingPacket;
-//		int networkManagerIndex{ static_cast<int>(connectedNetworkManagers.size() - 1) };
-//		outgoingPacket << networkManagerIndex;
-//		connectedNetworkManagers[connectedNetworkManagers.size()-1].send(outgoingPacket);
-//	}
-//	else {
-//		//No connection request, remove from map
-//		connectedNetworkManagers.erase(connectedNetworkManagers.size() - 1);
-//		//std::cout << "Size of vector after else: " << connectedNetworkManagers.size() << '\n';
-//	}
-//}
-
 
 
 void Server::CheckForIncomingConnectionRequests() {
 
 	//Create new socket and check if there's a connection request
 	connectedNetworkManagers[connectedNetworkManagers.size()].setBlocking(false);
-	if (listener.accept(connectedNetworkManagers[connectedNetworkManagers.size() - 1]) == sf::Socket::Done) {
+	if (tcpListener.accept(connectedNetworkManagers[connectedNetworkManagers.size() - 1]) == sf::Socket::Done) {
 		//Send network manager index back to network manager
 		sf::Packet outgoingPacket;
 		int networkManagerIndex{ static_cast<int>(connectedNetworkManagers.size() - 1) };
 		outgoingPacket << networkManagerIndex;
 		connectedNetworkManagers[connectedNetworkManagers.size() - 1].send(outgoingPacket);
-	
 	}
 	else {
 		//No connection request, remove from map
@@ -88,12 +45,14 @@ void Server::CheckForIncomingConnectionRequests() {
 }
 
 
-void Server::CheckForIncomingDataFromNetworkManager() {
-	//Loop through all connected sockets to see if data is being received
+void Server::CheckForIncomingTCPData() {
+	//Loop through all connected tcp sockets to see if data is being received
 	for (int i{ 0 }; i < connectedNetworkManagers.size(); ++i) {
-		//std::cout << " i:" << i << ' ';
 		sf::Packet incomingData;
 		if (connectedNetworkManagers[i].receive(incomingData) != sf::Socket::Done) { continue; } //No data being received from this socket, continue to the next one
+
+		std::cout << "TCP Packet Received\n";
+
 		std::underlying_type_t<PacketCode> packetCode;
 		incomingData >> packetCode;
 		switch (packetCode)
@@ -103,7 +62,7 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 			std::cout << "PacketCode: RemoveNetworkManager\n";
 			std::cout << "NetworkManager (ip: " << connectedNetworkManagers[i].getRemoteAddress() << ", " << connectedNetworkManagers[i].getRemotePort() << ") disconnected from server.\n";
 			connectedNetworkManagers.erase(i);
-			break;
+			return;
 		}
 		case PacketCode::Username:
 		{
@@ -410,8 +369,7 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 
 			//Validate data (make sure NetworkManager is trying to send data to an ip+port that is in the array and make sure NetworkManager isn't trying to send themselves data)
 			if ((networkManagerIndex >= connectedNetworkManagers.size()) || (connectedNetworkManagers[networkManagerIndex].getRemoteAddress() == connectedNetworkManagers[i].getRemoteAddress())) {
-				std::cerr << "NetworkManager (ip: " << connectedNetworkManagers[i].getRemoteAddress() << ", " << connectedNetworkManagers[i].getRemotePort() << ") tried to send a message to an invalid NetworkManager (ip: "
-					<< connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << ", " << connectedNetworkManagers[networkManagerIndex].getRemotePort() << ")!" << std::endl;
+				std::cerr << "NetworkManager (ip: " << connectedNetworkManagers[i].getRemoteAddress() << ", " << connectedNetworkManagers[i].getRemotePort() << ") tried to send a message to an invalid NetworkManager!" << std::endl;
 				continue;
 			}
 
@@ -421,37 +379,57 @@ void Server::CheckForIncomingDataFromNetworkManager() {
 
 			break;
 		}
-		case PacketCode::PositionChange:
+		default:
 		{
-			//std::cout << "PacketCode: PositionChange\n";
+			std::cerr << "Packet code uninterpretable." << std::endl;
+			return;
+		}
+		}
+	}
+}
 
 
-			//Separate packet, networkManagerIndex, and networkListenerIndex from incoming data
-			int networkManagerIndex;
-			int networkListenerIndex;
-			sf::Vector2f pos;
-			incomingData >> networkManagerIndex >> networkListenerIndex >> pos.x >> pos.y;
+void Server::CheckForIncomingUDPData() {
+	sf::Packet incomingData;
+	sf::IpAddress incomingNetworkManagerAddress;
+	unsigned short incomingNetworkManagerPort;
 
-			//Add networkListenerIndex, packetCode, and data to outgoingData
-			sf::Packet outgoingData;
-			outgoingData << networkListenerIndex << packetCode << pos.x << pos.y;
+	if (udpSocket.receive(incomingData, incomingNetworkManagerAddress, incomingNetworkManagerPort) != sf::Socket::Done) { return; }
 
-			//std::cout << "NMI: " << networkManagerIndex << '\n' << "NLI: " << networkListenerIndex << '\n' << "IP: " << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << '\n';
+	std::cout << "UDP Packet Received\n";
 
-			//Validate data (make sure NetworkManager is trying to send data to an ip+port that is in the array and make sure NetworkManager isn't trying to send themselves data. possibly other checks also.)
-			if ((networkManagerIndex >= connectedNetworkManagers.size()) || (connectedNetworkManagers[networkManagerIndex].getRemoteAddress() == connectedNetworkManagers[i].getRemoteAddress())) {
-				std::cout << "\nNMI: " << networkManagerIndex << " Size: " << connectedNetworkManagers.size() << "\n\n";
-				std::cerr << "NetworkManager (ip: " << connectedNetworkManagers[i].getRemoteAddress() << ", " << connectedNetworkManagers[i].getRemotePort() << ") tried to send a message to an invalid NetworkManager (ip: "
-					<< connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << ", " << connectedNetworkManagers[networkManagerIndex].getRemotePort() << ")!" << std::endl;
-				continue;
-			}
+	std::underlying_type_t<PacketCode> packetCode;
+	incomingData >> packetCode;
+	switch (packetCode)
+	{
+	case PacketCode::PositionChange:
+	{
 
-			//Send data to NetworkManager
-			//std::cout << "\n\n( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << "\n\n";
-			connectedNetworkManagers[networkManagerIndex].send(outgoingData);
+		//Separate packet, networkManagerIndex, and networkListenerIndex from incoming data
+		int networkManagerIndex;
+		int networkListenerIndex;
+		sf::Vector2f pos;
+		incomingData >> networkManagerIndex >> networkListenerIndex >> pos.x >> pos.y;
 
+		//Add networkListenerIndex, packetCode, and data to outgoingData
+		sf::Packet outgoingData;
+		outgoingData << networkListenerIndex << packetCode << pos.x << pos.y;
+
+		//Validate data (make sure NetworkManager is trying to send data to an ip+port that is in the array and make sure NetworkManager isn't trying to send themselves data. possibly other checks also.)
+		if ((networkManagerIndex >= connectedNetworkManagers.size()) || (connectedNetworkManagers[networkManagerIndex].getRemoteAddress() == incomingNetworkManagerAddress)) {
+			std::cerr << "NetworkManager (ip: " << incomingNetworkManagerAddress << ", " << incomingNetworkManagerPort << ") tried to send a message to an invalid NetworkManager!" << std::endl;
 			break;
 		}
-		}
+
+		//Send data to NetworkManager
+		udpSocket.send(outgoingData, connectedNetworkManagers[networkManagerIndex].getRemoteAddress(), connectedNetworkManagers[networkManagerIndex].getRemotePort());
+
+		break;
+	}
+	default:
+	{
+		std::cerr << "Packet code uninterpretable." << std::endl;
+		return;
+	}
 	}
 }

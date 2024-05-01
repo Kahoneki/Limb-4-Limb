@@ -10,34 +10,8 @@ class OnlinePlayer;
 NetworkManager& NetworkManager::getInstance() {
 	sf::IpAddress address{ "84.8.144.190" };
 	unsigned short port{ 6900 };
-	
-	std::cout << "Calling getInstance\n";
 
 	static NetworkManager instance(address, port);
-	//std::cout << "Connected to server: " << instance.connectedToServer << '\n';
-	//if (!instance.connectedToServer) {
-	//	std::cout << "connected to server is false\n";
-	//	instance.socket.setBlocking(true);
-
-	//	//Connect to server
-	//	if (instance.socket.connect(instance.serverAddress, instance.serverPort) != sf::Socket::Done) {
-	//		std::cerr << "Failed to send connection request to server." << std::endl;
-	//	}
-
-	//	//Get NetworkManager index from server
-	//	sf::Packet incomingData;
-	//	if (instance.socket.receive(incomingData) != sf::Socket::Done) {
-	//		instance.connectedToServer = false;
-	//		std::cerr << "Failed to connect to server." << std::endl;
-	//	}
-	//	else {
-	//		std::cout << "Successfully connected to server.\n";
-	//		incomingData >> instance.networkManagerIndex;
-	//		instance.connectedToServer = true;
-	//	}
-
-	//	instance.socket.setBlocking(false);
-	//}
 	return instance;
 	
 }
@@ -45,30 +19,6 @@ NetworkManager& NetworkManager::getInstance() {
 
 NetworkManager& NetworkManager::getInstance(sf::IpAddress _serverAddress, unsigned short _serverPort) {
 	static NetworkManager instance(_serverAddress, _serverPort);	
-
-	//if (!instance.connectedToServer) {
-	//	instance.socket.setBlocking(true);
-
-	//	//Connect to server
-	//	if (instance.socket.connect(instance.serverAddress, instance.serverPort) != sf::Socket::Done) {
-	//		std::cerr << "Failed to send connection request to server." << std::endl;
-	//	}
-
-	//	//Get NetworkManager index from server
-	//	sf::Packet incomingData;
-	//	if (instance.socket.receive(incomingData) != sf::Socket::Done) {
-	//		instance.connectedToServer = false;
-	//		std::cerr << "Failed to connect to server." << std::endl;
-	//	}
-	//	else {
-	//		std::cout << "Successfully connected to server.\n";
-	//		incomingData >> instance.networkManagerIndex;
-	//		instance.connectedToServer = true;
-	//	}
-
-	//	instance.socket.setBlocking(false);
-	//}
-
 	return instance;
 }
 
@@ -78,43 +28,40 @@ NetworkManager::NetworkManager(sf::IpAddress _serverAddress, unsigned short _ser
 	serverPort = _serverPort;
 
 
-	//if (!connectedToServer) {
-		socket.setBlocking(true);
-
-		//Connect to server
-		if (socket.connect(serverAddress, serverPort) != sf::Socket::Done) {
-			std::cerr << "Failed to send connection request to server." << std::endl;
-		}
+	//Connect to server
+	tcpSocket.setBlocking(true);
+	if (tcpSocket.connect(serverAddress, serverPort) != sf::Socket::Done) {
+		std::cerr << "Failed to send connection request to server." << std::endl;
+	}
 	
-		//Get NetworkManager index from server
-		sf::Packet incomingData;
-		if (socket.receive(incomingData) != sf::Socket::Done) {
-			connectedToServer = false;
-			std::cerr << "Failed to connect to server." << std::endl;
-		}
-		else {
-			std::cout << "Successfully connected to server.\n";
-			incomingData >> networkManagerIndex;
-			connectedToServer = true;
-		}
+	//Get NetworkManager index from server
+	sf::Packet incomingData;
+	if (tcpSocket.receive(incomingData) != sf::Socket::Done) {
+		connectedToServer = false;
+		std::cerr << "Failed to connect to server." << std::endl;
+	}
+	else {
+		std::cout << "Successfully connected to server.\n";
+		incomingData >> networkManagerIndex;
+		connectedToServer = true;
+	}
 
-		socket.setBlocking(false);
+	tcpSocket.setBlocking(false);
 
-		//Initialise networkListeners to x null pointers where x is the number of entities that hold a reserved spot within the vector
-		for (int i{ 0 }; i < ReservedEntityIndexTable::NUM_RESERVED_ENTITIES; ++i) {
-			networkListeners.push_back(nullptr);
-		}
-	//}
+	//Initialise networkListeners to x null pointers where x is the number of entities that hold a reserved spot within the vector
+	for (int i{ 0 }; i < ReservedEntityIndexTable::NUM_RESERVED_ENTITIES; ++i) {
+		networkListeners.push_back(nullptr);
+	}
 
 }
 
 
 NetworkManager::~NetworkManager() {
 	//Send message to server to tell it to remove NetworkManager from vector
-	socket.setBlocking(true);
+	tcpSocket.setBlocking(true);
 	sf::Packet outgoingPacket;
 	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(PacketCode::RemoveNetworkManager);
-	if (socket.send(outgoingPacket) != sf::Socket::Done) {
+	if (tcpSocket.send(outgoingPacket) != sf::Socket::Done) {
 		std::cerr << "Failed to disconnect from server." << std::endl;
 	}
 	else {
@@ -125,7 +72,7 @@ NetworkManager::~NetworkManager() {
 
 
 
-sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
+void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
 	//Combine Packet code, NetworkManager index, and NetworkListener index into the data packet so it can be sent to the server
 	sf::Packet outgoingPacket;
 	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(packetCode) << outgoingNetworkManagerIndex << networkListenerIndex;
@@ -139,6 +86,7 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkM
 		bool activeLimbs[4];
 		incomingPacket >> pos.x >> pos.y >> health >> activeLimbs[0] >> activeLimbs[1] >> activeLimbs[2] >> activeLimbs[3];
 		outgoingPacket << pos.x << pos.y << health << activeLimbs[0] << activeLimbs[1] << activeLimbs[2] << activeLimbs[3];
+		tcpSocket.send(outgoingPacket);
 		break;
 	}
 
@@ -148,6 +96,7 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkM
 		int key;
 		incomingPacket >> pressed >> key;
 		outgoingPacket << pressed << key;
+		tcpSocket.send(outgoingPacket);
 		break;
 	}
 
@@ -156,25 +105,24 @@ sf::Socket::Status NetworkManager::SendDataToNetworkManager(int outgoingNetworkM
 		sf::Vector2f pos;
 		incomingPacket >> pos.x >> pos.y;
 		outgoingPacket << pos.x << pos.y;
+		udpSocket.send(outgoingPacket, serverAddress, serverPort);
 		break;
 	}
 	}
 	namespace c = std::chrono;
 	uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
 	std::cout << "Send: " << ms << " milliseconds since the epoch\n";
-	return socket.send(outgoingPacket);
 }
 
 
-sf::Socket::Status NetworkManager::SendDataToNetworkManager(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
+void NetworkManager::SendDataToNetworkManager(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
 	//This function can be used if there are only two NetworkManagers connected to the server (in which case it will just send data to the other NetworkManager).
-	std::cout << "NMI: " << networkManagerIndex << '\n';
 	int outgoingNetworkManagerIndex = 1 - networkManagerIndex; //0->1, 1->0
-	return SendDataToNetworkManager(outgoingNetworkManagerIndex, networkListenerIndex, packetCode, incomingPacket);
+	SendDataToNetworkManager(outgoingNetworkManagerIndex, networkListenerIndex, packetCode, incomingPacket);
 }
 
 
-sf::Socket::Status NetworkManager::SendDataToServer(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
+void NetworkManager::SendDataToServer(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
 	//This function is to be used if the network manager is sending data to the server, but not necessarily to be passed on to another network manager
 	sf::Packet outgoingPacket;
 	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(packetCode) << networkListenerIndex;
@@ -185,6 +133,7 @@ sf::Socket::Status NetworkManager::SendDataToServer(int networkListenerIndex, Pa
 		std::string username;
 		incomingPacket >> username;
 		outgoingPacket << username;
+		tcpSocket.send(outgoingPacket);
 		break;
 	}
 	case PacketCode::Login:
@@ -193,12 +142,12 @@ sf::Socket::Status NetworkManager::SendDataToServer(int networkListenerIndex, Pa
 		sf::Uint64 uuid;
 		incomingPacket >> username >> uuid;
 		outgoingPacket << username << uuid;
+		tcpSocket.send(outgoingPacket);
 	}
 	}
-	using namespace std::chrono;
-	uint64_t ms = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+	namespace c = std::chrono;
+	uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
 	std::cout << "Send: " << ms << " milliseconds since the epoch\n";
-	return socket.send(outgoingPacket);
 }
 
 
@@ -207,10 +156,11 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 	sf::Packet incomingData;
 
 	//Extract data and check if it's empty
-	if (socket.receive(incomingData) != sf::Socket::Done) { return; }
+	if (tcpSocket.receive(incomingData) != sf::Socket::Done) { return; }
+	if (udpSocket.receive(incomingData, serverAddress, serverPort) != sf::Socket::Done) { return; }
 
-	using namespace std::chrono;
-	uint64_t ms = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+	namespace c = std::chrono;
+	uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
 	std::cout << "Receive: " << ms << " milliseconds since the epoch\n";
 
 	//Extract networkListenerIndex and send rest of packet to appropriate network listener
@@ -232,7 +182,7 @@ void NetworkManager::sendNums() {
 		sf::Packet p;
 		sf::Packet outgoingPacket;
 		outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(PacketCode::Nums) << 1 << i;
-		socket.send(outgoingPacket);
+		udpSocket.send(outgoingPacket, serverAddress, serverPort);
 		std::cout << i << '\n';
 	}
 }
