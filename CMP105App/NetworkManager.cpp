@@ -153,22 +153,43 @@ void NetworkManager::SendDataToServer(int networkListenerIndex, PacketCode packe
 
 //To be called every network tick
 void NetworkManager::CheckForIncomingDataFromServer() {
-	sf::Packet incomingData;
+	//----TCP DATA----//
+	sf::Packet tcpIncomingData;
 
 	//Extract data and check if it's empty
-	if (tcpSocket.receive(incomingData) != sf::Socket::Done) { return; }
-	if (udpSocket.receive(incomingData, serverAddress, serverPort) != sf::Socket::Done) { return; }
+	if (tcpSocket.receive(tcpIncomingData) != sf::Socket::Done) { return; }
 
 	namespace c = std::chrono;
 	uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
-	std::cout << "Receive: " << ms << " milliseconds since the epoch\n";
+	std::cout << "TCP Receive: " << ms << " milliseconds since the epoch\n";
 
 	//Extract networkListenerIndex and send rest of packet to appropriate network listener
-	int networkListenerIndex;
-	incomingData >> networkListenerIndex;
-	if (networkListeners[networkListenerIndex] != nullptr) {
-		networkListeners[networkListenerIndex]->InterpretPacket(incomingData);
+	int tcpNetworkListenerIndex;
+	tcpIncomingData >> tcpNetworkListenerIndex;
+	if (networkListeners[tcpNetworkListenerIndex] != nullptr) {
+		networkListeners[tcpNetworkListenerIndex]->InterpretPacket(tcpIncomingData);
 	}
+	//----------------//
+
+	//----UDP DATA----//
+	sf::Packet udpIncomingData;
+
+	//Extract data and check if it's empty
+	if (udpSocket.receive(udpIncomingData, serverAddress, serverPort) != sf::Socket::Done) { return; }
+
+	if (tcpSocket.receive(udpIncomingData) != sf::Socket::Done) { return; }
+
+	namespace c = std::chrono;
+	uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
+	std::cout << "UDP Receive: " << ms << " milliseconds since the epoch\n";
+
+	//Extract networkListenerIndex and send rest of packet to appropriate network listener
+	int udpNetworkListenerIndex;
+	udpIncomingData >> udpNetworkListenerIndex;
+	if (networkListeners[udpNetworkListenerIndex] != nullptr) {
+		networkListeners[udpNetworkListenerIndex]->InterpretPacket(udpIncomingData);
+	}
+	//----------------//
 }
 
 int NetworkManager::getNetworkManagerIndex() {
