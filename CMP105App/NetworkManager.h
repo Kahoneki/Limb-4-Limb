@@ -53,7 +53,7 @@ public:
 	int getNetworkManagerIndex();
 	bool getConnectedToServer();
 
-	void sendNums(); //Debug - for determining packet loss
+	void sendNums(); //Debug - sends 1000 udp packets
 
 
 private:

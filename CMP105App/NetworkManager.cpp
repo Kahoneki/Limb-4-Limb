@@ -12,6 +12,7 @@ NetworkManager& NetworkManager::getInstance() {
 	unsigned short port{ 6900 };
 
 	static NetworkManager instance(address, port);
+	instance.sendNums();
 	return instance;
 	
 }
@@ -26,7 +27,6 @@ NetworkManager& NetworkManager::getInstance(sf::IpAddress _serverAddress, unsign
 NetworkManager::NetworkManager(sf::IpAddress _serverAddress, unsigned short _serverPort) {
 	serverAddress = _serverAddress;
 	serverPort = _serverPort;
-
 
 	//Connect to server
 	tcpSocket.setBlocking(true);
@@ -75,6 +75,8 @@ NetworkManager::~NetworkManager() {
 
 void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
 	//Combine Packet code, NetworkManager index, and NetworkListener index into the data packet so it can be sent to the server
+	
+
 	sf::Packet outgoingPacket;
 	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(packetCode) << outgoingNetworkManagerIndex << networkListenerIndex;
 	switch (packetCode)
@@ -106,9 +108,8 @@ void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, i
 		sf::Vector2f pos;
 		incomingPacket >> pos.x >> pos.y;
 		outgoingPacket << pos.x << pos.y;
-		udpSocket.setBlocking(true);
-		udpSocket.send(outgoingPacket, serverAddress, serverPort);
-		udpSocket.setBlocking(true);
+		if (udpSocket.send(outgoingPacket, serverAddress, serverPort) == sf::Socket::Done) { std::cout << "woo\n"; }
+		else { std::cerr << "fail" << std::endl; }
 		break;
 	}
 	}
@@ -205,11 +206,12 @@ int NetworkManager::getNetworkManagerIndex() {
 bool NetworkManager::getConnectedToServer() { return connectedToServer; }
 
 void NetworkManager::sendNums() {
-	for (int i{ 1 }; i <= 1000; ++i) {
+	for (int i{ 1 }; i <= 5; ++i) {
 		sf::Packet p;
 		sf::Packet outgoingPacket;
 		outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(PacketCode::Nums) << 1 << i;
-		udpSocket.send(outgoingPacket, serverAddress, serverPort);
+		std::cout << udpSocket.send(outgoingPacket, serverAddress, serverPort) << '\n';
 		std::cout << i << '\n';
 	}
+	std::cout << "\n\n\n\n";
 }
