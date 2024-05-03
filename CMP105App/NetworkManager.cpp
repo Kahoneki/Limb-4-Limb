@@ -12,7 +12,6 @@ NetworkManager& NetworkManager::getInstance() {
 	unsigned short port{ 6900 };
 
 	static NetworkManager instance(address, port);
-	//std::cout << "INSTANCE SEND NUMS\n"; instance.sendNums(); std::cout << "END\n";
 	return instance;
 	
 }
@@ -186,19 +185,24 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 	{
 		sf::Packet incomingData;
 
-		//Extract data and check if it's empty
-		sf::IpAddress tempAddress;
-		unsigned short tempPort;
-		if (udpSocket.receive(incomingData, tempAddress, tempPort) == sf::Socket::Done) {		
-			namespace c = std::chrono;
-			uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
-			std::cout << "UDP Receive: " << ms << " milliseconds since the epoch\n";
+		//Extract data and check if it's coming from the server (not another network manager)
+		sf::IpAddress incomingAddress;
+		unsigned short incomingPort;
+		if (udpSocket.receive(incomingData, incomingAddress, incomingPort) == sf::Socket::Done) {
+			if (incomingAddress == serverAddress && incomingPort == serverPort) {
+				namespace c = std::chrono;
+				uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
+				std::cout << "UDP Receive: " << ms << " milliseconds since the epoch\n";
 
-			//Extract networkListenerIndex and send rest of packet to appropriate network listener
-			int networkListenerIndex;
-			incomingData >> networkListenerIndex;
-			if (networkListeners[networkListenerIndex] != nullptr) {
-				networkListeners[networkListenerIndex]->InterpretPacket(incomingData);
+				//Extract networkListenerIndex and send rest of packet to appropriate network listener
+				int networkListenerIndex;
+				incomingData >> networkListenerIndex;
+				if (networkListeners[networkListenerIndex] != nullptr) {
+					networkListeners[networkListenerIndex]->InterpretPacket(incomingData);
+				}
+			}
+			else {
+				std::cerr << "NetworkManager (" << incomingAddress << ", " << incomingPort << ") is attempting to send data to this NetworkManager" << std::endl;
 			}
 		}
 	}
