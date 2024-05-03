@@ -11,6 +11,8 @@
 //Forward declarations
 class SceneManager;
 class OnlinePlayer;
+class NetworkManager;
+class TimeManager;
 
 class NetworkScene : public BaseLevel
 {
@@ -39,6 +41,8 @@ private:
 	Platform platforms[4];
 
 	AudioManager audioManager;
+	NetworkManager& networkManager;
+	TimeManager& timeManager;
 
 	//To stop players from falling through platforms at startup - ensure the scene is fully loaded before updating players
 	float timeUntilPlayersShouldStartUpdate; //In seconds

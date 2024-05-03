@@ -3,7 +3,7 @@
 #include "OnlinePlayer.h"
 #include "NetworkManager.h"
 
-NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn) : sceneManager(sm)
+NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn) : sceneManager(sm), networkManager(NetworkManager::getInstance()), timeManager(TimeManager::getInstance(240))
 {
 	std::cout << "Loading test scene\n";
 
@@ -125,8 +125,8 @@ void NetworkScene::update(float dt) {
 	}
 	HealthBarUpdate();
 
-	if (TimeManager::getInstance(240).UpdateAndCheckNetworkTickStatus()) {
-		NetworkManager::getInstance().CheckForIncomingDataFromServer();
+	if (timeManager.UpdateAndCheckNetworkTickStatus()) {
+		networkManager.CheckForIncomingDataFromServer();
 	}
 }
 

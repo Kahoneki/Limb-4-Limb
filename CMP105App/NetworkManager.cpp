@@ -12,7 +12,7 @@ NetworkManager& NetworkManager::getInstance() {
 	unsigned short port{ 6900 };
 
 	static NetworkManager instance(address, port);
-	instance.sendNums();
+	//std::cout << "INSTANCE SEND NUMS\n"; instance.sendNums(); std::cout << "END\n";
 	return instance;
 	
 }
@@ -76,6 +76,8 @@ NetworkManager::~NetworkManager() {
 void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
 	//Combine Packet code, NetworkManager index, and NetworkListener index into the data packet so it can be sent to the server
 	
+	sf::UdpSocket udpSocket;
+	udpSocket.setBlocking(false);
 
 	sf::Packet outgoingPacket;
 	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(packetCode) << outgoingNetworkManagerIndex << networkListenerIndex;
@@ -110,9 +112,11 @@ void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, i
 		outgoingPacket << pos.x << pos.y;
 		if (udpSocket.send(outgoingPacket, serverAddress, serverPort) == sf::Socket::Done) { std::cout << "woo\n"; }
 		else { std::cerr << "fail" << std::endl; }
+
 		break;
 	}
 	}
+	outgoingPacket.clear();
 	namespace c = std::chrono;
 	uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
 	std::cout << "Send: " << ms << " milliseconds since the epoch\n";
@@ -183,7 +187,9 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 		sf::Packet incomingData;
 
 		//Extract data and check if it's empty
-		if (udpSocket.receive(incomingData, serverAddress, serverPort) == sf::Socket::Done) {		
+		sf::IpAddress tempAddress;
+		unsigned short tempPort;
+		if (udpSocket.receive(incomingData, tempAddress, tempPort) == sf::Socket::Done) {		
 			namespace c = std::chrono;
 			uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
 			std::cout << "UDP Receive: " << ms << " milliseconds since the epoch\n";

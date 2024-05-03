@@ -5,14 +5,14 @@
         {
             "primary-output": "x64\\Debug\\SceneManager.h.obj",
             "outputs": [
-                "C:\\Users\\shiny\\Desktop\\Code\\Github Repository Clones\\CMP105-Individual\\CMP105App\\x64\\Debug\\vc143.pdb",
+                "C:\\Users\\shiny\\Desktop\\Code\\CMP105-Individual\\CMP105App\\x64\\Debug\\vc143.pdb",
                 "x64\\Debug\\",
-                "C:\\Users\\shiny\\Desktop\\Code\\Github Repository Clones\\CMP105-Individual\\CMP105App\\x64\\Debug\\SceneManager.h.ifc"
+                "C:\\Users\\shiny\\Desktop\\Code\\CMP105-Individual\\CMP105App\\x64\\Debug\\SceneManager.h.ifc"
             ],
             "provides": [
                 {
                     "logical-name": "SceneManager.h",
-                    "source-path": "c:\\users\\shiny\\desktop\\code\\github repository clones\\cmp105-individual\\cmp105app\\scenemanager.h",
+                    "source-path": "c:\\users\\shiny\\desktop\\code\\cmp105-individual\\cmp105app\\scenemanager.h",
                     "lookup-method": "absolute"
                 }
             ],
