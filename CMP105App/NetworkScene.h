@@ -18,7 +18,7 @@ class NetworkScene : public BaseLevel
 {
 public:
 
-	NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager, int pn);
+	NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager, int pn, int oppNMI);
 	~NetworkScene();
 
 	void handleInput(float dt) override;
@@ -49,6 +49,8 @@ private:
 	float playerStartUpdateTimeCountdown;
 
 	int playerNum;
+
+	int opponentNetworkManagerIndex;
 
 	void InitialiseScene();
 	void InitialisePlayers();

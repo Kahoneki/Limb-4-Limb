@@ -11,7 +11,7 @@
 
 //Forward declarations
 class SceneManager;
-
+class NetworkManager;
 template<typename ParentType>
 class NetworkListener;
 
@@ -26,17 +26,14 @@ public:
 	void update(float dt) override;
 	void render() override;
 
-	//Will be called by network listener
-	void setLoginStatus(bool val);
-	void setRanking(int ranking);
+	friend class NetworkListener<LoginScreen>;
 
 private:
 	SceneManager& sceneManager;
+	NetworkManager& networkManager;
 
 	sf::Font font;
 	sf::RectangleShape background;
-
-	bool mousePressedLastFrame;
 
 	InputBox usernameBox;
 

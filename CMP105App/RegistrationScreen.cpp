@@ -6,7 +6,7 @@
 #include "AccountManager.h"
 #include <fstream>
 
-RegistrationScreen::RegistrationScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
+RegistrationScreen::RegistrationScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), networkManager(NetworkManager::getInstance(false))
 {
 	std::cout << "Loading registration screen\n";
 
@@ -18,8 +18,6 @@ RegistrationScreen::RegistrationScreen(sf::RenderWindow* hwnd, Input* in, SceneM
 	background.setFillColor(BACKGROUNDCOLOUR);
 
 	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
-	
-	mousePressedLastFrame = false;
 	
 	minUsernameLength = 4;
 	maxUsernameLength = 20;
@@ -53,16 +51,26 @@ void RegistrationScreen::InitialiseCallbacks() {
 		if (!awaitServerResponses) {
 			displayStatusBar = true;
 			if (checkClientSideUsernameValidity()) {
-				awaitServerResponses = true;
-				statusBar.text.setString("Connecting to server...\n");
-				render();
-				NetworkManager& networkManager{ NetworkManager::getInstance() };
-				networkListener = networkManager.GenerateNetworkListener<RegistrationScreen>(*this, networkListenerIndex);
 
-				sf::Packet outgoingPacket;
-				std::string username{ usernameBox.getTypedText() };
-				outgoingPacket << username;
-				networkManager.SendDataToServer(networkListenerIndex, PacketCode::Username, outgoingPacket);
+				if (!networkManager.getConnectedToServer()) {
+					//Attempt to connect to server
+					statusBar.text.setString("Connecting to server...\n");
+					render();
+					if (!networkManager.AttemptToConnectToServer()) {
+						//Connection failed
+						statusBar.text.setString("Failed to connect to server");
+						awaitServerResponses = false;
+					}
+				}
+
+				if (networkManager.getConnectedToServer()) {
+					networkListener = networkManager.GenerateNetworkListener<RegistrationScreen>(*this, networkListenerIndex);
+					sf::Packet outgoingPacket;
+					std::string username{ usernameBox.getTypedText() };
+					outgoingPacket << username;
+					networkManager.SendDataToServer(networkListenerIndex, PacketCode::UsernameRegister, outgoingPacket);
+					awaitServerResponses = true;
+				}
 			}
 		}
 	};
@@ -87,10 +95,10 @@ void RegistrationScreen::update(float dt) {
 	if (awaitServerResponses) {
 		if (usernameAvailable == -1) {
 			//Server hasn't responded yet
-			NetworkManager::getInstance().CheckForIncomingDataFromServer();
+			networkManager.CheckForIncomingDataFromServer();
 			return;
 		}
-		else if (usernameAvailable == 0) {
+		else if (usernameAvailable == 1) {
 			statusBar.text.setString("Username not available.");
 			awaitServerResponses = false;
 			usernameAvailable = -1;
@@ -102,7 +110,7 @@ void RegistrationScreen::update(float dt) {
 
 		if (uuid == 0) {
 			//Server hasn't responded yet
-			NetworkManager::getInstance().CheckForIncomingDataFromServer();
+			networkManager.CheckForIncomingDataFromServer();
 			return;
 		}
 
@@ -163,8 +171,3 @@ bool RegistrationScreen::checkClientSideUsernameValidity() {
 	}
 	return true;
 }
-
-
-void RegistrationScreen::setUsernameAvailable(bool val) { usernameAvailable = val; }
-
-void RegistrationScreen::setUUID(sf::Uint64 val) { uuid = val; }

@@ -1,7 +1,6 @@
 #ifndef NETWORKMANAGER_H
 #define NETWORKMANAGER_H
 
-#include "NetworkNode.h"
 #include "NetworkListener.h"
 #include "SFML/Network.hpp"
 #include <vector>
@@ -14,19 +13,26 @@ public:
 
 
 	//Entities that hold a reserved spot in the networkListeners vector, this is to ensure that, e.g.:, players 1 and 2 are always in indices 0 and 1 and in the correct order
-	static const enum ReservedEntityIndexTable
+	enum ReservedEntityIndexTable
 	{
 		PLAYER_1,
 		PLAYER_2,
+		
 		REGISTRATION_SCREEN,
 		LOGIN_SCREEN,
+		SEND_INVITE_SCREEN,
+
+		MATCH_INVITATION_INTERRUPT, //Add a network listener of this type to a class if it should receive match invitations
+
 		NUM_RESERVED_ENTITIES //Size of this enum - must be last
 	};
 
 
-	static NetworkManager& getInstance();
-	static NetworkManager& getInstance(sf::IpAddress _serverAddress, unsigned short _serverPort);
+	static NetworkManager& getInstance(bool attemptConnection);
+	static NetworkManager& getInstance(bool attemptConnection, sf::IpAddress _serverAddress, unsigned short _serverPort);
 	~NetworkManager();
+	bool AttemptToConnectToServer(); //Returns whether connection attempt was successful or not
+	bool AttemptToDisconnectFromServer(); //Returns whether disconnection attempt was successful or not
 	
 	template <typename ParentType>
 	NetworkListener<ParentType>* GenerateNetworkListener(ParentType& parentReference, int reservedSpot = -1) {

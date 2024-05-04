@@ -23,7 +23,7 @@ InputBox::InputBox(sf::Vector2f pos, sf::Vector2f size, sf::Color fillCol, sf::C
 	backspaceCooldown = 0.05f;
 	backspaceCooldownTimer = 0.0f;
 
-	mousePressedLastFrame = false;
+	mousePressedLastFrame = true;
 }
 
 InputBox::InputBox(float posX, float posY, float sizeX, float sizeY, sf::Color fillCol, sf::Color txCol, float txSize, sf::Font& txFont, int maxLen, const char* acceptableChars, const char* defaultTxt, bool asterisks, sf::Color activeCol)
@@ -42,7 +42,7 @@ InputBox::InputBox(float posX, float posY, float sizeX, float sizeY, sf::Color f
 	backspaceCooldown = 0.05f;
 	backspaceCooldownTimer = 0.0f;
 
-	mousePressedLastFrame = false;
+	mousePressedLastFrame = true;
 
 }
 

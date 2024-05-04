@@ -90,9 +90,6 @@
     <ClCompile Include="NetworkManager.cpp">
       <Filter>Source Files\Networking</Filter>
     </ClCompile>
-    <ClCompile Include="NetworkNode.cpp">
-      <Filter>Source Files\Networking</Filter>
-    </ClCompile>
     <ClCompile Include="LocalScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
@@ -137,6 +134,18 @@
     </ClCompile>
     <ClCompile Include="AccountManager.cpp">
       <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlineSelectScreen.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SendInviteScreen.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomMatchScreen.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="MatchInvitationInterrupt.cpp">
+      <Filter>Source Files\Networking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,9 +194,6 @@
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="NetworkManager.h">
-      <Filter>Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="NetworkNode.h">
       <Filter>Header Files\Networking</Filter>
     </ClInclude>
     <ClInclude Include="NetworkListener.h">
@@ -243,6 +249,18 @@
     </ClInclude>
     <ClInclude Include="ColourPallete.h">
       <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineSelectScreen.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SendInviteScreen.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomMatchScreen.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="MatchInvitationInterrupt.h">
+      <Filter>Header Files\Networking</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

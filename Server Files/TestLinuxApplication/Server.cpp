@@ -64,70 +64,26 @@ void Server::CheckForIncomingTCPData() {
 			connectedNetworkManagers.erase(i);
 			return;
 		}
-		case PacketCode::Username:
+		case PacketCode::UsernameRegister:
 		{
-			std::cout << "PacketCode: Username\n";
+			std::cout << "PacketCode: UsernameRegister\n";
 			int networkListenerIndex;
 			std::string username;
 			incomingData >> networkListenerIndex >> username;
 
-			//Open database
-			sqlite3* db;
-			sqlite3_open("LimbForLimbDatabase.db", &db);
-
-
-
-			//----PART 1: CHECK IF USERNAME IS ALREADY TAKEN----//
-
-			std::string usernameTakenQuery{ "SELECT EXISTS(SELECT 1 FROM AccountInfo WHERE Username = ?);"};
-
-			//Compile statement
-			sqlite3_stmt* usernameTakenStmt;
-			if (sqlite3_prepare_v2(db, usernameTakenQuery.c_str(), -1, &usernameTakenStmt, NULL) != SQLITE_OK) {
-				std::cerr << "Error preparing statement:" << sqlite3_errmsg(db) << std::endl;
-				//Dont forget to close the database
-				sqlite3_close(db);
-				continue;
-			}
-
-			//Bind username to statement
-			sqlite3_bind_text(usernameTakenStmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
-
-			//Run statement
-			int result = sqlite3_step(usernameTakenStmt);
-
-			//Send username availability back to network manager
 			sf::Int8 usernameAvailability{ -1 };
-			if (result == SQLITE_ROW) {
-				usernameAvailability = !sqlite3_column_int(usernameTakenStmt, 0); //0 if username doesn't exist, 1 if username does exist. Negate it so it instead represents if username is available
-			}
-			else {
-				//Error
-				std::cerr << "Unable to parse result, result value is: " << result << std::endl;
-			}
+			usernameAvailability = AccountExists(username) ? 1 : 0;
+			sf::Packet outgoingData;
+			packetCode = PacketCode::UsernameAvailabilityStatus;
+			outgoingData << networkListenerIndex << packetCode << usernameAvailability;
 
-			{
-				//Add networkListenerIndex, packetCode, and data to outgoingData
-				sf::Packet outgoingData;
-				packetCode = PacketCode::UsernameAvailabilityStatus;
-				outgoingData << networkListenerIndex << packetCode << usernameAvailability;
+			std::cout << "This packet is being sent to network manager at ip " << connectedNetworkManagers[i].getRemoteAddress() << '\n';
+			connectedNetworkManagers[i].send(outgoingData);
 
-				//Send data to NetworkManager
-				std::cout << "This packet is being sent to network manager at ip " << connectedNetworkManagers[i].getRemoteAddress() << '\n';
-				connectedNetworkManagers[i].send(outgoingData);
-			}
-			sqlite3_finalize(usernameTakenStmt);
-
-
-			if (usernameAvailability != 1) {
-			
-				std::cout << "Username " << username << " is unavailable.\n\n\n\n";
-
-				//Dont forget to close the database
-				sqlite3_close(db);
+			if (usernameAvailability != 0) {
+				std::cout << "Username " << username << " is unavailable.\n";
 				continue;
 			}
-
 
 
 			//----PART 2: GENERATE UNIQUE RANDOM UUID----//
@@ -141,6 +97,10 @@ void Server::CheckForIncomingTCPData() {
 
 			sf::Uint64 uuid{ dis(gen) };
 			std::cout << "UUID: " << uuid << '\n';
+
+			//Open database
+			sqlite3* db;
+			sqlite3_open("LimbForLimbDatabase.db", &db);
 
 			//Add username + uuid to account info table
 			sqlite3_exec(db, "START TRANSACTION;", NULL, NULL, NULL);
@@ -231,8 +191,6 @@ void Server::CheckForIncomingTCPData() {
 				connectedNetworkManagers[i].send(outgoingData);
 			}
 
-			std::cout << "\n\n\n\n";
-
 
 			break;
 		}
@@ -272,10 +230,6 @@ void Server::CheckForIncomingTCPData() {
 			//Run statement
 			int credentialsCorrectResult{ sqlite3_step(credentialsCorrectStmt) };
 
-			//std::cout << "User: " << sqlite3_column_blob(credentialsCorrectStmt, 0) << '\n';
-			//std::cout << "UUID: " << sqlite3_column_int64(credentialsCorrectStmt, 1) << '\n';
-
-
 			//Send username availability back to network manager
 			sf::Int8 credentialsCorrect{ -1 };
 			if (credentialsCorrectResult == SQLITE_ROW) {
@@ -303,7 +257,7 @@ void Server::CheckForIncomingTCPData() {
 
 			if (credentialsCorrect != 1) {
 
-				std::cout << "Matching credentials not found.\n\n\n\n";
+				std::cout << "Matching credentials not found.\n";
 
 				//Dont forget to close the database
 				sqlite3_close(db);
@@ -349,6 +303,100 @@ void Server::CheckForIncomingTCPData() {
 			
 			//Dont forget to close the database
 			sqlite3_close(db);
+
+			//--------------------------------------------------//
+
+
+
+			//----PART 3: ADD USER TO MAPS----//
+			onlineUsers[i] = username;
+			onlineUserRankings[username] = ranking;
+
+			//---------------------------------------//
+
+
+			break;
+		}
+		case PacketCode::UsernameInvite:
+		{
+
+			std::cout << "PacketCode: UsernameInvite\n";
+
+			int networkListenerIndex;
+			std::string username;
+			incomingData >> networkListenerIndex >> username;
+
+			//Send user-exists packet
+			{
+				sf::Packet outgoingData;
+				packetCode = PacketCode::UserExists;
+				sf::Int8 userExists{ static_cast<sf::Int8>(AccountExists(username) ? 0 : 1) };
+				outgoingData << networkListenerIndex << packetCode << userExists;
+				connectedNetworkManagers[i].send(outgoingData);
+			}
+
+			//Loop through all online users to find a match
+			int invitedNetworkMangerIndex{ -1 };
+			for (std::map<int, std::string>::iterator it{ onlineUsers.begin() }; it != onlineUsers.end(); ++it) {
+				if (it->second == username) {
+					invitedNetworkMangerIndex = it->first;
+					break;
+				}
+			}
+
+			//Send user-online packet
+			{
+				sf::Packet outgoingData;
+				packetCode = PacketCode::UserOnline;
+				sf::Int8 userOnline{ static_cast<sf::Int8>((invitedNetworkMangerIndex == -1) ? 1 : 0) };
+				outgoingData << networkListenerIndex << packetCode << userOnline;
+				connectedNetworkManagers[i].send(outgoingData);
+			}
+
+			if (invitedNetworkMangerIndex == -1) {
+				continue;
+			}
+
+			//Send network manager index of invited client back to inviting user
+			{
+				sf::Packet outgoingData;
+				packetCode = PacketCode::InvitedUserNetworkManagerIndex;
+				outgoingData << networkListenerIndex << packetCode << invitedNetworkMangerIndex;
+				connectedNetworkManagers[i].send(outgoingData);
+			}
+
+			//Loop through all matched users to see if invited user is currently in a match
+			bool invitedUserInMatch{ false };
+			for (std::map<int, int>::iterator it{ matchedUsers.begin() }; it != matchedUsers.end(); ++it) {
+				if (invitedNetworkMangerIndex == it->first || invitedNetworkMangerIndex == it->second) {
+					invitedUserInMatch = true;
+				}
+			}
+
+			//Send user-free packet
+			{
+				sf::Packet outgoingData;
+				packetCode = PacketCode::UserFree;
+				sf::Int8 userFree{ static_cast<sf::Int8>(invitedUserInMatch ? 1 : 0) };
+				outgoingData << networkListenerIndex << packetCode << userFree;
+				connectedNetworkManagers[i].send(outgoingData);
+			}
+
+			if (invitedUserInMatch) {
+				continue;
+			}
+
+
+			//User exists, is online, and isn't currently in a match - they are ready to be invited. Send inviting user's username, ranking, and nmi
+			{
+				sf::Packet outgoingData;
+				packetCode = PacketCode::MatchInvitation;
+				std::string invitingClientUsername{ onlineUsers[i] }; //Username of the client that's sending the invitation
+				sf::Int32 invitingClientRanking{ onlineUserRankings[invitingClientUsername] }; //Ranking of the client that's sending the invitation
+				outgoingData << ReservedEntityIndexTable::MATCH_INVITATION_INTERRUPT << packetCode << invitingClientUsername << invitingClientRanking << i;
+				connectedNetworkManagers[invitedNetworkMangerIndex].send(outgoingData);
+			}
+
 
 			break;
 		}
@@ -435,4 +483,43 @@ void Server::CheckForIncomingUDPData() {
 		return;
 	}
 	}
+}
+
+
+
+bool Server::AccountExists(std::string username)
+{
+	//Open database
+	sqlite3* db;
+	sqlite3_open("LimbForLimbDatabase.db", &db);
+
+	std::string usernameExistsQuery{ "SELECT EXISTS(SELECT 1 FROM AccountInfo WHERE Username = ?);" };
+
+	//Compile statement
+	sqlite3_stmt* usernameExistsStmt;
+	if (sqlite3_prepare_v2(db, usernameExistsQuery.c_str(), -1, &usernameExistsStmt, NULL) != SQLITE_OK) {
+		std::cerr << "Error preparing statement:" << sqlite3_errmsg(db) << std::endl;
+		//Dont forget to close the database
+		sqlite3_close(db);
+		exit(-1);
+	}
+
+	//Bind username to statement
+	sqlite3_bind_text(usernameExistsStmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
+
+	//Run statement
+	int result = sqlite3_step(usernameExistsStmt);
+
+	bool usernameExists;
+	if (result == SQLITE_ROW) {
+		usernameExists = sqlite3_column_int(usernameExistsStmt, 0); //0 if username doesn't exist, 1 if username does exist
+	}
+	else {
+		//Error
+		std::cerr << "Unable to parse result, result value is: " << result << std::endl;
+	}
+
+	sqlite3_finalize(usernameExistsStmt);
+	sqlite3_close(db);
+	return usernameExists;
 }

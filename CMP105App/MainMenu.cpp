@@ -1,13 +1,16 @@
 #include "MainMenu.h"
-#include "NetworkScene.h"
+#include "OnlineSelectScreen.h"
 #include "LocalScene.h"
 #include "SceneManager.h"
+#include "AccountManager.h"
+#include "MatchInvitationInterrupt.h"
+#include "NetworkManager.h"
 #include "RegistrationScreen.h"
 #include "LoginScreen.h"
 #include "ColourPallete.h"
 
 
-MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), accountManager(AccountManager::getInstance())
+MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), accountManager(AccountManager::getInstance()), matchInvitationInterrupt(MatchInvitationInterrupt::getInstance()), networkManager(NetworkManager::getInstance(false))
 {
 	std::cout << "Loading main menu\n";
 
@@ -27,6 +30,7 @@ MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneM
 	online = Button(800, 300, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onOnlineButtonClick, "ONLINE");
 	registration = Button(230, 500, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onRegistrationButtonClick, "REGISTER");
 	login = Button(800, 500, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onLoginButtonClick, "LOGIN");
+	switchOnlineStatus = Button(1500, 800, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onSwitchOnlineStatusButtonClick, "");
 
 	username = TextBox(50, 950, 500, 40, INACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, "");
 	ranking = TextBox(50, 1000, 500, 40, INACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, "");
@@ -35,6 +39,13 @@ MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneM
 		//User is signed in
 		username.text.setString(accountManager.getUsername());
 		ranking.text.setString(std::to_string(accountManager.getRanking()));
+	}
+
+	if (networkManager.getConnectedToServer()) {
+		switchOnlineStatus.text.setString("GO OFFLINE");
+	}
+	else {
+		switchOnlineStatus.text.setString("GO ONLINE");
 	}
 
 
@@ -54,11 +65,14 @@ void MainMenu::InitialiseCallbacks() {
 	};
 	
 	onOnlineButtonClick = [this]() {
-		int playerNum{}; //Temp
-		std::cout << "Player num (1 or 2): ";
-		std::cin >> playerNum;
-		NetworkScene* networkScene = new NetworkScene(window, input, sceneManager, playerNum);
-		sceneManager.LoadScene(networkScene);
+		if (accountManager.getUsername() == "N/A") {
+			LoginScreen* loginScreen = new LoginScreen(window, input, sceneManager);
+			sceneManager.LoadScene(loginScreen);
+		}
+		else {
+			OnlineSelectScreen* onlineSelectScreen = new OnlineSelectScreen(window, input, sceneManager);
+			sceneManager.LoadScene(onlineSelectScreen);
+		}
 	};
 
 	onRegistrationButtonClick = [this]() {
@@ -70,20 +84,38 @@ void MainMenu::InitialiseCallbacks() {
 		LoginScreen* loginScreen = new LoginScreen(window, input, sceneManager);
 		sceneManager.LoadScene(loginScreen);
 	};
+
+	onSwitchOnlineStatusButtonClick = [this]() {
+		if (networkManager.getConnectedToServer()) {
+			//Go offline
+			if (networkManager.AttemptToDisconnectFromServer()) {
+				switchOnlineStatus.text.setString("GO ONLINE");
+			}
+		}
+		else {
+			//Go online
+			if (networkManager.AttemptToConnectToServer()) {
+				switchOnlineStatus.text.setString("GO OFFLINE");
+			}
+		}
+	};
 }
 
 
 
-void MainMenu::handleInput(float dt) {}
-
-void MainMenu::update(float dt) {
-	
+void MainMenu::handleInput(float dt)
+{
 	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
 
 	local.processEvents(mousePos);
 	online.processEvents(mousePos);
 	registration.processEvents(mousePos);
 	login.processEvents(mousePos);
+	switchOnlineStatus.processEvents(mousePos);
+}
+
+void MainMenu::update(float dt)
+{
 }
 
 void MainMenu::render()
@@ -95,6 +127,7 @@ void MainMenu::render()
 	window->draw(online);
 	window->draw(registration);
 	window->draw(login);
+	window->draw(switchOnlineStatus);
 
 	if (accountManager.getUsername() != "N/A") { //N/A is default value
 		//Player is signed in

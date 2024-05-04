@@ -7,17 +7,22 @@
 class OnlinePlayer;
 
 
-NetworkManager& NetworkManager::getInstance() {
+NetworkManager& NetworkManager::getInstance(bool attemptConnection) {
 	sf::IpAddress address{ "84.8.144.190" };
 	unsigned short port{ 6900 };
 
 	static NetworkManager instance(address, port);
+
+	if (attemptConnection && !instance.connectedToServer) {
+		instance.AttemptToConnectToServer();
+	}
+
 	return instance;
 	
 }
 
 
-NetworkManager& NetworkManager::getInstance(sf::IpAddress _serverAddress, unsigned short _serverPort) {
+NetworkManager& NetworkManager::getInstance(bool attemptConnection, sf::IpAddress _serverAddress, unsigned short _serverPort) {
 	static NetworkManager instance(_serverAddress, _serverPort);	
 	return instance;
 }
@@ -27,12 +32,32 @@ NetworkManager::NetworkManager(sf::IpAddress _serverAddress, unsigned short _ser
 	serverAddress = _serverAddress;
 	serverPort = _serverPort;
 
+	connectedToServer = false;
+	networkManagerIndex = -1;
+
+	//Initialise networkListeners to x null pointers where x is the number of entities that hold a reserved spot within the vector
+	for (int i{ 0 }; i < ReservedEntityIndexTable::NUM_RESERVED_ENTITIES; ++i) {
+		networkListeners.push_back(nullptr);
+	}
+
+}
+
+
+NetworkManager::~NetworkManager() {
+	if (connectedToServer) {
+		AttemptToDisconnectFromServer();
+	}
+}
+
+
+bool NetworkManager::AttemptToConnectToServer()
+{
 	//Connect to server
 	tcpSocket.setBlocking(true);
 	if (tcpSocket.connect(serverAddress, serverPort) != sf::Socket::Done) {
 		std::cerr << "Failed to send connection request to server." << std::endl;
 	}
-	
+
 	//Get NetworkManager index from server
 	sf::Packet incomingData;
 	if (tcpSocket.receive(incomingData) != sf::Socket::Done) {
@@ -47,52 +72,35 @@ NetworkManager::NetworkManager(sf::IpAddress _serverAddress, unsigned short _ser
 
 	tcpSocket.setBlocking(false);
 	udpSocket.setBlocking(false);
-
-	//Initialise networkListeners to x null pointers where x is the number of entities that hold a reserved spot within the vector
-	for (int i{ 0 }; i < ReservedEntityIndexTable::NUM_RESERVED_ENTITIES; ++i) {
-		networkListeners.push_back(nullptr);
-	}
-
+	return connectedToServer;
 }
 
-
-NetworkManager::~NetworkManager() {
+bool NetworkManager::AttemptToDisconnectFromServer()
+{
 	//Send message to server to tell it to remove NetworkManager from vector
 	tcpSocket.setBlocking(true);
 	sf::Packet outgoingPacket;
 	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(PacketCode::RemoveNetworkManager);
 	if (tcpSocket.send(outgoingPacket) != sf::Socket::Done) {
 		std::cerr << "Failed to disconnect from server." << std::endl;
+		return false;
 	}
 	else {
 		std::cout << "Successfully disconnected from server.\n";
+		connectedToServer = false;
+		return true;
 	}
 }
 
 
 
-
 void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
 	//Combine Packet code, NetworkManager index, and NetworkListener index into the data packet so it can be sent to the server
-	
-	sf::UdpSocket udpSocket;
-	udpSocket.setBlocking(false);
 
 	sf::Packet outgoingPacket;
 	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(packetCode) << outgoingNetworkManagerIndex << networkListenerIndex;
 	switch (packetCode)
 	{
-
-	case PacketCode::Verification:
-	{
-		sf::Vector2f pos;
-		sf::Int16 health;
-		bool activeLimbs[4];
-		incomingPacket >> pos.x >> pos.y >> health >> activeLimbs[0] >> activeLimbs[1] >> activeLimbs[2] >> activeLimbs[3];
-		outgoingPacket << pos.x << pos.y << health << activeLimbs[0] << activeLimbs[1] << activeLimbs[2] << activeLimbs[3];
-		tcpSocket.send(outgoingPacket);
-		break;
-	}
 
 	case PacketCode::KeyChange:
 	{
@@ -109,13 +117,11 @@ void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, i
 		sf::Vector2f pos;
 		incomingPacket >> pos.x >> pos.y;
 		outgoingPacket << pos.x << pos.y;
-		if (udpSocket.send(outgoingPacket, serverAddress, serverPort) == sf::Socket::Done) { std::cout << "woo\n"; }
-		else { std::cerr << "fail" << std::endl; }
+		udpSocket.send(outgoingPacket, serverAddress, serverPort);
 
 		break;
 	}
 	}
-	outgoingPacket.clear();
 	namespace c = std::chrono;
 	uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
 	std::cout << "Send: " << ms << " milliseconds since the epoch\n";
@@ -135,7 +141,7 @@ void NetworkManager::SendDataToServer(int networkListenerIndex, PacketCode packe
 	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(packetCode) << networkListenerIndex;
 	switch (packetCode)
 	{
-	case PacketCode::Username:
+	case PacketCode::UsernameRegister:
 	{
 		std::string username;
 		incomingPacket >> username;
@@ -150,6 +156,15 @@ void NetworkManager::SendDataToServer(int networkListenerIndex, PacketCode packe
 		incomingPacket >> username >> uuid;
 		outgoingPacket << username << uuid;
 		tcpSocket.send(outgoingPacket);
+		break;
+	}
+	case PacketCode::UsernameInvite:
+	{
+		std::string username;
+		incomingPacket >> username;
+		outgoingPacket << username;
+		tcpSocket.send(outgoingPacket);
+		break;
 	}
 	}
 	namespace c = std::chrono;
@@ -202,17 +217,16 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 				}
 			}
 			else {
-				std::cerr << "NetworkManager (" << incomingAddress << ", " << incomingPort << ") is attempting to send data to this NetworkManager" << std::endl;
+				std::cerr << "NetworkManager (" << incomingAddress << ", " << incomingPort << ") is attempting to send data directly to this NetworkManager" << std::endl;
 			}
 		}
 	}
 	//----------------//
 }
 
-int NetworkManager::getNetworkManagerIndex() {
-	return networkManagerIndex;
-}
 
+
+int NetworkManager::getNetworkManagerIndex() { return networkManagerIndex; }
 bool NetworkManager::getConnectedToServer() { return connectedToServer; }
 
 void NetworkManager::sendNums() {
@@ -223,5 +237,5 @@ void NetworkManager::sendNums() {
 		std::cout << udpSocket.send(outgoingPacket, serverAddress, serverPort) << '\n';
 		std::cout << i << '\n';
 	}
-	std::cout << "\n\n\n\n";
+	std::cout << '\n';
 }

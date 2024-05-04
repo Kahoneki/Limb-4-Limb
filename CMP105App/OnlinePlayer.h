@@ -10,25 +10,6 @@ class NetworkManager;
 template<typename ParentType>
 class NetworkListener;
 
-struct OnlinePlayerState {
-	sf::Vector2i pos;
-	bool crouched;
-	int health;
-	float invincibilityFramesLeft;
-
-	bool activeLimbs[4];
-	bool attacking[4];
-
-	bool operator==(const OnlinePlayerState& other) const {
-		return ((pos == other.pos) &&
-			    (crouched == other.crouched) &&
-				(health == other.health) &&
-				(invincibilityFramesLeft == other.invincibilityFramesLeft) &&
-				(activeLimbs == other.activeLimbs) &&
-			    (attacking == other.attacking));
-	}
-};
-
 class OnlinePlayer : public Player
 {
 public:
@@ -37,11 +18,10 @@ public:
 	void update(float dt);
 	void SendUpdateDataToNetwork(std::vector<int> changedKeys);
 	void SendUpdateDataToNetwork(sf::Vector2f newPosition);
-	void VerifyStatus(sf::Packet verificationPacket);
 
 	int getPlayerNum();
 
-	void setKeyPressed(int key, bool pressed);
+	friend class NetworkListener<OnlinePlayer>;
 
 private:
 	bool isLocal; //True if this player is controlled by this client, false if controlled by another client
@@ -53,9 +33,6 @@ private:
 
 	NetworkManager& networkManager; //For sending
 	NetworkListener<OnlinePlayer>* networkListener; //For receiving
-
-	OnlinePlayerState prevState;
-	OnlinePlayerState newState;
 
 	bool prevKeyState[6];
 

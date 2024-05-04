@@ -11,7 +11,7 @@ Button::Button(sf::Vector2f pos, sf::Vector2f size, sf::Color inactiveFillCol, s
 	activeFillColour = activeFillCol;
 	onClick = onClickCallback;
 
-	mousePressedLastFrame = false;
+	mousePressedLastFrame = true;
 }
 
 Button::Button(float posX, float posY, float sizeX, float sizeY, sf::Color inactiveFillCol, sf::Color activeFillCol, sf::Color txCol, float txSize, sf::Font& txFont, std::function<void(void)> onClickCallback, const char* defaultTxt)
@@ -21,7 +21,7 @@ Button::Button(float posX, float posY, float sizeX, float sizeY, sf::Color inact
 	activeFillColour = activeFillCol;
 	onClick = onClickCallback;
 
-	mousePressedLastFrame = false;
+	mousePressedLastFrame = true;
 }
 
 void Button::processEvents(sf::Vector2f mousePos) {

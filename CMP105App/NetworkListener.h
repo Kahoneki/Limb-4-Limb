@@ -1,7 +1,6 @@
 #ifndef NETWORKLISTENER_H
 #define NETWORKLISTENER_H
 
-#include <iostream>
 #include "PacketCode.h"
 #include "BaseNetworkListener.h"
 #include "SFML/Network.hpp"
@@ -9,6 +8,15 @@
 #include "OnlinePlayer.h"
 #include "RegistrationScreen.h"
 #include "LoginScreen.h"
+#include "SendInviteScreen.h"
+#include "MatchInvitationInterrupt.h"
+
+
+
+//This template class can be attached to a class to serve as a "network receiver component"
+//When data is received by the network manager, the packet will be sent to the appropriate network listener which will deconstruct the packet and use it to perform some operation on the
+//object that it is attached to
+
 
 
 template<typename ParentType>
@@ -30,13 +38,7 @@ public:
             bool pressed;
             int key;
             incomingData >> pressed >> key;
-            parentReference.setKeyPressed(key, pressed);
-            break;
-        }
-        
-        case PacketCode::Verification:
-        {
-            parentReference.VerifyStatus(incomingData);
+            parentReference.keyIsPressed[key] = pressed;
             break;
         }
         
@@ -72,7 +74,7 @@ public:
         {
             sf::Int8 available;
             incomingData >> available;
-            parentReference.setUsernameAvailable(available);
+            parentReference.usernameAvailable = available;
             break;
         }
 
@@ -80,8 +82,7 @@ public:
         {
             sf::Uint64 uuid;
             incomingData >> uuid;
-            std::cout << "INCOMING UUID: " << uuid << '\n';
-            parentReference.setUUID(uuid);
+            parentReference.uuid = uuid;
             break;
         }
         }
@@ -108,7 +109,7 @@ public:
         {
             sf::Int8 available;
             incomingData >> available;
-            parentReference.setLoginStatus(available);
+            parentReference.loginStatus = available;
             break;
         }
 
@@ -116,7 +117,7 @@ public:
         {
             sf::Int32 ranking;
             incomingData >> ranking;
-            parentReference.setRanking(ranking);
+            parentReference.ranking = ranking;
             break;
         }
         }
@@ -124,6 +125,94 @@ public:
 
 private:
     LoginScreen& parentReference;
+};
+
+
+
+template<>
+class NetworkListener<SendInviteScreen> : public BaseNetworkListener {
+public:
+    NetworkListener(SendInviteScreen& pr) : parentReference(pr) {}
+
+    void InterpretPacket(sf::Packet incomingData) {
+        std::underlying_type_t<PacketCode> code;
+        incomingData >> code;
+
+        switch (code)
+        {
+        case PacketCode::UserExists:
+        {
+            sf::Int8 exists;
+            incomingData >> exists;
+            parentReference.userExists = exists;
+            break;
+        }
+
+        case PacketCode::UserOnline:
+        {
+            sf::Int8 online;
+            incomingData >> online;
+            parentReference.userOnline = online;
+            break;
+        }
+        case PacketCode::UserFree:
+        {
+            sf::Int8 userFree;
+            incomingData >> userFree;
+            parentReference.userFree = userFree;
+            break;
+        }
+        case PacketCode::MatchAcceptance:
+        {
+            sf::Int8 acceptance;
+            incomingData >> acceptance;
+            parentReference.userAccept = acceptance;
+            break;
+        }
+        case PacketCode::InvitedUserNetworkManagerIndex:
+        {
+            int invitedUserNetworkManagerIndex;
+            incomingData >> invitedUserNetworkManagerIndex;
+            parentReference.invitedUserNetworkManagerIndex = invitedUserNetworkManagerIndex;
+            break;
+        }
+        }
+    }
+
+private:
+    SendInviteScreen& parentReference;
+};
+
+
+
+template<>
+class NetworkListener<MatchInvitationInterrupt> : public BaseNetworkListener {
+public:
+    NetworkListener(MatchInvitationInterrupt& pr) : parentReference(pr) {}
+
+    void InterpretPacket(sf::Packet incomingData) {
+        std::underlying_type_t<PacketCode> code;
+        incomingData >> code;
+
+        switch (code)
+        {
+        case PacketCode::MatchInvitation:
+        {
+            std::string username;
+            sf::Int32 ranking;
+            int networkManagerIndex;
+            incomingData >> username >> ranking >> networkManagerIndex;
+            parentReference.invitationReceived = true;
+            parentReference.username = username;
+            parentReference.ranking = ranking;
+            parentReference.networkManagerIndex = networkManagerIndex;
+            break;
+        }
+        }
+    }
+
+private:
+    MatchInvitationInterrupt& parentReference;
 };
 
 

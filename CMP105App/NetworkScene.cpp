@@ -3,13 +3,14 @@
 #include "OnlinePlayer.h"
 #include "NetworkManager.h"
 
-NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn) : sceneManager(sm), networkManager(NetworkManager::getInstance()), timeManager(TimeManager::getInstance(240))
+NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn, int oppNMI) : sceneManager(sm), networkManager(NetworkManager::getInstance(false)), timeManager(TimeManager::getInstance(240))
 {
-	std::cout << "Loading test scene\n";
+	std::cout << "Loading network scene\n";
 
 	window = hwnd;
 	input = in;
 	playerNum = pn;
+	opponentNetworkManagerIndex = oppNMI;
 	timeUntilPlayersShouldStartUpdate = 0.5f;
 	playerStartUpdateTimeCountdown = timeUntilPlayersShouldStartUpdate;
 
@@ -17,16 +18,16 @@ NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, 
 	InitialisePlayers();
 	InitialiseHealthBars();
 
-	std::cout << "Loaded test scene\n";
+	std::cout << "Loaded network scene\n";
 }
 
 
 NetworkScene::~NetworkScene()
 {
-	std::cout << "Unloading test scene\n";
+	std::cout << "Unloading network scene\n";
 	delete players[0];
 	delete players[1];
-	std::cout << "Unloaded test scene\n";
+	std::cout << "Unloaded network scene\n";
 
 }
 

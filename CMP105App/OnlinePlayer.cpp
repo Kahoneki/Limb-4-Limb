@@ -2,7 +2,7 @@
 #include "NetworkManager.h"
 
 OnlinePlayer::OnlinePlayer(sf::Vector2f size, float acc, float ts, float js, int hp, int prot, int c1, bool flip, int pn, bool local) :
-	Player(size, acc, ts, js, hp, prot, c1, flip), networkManager(NetworkManager::getInstance()), timeManager (TimeManager::getInstance(240))
+	Player(size, acc, ts, js, hp, prot, c1, flip), networkManager(NetworkManager::getInstance(false)), timeManager (TimeManager::getInstance(240))
 {
 	verificationPacketTimer = 0;
 	verificationPacketCooldown = 100.0f;
@@ -154,26 +154,6 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 
 void OnlinePlayer::update(float dt) {
 	Player::update(dt);
-	if (!isLocal) {
-		return;
-	}
-	
-	verificationPacketTimer += timeManager.getDeltaTime();
-	if (verificationPacketTimer >= verificationPacketCooldown) {
-		verificationPacketTimer = 0;
-
-		//A verification packet is a packet sent every so often with the current player's status to be checked against the other client - this helps to mitigate the effects of packet loss.
-		//A verification packet consists of:
-		//-Position
-		//-Health
-		//-Limb status
-
-		//Create verification packet to send to server
-		int networkListenerIndex{ playerNum - 1 };
-		sf::Packet outgoingPacket;
-		outgoingPacket << getPosition().x << getPosition().y << health << activeLimbs[0] << activeLimbs[1] << activeLimbs[2] << activeLimbs[3];
-		networkManager.SendDataToNetworkManager(networkListenerIndex, PacketCode::Verification, outgoingPacket);
-	}
 }
 
 
@@ -199,21 +179,4 @@ void OnlinePlayer::SendUpdateDataToNetwork(sf::Vector2f newPosition) {
 
 
 
-void OnlinePlayer::VerifyStatus(sf::Packet verificationPacket) {
-	//Compare status against verification packet - if there are any mismatches, favour the verification packet
-	sf::Vector2f pos;
-	verificationPacket >> pos.x >> pos.y;
-	setPosition(pos);
-	verificationPacket >> health >> activeLimbs[0] >> activeLimbs[1] >> activeLimbs[2] >> activeLimbs[3];
-}
-
-
-
 int OnlinePlayer::getPlayerNum() { return playerNum; }
-
-
-
-void OnlinePlayer::setKeyPressed(int key, bool pressed) {
-	std::cout << key << " is " << pressed << '\n';
-	keyIsPressed[key] = pressed;
-}

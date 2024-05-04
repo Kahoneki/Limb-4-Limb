@@ -7,7 +7,7 @@
 #include <fstream>
 #include <filesystem> //For std::filesystem::exists
 
-LoginScreen::LoginScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
+LoginScreen::LoginScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), networkManager(NetworkManager::getInstance(false))
 {
 	std::cout << "Loading login screen\n";
 
@@ -19,8 +19,6 @@ LoginScreen::LoginScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : 
 	background.setFillColor(BACKGROUNDCOLOUR);
 
 	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
-
-	mousePressedLastFrame = false;
 
 	minUsernameLength = 4;
 	maxUsernameLength = 20;
@@ -55,14 +53,26 @@ void LoginScreen::InitialiseCallbacks() {
 			displayStatusBar = true;
 			if (checkClientSideUsernameValidity()) {
 				awaitServerResponses = true;
-				statusBar.text.setString("Connecting to server...\n");
-				render();
-				NetworkManager& networkManager{ NetworkManager::getInstance() };
-				networkListener = networkManager.GenerateNetworkListener<LoginScreen>(*this, networkListenerIndex);
+				
+				if (!networkManager.getConnectedToServer()) {
+					//Attempt to connect to server
+					statusBar.text.setString("Connecting to server...\n");
+					render();
+					if (!networkManager.AttemptToConnectToServer()) {
+						//Connection failed
+						statusBar.text.setString("Failed to connect to server");
+						awaitServerResponses = false;
+					}
+				}
 
-				sf::Packet outgoingPacket;
-				outgoingPacket << username << uuid;
-				networkManager.SendDataToServer(networkListenerIndex, PacketCode::Login, outgoingPacket);
+				if (networkManager.getConnectedToServer()) {
+					networkListener = networkManager.GenerateNetworkListener<LoginScreen>(*this, networkListenerIndex);
+
+					sf::Packet outgoingPacket;
+					outgoingPacket << username << uuid;
+					networkManager.SendDataToServer(networkListenerIndex, PacketCode::Login, outgoingPacket);
+				}
+
 			}
 		}
 	};
@@ -116,10 +126,9 @@ void LoginScreen::handleInput(float dt) {
 
 void LoginScreen::update(float dt) {
 	if (awaitServerResponses) {
-	//std::cout << static_cast<int>(loginStatus) << '\n';
 		if (loginStatus == -1) {
 			//Server hasn't responded yet
-			NetworkManager::getInstance().CheckForIncomingDataFromServer();
+			networkManager.CheckForIncomingDataFromServer();
 			return;
 		}
 		else if (loginStatus == 0) {
@@ -136,7 +145,7 @@ void LoginScreen::update(float dt) {
 		//Get ranking
 		if (ranking == -1) {
 			//Server hasn't responded yet
-			NetworkManager::getInstance().CheckForIncomingDataFromServer();
+			networkManager.CheckForIncomingDataFromServer();
 			return;
 		}
 
@@ -163,6 +172,3 @@ void LoginScreen::render()
 	}
 	endDraw();
 }
-
-void LoginScreen::setLoginStatus(bool val) { std::cout << "VAL: " << val << '\n'; loginStatus = val; }
-void LoginScreen::setRanking(int val) { ranking = val; };

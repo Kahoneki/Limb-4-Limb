@@ -11,6 +11,7 @@
 
 //Forward declarations
 class SceneManager;
+class NetworkManager;
 
 template<typename ParentType>
 class NetworkListener;
@@ -26,16 +27,14 @@ public:
 	void update(float dt) override;
 	void render() override;
 
-	void setUsernameAvailable(bool val);
-	void setUUID(sf::Uint64 val);
+	friend class NetworkListener<RegistrationScreen>;
 
 private:
 	SceneManager& sceneManager;
+	NetworkManager& networkManager;
 
 	sf::Font font;
 	sf::RectangleShape background;
-	
-	bool mousePressedLastFrame;
 
 	InputBox usernameBox;
 	
@@ -55,7 +54,6 @@ private:
 	int maxUsernameLength;
 
 	bool awaitServerResponses;
-	void sendUsernameToServer();
 	NetworkListener<RegistrationScreen>* networkListener;
 	int networkListenerIndex;
 	sf::Int8 usernameAvailable; //-1 = server hasn't responded yet, 0 = username available, 1 = username not available

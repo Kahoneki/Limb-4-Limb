@@ -6,16 +6,21 @@
 #include <iostream>
 #include "TextBox.h"
 #include "Button.h"
-#include "AccountManager.h"
 #include <functional>
 
-class SceneManager; //Forward declaration
+
+//Forward declarations
+class SceneManager;
+class AccountManager;
+class MatchInvitationInterrupt;
+class NetworkManager;
+
 
 class MainMenu : public BaseLevel
 {
 public:
 
-	MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager);
+	MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm);
 	~MainMenu();
 
 
@@ -25,8 +30,9 @@ public:
 
 private:
 	SceneManager& sceneManager;
-	
-	bool mousePressedLastFrame;
+	MatchInvitationInterrupt& matchInvitationInterrupt;
+	AccountManager& accountManager;
+	NetworkManager& networkManager;
 	
 	sf::RectangleShape background;
 	
@@ -36,12 +42,13 @@ private:
 	//Will only be displayed if player is logged in
 	TextBox username;
 	TextBox ranking;
-	AccountManager& accountManager;
+	
 
 	Button local;
 	Button online;
 	Button registration;
 	Button login;
+	Button switchOnlineStatus; //Initially "Go Online". If clicked, "Go Offline"
 
 	//Callbacks
 	void InitialiseCallbacks();
@@ -49,6 +56,7 @@ private:
 	std::function<void(void)> onOnlineButtonClick;
 	std::function<void(void)> onRegistrationButtonClick;
 	std::function<void(void)> onLoginButtonClick;
+	std::function<void(void)> onSwitchOnlineStatusButtonClick;
 };
 
 #endif
