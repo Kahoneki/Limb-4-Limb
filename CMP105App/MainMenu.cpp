@@ -29,16 +29,22 @@ MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneM
 	local = Button(230, 300, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onLocalButtonClick, "LOCAL");
 	online = Button(800, 300, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onOnlineButtonClick, "ONLINE");
 	registration = Button(230, 500, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onRegistrationButtonClick, "REGISTER");
-	login = Button(800, 500, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onLoginButtonClick, "LOGIN");
+	login = Button(800, 500, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onLoginButtonClick, "");
 	switchOnlineStatus = Button(1500, 800, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onSwitchOnlineStatusButtonClick, "");
 
 	username = TextBox(50, 950, 500, 40, INACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, "");
 	ranking = TextBox(50, 1000, 500, 40, INACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, "");
 
 	if (accountManager.getUsername() != "N/A") {
-		//User is signed in
+		//User is logged in
 		username.text.setString(accountManager.getUsername());
 		ranking.text.setString(std::to_string(accountManager.getRanking()));
+
+		login.text.setString("LOGOUT");
+	}
+	else {
+		//User is logged out
+		login.text.setString("LOGIN");
 	}
 
 	if (networkManager.getConnectedToServer()) {
@@ -81,8 +87,18 @@ void MainMenu::InitialiseCallbacks() {
 	};
 
 	onLoginButtonClick = [this]() {
-		LoginScreen* loginScreen = new LoginScreen(window, input, sceneManager);
-		sceneManager.LoadScene(loginScreen);
+		if (accountManager.getUsername() == "N/A") {
+			//User isn't logged in
+			LoginScreen* loginScreen = new LoginScreen(window, input, sceneManager);
+			sceneManager.LoadScene(loginScreen);
+		}
+		else {
+			//User is logged in
+			sf::Packet outgoingData;
+			networkManager.SendDataToServer(-1, PacketCode::Logout, outgoingData);
+			accountManager.setValues("N/A", -1);
+			login.text.setString("LOGIN");
+		}
 	};
 
 	onSwitchOnlineStatusButtonClick = [this]() {

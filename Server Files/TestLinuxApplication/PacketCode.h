@@ -29,6 +29,7 @@ enum PacketCode
 	Login, //From client
 	LoginStatus, //From server
 	Ranking, //From server
+	Logout, //From client
 	//----//
 
 	

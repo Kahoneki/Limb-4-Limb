@@ -138,7 +138,10 @@ void NetworkManager::SendDataToNetworkManager(int networkListenerIndex, PacketCo
 void NetworkManager::SendDataToServer(int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
 	//This function is to be used if the network manager is sending data to the server, but not necessarily to be passed on to another network manager
 	sf::Packet outgoingPacket;
-	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(packetCode) << networkListenerIndex;
+	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(packetCode);
+	if (networkListenerIndex != -1) {
+		outgoingPacket << networkListenerIndex;
+	}
 	switch (packetCode)
 	{
 	case PacketCode::UsernameRegister:
@@ -155,6 +158,11 @@ void NetworkManager::SendDataToServer(int networkListenerIndex, PacketCode packe
 		sf::Uint64 uuid;
 		incomingPacket >> username >> uuid;
 		outgoingPacket << username << uuid;
+		tcpSocket.send(outgoingPacket);
+		break;
+	}
+	case PacketCode::Logout:
+	{
 		tcpSocket.send(outgoingPacket);
 		break;
 	}

@@ -135,6 +135,7 @@ void LoginScreen::update(float dt) {
 			statusBar.text.setString("Username does not match UUID.");
 			awaitServerResponses = false;
 			loginStatus = -1;
+
 			return;
 		}
 
@@ -153,6 +154,7 @@ void LoginScreen::update(float dt) {
 
 		//Username has responded with account's ranking
 		awaitServerResponses = false;
+
 		AccountManager::getInstance().setValues(username, ranking);
 		std::cout << "Username: " << username << '\n' << "Ranking: " << ranking << '\n';
 

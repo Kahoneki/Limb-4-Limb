@@ -134,6 +134,13 @@ void RegistrationScreen::update(float dt) {
 
 				//Log in user
 				AccountManager& accountManager{ AccountManager::getInstance() };
+				
+				if (accountManager.getUsername() != "N/A") {
+					//User is already logged in, send logout packet to server
+					sf::Packet outgoingData;
+					networkManager.SendDataToServer(networkListenerIndex, PacketCode::Logout, outgoingData);
+				}
+
 				accountManager.setValues(usernameBox.getTypedText(), 1000);
 
 			}

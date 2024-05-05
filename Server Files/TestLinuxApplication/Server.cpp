@@ -61,7 +61,12 @@ void Server::CheckForIncomingTCPData() {
 		{
 			std::cout << "PacketCode: RemoveNetworkManager\n";
 			std::cout << "NetworkManager (ip: " << connectedNetworkManagers[i].getRemoteAddress() << ", " << connectedNetworkManagers[i].getRemotePort() << ") disconnected from server.\n";
+			
+			//Remove user from maps
 			connectedNetworkManagers.erase(i);
+			onlineUserRankings.erase(onlineUsers[i]);
+			onlineUsers.erase(i);
+			
 			return;
 		}
 		case PacketCode::UsernameRegister:
@@ -192,6 +197,12 @@ void Server::CheckForIncomingTCPData() {
 			}
 
 
+
+			//----PART 5: ADD USER TO MAPS----//
+			onlineUsers[i] = username;
+			onlineUserRankings[username] = ranking;
+			//--------------------------------//
+
 			break;
 		}
 		case PacketCode::Login:
@@ -317,6 +328,15 @@ void Server::CheckForIncomingTCPData() {
 
 			break;
 		}
+		case PacketCode::Logout:
+		{
+			std::cout << "PacketCode: Logout\n";
+			//Log out user that sent the packet
+			onlineUserRankings.erase(onlineUsers[i]);
+			onlineUsers.erase(i);
+
+			break;
+		}
 		case PacketCode::UsernameInvite:
 		{
 
@@ -328,6 +348,7 @@ void Server::CheckForIncomingTCPData() {
 
 			//Send user-exists packet
 			{
+				std::cout << "PacketCode: UserExists\n";
 				sf::Packet outgoingData;
 				packetCode = PacketCode::UserExists;
 				sf::Int8 userExists{ static_cast<sf::Int8>(AccountExists(username) ? 0 : 1) };
@@ -346,6 +367,7 @@ void Server::CheckForIncomingTCPData() {
 
 			//Send user-online packet
 			{
+				std::cout << "PacketCode: UserOnline\n";
 				sf::Packet outgoingData;
 				packetCode = PacketCode::UserOnline;
 				sf::Int8 userOnline{ static_cast<sf::Int8>((invitedNetworkMangerIndex == -1) ? 1 : 0) };
@@ -359,6 +381,7 @@ void Server::CheckForIncomingTCPData() {
 
 			//Send network manager index of invited client back to inviting user
 			{
+				std::cout << "PacketCode: InvitedUserNetworkManagerIndex\n";
 				sf::Packet outgoingData;
 				packetCode = PacketCode::InvitedUserNetworkManagerIndex;
 				outgoingData << networkListenerIndex << packetCode << invitedNetworkMangerIndex;
@@ -375,6 +398,7 @@ void Server::CheckForIncomingTCPData() {
 
 			//Send user-free packet
 			{
+				std::cout << "PacketCode: UserFree\n";
 				sf::Packet outgoingData;
 				packetCode = PacketCode::UserFree;
 				sf::Int8 userFree{ static_cast<sf::Int8>(invitedUserInMatch ? 1 : 0) };
@@ -389,6 +413,7 @@ void Server::CheckForIncomingTCPData() {
 
 			//User exists, is online, and isn't currently in a match - they are ready to be invited. Send inviting user's username, ranking, and nmi
 			{
+				std::cout << "PacketCode: MatchInvitation\n";
 				sf::Packet outgoingData;
 				packetCode = PacketCode::MatchInvitation;
 				std::string invitingClientUsername{ onlineUsers[i] }; //Username of the client that's sending the invitation
