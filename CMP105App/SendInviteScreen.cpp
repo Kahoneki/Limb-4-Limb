@@ -98,6 +98,7 @@ void SendInviteScreen::update(float dt)
 		if (userExists == -1) {
 			//Server hasn't responded yet
 			networkManager.CheckForIncomingDataFromServer();
+			return;
 		}
 		else if (userExists == 1) {
 			//User doesn't exist
@@ -113,6 +114,7 @@ void SendInviteScreen::update(float dt)
 		if (userOnline == -1) {
 			//Server hasn't responded yet
 			networkManager.CheckForIncomingDataFromServer();
+			return;
 		}
 		else if (userOnline == 1) {
 			//User is offline
@@ -128,6 +130,7 @@ void SendInviteScreen::update(float dt)
 		if (userFree == -1) {
 			//Server hasn't responded yet
 			networkManager.CheckForIncomingDataFromServer();
+			return;
 		}
 		else if (userFree == 1) {
 			//User is in a match
@@ -143,6 +146,7 @@ void SendInviteScreen::update(float dt)
 		if (userAccept == -1) {
 			//Server hasn't responded yet
 			networkManager.CheckForIncomingDataFromServer();
+			return;
 		}
 		else if (userAccept == 1) {
 			//User declined match invitation
@@ -153,7 +157,9 @@ void SendInviteScreen::update(float dt)
 		}
 
 		//User has accepted match invitation
-
+		statusBar.text.setString("User accepted match invitation.");
+		awaitServerResponses = false;
+		return;
 	}
 }
 

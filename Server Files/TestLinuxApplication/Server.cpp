@@ -32,6 +32,9 @@ void Server::CheckForIncomingConnectionRequests() {
 	//Create new socket and check if there's a connection request
 	connectedNetworkManagers[connectedNetworkManagers.size()].setBlocking(false);
 	if (tcpListener.accept(connectedNetworkManagers[connectedNetworkManagers.size() - 1]) == sf::Socket::Done) {
+
+		std::cout << "NetworkManager (ip: " << connectedNetworkManagers[connectedNetworkManagers.size() - 1].getRemoteAddress() << ", " << connectedNetworkManagers[connectedNetworkManagers.size() - 1].getRemotePort() << ") connected to server.\n";
+
 		//Send network manager index back to network manager
 		sf::Packet outgoingPacket;
 		int networkManagerIndex{ static_cast<int>(connectedNetworkManagers.size() - 1) };
@@ -419,7 +422,8 @@ void Server::CheckForIncomingTCPData() {
 				std::string invitingClientUsername{ onlineUsers[i] }; //Username of the client that's sending the invitation
 				sf::Int32 invitingClientRanking{ onlineUserRankings[invitingClientUsername] }; //Ranking of the client that's sending the invitation
 				outgoingData << ReservedEntityIndexTable::MATCH_INVITATION_INTERRUPT << packetCode << invitingClientUsername << invitingClientRanking << i;
-				connectedNetworkManagers[invitedNetworkMangerIndex].send(outgoingData);
+				std::cout << "ADDR + PORT IS: " << connectedNetworkManagers[invitedNetworkMangerIndex].getRemoteAddress() << ", " << connectedNetworkManagers[invitedNetworkMangerIndex].getRemotePort() << '\n';
+				std::cout << "RETURN IS: " << connectedNetworkManagers[invitedNetworkMangerIndex].send(outgoingData) << '\n';
 			}
 
 
