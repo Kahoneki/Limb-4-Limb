@@ -13,6 +13,8 @@ class SceneManager;
 class OnlinePlayer;
 class NetworkManager;
 class TimeManager;
+template<typename ParentType>
+class NetworkListener;
 
 class NetworkScene : public BaseLevel
 {
@@ -25,6 +27,8 @@ public:
 	void update(float dt) override;
 	void HealthBarUpdate();
 	void render() override;
+
+	friend class NetworkListener<NetworkScene>;
 
 private:
 	SceneManager& sceneManager;
@@ -50,7 +54,10 @@ private:
 
 	int playerNum;
 
+	bool opponentSceneLoaded; //Stores whether or not the opponent's scene has been loaded yet - halt until this value is true to make sure one player can't start before the other
 	int opponentNetworkManagerIndex;
+
+	NetworkListener<NetworkScene>* networkListener;
 
 	void InitialiseScene();
 	void InitialisePlayers();

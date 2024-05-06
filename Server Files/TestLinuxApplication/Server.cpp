@@ -421,12 +421,65 @@ void Server::CheckForIncomingTCPData() {
 				packetCode = PacketCode::MatchInvitation;
 				std::string invitingClientUsername{ onlineUsers[i] }; //Username of the client that's sending the invitation
 				sf::Int32 invitingClientRanking{ onlineUserRankings[invitingClientUsername] }; //Ranking of the client that's sending the invitation
-				outgoingData << ReservedEntityIndexTable::MATCH_INVITATION_INTERRUPT << packetCode << invitingClientUsername << invitingClientRanking << i;
-				std::cout << "ADDR + PORT IS: " << connectedNetworkManagers[invitedNetworkMangerIndex].getRemoteAddress() << ", " << connectedNetworkManagers[invitedNetworkMangerIndex].getRemotePort() << '\n';
-				std::cout << "RETURN IS: " << connectedNetworkManagers[invitedNetworkMangerIndex].send(outgoingData) << '\n';
+				outgoingData << ReservedEntityIndexTable::MATCH_INVITATION_INTERRUPT << packetCode << invitingClientUsername << invitingClientRanking << i << ;
+				//std::cout << "ADDR + PORT IS: " << connectedNetworkManagers[invitedNetworkMangerIndex].getRemoteAddress() << ", " << connectedNetworkManagers[invitedNetworkMangerIndex].getRemotePort() << '\n';
+				//std::cout << "RETURN IS: " << connectedNetworkManagers[invitedNetworkMangerIndex].send(outgoingData) << '\n';
+				connectedNetworkManagers[invitedNetworkMangerIndex].send(outgoingData);
 			}
 
 
+			break;
+		}
+		case PacketCode::MatchAcceptanceClientToServer:
+		{
+			std::cout << "PacketCode: MatchAcceptanceClientToServer\n";
+			int networkListenerIndex;
+			sf::Int8 acceptance;
+			int opponentNetworkManagerIndex;
+
+			incomingData >> networkListenerIndex >> acceptance >> opponentNetworkManagerIndex;
+
+			std::cout << "Acceptance is: " << acceptance << '\n';
+
+			//Send acceptance status to inviting client
+			{
+				std::cout << "PacketCode: MatchAcceptanceServerToClient\n";
+				sf::Packet outgoingData;
+				packetCode = PacketCode::MatchAcceptanceServerToClient;
+				outgoingData << ReservedEntityIndexTable::SEND_INVITE_SCREEN << packetCode << acceptance;
+				connectedNetworkManagers[opponentNetworkManagerIndex].send(outgoingData);
+			}
+
+			if (acceptance == 0) {
+				//User has accepted match invitation, send both players their player numbers
+				sf::Int8 invitingClientPlayerNum{ (rand % 2) + 1 };
+				std::cout << "Inviting player num: " << invitingClientPlayerNum << '\n';
+				{
+					std::cout << "PacketCode: PlayerNum\n";
+					sf::Packet outgoingData;
+					packetCode = PacketCode::PlayerNum;
+					outgoingData << ReservedEntityIndexTable::SEND_INVITE_SCREEN << packetCode << playerNum;
+					connectedNetworkManagers[opponentNetworkManagerIndex].send(outgoingData);
+				}
+				sf::Int8 invitedClientPlayerNum{ 1 - invitingClientPlayerNum };
+				std::cout << "Invited player num: " << invitingClientPlayerNum << '\n';
+				{
+					std::cout << "PacketCode: PlayerNum\n";
+					sf::Packet outgoingData;
+					packetCode = PacketCode::PlayerNum;
+					outgoingData << networkListenerIndex << packetCode << playerNum;
+				}
+
+				//Add players to match map
+				matchedUsers[i] = opponentNetworkManagerIndex;
+			}
+
+			break;
+		}
+		case PacketCode::MatchSceneLoaded:
+		{
+			std::cout << "PacketCode: MatchSceneLoaded\n";
+			
 			break;
 		}
 		case PacketCode::KeyChange:

@@ -52,6 +52,11 @@ void SendInviteScreen::InitialiseCallbacks() {
 	onSendInviteButtonClick = [this]() {
 		if (!awaitServerResponses) {
 			displayStatusBar = true;
+			if (usernameBox.getTypedText() == AccountManager::getInstance().getUsername()) {
+				//User is trying to send a match invitation to themselves
+				statusBar.text.setString("Cannot send invitation to self.");
+				return;
+			}
 			awaitServerResponses = true;
 
 			if (!networkManager.getConnectedToServer()) {
@@ -158,7 +163,18 @@ void SendInviteScreen::update(float dt)
 
 		//User has accepted match invitation
 		statusBar.text.setString("User accepted match invitation.");
+		
+		//Wait to receive player num from server
+		if (playerNum == -1) {
+			//Server hasn't responded yet
+			networkManager.CheckForIncomingDataFromServer();
+			return;
+		}
+		
+		//Player num has been received
+
 		awaitServerResponses = false;
+
 		return;
 	}
 }

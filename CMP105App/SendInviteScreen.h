@@ -57,6 +57,7 @@ private:
 	sf::Int8 userFree;   //-1 = server hasn't responded yet, 0 = user free, 1 = user currently in match
 	sf::Int8 userAccept; //-1 = user hasn't responded yet, 0 = user accepted, 1 = user declined
 	int invitedUserNetworkManagerIndex; //The network manager index of the user that this client has sent an invitation to
+	int playerNum; //Player num of this client
 };
 
 #endif

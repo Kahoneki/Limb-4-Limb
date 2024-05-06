@@ -38,11 +38,10 @@ private:
 	
 	sf::Font font;
 	TextBox title;
-	
 	//Will only be displayed if player is logged in
 	TextBox username;
 	TextBox ranking;
-	
+	//--//
 
 	Button local;
 	Button online;

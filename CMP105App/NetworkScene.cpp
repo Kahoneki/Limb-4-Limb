@@ -3,7 +3,7 @@
 #include "OnlinePlayer.h"
 #include "NetworkManager.h"
 
-NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn, int oppNMI) : sceneManager(sm), networkManager(NetworkManager::getInstance(false)), timeManager(TimeManager::getInstance(240))
+NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn, int oppNMI) : sceneManager(sm), networkManager(NetworkManager::getInstance(true)), timeManager(TimeManager::getInstance(240))
 {
 	std::cout << "Loading network scene\n";
 
@@ -14,9 +14,26 @@ NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, 
 	timeUntilPlayersShouldStartUpdate = 0.5f;
 	playerStartUpdateTimeCountdown = timeUntilPlayersShouldStartUpdate;
 
+	opponentNetworkManagerIndex = oppNMI;
+	opponentSceneLoaded = -1;
+
+	networkListener = networkManager.GenerateNetworkListener(*this, NetworkManager::ReservedEntityIndexTable::NETWORK_SCENE);
+
 	InitialiseScene();
 	InitialisePlayers();
 	InitialiseHealthBars();
+
+	//Scene has finished loading, send MatchSceneLoaded packet to server and halt until opponent's scene has also loaded
+	sf::Packet outgoingPacket;
+	outgoingPacket << true;
+	networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, PacketCode::MatchSceneLoaded, outgoingPacket);
+	while (!opponentSceneLoaded) {
+		//Do nothing
+	}
+	//Opponent's scene has loaded
+
+	std::cout << "YOU ARE: PLAYER NUM " << playerNum << ", NMI: " << networkManager.getNetworkManagerIndex() << '\n';
+	std::cout << "OPPONENT IS: PLAYER NUM " << 1 - playerNum << ", NMI: " << opponentNetworkManagerIndex << '\n';
 
 	std::cout << "Loaded network scene\n";
 }

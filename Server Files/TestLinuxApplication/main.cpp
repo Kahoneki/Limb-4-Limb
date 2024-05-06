@@ -6,11 +6,17 @@
 #include "TimeManager.h"
 #include <iostream>
 
+//For generating random player numbers (i.e.: player 1 and player 2)
+#include <ctime>
+#include <random>
+
 void InitialiseDatabase();
 
 int main()
 {
     printf("hello from %s!\n", "TestLinuxApplication");
+
+    srand(time(null));
 
     sf::IpAddress serverIp{ "limbforlimb.duckdns.org" };
     unsigned short serverPort{ 6900 };

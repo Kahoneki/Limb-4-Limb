@@ -8,6 +8,7 @@
 #include "RegistrationScreen.h"
 #include "LoginScreen.h"
 #include "ColourPallete.h"
+#include "NetworkScene.h"
 
 
 MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), accountManager(AccountManager::getInstance()), matchInvitationInterrupt(MatchInvitationInterrupt::getInstance()), networkManager(NetworkManager::getInstance(false))
@@ -123,15 +124,26 @@ void MainMenu::handleInput(float dt)
 {
 	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
 
-	local.processEvents(mousePos);
-	online.processEvents(mousePos);
-	registration.processEvents(mousePos);
-	login.processEvents(mousePos);
-	switchOnlineStatus.processEvents(mousePos);
+	if (matchInvitationInterrupt.getInvitationReceived()) {
+		matchInvitationInterrupt.processEvents(mousePos);
+	}
+
+	else {
+		//Only allow user to interact with other buttons if there isn't currently a match invitation pop up
+		local.processEvents(mousePos);
+		online.processEvents(mousePos);
+		registration.processEvents(mousePos);
+		login.processEvents(mousePos);
+		switchOnlineStatus.processEvents(mousePos);
+	}
 }
 
 void MainMenu::update(float dt)
 {
+	if (matchInvitationInterrupt.getStartMatch()) {
+		//Open network scene to start match
+		NetworkScene* networkScene{ new NetworkScene(window, input, sceneManager, matchInvitationInterrupt.getPlayerNum(), matchInvitationInterrupt.getNetworkManagerIndex())};
+	}
 }
 
 void MainMenu::render()
@@ -146,9 +158,14 @@ void MainMenu::render()
 	window->draw(switchOnlineStatus);
 
 	if (accountManager.getUsername() != "N/A") { //N/A is default value
-		//Player is signed in
+		//User is signed in
 		window->draw(username);
 		window->draw(ranking);
+	}
+
+	if (matchInvitationInterrupt.getInvitationReceived()) {
+		//Match invitation has been received
+		window->draw(matchInvitationInterrupt);
 	}
 
 	endDraw();

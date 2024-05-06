@@ -10,6 +10,7 @@
 #include "LoginScreen.h"
 #include "SendInviteScreen.h"
 #include "MatchInvitationInterrupt.h"
+#include "NetworkScene.h"
 
 
 
@@ -162,11 +163,18 @@ public:
             parentReference.userFree = userFree;
             break;
         }
-        case PacketCode::MatchAcceptance:
+        case PacketCode::MatchAcceptanceServerToClient:
         {
             sf::Int8 acceptance;
             incomingData >> acceptance;
             parentReference.userAccept = acceptance;
+            break;
+        }
+        case PacketCode::PlayerNum:
+        {
+            sf::Int8 playerNum;
+            incomingData >> playerNum;
+            parentReference.playerNum = playerNum;
             break;
         }
         case PacketCode::InvitedUserNetworkManagerIndex:
@@ -208,11 +216,45 @@ public:
             parentReference.networkManagerIndex = networkManagerIndex;
             break;
         }
+        case PacketCode::PlayerNum:
+        {
+            sf::Int8 playerNum;
+            incomingData >> playerNum;
+            parentReference.playerNum = playerNum;
+            break;
+        }
         }
     }
 
 private:
     MatchInvitationInterrupt& parentReference;
+};
+
+
+
+template<>
+class NetworkListener<NetworkScene> : public BaseNetworkListener {
+public:
+    NetworkListener(NetworkScene& pr) : parentReference(pr) {}
+
+    void InterpretPacket(sf::Packet incomingData) {
+        std::underlying_type_t<PacketCode> code;
+        incomingData >> code;
+
+        switch (code)
+        {
+        case PacketCode::MatchSceneLoaded:
+        {
+            bool matchSceneLoaded{ false };
+            incomingData >> matchSceneLoaded;
+            parentReference.opponentSceneLoaded = matchSceneLoaded;
+            break;
+        }
+        }
+    }
+
+private:
+    NetworkScene& parentReference;
 };
 
 

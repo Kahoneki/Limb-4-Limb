@@ -2,7 +2,9 @@
 #define MATCH_INVITATION_INTERRUPT_H
 
 #include <string>
-#include "SFML/Graphics.hpp"
+#include "TextBox.h"
+#include "Button.h"
+#include <functional>
 
 template<typename ParentType>
 class NetworkListener;
@@ -16,28 +18,49 @@ class NetworkListener;
 //receiving user is currently on to be able to send a packet to that network listener. Instead, this class's network listener can hold a reserved spot which will be known to both clients and the server
 
 
-class MatchInvitationInterrupt
+class MatchInvitationInterrupt : public GameObject
 {
 public:
 	static MatchInvitationInterrupt& getInstance();
 
+	void processEvents(sf::Vector2f mousePos);
+
 	bool getInvitationReceived();
-	std::string getUsername();
-	sf::Int32 getRanking();
 	int getNetworkManagerIndex();
+	bool getStartMatch();
+	bool getPlayerNum();
+	//std::string getUsername();
+	//sf::Int32 getRanking();
 
 	friend class NetworkListener<MatchInvitationInterrupt>;
 
 private:
 	MatchInvitationInterrupt();
 	
+	TextBox popupBox;
+	Button acceptMatchInvitation;
+	Button declineMatchInvitation;
+
+	//Callbacks
+	std::function<void(void)> onAcceptMatchInvitationButtonClick;
+	std::function<void(void)> onDeclineMatchInvitationButtonClick;
+
+	void InitialiseCallbacks();
+
 	NetworkListener<MatchInvitationInterrupt>* networkListener;
-	bool invitationReceived;
+	bool invitationReceived; //Value set by network
 
 	//Information of the user that sent the invite - to be populated once invitation is received
 	std::string username;
 	sf::Int32 ranking;
-	int networkManagerIndex;
+	int networkManagerIndex; //Opponent's network manager index
+
+	int playerNum; //This player's player number (i.e. player 1 or player 2) - set by network
+
+	bool startMatch; //Set true when player num is set by network
+
+	//Override pure virtual draw function
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
 #endif

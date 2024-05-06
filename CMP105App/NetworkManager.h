@@ -21,6 +21,7 @@ public:
 		REGISTRATION_SCREEN,
 		LOGIN_SCREEN,
 		SEND_INVITE_SCREEN,
+		NETWORK_SCENE,
 
 		MATCH_INVITATION_INTERRUPT, //Add a network listener of this type to a class if it should receive match invitations
 
