@@ -421,7 +421,7 @@ void Server::CheckForIncomingTCPData() {
 				packetCode = PacketCode::MatchInvitation;
 				std::string invitingClientUsername{ onlineUsers[i] }; //Username of the client that's sending the invitation
 				sf::Int32 invitingClientRanking{ onlineUserRankings[invitingClientUsername] }; //Ranking of the client that's sending the invitation
-				outgoingData << ReservedEntityIndexTable::MATCH_INVITATION_INTERRUPT << packetCode << invitingClientUsername << invitingClientRanking << i << ;
+				outgoingData << ReservedEntityIndexTable::MATCH_INVITATION_INTERRUPT << packetCode << invitingClientUsername << invitingClientRanking << i;
 				//std::cout << "ADDR + PORT IS: " << connectedNetworkManagers[invitedNetworkMangerIndex].getRemoteAddress() << ", " << connectedNetworkManagers[invitedNetworkMangerIndex].getRemotePort() << '\n';
 				//std::cout << "RETURN IS: " << connectedNetworkManagers[invitedNetworkMangerIndex].send(outgoingData) << '\n';
 				connectedNetworkManagers[invitedNetworkMangerIndex].send(outgoingData);
@@ -452,22 +452,22 @@ void Server::CheckForIncomingTCPData() {
 
 			if (acceptance == 0) {
 				//User has accepted match invitation, send both players their player numbers
-				sf::Int8 invitingClientPlayerNum{ (rand % 2) + 1 };
+				sf::Int8 invitingClientPlayerNum{ static_cast<sf::Int8>((rand() % 2) + 1)};
 				std::cout << "Inviting player num: " << invitingClientPlayerNum << '\n';
 				{
 					std::cout << "PacketCode: PlayerNum\n";
 					sf::Packet outgoingData;
 					packetCode = PacketCode::PlayerNum;
-					outgoingData << ReservedEntityIndexTable::SEND_INVITE_SCREEN << packetCode << playerNum;
+					outgoingData << ReservedEntityIndexTable::SEND_INVITE_SCREEN << packetCode << invitingClientPlayerNum;
 					connectedNetworkManagers[opponentNetworkManagerIndex].send(outgoingData);
 				}
-				sf::Int8 invitedClientPlayerNum{ 1 - invitingClientPlayerNum };
+				sf::Int8 invitedClientPlayerNum{ static_cast<sf::Int8>(1 - invitingClientPlayerNum) };
 				std::cout << "Invited player num: " << invitingClientPlayerNum << '\n';
 				{
 					std::cout << "PacketCode: PlayerNum\n";
 					sf::Packet outgoingData;
 					packetCode = PacketCode::PlayerNum;
-					outgoingData << networkListenerIndex << packetCode << playerNum;
+					outgoingData << networkListenerIndex << packetCode << invitedClientPlayerNum;
 				}
 
 				//Add players to match map

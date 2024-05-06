@@ -16,7 +16,7 @@ int main()
 {
     printf("hello from %s!\n", "TestLinuxApplication");
 
-    srand(time(null));
+    srand(time(NULL));
 
     sf::IpAddress serverIp{ "limbforlimb.duckdns.org" };
     unsigned short serverPort{ 6900 };

@@ -1,5 +1,6 @@
 #include "SendInviteScreen.h"
 #include "MainMenu.h"
+#include "NetworkScene.h"
 #include "SceneManager.h"
 #include "NetworkManager.h"
 #include "ColourPallete.h"
@@ -171,7 +172,9 @@ void SendInviteScreen::update(float dt)
 			return;
 		}
 		
-		//Player num has been received
+		//Player num has been received, load network scene
+		NetworkScene* networkScene = new NetworkScene(window, input, sceneManager, playerNum, invitedUserNetworkManagerIndex);
+		sceneManager.LoadScene(networkScene);
 
 		awaitServerResponses = false;
 
