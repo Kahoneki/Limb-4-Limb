@@ -2,3 +2,4 @@
 /.x64
 /.CMP105App/x64
 /Server Files/TestLinuxApplication/.vs
+*.uuid
