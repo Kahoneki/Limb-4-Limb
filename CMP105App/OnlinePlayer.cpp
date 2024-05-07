@@ -1,13 +1,15 @@
 #include "OnlinePlayer.h"
 #include "NetworkManager.h"
 
-OnlinePlayer::OnlinePlayer(sf::Vector2f size, float acc, float ts, float js, int hp, int prot, int c1, bool flip, int pn, bool local) :
+OnlinePlayer::OnlinePlayer(sf::Vector2f size, float acc, float ts, float js, int hp, int prot, int c1, bool flip, int pn, bool local, int nmi) :
 	Player(size, acc, ts, js, hp, prot, c1, flip), networkManager(NetworkManager::getInstance(false)), timeManager (TimeManager::getInstance(240))
 {
 	verificationPacketTimer = 0;
 	verificationPacketCooldown = 100.0f;
 	playerNum = pn;
 	isLocal = local;
+	networkManagerIndex = nmi;
+	networkListenerIndex = (playerNum == 1) ? NetworkManager::ReservedEntityIndexTable::PLAYER_1 : NetworkManager::ReservedEntityIndexTable::PLAYER_2;
 	networkListener = networkManager.GenerateNetworkListener<OnlinePlayer>(*this, playerNum - 1);
 
 	for (int i{ 0 }; i < sizeof(prevKeyState)/sizeof(prevKeyState[0]); ++i) {
@@ -159,8 +161,6 @@ void OnlinePlayer::update(float dt) {
 
 
 void OnlinePlayer::SendUpdateDataToNetwork(std::vector<int> changedKeys) {
-	int networkListenerIndex{ playerNum - 1 };
-
 	for (int key : changedKeys) {
 		bool pressed = input->isKeyDown(key);
 		sf::Packet outgoingPacket;
@@ -170,11 +170,9 @@ void OnlinePlayer::SendUpdateDataToNetwork(std::vector<int> changedKeys) {
 }
 
 void OnlinePlayer::SendUpdateDataToNetwork(sf::Vector2f newPosition) {
-	int networkListenerIndex{ playerNum - 1 };
-
 	sf::Packet outgoingPacket;
 	outgoingPacket << newPosition.x << newPosition.y;
-	networkManager.SendDataToNetworkManager(networkListenerIndex, PacketCode::PositionChange, outgoingPacket);
+	networkManager.SendDataToNetworkManager(networkManagerIndex, networkListenerIndex, PacketCode::PositionChange, outgoingPacket);
 }
 
 
