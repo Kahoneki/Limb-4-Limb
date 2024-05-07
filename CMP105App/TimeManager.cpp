@@ -1,6 +1,6 @@
 #include "TimeManager.h"
 
-TimeManager& TimeManager::getInstance(int tps=30) {
+TimeManager& TimeManager::getInstance(int tps=240) {
 	static TimeManager instance(tps);
 	return instance;
 }

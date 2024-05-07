@@ -543,6 +543,7 @@ void Server::CheckForIncomingUDPData() {
 	{
 	case PacketCode::UDPConnect:
 	{
+		std::cout << "PacketCode: UDPConnect\n";
 		int networkManagerIndex;
 		incomingData >> networkManagerIndex;
 		connectedUdpPorts[networkManagerIndex] = incomingNetworkManagerPort;
