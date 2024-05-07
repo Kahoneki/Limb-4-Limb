@@ -97,6 +97,8 @@ bool NetworkManager::AttemptToDisconnectFromServer()
 void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
 	//Combine Packet code, NetworkManager index, and NetworkListener index into the data packet so it can be sent to the server
 
+	std::cout << "Outgoing NMI: " << outgoingNetworkManagerIndex << '\n';
+
 	sf::Packet outgoingPacket;
 	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(packetCode) << outgoingNetworkManagerIndex << networkListenerIndex;
 	switch (packetCode)
@@ -118,6 +120,16 @@ void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, i
 		incomingPacket >> pos.x >> pos.y;
 		outgoingPacket << pos.x << pos.y;
 		udpSocket.send(outgoingPacket, serverAddress, serverPort);
+
+		break;
+	}
+
+	case PacketCode::MatchSceneLoaded:
+	{
+		bool loaded;
+		incomingPacket >> loaded;
+		outgoingPacket << loaded;
+		tcpSocket.send(outgoingPacket);
 
 		break;
 	}
