@@ -6,6 +6,7 @@ enum PacketCode
 {
 
 	//NETWORKING//
+	UDPConnect,
 	RemoveNetworkManager,
 	OnlineCheck, //Periodically sent by server to make sure client is still online, if client receives this packet, they should send one back as a confirmation
 	//----//

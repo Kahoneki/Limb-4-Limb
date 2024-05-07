@@ -56,6 +56,7 @@ private:
 	std::string username;
 	sf::Int32 ranking;
 	int networkManagerIndex; //Opponent's network manager index
+	//----//
 
 	int playerNum; //This player's player number (i.e. player 1 or player 2) - set by network
 

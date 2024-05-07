@@ -45,6 +45,7 @@ private:
 	sf::TcpSocket tcpSocket;
 	sf::UdpSocket udpSocket;
 	std::map<int, sf::TcpSocket> connectedNetworkManagers; //Using a map instead of a vector for the unique property that map[map.size()] will create a new item, this is to work around sockets not being copyable
+	std::map<int, unsigned short> connectedUdpPorts; //Network Manager Index + Port that its UDP socket is bound to
 	std::map<int, std::string> onlineUsers; //Network Manager Index + Username that it's associated with
 	std::map<std::string, sf::Int32> onlineUserRankings; //Username + user's ranking
 	std::map<int, int> matchedUsers; //NMI + NMI combination of users that are currently in a match - order doesn't matter (if [a,b] is in a map, [b,a] won't be)

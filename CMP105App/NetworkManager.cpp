@@ -35,6 +35,8 @@ NetworkManager::NetworkManager(sf::IpAddress _serverAddress, unsigned short _ser
 	connectedToServer = false;
 	networkManagerIndex = -1;
 
+	udpSocket.bind(sf::Socket::AnyPort);
+
 	//Initialise networkListeners to x null pointers where x is the number of entities that hold a reserved spot within the vector
 	for (int i{ 0 }; i < ReservedEntityIndexTable::NUM_RESERVED_ENTITIES; ++i) {
 		networkListeners.push_back(nullptr);
@@ -59,15 +61,29 @@ bool NetworkManager::AttemptToConnectToServer()
 	}
 
 	//Get NetworkManager index from server
-	sf::Packet incomingData;
-	if (tcpSocket.receive(incomingData) != sf::Socket::Done) {
-		connectedToServer = false;
-		std::cerr << "Failed to connect to server." << std::endl;
+	{
+		sf::Packet incomingData;
+		if (tcpSocket.receive(incomingData) != sf::Socket::Done) {
+			connectedToServer = false;
+			std::cerr << "Failed to connect to server." << std::endl;
+		}
+		else {
+			std::cout << "Successfully connected to server.\n";
+			incomingData >> networkManagerIndex;
+			connectedToServer = true;
+		}
 	}
-	else {
-		std::cout << "Successfully connected to server.\n";
-		incomingData >> networkManagerIndex;
-		connectedToServer = true;
+
+	//Send udp packet to server (so that server can store the udp socket's port)
+	{
+		sf::Packet outgoingPacket;
+		outgoingPacket << static_cast<std::underlying_type_t<PacketCode>>(PacketCode::UDPConnect) << networkManagerIndex;
+		if (udpSocket.send(outgoingPacket, serverAddress, serverPort) != sf::Socket::Done) {
+			std::cerr << "Failed to send UDP packet to server." << std::endl;
+		}
+		else {
+			std::cout << "Successfully sent UDP packet to server.\n";
+		}
 	}
 
 	tcpSocket.setBlocking(false);
@@ -249,6 +265,7 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 				std::cerr << "NetworkManager (" << incomingAddress << ", " << incomingPort << ") is attempting to send data directly to this NetworkManager" << std::endl;
 			}
 		}
+	std::cout << udpSocket.receive(incomingData, incomingAddress, incomingPort) << '\n';
 	}
 	//----------------//
 }

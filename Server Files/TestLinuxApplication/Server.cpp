@@ -67,6 +67,7 @@ void Server::CheckForIncomingTCPData() {
 			
 			//Remove user from maps
 			connectedNetworkManagers.erase(i);
+			connectedUdpPorts.erase(i);
 			onlineUserRankings.erase(onlineUsers[i]);
 			onlineUsers.erase(i);
 			
@@ -422,8 +423,6 @@ void Server::CheckForIncomingTCPData() {
 				std::string invitingClientUsername{ onlineUsers[i] }; //Username of the client that's sending the invitation
 				sf::Int32 invitingClientRanking{ onlineUserRankings[invitingClientUsername] }; //Ranking of the client that's sending the invitation
 				outgoingData << ReservedEntityIndexTable::MATCH_INVITATION_INTERRUPT << packetCode << invitingClientUsername << invitingClientRanking << i;
-				//std::cout << "ADDR + PORT IS: " << connectedNetworkManagers[invitedNetworkMangerIndex].getRemoteAddress() << ", " << connectedNetworkManagers[invitedNetworkMangerIndex].getRemotePort() << '\n';
-				//std::cout << "RETURN IS: " << connectedNetworkManagers[invitedNetworkMangerIndex].send(outgoingData) << '\n';
 				connectedNetworkManagers[invitedNetworkMangerIndex].send(outgoingData);
 			}
 
@@ -453,7 +452,7 @@ void Server::CheckForIncomingTCPData() {
 			if (acceptance == 0) {
 				//User has accepted match invitation, send both players their player numbers
 				sf::Int8 invitingClientPlayerNum{ static_cast<sf::Int8>((rand() % 2) + 1)};
-				std::cout << "Inviting player num: " << invitingClientPlayerNum << '\n';
+				std::cout << "Inviting player num: " << static_cast<int>(invitingClientPlayerNum) << '\n';
 				{
 					std::cout << "PacketCode: PlayerNum\n";
 					sf::Packet outgoingData;
@@ -462,7 +461,7 @@ void Server::CheckForIncomingTCPData() {
 					connectedNetworkManagers[opponentNetworkManagerIndex].send(outgoingData);
 				}
 				sf::Int8 invitedClientPlayerNum{ static_cast<sf::Int8>((invitingClientPlayerNum == 1) ? 2 : 1) };
-				std::cout << "Invited player num: " << invitingClientPlayerNum << '\n';
+				std::cout << "Invited player num: " << static_cast<int>(invitedClientPlayerNum) << '\n';
 				{
 					std::cout << "PacketCode: PlayerNum\n";
 					sf::Packet outgoingData;
@@ -480,6 +479,15 @@ void Server::CheckForIncomingTCPData() {
 		case PacketCode::MatchSceneLoaded:
 		{
 			std::cout << "PacketCode: MatchSceneLoaded\n";
+			int networkManagerIndex;
+			int networkListenerIndex;
+			bool loaded;
+			incomingData >> networkManagerIndex >> networkListenerIndex >> loaded;
+			
+			sf::Packet outgoingData;
+			outgoingData << networkListenerIndex << packetCode << loaded;
+			std::cout << "This packet is being sent to ip: " << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << '\n';
+			connectedNetworkManagers[networkManagerIndex].send(outgoingData);
 			
 			break;
 		}
@@ -533,6 +541,13 @@ void Server::CheckForIncomingUDPData() {
 	incomingData >> packetCode;
 	switch (packetCode)
 	{
+	case PacketCode::UDPConnect:
+	{
+		int networkManagerIndex;
+		incomingData >> networkManagerIndex;
+		connectedUdpPorts[networkManagerIndex] = incomingNetworkManagerPort;
+		break;
+	}
 	case PacketCode::PositionChange:
 	{
 
@@ -551,12 +566,13 @@ void Server::CheckForIncomingUDPData() {
 		//Validate data (make sure NetworkManager is trying to send data to an ip+port that is in the array and make sure NetworkManager isn't trying to send themselves data. possibly other checks also.)
 		if ((networkManagerIndex >= connectedNetworkManagers.size()) || (connectedNetworkManagers[networkManagerIndex].getRemoteAddress() == incomingNetworkManagerAddress)) {
 			std::cerr << "NetworkManager (ip: " << incomingNetworkManagerAddress << ", " << incomingNetworkManagerPort << ") tried to send a message to an invalid NetworkManager!" << std::endl;
+			std::cerr << "NETWORK MANAGER INDEX IS: " << networkManagerIndex << '\n';
 			break;
 		}
 
 		//Send data to NetworkManager
-		udpSocket.send(outgoingData, connectedNetworkManagers[networkManagerIndex].getRemoteAddress(), connectedNetworkManagers[networkManagerIndex].getRemotePort());
-		std::cout << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << ' ' << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << '\n';
+		std::cout << "STATUS: " << udpSocket.send(outgoingData, connectedNetworkManagers[networkManagerIndex].getRemoteAddress(), connectedUdpPorts[networkManagerIndex]) << '\n';
+		std::cout << incomingNetworkManagerAddress << ' ' << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << connectedUdpPorts[networkManagerIndex] << '\n';
 
 		break;
 	}
