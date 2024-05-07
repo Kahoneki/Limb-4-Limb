@@ -1,7 +1,7 @@
 #include "MatchInvitationInterrupt.h"
 #include "NetworkManager.h"
 #include "ColourPallete.h"
-#include "NetworkScene.h"
+#include <format>
 
 MatchInvitationInterrupt& MatchInvitationInterrupt::getInstance()
 {
@@ -11,19 +11,22 @@ MatchInvitationInterrupt& MatchInvitationInterrupt::getInstance()
 
 MatchInvitationInterrupt::MatchInvitationInterrupt()
 {
-	sf::Font font;
+	InitialiseCallbacks();
+
 	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
-	popupBox = TextBox(300, 300, 1320, 480, INACTIVEBOXCOLOUR, TEXTCOLOUR, 40, font, "INCOMING MATCH INVITATION\nUSER: \nRANKING: ");
+	popupBox = TextBox(500, 400, 920, 280, INACTIVEBOXCOLOUR, TEXTCOLOUR, 40, font, "INCOMING MATCH INVITATION\nUSER: \nRANKING: ");
 	acceptMatchInvitation = Button(500, 800, 300, 100, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 40, font, onAcceptMatchInvitationButtonClick, "ACCEPT");
-	acceptMatchInvitation = Button(1200, 800, 300, 100, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 40, font, onDeclineMatchInvitationButtonClick, "DECLINE");
+	declineMatchInvitation = Button(1200, 800, 300, 100, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 40, font, onDeclineMatchInvitationButtonClick, "DECLINE");
 
 	networkListener = NetworkManager::getInstance(false).GenerateNetworkListener(*this, NetworkManager::ReservedEntityIndexTable::MATCH_INVITATION_INTERRUPT);
 	invitationReceived = false;
+	valuesSet = false;
 	username = "N/A";
 	ranking = -1;
 	networkManagerIndex = -1;
 	playerNum = -1;
 	startMatch = false;
+
 }
 
 void MatchInvitationInterrupt::InitialiseCallbacks()
@@ -32,11 +35,11 @@ void MatchInvitationInterrupt::InitialiseCallbacks()
 		sf::Packet outgoingPacket;
 		sf::Int8 acceptance{ 0 };
 		outgoingPacket << acceptance << networkManagerIndex;
-		NetworkManager::getInstance(true).SendDataToServer(-1, PacketCode::MatchAcceptanceClientToServer, outgoingPacket);
+		NetworkManager::getInstance(true).SendDataToServer(NetworkManager::ReservedEntityIndexTable::MATCH_INVITATION_INTERRUPT, PacketCode::MatchAcceptanceClientToServer, outgoingPacket);
 		
 		//Halt until player num is received from server
 		while (playerNum == -1) {
-			//Do nothing
+			NetworkManager::getInstance(false).CheckForIncomingDataFromServer();
 		}
 		startMatch = true;
 	};
@@ -52,6 +55,12 @@ void MatchInvitationInterrupt::InitialiseCallbacks()
 
 void MatchInvitationInterrupt::processEvents(sf::Vector2f mousePos)
 {
+
+	if (invitationReceived && !valuesSet) {
+		popupBox.text.setString(std::format("INCOMING MATCH INVITATION\nUSER: {}\nRANKING: {}", username, ranking));
+		valuesSet = true;
+	}
+
 	acceptMatchInvitation.processEvents(mousePos);
 	declineMatchInvitation.processEvents(mousePos);
 }

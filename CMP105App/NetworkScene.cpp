@@ -28,12 +28,12 @@ NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, 
 	outgoingPacket << true;
 	networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, PacketCode::MatchSceneLoaded, outgoingPacket);
 	while (!opponentSceneLoaded) {
-		//Do nothing
+		networkManager.CheckForIncomingDataFromServer();
 	}
 	//Opponent's scene has loaded
 
 	std::cout << "YOU ARE: PLAYER NUM " << playerNum << ", NMI: " << networkManager.getNetworkManagerIndex() << '\n';
-	std::cout << "OPPONENT IS: PLAYER NUM " << 1 - playerNum << ", NMI: " << opponentNetworkManagerIndex << '\n';
+	std::cout << "OPPONENT IS: PLAYER NUM " << ((playerNum == 1) ? 2 : 1) << ", NMI: " << opponentNetworkManagerIndex << '\n';
 
 	std::cout << "Loaded network scene\n";
 }

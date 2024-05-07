@@ -43,7 +43,6 @@ InputBox::InputBox(float posX, float posY, float sizeX, float sizeY, sf::Color f
 	backspaceCooldownTimer = 0.0f;
 
 	mousePressedLastFrame = true;
-
 }
 
 

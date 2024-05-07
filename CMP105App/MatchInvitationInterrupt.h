@@ -37,6 +37,7 @@ public:
 private:
 	MatchInvitationInterrupt();
 	
+	sf::Font font;
 	TextBox popupBox;
 	Button acceptMatchInvitation;
 	Button declineMatchInvitation;
@@ -49,6 +50,7 @@ private:
 
 	NetworkListener<MatchInvitationInterrupt>* networkListener;
 	bool invitationReceived; //Value set by network
+	bool valuesSet; //True if username and ranking field have been set
 
 	//Information of the user that sent the invite - to be populated once invitation is received
 	std::string username;

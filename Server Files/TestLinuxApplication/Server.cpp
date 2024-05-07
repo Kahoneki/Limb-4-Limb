@@ -439,7 +439,7 @@ void Server::CheckForIncomingTCPData() {
 
 			incomingData >> networkListenerIndex >> acceptance >> opponentNetworkManagerIndex;
 
-			std::cout << "Acceptance is: " << acceptance << '\n';
+			std::cout << "Acceptance is: " << static_cast<int>(acceptance) << '\n';
 
 			//Send acceptance status to inviting client
 			{
@@ -461,13 +461,14 @@ void Server::CheckForIncomingTCPData() {
 					outgoingData << ReservedEntityIndexTable::SEND_INVITE_SCREEN << packetCode << invitingClientPlayerNum;
 					connectedNetworkManagers[opponentNetworkManagerIndex].send(outgoingData);
 				}
-				sf::Int8 invitedClientPlayerNum{ static_cast<sf::Int8>(1 - invitingClientPlayerNum) };
+				sf::Int8 invitedClientPlayerNum{ static_cast<sf::Int8>((invitingClientPlayerNum == 1) ? 2 : 1) };
 				std::cout << "Invited player num: " << invitingClientPlayerNum << '\n';
 				{
 					std::cout << "PacketCode: PlayerNum\n";
 					sf::Packet outgoingData;
 					packetCode = PacketCode::PlayerNum;
 					outgoingData << networkListenerIndex << packetCode << invitedClientPlayerNum;
+					connectedNetworkManagers[i].send(outgoingData);
 				}
 
 				//Add players to match map
