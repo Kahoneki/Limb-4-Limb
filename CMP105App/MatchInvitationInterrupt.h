@@ -37,6 +37,7 @@ public:
 private:
 	MatchInvitationInterrupt();
 	
+	sf::Font font;
 	TextBox popupBox;
 	Button acceptMatchInvitation;
 	Button declineMatchInvitation;

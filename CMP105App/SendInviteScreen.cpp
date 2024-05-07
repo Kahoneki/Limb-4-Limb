@@ -39,6 +39,7 @@ SendInviteScreen::SendInviteScreen(sf::RenderWindow* hwnd, Input* in, SceneManag
 	userFree = -1;
 	userAccept = -1;
 	invitedUserNetworkManagerIndex = -1;
+	playerNum = -1;
 
 	std::cout << "Loaded send invite screen\n";
 }

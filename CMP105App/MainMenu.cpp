@@ -55,7 +55,6 @@ MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneM
 		switchOnlineStatus.text.setString("GO ONLINE");
 	}
 
-
 	std::cout << "Loaded main menu\n";
 }
 
@@ -143,6 +142,7 @@ void MainMenu::update(float dt)
 	if (matchInvitationInterrupt.getStartMatch()) {
 		//Open network scene to start match
 		NetworkScene* networkScene{ new NetworkScene(window, input, sceneManager, matchInvitationInterrupt.getPlayerNum(), matchInvitationInterrupt.getNetworkManagerIndex())};
+		sceneManager.LoadScene(networkScene);
 	}
 }
 
