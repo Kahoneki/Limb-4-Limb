@@ -265,7 +265,6 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 				std::cerr << "NetworkManager (" << incomingAddress << ", " << incomingPort << ") is attempting to send data directly to this NetworkManager" << std::endl;
 			}
 		}
-	std::cout << udpSocket.receive(incomingData, incomingAddress, incomingPort) << '\n';
 	}
 	//----------------//
 }
