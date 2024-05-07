@@ -55,7 +55,6 @@ MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneM
 		switchOnlineStatus.text.setString("GO ONLINE");
 	}
 
-
 	std::cout << "Loaded main menu\n";
 }
 
