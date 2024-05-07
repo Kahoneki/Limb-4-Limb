@@ -8,7 +8,7 @@ OnlinePlayer::OnlinePlayer(sf::Vector2f size, float acc, float ts, float js, int
 	verificationPacketCooldown = 100.0f;
 	playerNum = pn;
 	isLocal = local;
-	networkManagerIndex = nmi;
+	opponentNetworkManagerIndex = nmi;
 	networkListenerIndex = (playerNum == 1) ? NetworkManager::ReservedEntityIndexTable::PLAYER_1 : NetworkManager::ReservedEntityIndexTable::PLAYER_2;
 	networkListener = networkManager.GenerateNetworkListener<OnlinePlayer>(*this, playerNum - 1);
 
@@ -165,14 +165,14 @@ void OnlinePlayer::SendUpdateDataToNetwork(std::vector<int> changedKeys) {
 		bool pressed = input->isKeyDown(key);
 		sf::Packet outgoingPacket;
 		outgoingPacket << pressed << key;
-		networkManager.SendDataToNetworkManager(networkListenerIndex, PacketCode::KeyChange, outgoingPacket);
+		networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, networkListenerIndex, PacketCode::KeyChange, outgoingPacket);
 	}
 }
 
 void OnlinePlayer::SendUpdateDataToNetwork(sf::Vector2f newPosition) {
 	sf::Packet outgoingPacket;
 	outgoingPacket << newPosition.x << newPosition.y;
-	networkManager.SendDataToNetworkManager(networkManagerIndex, networkListenerIndex, PacketCode::PositionChange, outgoingPacket);
+	networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, networkListenerIndex, PacketCode::PositionChange, outgoingPacket);
 }
 
 

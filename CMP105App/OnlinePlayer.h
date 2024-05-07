@@ -26,7 +26,7 @@ public:
 private:
 	int playerNum; //e.g. Player 1, Player 2, etc.
 	bool isLocal; //True if this player is controlled by this client, false if controlled by another client
-	int networkManagerIndex; //The nmi associated with this player
+	int opponentNetworkManagerIndex; //The nmi associated with this player's opponent (the nmi that local data will be sent to) - WILL BE -1 IF PLAYER ISN'T LOCAL (since online players shouldn't send data locally)
 	int networkListenerIndex; //The nli associated with this player
 	
 	TimeManager& timeManager;

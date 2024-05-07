@@ -248,6 +248,7 @@ public:
             bool matchSceneLoaded{ false };
             incomingData >> matchSceneLoaded;
             parentReference.opponentSceneLoaded = matchSceneLoaded;
+            std::cout << "Opponent match scene loaded: " << matchSceneLoaded << '\n';
             break;
         }
         }
