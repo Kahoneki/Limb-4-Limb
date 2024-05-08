@@ -139,16 +139,6 @@ void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, i
 
 		break;
 	}
-
-	case PacketCode::MatchSceneLoaded:
-	{
-		bool loaded;
-		incomingPacket >> loaded;
-		outgoingPacket << loaded;
-		tcpSocket.send(outgoingPacket);
-
-		break;
-	}
 	}
 	namespace c = std::chrono;
 	uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
@@ -209,6 +199,15 @@ void NetworkManager::SendDataToServer(int networkListenerIndex, PacketCode packe
 		incomingPacket >> acceptance >> networkManagerIndex;
 		outgoingPacket << acceptance << networkManagerIndex;
 		tcpSocket.send(outgoingPacket);
+		break;
+	}
+	case PacketCode::MatchSceneLoaded:
+	{
+		bool loaded;
+		incomingPacket >> loaded;
+		outgoingPacket << loaded;
+		tcpSocket.send(outgoingPacket);
+		
 		break;
 	}
 	}

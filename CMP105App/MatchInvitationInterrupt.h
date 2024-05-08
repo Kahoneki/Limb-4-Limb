@@ -27,8 +27,9 @@ public:
 
 	bool getInvitationReceived();
 	int getNetworkManagerIndex();
-	bool getStartMatch();
-	bool getPlayerNum();
+	bool getReadyToLoadScene();
+	bool getOpponentSceneLoaded();
+	int getPlayerNum();
 	//std::string getUsername();
 	//sf::Int32 getRanking();
 
@@ -60,7 +61,8 @@ private:
 
 	int playerNum; //This player's player number (i.e. player 1 or player 2) - set by network
 
-	bool startMatch; //Set true when player num is set by network
+	bool readyToLoadScene; //Set true when player num is set by network
+	bool opponentSceneLoaded; //Set by network when the opponent's network scene has finished loading
 
 	//Override pure virtual draw function
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;

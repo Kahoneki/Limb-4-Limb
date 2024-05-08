@@ -44,7 +44,8 @@ enum PacketCode
 	MatchAcceptanceClientToServer, //Stores whether user accepts/denies match invitation and the nmi of the user that invited them - sending from client to server
 	MatchAcceptanceServerToClient, //Stores whether user accepts/denies match invitation - sending from server to client
 	PlayerNum, //Stores a player number (i.e.: player 1 or player 2)
-	MatchSceneLoaded, //Sent when match scene is loaded - to make sure scene is loaded on both client's machine before match starts
+	MatchSceneLoaded, //Sent by client when match scene is loaded - to make sure scene is loaded on both client's machine before match starts
+	MatchStart, //Sent by server once both matched users have sent a positive-status MatchSceneLoaded packet to tell them to start the match
 	MatchWin, //Sent if player wins - it is assumed that this means the other player has lost. This packet should only be sent by one of the two clients (the one which has won)
 	//----//
 

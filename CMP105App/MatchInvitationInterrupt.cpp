@@ -41,7 +41,8 @@ void MatchInvitationInterrupt::InitialiseCallbacks()
 		while (playerNum == -1) {
 			NetworkManager::getInstance(false).CheckForIncomingDataFromServer();
 		}
-		startMatch = true;
+		std::cout << "PLAYER NUM: " << playerNum << '\n';
+		readyToLoadScene = true;
 	};
 	onDeclineMatchInvitationButtonClick = [this]() {
 		sf::Packet outgoingPacket;
@@ -77,9 +78,11 @@ bool MatchInvitationInterrupt::getInvitationReceived() { return invitationReceiv
 
 int MatchInvitationInterrupt::getNetworkManagerIndex() { return networkManagerIndex; }
 
-bool MatchInvitationInterrupt::getPlayerNum() { return playerNum; }
+int MatchInvitationInterrupt::getPlayerNum() { return playerNum; }
 
-bool MatchInvitationInterrupt::getStartMatch() { return startMatch; }
+bool MatchInvitationInterrupt::getReadyToLoadScene() { return readyToLoadScene; }
+
+bool MatchInvitationInterrupt::getOpponentSceneLoaded() { return opponentSceneLoaded; }
 
 
 //std::string MatchInvitationInterrupt::getUsername() { return username; }

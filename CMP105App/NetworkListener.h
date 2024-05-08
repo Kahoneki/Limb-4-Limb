@@ -243,12 +243,9 @@ public:
 
         switch (code)
         {
-        case PacketCode::MatchSceneLoaded:
+        case PacketCode::MatchStart:
         {
-            bool matchSceneLoaded{ false };
-            incomingData >> matchSceneLoaded;
-            parentReference.opponentSceneLoaded = matchSceneLoaded;
-            std::cout << "Opponent match scene loaded: " << matchSceneLoaded << '\n';
+            parentReference.matchStart = true;
             break;
         }
         }

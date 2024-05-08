@@ -15,7 +15,7 @@ NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, 
 	playerStartUpdateTimeCountdown = timeUntilPlayersShouldStartUpdate;
 
 	opponentNetworkManagerIndex = oppNMI;
-	opponentSceneLoaded = false;
+	matchStart = false;
 
 	networkListener = networkManager.GenerateNetworkListener(*this, NetworkManager::ReservedEntityIndexTable::NETWORK_SCENE);
 
@@ -26,8 +26,8 @@ NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, 
 	//Scene has finished loading, send MatchSceneLoaded packet to server and halt until opponent's scene has also loaded
 	sf::Packet outgoingPacket;
 	outgoingPacket << true;
-	networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, NetworkManager::ReservedEntityIndexTable::NETWORK_SCENE, PacketCode::MatchSceneLoaded, outgoingPacket);
-	while (!opponentSceneLoaded) {
+	networkManager.SendDataToServer(-1, PacketCode::MatchSceneLoaded, outgoingPacket);
+	while (!matchStart) {
 		networkManager.CheckForIncomingDataFromServer();
 	}
 	//Opponent's scene has loaded

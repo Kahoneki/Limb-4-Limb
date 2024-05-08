@@ -54,7 +54,7 @@ private:
 
 	int playerNum;
 
-	bool opponentSceneLoaded; //Stores whether or not the opponent's scene has been loaded yet - halt until this value is true to make sure one player can't start before the other
+	bool matchStart; //Stores whether or not both players' scenes have been loaded - halt until this value is true to make sure one player can't start before the other
 	int opponentNetworkManagerIndex;
 
 	NetworkListener<NetworkScene>* networkListener;

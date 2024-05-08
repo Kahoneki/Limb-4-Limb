@@ -478,17 +478,33 @@ void Server::CheckForIncomingTCPData() {
 		}
 		case PacketCode::MatchSceneLoaded:
 		{
+
 			std::cout << "PacketCode: MatchSceneLoaded\n";
-			int networkManagerIndex;
-			int networkListenerIndex;
 			bool loaded;
-			incomingData >> networkManagerIndex >> networkListenerIndex >> loaded;
-			
-			sf::Packet outgoingData;
-			outgoingData << networkListenerIndex << packetCode << loaded;
-			std::cout << "This packet is being sent to ip: " << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << '\n';
-			connectedNetworkManagers[networkManagerIndex].send(outgoingData);
-			
+			incomingData >> loaded;
+
+			//Add loaded state to userMatchSceneLoaded
+			userMatchSceneLoaded[i] = loaded;
+
+			//Check if both users' match scenes have finished loading
+			int opponentNMI{ GetOpponentNMI(i) };
+			if (opponentNMI != -1) {
+				//Opponent user found
+				if (userMatchSceneLoaded[i] && userMatchSceneLoaded[opponentNMI]) {
+					//Both scenes have loaded
+					std::cout << "PacketCode: MatchStart\n";
+					sf::Packet outgoingData;
+					int networkListenerIndex{ ReservedEntityIndexTable::NETWORK_SCENE };
+					packetCode = PacketCode::MatchStart;
+					outgoingData << networkListenerIndex << packetCode;
+					connectedNetworkManagers[i].send(outgoingData);
+					connectedNetworkManagers[opponentNMI].send(outgoingData);
+				}
+			}
+			else {
+				std::cerr << "Failed to find opponent of nmi " << i << std::endl;
+			}
+
 			break;
 		}
 		case PacketCode::KeyChange:
@@ -622,4 +638,20 @@ bool Server::AccountExists(std::string username)
 	sqlite3_finalize(usernameExistsStmt);
 	sqlite3_close(db);
 	return usernameExists;
+}
+
+
+
+int Server::GetOpponentNMI(int nmi)
+{
+	for (std::map<int, int>::iterator it{ matchedUsers.begin() }; it < matchedUsers.end(); ++it) {
+		if (it->first == nmi) {
+			return it->second;
+		}
+		else if (it->second == nmi) {
+			return it->first;
+		}
+	}
+	//User not found
+	return -1;
 }

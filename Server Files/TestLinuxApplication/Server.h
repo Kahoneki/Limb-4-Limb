@@ -49,8 +49,10 @@ private:
 	std::map<int, std::string> onlineUsers; //Network Manager Index + Username that it's associated with
 	std::map<std::string, sf::Int32> onlineUserRankings; //Username + user's ranking
 	std::map<int, int> matchedUsers; //NMI + NMI combination of users that are currently in a match - order doesn't matter (if [a,b] is in a map, [b,a] won't be)
+	std::map<int, bool> userMatchSceneLoaded; //NMI + true/false whether the user's match scene has loaded (to ensure that both user's scenes have loaded before the match starts)
 
 	bool AccountExists(std::string username); //Searches the database for provided username and returns whether it was found or not
+	int GetOpponentNMI(int nmi); //Get nmi of the provided nmi's opponent
 };
 
 
