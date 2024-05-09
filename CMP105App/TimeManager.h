@@ -17,7 +17,7 @@ public:
 	
 	float getDeltaTime();
 
-	static constexpr int PhysicsClockFramerate{ 240 };
+	static constexpr int PhysicsClockFramerate{ 30 };
 
 private:
 	TimeManager(int tps = 240);
