@@ -55,11 +55,6 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 
 
 	else {
-		for (const auto& a : keyIsPressed) {
-			if (a.second) {
-				std::cout << a.first << " is enabled\n";
-			}
-		}
 		if (dodgeFramesLeft) { actionable = false; }
 
 		//-----COMBAT-----//
@@ -124,32 +119,32 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 			}
 		}
 
-		//Dodging
-		if (!dodgeCooldownFramesLeft && !dodgeButtonPressed) {
-			if (keyIsPressed[dodge] && mostRecentDirectionKeycode != -1) {
-				dodgeButtonPressed = true;
-				if (mostRecentDirectionKeycode == left) {
-					dodgeFramesLeft = totalDodgeFrames;
-					setVelocity(-dodgeVelocity, getVelocity().y);
-				}
-				else if (mostRecentDirectionKeycode == right) {
-					dodgeFramesLeft = totalDodgeFrames;
-					setVelocity(dodgeVelocity, getVelocity().y);
-				}
-			}
-		}
-		if (dodgeButtonPressed && !keyIsPressed[dodge] && !dodgeFramesLeft) {
-			dodgeButtonPressed = false;
-		}
+		////Dodging
+		//if (!dodgeCooldownFramesLeft && !dodgeButtonPressed) {
+		//	if (keyIsPressed[dodge] && mostRecentDirectionKeycode != -1) {
+		//		dodgeButtonPressed = true;
+		//		if (mostRecentDirectionKeycode == left) {
+		//			dodgeFramesLeft = totalDodgeFrames;
+		//			setVelocity(-dodgeVelocity, getVelocity().y);
+		//		}
+		//		else if (mostRecentDirectionKeycode == right) {
+		//			dodgeFramesLeft = totalDodgeFrames;
+		//			setVelocity(dodgeVelocity, getVelocity().y);
+		//		}
+		//	}
+		//}
+		//if (dodgeButtonPressed && !keyIsPressed[dodge] && !dodgeFramesLeft) {
+		//	dodgeButtonPressed = false;
+		//}
 
 
-		//Player is in air, so bring them towards ground
-		if (!isGrounded && !(velocity.y == terminalVelocity)) {
-			velocity.y -= acceleration * dt;
-		}
-		if (velocity.y < terminalVelocity) {
-			velocity.y = terminalVelocity;
-		}
+		////Player is in air, so bring them towards ground
+		//if (!isGrounded && !(velocity.y == terminalVelocity)) {
+		//	velocity.y -= acceleration * dt;
+		//}
+		//if (velocity.y < terminalVelocity) {
+		//	velocity.y = terminalVelocity;
+		//}
 	}
 }
 

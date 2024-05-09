@@ -20,7 +20,7 @@ public:
 	static constexpr int PhysicsClockFramerate{ 240 };
 
 private:
-	TimeManager(int tps = 30);
+	TimeManager(int tps = 240);
 
 	sf::Clock clock;
 
