@@ -136,7 +136,6 @@ void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, i
 		incomingPacket >> pos.x >> pos.y;
 		outgoingPacket << pos.x << pos.y;
 		udpSocket.send(outgoingPacket, serverAddress, serverPort);
-
 		break;
 	}
 
@@ -146,14 +145,17 @@ void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, i
 		incomingPacket >> isGrounded;
 		outgoingPacket << isGrounded;
 		tcpSocket.send(outgoingPacket);
+		break;
 	}
 
 	case PacketCode::Flip:
 	{
+		std::cout << "FLIP\n";
 		bool flip;
 		incomingPacket >> flip;
 		outgoingPacket << flip;
 		tcpSocket.send(outgoingPacket);
+		break;
 	}
 
 	}

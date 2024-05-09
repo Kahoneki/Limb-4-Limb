@@ -125,41 +125,18 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 				crouched = false;
 			}
 		}
-
-
-		////Dodging
-		//if (!dodgeCooldownFramesLeft && !dodgeButtonPressed) {
-		//	if (keyIsPressed[dodge] && mostRecentDirectionKeycode != -1) {
-		//		dodgeButtonPressed = true;
-		//		if (mostRecentDirectionKeycode == left) {
-		//			dodgeFramesLeft = totalDodgeFrames;
-		//			setVelocity(-dodgeVelocity, getVelocity().y);
-		//		}
-		//		else if (mostRecentDirectionKeycode == right) {
-		//			dodgeFramesLeft = totalDodgeFrames;
-		//			setVelocity(dodgeVelocity, getVelocity().y);
-		//		}
-		//	}
-		//}
-		//if (dodgeButtonPressed && !keyIsPressed[dodge] && !dodgeFramesLeft) {
-		//	dodgeButtonPressed = false;
-		//}
-
-
-		////Player is in air, so bring them towards ground
-		//if (!isGrounded && !(velocity.y == terminalVelocity)) {
-		//	velocity.y -= acceleration * dt;
-		//}
-		//if (velocity.y < terminalVelocity) {
-		//	velocity.y = terminalVelocity;
-		//}
 	}
 }
 
 
 void OnlinePlayer::update(float dt) {
 	if (isLocal) {
+		bool flippedAtStartOfFrame{ flipped };
 		Player::update(dt);
+		//Check if flipped state has changed - send this change to the server
+		if (flippedAtStartOfFrame != flipped) {
+			SendUpdateDataToNetwork(flipped);
+		}
 	}
 	else {
 

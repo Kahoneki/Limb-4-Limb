@@ -64,6 +64,7 @@ public:
             bool flipped;
             incomingData >> flipped;
             parentReference.flipped = flipped;
+            parentReference.setScale(flipped ? -1 : 1, 1);
             break;
         }
 
