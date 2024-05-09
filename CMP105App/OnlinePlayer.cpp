@@ -60,7 +60,7 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 		//-----COMBAT-----//
 		if (actionable) {
 			if (!crouched) {
-				if (keyIsPressed[jab]) {
+				if (keyIsPressed[kick]) {
 					attacks[0].setAttacking(true);
 				}
 				if (keyIsPressed[sweep]) {
@@ -240,6 +240,9 @@ void OnlinePlayer::update(float dt) {
 void OnlinePlayer::SendUpdateDataToNetwork(std::vector<int> changedKeys) {
 	for (int key : changedKeys) {
 		bool pressed = input->isKeyDown(key);
+
+		std::cout << key << ' ' << pressed << '\n';
+
 		sf::Packet outgoingPacket;
 		outgoingPacket << pressed << key;
 		networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, networkListenerIndex, PacketCode::KeyChange, outgoingPacket);
