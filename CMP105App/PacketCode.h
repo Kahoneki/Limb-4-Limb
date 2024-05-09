@@ -16,6 +16,7 @@ enum PacketCode
 	KeyChange,
 	PositionChange,
 	Grounded,
+	Flip,
 	//----//
 
 

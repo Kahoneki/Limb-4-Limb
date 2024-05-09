@@ -59,6 +59,14 @@ public:
             break;
         }
         
+        case PacketCode::Flip:
+        {
+            bool flipped;
+            incomingData >> flipped;
+            parentReference.flipped = flipped;
+            break;
+        }
+
         }
     }
 

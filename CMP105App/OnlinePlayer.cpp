@@ -21,6 +21,8 @@ OnlinePlayer::OnlinePlayer(sf::Vector2f size, float acc, float ts, float js, int
 void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down, int dodge, int jab, int kick, int sweep, int upper) {
 	if (isLocal) {
 
+		bool flippedAtStartOfFrame{ flipped };
+
 		//Compare keys pressed this frame to keys pressed last frame, if they're different, send the differences to the network manager
 
 		int keys[6] { down, dodge, jab, kick, sweep, upper };
@@ -50,6 +52,11 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 		if (prevPosition != getPosition()) {
 			SendUpdateDataToNetwork(getPosition());
 			prevPosition = getPosition();
+		}
+
+		//Check if flipped state has changed - send this change to the server
+		if (flippedAtStartOfFrame != flipped) {
+			SendUpdateDataToNetwork(flipped);
 		}
 	}
 
@@ -253,6 +260,12 @@ void OnlinePlayer::SendUpdateDataToNetwork(sf::Vector2f newPosition) {
 	sf::Packet outgoingPacket;
 	outgoingPacket << newPosition.x << newPosition.y;
 	networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, networkListenerIndex, PacketCode::PositionChange, outgoingPacket);
+}
+
+void OnlinePlayer::SendUpdateDataToNetwork(bool flipped) {
+	sf::Packet outgoingPacket;
+	outgoingPacket << flipped;
+	networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, networkListenerIndex, PacketCode::Flip, outgoingPacket);
 }
 
 
