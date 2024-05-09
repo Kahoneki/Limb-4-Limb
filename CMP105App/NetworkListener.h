@@ -50,6 +50,14 @@ public:
             parentReference.setPosition(pos);
             break;
         }
+
+        case PacketCode::Grounded:
+        {
+            bool grounded;
+            incomingData >> grounded;
+            parentReference.isGrounded = grounded;
+            break;
+        }
         
         }
     }

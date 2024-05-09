@@ -133,7 +133,18 @@ void NetworkScene::update(float dt) {
 		OnlinePlayer* p1 = players[playerIndex];	 //Defending player
 		OnlinePlayer* p2 = players[1 - playerIndex]; //Attacking player
 
+		bool isGroundedBeforePlatformCollisionCheck{ p1->getGrounded() };
 		PlatformCollisionCheck(p1);
+		bool isGroundedAfterPlatformCollisionCheck{ p1->getGrounded() };
+		bool playerIsLocal{ p1->getPlayerNum() == playerNum };
+
+		if (isGroundedBeforePlatformCollisionCheck != isGroundedAfterPlatformCollisionCheck && playerIsLocal) {
+			//Send new grounded data to opponent
+			sf::Packet outgoingPacket;
+			outgoingPacket << isGroundedAfterPlatformCollisionCheck;
+			networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, (playerNum == 1) ? NetworkManager::ReservedEntityIndexTable::PLAYER_1 : NetworkManager::ReservedEntityIndexTable::PLAYER_2, PacketCode::Grounded, outgoingPacket);
+		}
+
 
 		//Defending player has invincibility frames left, continue to the next player
 		if (p1->getInvincibilityFramesLeft())
@@ -152,6 +163,7 @@ void NetworkScene::update(float dt) {
 
 
 void NetworkScene::PlatformCollisionCheck(OnlinePlayer* player) {
+	
 	//Loop through all platforms
 	for (int i{ 0 }; i < sizeof(platforms) / sizeof(platforms[0]); ++i) {
 

@@ -15,6 +15,7 @@ enum PacketCode
 	//GAMEPLAY//
 	KeyChange,
 	PositionChange,
+	Grounded,
 	//----//
 
 

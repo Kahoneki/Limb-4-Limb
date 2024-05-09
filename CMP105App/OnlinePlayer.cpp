@@ -119,6 +119,7 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 			}
 		}
 
+
 		////Dodging
 		//if (!dodgeCooldownFramesLeft && !dodgeButtonPressed) {
 		//	if (keyIsPressed[dodge] && mostRecentDirectionKeycode != -1) {

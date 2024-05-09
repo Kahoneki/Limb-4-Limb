@@ -139,6 +139,15 @@ void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, i
 
 		break;
 	}
+
+	case PacketCode::Grounded:
+	{
+		bool isGrounded;
+		incomingPacket >> isGrounded;
+		outgoingPacket << isGrounded;
+		tcpSocket.send(outgoingPacket);
+	}
+
 	}
 	namespace c = std::chrono;
 	uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();

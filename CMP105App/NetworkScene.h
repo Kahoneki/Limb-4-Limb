@@ -52,7 +52,7 @@ private:
 	float timeUntilPlayersShouldStartUpdate; //In seconds
 	float playerStartUpdateTimeCountdown;
 
-	int playerNum;
+	int playerNum; //Player num of local player
 
 	bool matchStart; //Stores whether or not both players' scenes have been loaded - halt until this value is true to make sure one player can't start before the other
 	int opponentNetworkManagerIndex;

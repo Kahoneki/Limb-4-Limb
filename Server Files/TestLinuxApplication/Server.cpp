@@ -534,6 +534,32 @@ void Server::CheckForIncomingTCPData() {
 
 			break;
 		}
+		case PacketCode::Grounded:
+		{
+			std::cout << "PacketCode: Grounded\n";
+
+			//Separate packet, networkManagerIndex, and networkListenerIndex from incoming data
+			int networkManagerIndex;
+			int networkListenerIndex;
+			bool grounded;
+			incomingData >> networkManagerIndex >> networkListenerIndex >> grounded;
+
+			//Add networkListenerIndex, packetCode, and data to outgoingData
+			sf::Packet outgoingData;
+			outgoingData << networkListenerIndex << packetCode << grounded;
+
+			//Validate data (make sure NetworkManager is trying to send data to an ip+port that is in the array and make sure NetworkManager isn't trying to send themselves data)
+			if ((networkManagerIndex >= connectedNetworkManagers.size()) || (connectedNetworkManagers[networkManagerIndex].getRemoteAddress() == connectedNetworkManagers[i].getRemoteAddress())) {
+				std::cerr << "NetworkManager (ip: " << connectedNetworkManagers[i].getRemoteAddress() << ", " << connectedNetworkManagers[i].getRemotePort() << ") tried to send a message to an invalid NetworkManager!" << std::endl;
+				continue;
+			}
+
+			//Send data to NetworkManager
+			std::cout << "\n\n( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << "\n\n";
+			connectedNetworkManagers[networkManagerIndex].send(outgoingData);
+
+			break;
+		}
 		default:
 		{
 			std::cerr << "Packet code uninterpretable." << std::endl;
