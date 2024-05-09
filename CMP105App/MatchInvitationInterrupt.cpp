@@ -25,7 +25,6 @@ MatchInvitationInterrupt::MatchInvitationInterrupt()
 	ranking = -1;
 	networkManagerIndex = -1;
 	playerNum = -1;
-	startMatch = false;
 
 }
 
@@ -81,8 +80,6 @@ int MatchInvitationInterrupt::getNetworkManagerIndex() { return networkManagerIn
 int MatchInvitationInterrupt::getPlayerNum() { return playerNum; }
 
 bool MatchInvitationInterrupt::getReadyToLoadScene() { return readyToLoadScene; }
-
-bool MatchInvitationInterrupt::getOpponentSceneLoaded() { return opponentSceneLoaded; }
 
 
 //std::string MatchInvitationInterrupt::getUsername() { return username; }

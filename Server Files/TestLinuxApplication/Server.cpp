@@ -644,7 +644,7 @@ bool Server::AccountExists(std::string username)
 
 int Server::GetOpponentNMI(int nmi)
 {
-	for (std::map<int, int>::iterator it{ matchedUsers.begin() }; it < matchedUsers.end(); ++it) {
+	for (std::map<int, int>::iterator it{ matchedUsers.begin() }; it != matchedUsers.end(); ++it) {
 		if (it->first == nmi) {
 			return it->second;
 		}

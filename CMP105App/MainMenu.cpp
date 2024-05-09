@@ -142,9 +142,6 @@ void MainMenu::update(float dt)
 	if (matchInvitationInterrupt.getReadyToLoadScene()) {
 		//Open network scene to start match
 		NetworkScene* networkScene{ new NetworkScene(window, input, sceneManager, matchInvitationInterrupt.getPlayerNum(), matchInvitationInterrupt.getNetworkManagerIndex())};
-		while (!matchInvitationInterrupt.getOpponentSceneLoaded()) {
-			networkManager.CheckForIncomingDataFromServer();
-		}
 		sceneManager.LoadScene(networkScene);
 	}
 }
