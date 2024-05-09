@@ -151,7 +151,88 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 
 
 void OnlinePlayer::update(float dt) {
-	Player::update(dt);
+	if (isLocal) {
+		Player::update(dt);
+	}
+	else {
+
+		effectiveCollider = getGlobalBounds();
+		effectiveCollider.left += colliderShrinkage.x;
+		effectiveCollider.top += colliderShrinkage.y;
+		effectiveCollider.width -= colliderShrinkage.x * 2;
+		effectiveCollider.height -= colliderShrinkage.y * 2;
+
+		//Vertical - check if player has fallen off map
+		int deathPlaneLevel{ 1920 };
+		if (getPosition().y - getSize().y / 2 > deathPlaneLevel) {
+			health = 0;
+		}
+
+		actionable = true;
+		for (int i{}; i < 4; ++i) {
+			if (attacks[i].getAttacking()) {
+				attacks[i].strike(dt, getPosition().x, getPosition().y, flipped, crouched);
+				actionable = false;
+			}
+		}
+
+		if ((invincibilityFramesLeft || dodgeFramesLeft) && getFillColor().a != 128) {
+			setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128)); //Make transparent
+		}
+		else if (!(invincibilityFramesLeft || dodgeFramesLeft) && getFillColor().a != 255) {
+			setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 255)); //Restore to full transparency
+		}
+
+		//Check if player is being knocked back but has hit the ground again
+		if (hasKnockback && isGrounded) {
+			hasKnockback = false;
+		}
+
+		//Check if limbs are to be destroyed
+		for (int i{}; i < 4; ++i) {
+			activeLimbs[i] = health >= 20 * (i + 1);
+			UpdateTextures();
+		}
+
+
+		if (updateTextures) {
+			updateTextures = false;
+
+			//Clear the render texture
+			playerRenderTexture->clear(sf::Color::Transparent);
+
+			//Draw base
+			playerRenderTexture->draw(*basePlayerSprite);
+			playerRenderTexture->display();
+
+			//Draw limbs
+			for (int i{}; i < 4; ++i) {
+				if (activeLimbs[i]) {
+					//Draw alive limb
+					playerRenderTexture->draw(*aliveLimbSprites[i]);
+				}
+				else {
+					//Draw dead limb
+					playerRenderTexture->draw(*deadLimbSprites[i]);
+				}
+			}
+			playerRenderTexture->display();
+			setTexture(&playerRenderTexture->getTexture());
+		}
+
+		if (invincibilityFramesLeft > 0) { invincibilityFramesLeft -= TimeManager::PhysicsClockFramerate * dt; }
+		else if (invincibilityFramesLeft < 0) { invincibilityFramesLeft = 0; }
+
+		if (dodgeFramesLeft > 0) { dodgeFramesLeft -= TimeManager::PhysicsClockFramerate * dt; }
+		else if (dodgeFramesLeft < 0) {
+			dodgeFramesLeft = 0;
+			velocity.x = 0;
+			dodgeCooldownFramesLeft = dodgeCooldownFrames;
+		}
+
+		if (dodgeCooldownFramesLeft > 0) { dodgeCooldownFramesLeft -= TimeManager::PhysicsClockFramerate * dt; }
+		else if (dodgeCooldownFramesLeft < 0) { dodgeCooldownFramesLeft = 0; }
+	}
 }
 
 
