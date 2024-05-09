@@ -148,6 +148,14 @@ void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, i
 		tcpSocket.send(outgoingPacket);
 	}
 
+	case PacketCode::Flip:
+	{
+		bool flip;
+		incomingPacket >> flip;
+		outgoingPacket << flip;
+		tcpSocket.send(outgoingPacket);
+	}
+
 	}
 	namespace c = std::chrono;
 	uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
