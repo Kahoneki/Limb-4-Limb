@@ -1,7 +1,6 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include "NetworkNode.h"
 #include "SFML/Network.hpp"
 #include <string>
 #include <map>

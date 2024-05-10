@@ -1,4 +1,5 @@
 #include "Server.h"
+#include "PacketCode.h"
 #include <algorithm> //For std::find
 #include <iostream>
 #include <random>
@@ -24,7 +25,7 @@ Server::Server(sf::IpAddress _ip, unsigned short _port) {
 	std::cout << "UDP successfully bound to port.\n";
 	udpSocket.setBlocking(false);
 
-	timeBetweenTimeoutCheckPackets = 10;
+	timeBetweenTimeoutCheckPackets = 5;
 }
 
 
@@ -53,22 +54,25 @@ void Server::CheckForIncomingConnectionRequests() {
 
 void Server::CheckForIncomingTCPData(float dt) {
 	//Loop through all connected tcp sockets to see if data is being received
+		std::cout << connectedNetworkManagers.size() << ' ' << connectedUdpPorts.size() << ' ' << onlineUserRankings.size() << ' ' << onlineUsers.size() << ' ' << '\n';
 	for (int i{ 0 }; i < connectedNetworkManagers.size(); ++i) {
+
 
 		//Update and check status of client's time-until-timeout packet
 		timeUntilNextTimeoutCheckPacket[i] -= dt;
 		if (timeUntilNextTimeoutCheckPacket[i] <= 0) {
 			sf::Packet timeoutCheckPacket;
+			timeoutCheckPacket << -1; //-1 = discarded by client
 			if (connectedNetworkManagers[i].send(timeoutCheckPacket) != sf::Socket::Done) {
 				//Failed to send timeout packet, disconnect user
-				std::cout << "Failed to send timeout packet. Disconnecting client " << onlineUsers[i] << '\n';
+				std::cout << "Failed to send timeout packet. Disconnecting client\n";
 				DisconnectUser(i);
 				continue;
 			}
-			//Successfully sent timeout packet, reset timer
-
-			std::cout << "Successfully sent timeout packet to " << onlineUsers[i];
-			timeUntilNextTimeoutCheckPacket[i] = timeBetweenTimeoutCheckPackets;
+			else {
+				//Successfully sent timeout packet, reset timer
+				timeUntilNextTimeoutCheckPacket[i] = timeBetweenTimeoutCheckPackets;
+			}
 		}
 
 		sf::Packet incomingData;
@@ -684,17 +688,21 @@ void Server::CheckForIncomingUDPData() {
 
 void Server::DisconnectUser(int nmi)
 {
-	//Check if user is in match - if so, end the match and award a win to their opponent
-	int opponentNMI{ GetOpponentNMI(i) };
-	if (opponentNMI != -1) {
-		//User in match - award win to opponent
-		AwardMatchWin(opponentNMI);
+	if (onlineUsers.find(nmi) != onlineUsers.end()) {
+		//User is logged in, log them out
+		onlineUserRankings.erase(onlineUsers[nmi]);
+		onlineUsers.erase(nmi);
+
+		//Check if user is in match - if so, end the match and award a win to their opponent
+		int opponentNMI{ GetOpponentNMI(nmi) };
+		if (opponentNMI != -1) {
+			//User in match - award win to opponent
+			AwardMatchWin(opponentNMI);
+		}
 	}
 
-	connectedNetworkManagers.erase(i);
-	connectedUdpPorts.erase(i);
-	onlineUserRankings.erase(onlineUsers[i]);
-	onlineUsers.erase(i);
+	connectedNetworkManagers.erase(nmi);
+	connectedUdpPorts.erase(nmi);
 }
 
 
@@ -759,8 +767,8 @@ void Server::AwardMatchWin(int winningNMI)
 	int losingNMI{ GetOpponentNMI(winningNMI) };
 
 	//+30 rank to winner and -30 rank to loser
-	onlineUserRankings[winningNMI] += 30;
-	onlineUserRankings[losingNMI] -= 30;
+	onlineUserRankings[onlineUsers[winningNMI]] += 30;
+	onlineUserRankings[onlineUsers[losingNMI]] -= 30;
 
 	//Loop through both players to update ranking in database and send MatchEnd packet
 	//Open database
@@ -781,7 +789,7 @@ void Server::AwardMatchWin(int winningNMI)
 		}
 
 		//Bind ranking and username to statement
-		sqlite3_bind_text(rankUpdateStmt, 1, std::to_string(onlineUserRankings[nmi]).c_str(), -1, SQLITE_TRANSIENT);
+		sqlite3_bind_text(rankUpdateStmt, 1, std::to_string(onlineUserRankings[onlineUsers[nmi]]).c_str(), -1, SQLITE_TRANSIENT);
 		sqlite3_bind_text(rankUpdateStmt, 2, onlineUsers[nmi].c_str(), -1, SQLITE_TRANSIENT);
 
 		//Run statement
@@ -797,12 +805,12 @@ void Server::AwardMatchWin(int winningNMI)
 			return;
 		}
 
-		sqlite3_finalize(usernameExistsStmt);
+		sqlite3_finalize(rankUpdateStmt);
 
 
 		//Send MatchEnd packet to client
 		sf::Packet outgoingPacket;
-		outgoingPacket << ReservedEntityIndexTable::NETWORK_SCENE << PacketCode::MatchEnd << winningNMI << onlineUserRankings[nmi];
+		outgoingPacket << ReservedEntityIndexTable::NETWORK_SCENE << PacketCode::MatchEnd << winningNMI << onlineUserRankings[onlineUsers[nmi]];
 		connectedNetworkManagers[nmi].send(outgoingPacket);
 	}
 

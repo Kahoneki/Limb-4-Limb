@@ -26,11 +26,12 @@ int main()
     InitialiseDatabase();
 
     while (true) {
-        //if (timeManager.UpdateAndCheckNetworkTickStatus()) {
+        if (timeManager.UpdateAndCheckNetworkTickStatus()) {
             server->CheckForIncomingConnectionRequests();
-            server->CheckForIncomingTCPData();
+            server->CheckForIncomingTCPData(timeManager.getDeltaTime());
             server->CheckForIncomingUDPData();
-	    //}
+            timeManager.UpdateDeltaTime();
+	    }
     }
 
     return 0;

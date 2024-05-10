@@ -250,7 +250,8 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 
 			//Extract networkListenerIndex and send rest of packet to appropriate network listener
 			int networkListenerIndex;
-			if (incomingData >> networkListenerIndex) {
+			incomingData >> networkListenerIndex;
+			if (networkListenerIndex != -1) {
 				if (networkListeners[networkListenerIndex] != nullptr) {
 					networkListeners[networkListenerIndex]->InterpretPacket(incomingData);
 				}
