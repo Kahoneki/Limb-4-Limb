@@ -1,0 +1,7 @@
+﻿  Scanning sources for module dependencies...
+  Generating code
+  5 of 2049 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    9 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  CMP105App.vcxproj -> C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\x64\Release\CMP105App.exe

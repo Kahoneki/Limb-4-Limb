@@ -8,7 +8,6 @@ enum PacketCode
 	//NETWORKING//
 	UDPConnect,
 	RemoveNetworkManager,
-	OnlineCheck, //Periodically sent by server to make sure client is still online, if client receives this packet, they should send one back as a confirmation
 	//----//
 
 
@@ -48,7 +47,8 @@ enum PacketCode
 	PlayerNum, //Stores a player number (i.e.: player 1 or player 2)
 	MatchSceneLoaded, //Sent by client when match scene is loaded - to make sure scene is loaded on both client's machine before match starts
 	MatchStart, //Sent by server once both matched users have sent a positive-status MatchSceneLoaded packet to tell them to start the match
-	MatchWin, //Sent if player wins - it is assumed that this means the other player has lost. This packet should only be sent by one of the two clients (the one which has won)
+	MatchWin, //Sent by client if player wins - it is assumed that this means the other player has lost. This packet should only be sent by one of the two clients (the one which has won)
+	MatchEnd, //Sent by server once match has ended (if client sends MatchWin packet or disconnects), holds winning player's nmi and client's new ranking
 	//----//
 
 };

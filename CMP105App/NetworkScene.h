@@ -57,6 +57,12 @@ private:
 	bool matchStart; //Stores whether or not both players' scenes have been loaded - halt until this value is true to make sure one player can't start before the other
 	int opponentNetworkManagerIndex;
 
+	//Set by server when match is over
+	bool matchEnd;
+	int winningPlayerNMI;
+	int updatedRanking;
+	//----//
+
 	NetworkListener<NetworkScene>* networkListener;
 
 	void InitialiseScene();

@@ -24,6 +24,7 @@ Server::Server(sf::IpAddress _ip, unsigned short _port) {
 	std::cout << "UDP successfully bound to port.\n";
 	udpSocket.setBlocking(false);
 
+	timeBetweenTimeoutCheckPackets = 10;
 }
 
 
@@ -40,6 +41,8 @@ void Server::CheckForIncomingConnectionRequests() {
 		int networkManagerIndex{ static_cast<int>(connectedNetworkManagers.size() - 1) };
 		outgoingPacket << networkManagerIndex;
 		connectedNetworkManagers[connectedNetworkManagers.size() - 1].send(outgoingPacket);
+
+		timeUntilNextTimeoutCheckPacket[networkManagerIndex] = timeBetweenTimeoutCheckPackets;
 	}
 	else {
 		//No connection request, remove from map
@@ -48,9 +51,26 @@ void Server::CheckForIncomingConnectionRequests() {
 }
 
 
-void Server::CheckForIncomingTCPData() {
+void Server::CheckForIncomingTCPData(float dt) {
 	//Loop through all connected tcp sockets to see if data is being received
 	for (int i{ 0 }; i < connectedNetworkManagers.size(); ++i) {
+
+		//Update and check status of client's time-until-timeout packet
+		timeUntilNextTimeoutCheckPacket[i] -= dt;
+		if (timeUntilNextTimeoutCheckPacket[i] <= 0) {
+			sf::Packet timeoutCheckPacket;
+			if (connectedNetworkManagers[i].send(timeoutCheckPacket) != sf::Socket::Done) {
+				//Failed to send timeout packet, disconnect user
+				std::cout << "Failed to send timeout packet. Disconnecting client " << onlineUsers[i] << '\n';
+				DisconnectUser(i);
+				continue;
+			}
+			//Successfully sent timeout packet, reset timer
+
+			std::cout << "Successfully sent timeout packet to " << onlineUsers[i];
+			timeUntilNextTimeoutCheckPacket[i] = timeBetweenTimeoutCheckPackets;
+		}
+
 		sf::Packet incomingData;
 		if (connectedNetworkManagers[i].receive(incomingData) != sf::Socket::Done) { continue; } //No data being received from this socket, continue to the next one
 
@@ -65,13 +85,9 @@ void Server::CheckForIncomingTCPData() {
 			std::cout << "PacketCode: RemoveNetworkManager\n";
 			std::cout << "NetworkManager (ip: " << connectedNetworkManagers[i].getRemoteAddress() << ", " << connectedNetworkManagers[i].getRemotePort() << ") disconnected from server.\n";
 			
-			//Remove user from maps
-			connectedNetworkManagers.erase(i);
-			connectedUdpPorts.erase(i);
-			onlineUserRankings.erase(onlineUsers[i]);
-			onlineUsers.erase(i);
+			DisconnectUser(i);
 			
-			return;
+			continue;
 		}
 		case PacketCode::UsernameRegister:
 		{
@@ -499,12 +515,23 @@ void Server::CheckForIncomingTCPData() {
 					outgoingData << networkListenerIndex << packetCode;
 					connectedNetworkManagers[i].send(outgoingData);
 					connectedNetworkManagers[opponentNMI].send(outgoingData);
+
+					//Erase entries from userMatchSceneLoaded map
+					userMatchSceneLoaded.erase(i);
+					userMatchSceneLoaded.erase(opponentNMI);
 				}
 			}
 			else {
 				std::cerr << "Failed to find opponent of nmi " << i << std::endl;
 			}
 
+			break;
+		}
+		case PacketCode::MatchWin:
+		{
+			std::cout << "PacketCode: MatchWin\n";
+			std::cout << "Winning player: " << onlineUsers[i];
+			AwardMatchWin(i);
 			break;
 		}
 		case PacketCode::KeyChange:
@@ -529,7 +556,7 @@ void Server::CheckForIncomingTCPData() {
 			}
 
 			//Send data to NetworkManager
-			std::cout << "\n\n( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << "\n\n";
+			std::cout << "( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << '\n';
 			connectedNetworkManagers[networkManagerIndex].send(outgoingData);
 
 			break;
@@ -555,7 +582,7 @@ void Server::CheckForIncomingTCPData() {
 			}
 
 			//Send data to NetworkManager
-			std::cout << "\n\n( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << "\n\n";
+			std::cout << "( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << '\n';
 			connectedNetworkManagers[networkManagerIndex].send(outgoingData);
 
 			break;
@@ -581,7 +608,7 @@ void Server::CheckForIncomingTCPData() {
 			}
 
 			//Send data to NetworkManager
-			std::cout << "\n\n( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << "\n\n";
+			std::cout << "( " << connectedNetworkManagers[i].getRemoteAddress() << "): This packet is being sent to network manager at ip " << connectedNetworkManagers[networkManagerIndex].getRemoteAddress() << '\n';
 			connectedNetworkManagers[networkManagerIndex].send(outgoingData);
 
 			break;
@@ -655,6 +682,23 @@ void Server::CheckForIncomingUDPData() {
 
 
 
+void Server::DisconnectUser(int nmi)
+{
+	//Check if user is in match - if so, end the match and award a win to their opponent
+	int opponentNMI{ GetOpponentNMI(i) };
+	if (opponentNMI != -1) {
+		//User in match - award win to opponent
+		AwardMatchWin(opponentNMI);
+	}
+
+	connectedNetworkManagers.erase(i);
+	connectedUdpPorts.erase(i);
+	onlineUserRankings.erase(onlineUsers[i]);
+	onlineUsers.erase(i);
+}
+
+
+
 bool Server::AccountExists(std::string username)
 {
 	//Open database
@@ -706,4 +750,62 @@ int Server::GetOpponentNMI(int nmi)
 	}
 	//User not found
 	return -1;
+}
+
+
+
+void Server::AwardMatchWin(int winningNMI)
+{
+	int losingNMI{ GetOpponentNMI(winningNMI) };
+
+	//+30 rank to winner and -30 rank to loser
+	onlineUserRankings[winningNMI] += 30;
+	onlineUserRankings[losingNMI] -= 30;
+
+	//Loop through both players to update ranking in database and send MatchEnd packet
+	//Open database
+	sqlite3* db;
+	sqlite3_open("LimbForLimbDatabase.db", &db);
+	int nmis[2]{ winningNMI, losingNMI };
+	for (int nmi : nmis) {
+		
+		std::string rankUpdateQuery{ "UPDATE AccountRanking SET Ranking = ? WHERE Username = ?" };
+
+		//Compile statement
+		sqlite3_stmt* rankUpdateStmt;
+		if (sqlite3_prepare_v2(db, rankUpdateQuery.c_str(), -1, &rankUpdateStmt, NULL) != SQLITE_OK) {
+			std::cerr << "Error preparing statement:" << sqlite3_errmsg(db) << std::endl;
+			//Dont forget to close the database
+			sqlite3_close(db);
+			exit(-1);
+		}
+
+		//Bind ranking and username to statement
+		sqlite3_bind_text(rankUpdateStmt, 1, std::to_string(onlineUserRankings[nmi]).c_str(), -1, SQLITE_TRANSIENT);
+		sqlite3_bind_text(rankUpdateStmt, 2, onlineUsers[nmi].c_str(), -1, SQLITE_TRANSIENT);
+
+		//Run statement
+		int result = sqlite3_step(rankUpdateStmt);
+
+		if (result == SQLITE_ROW) {
+			std::cout << "Successfully updated player's ranking in database\n.";
+
+		}
+		else {
+			//Error
+			std::cerr << "Unable to parse result, result value is: " << result << std::endl;
+			return;
+		}
+
+		sqlite3_finalize(usernameExistsStmt);
+
+
+		//Send MatchEnd packet to client
+		sf::Packet outgoingPacket;
+		outgoingPacket << ReservedEntityIndexTable::NETWORK_SCENE << PacketCode::MatchEnd << winningNMI << onlineUserRankings[nmi];
+		connectedNetworkManagers[nmi].send(outgoingPacket);
+	}
+
+	//Don't forget to close the database... -_-
+	sqlite3_close(db);
 }

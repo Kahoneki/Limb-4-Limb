@@ -2,6 +2,7 @@
 #include "EndScreen.h"
 #include "OnlinePlayer.h"
 #include "NetworkManager.h"
+#include "AccountManager.h"
 
 NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn, int oppNMI) : sceneManager(sm), networkManager(NetworkManager::getInstance(true)), timeManager(TimeManager::getInstance(240))
 {
@@ -16,6 +17,10 @@ NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, 
 
 	opponentNetworkManagerIndex = oppNMI;
 	matchStart = false;
+
+	matchEnd = false;
+	winningPlayerNMI = -1;
+	updatedRanking = -1;
 
 	networkListener = networkManager.GenerateNetworkListener(*this, NetworkManager::ReservedEntityIndexTable::NETWORK_SCENE);
 
@@ -156,8 +161,16 @@ void NetworkScene::update(float dt) {
 	}
 	HealthBarUpdate();
 
-	if (timeManager.UpdateAndCheckNetworkTickStatus()) {
-		networkManager.CheckForIncomingDataFromServer();
+
+	if (matchEnd) {
+		std::cout << "Winner: " << (winningPlayerNMI == opponentNetworkManagerIndex) ? "Opponent. :|\n" : "Me! :]\n";
+		std::cout << "New ranking: " << updatedRanking << '\n';
+		AccountManager accountManager{ AccountManager::getInstance() };
+		accountManager.setValues(accountManager.getUsername(), updatedRanking);
+
+		//TEMP: GO BACK TO MAIN MENU
+		MainMenu* mainMenu{ new MainMenu(window, input, sceneManager) };
+		sceneManager.LoadScene(mainMenu);
 	}
 }
 
@@ -394,9 +407,11 @@ void NetworkScene::HealthBarUpdate() {
 	HealthBarFront2.setSize(sf::Vector2f(Calc2, HealthBarFront1.getSize().y));
 	HealthBarFront2.setPosition((1920 - Calc2 - 37), 37);
 
-	if (players[0]->getHealth() <= 0 || players[1]->getHealth() <= 0) {
-		EndScreen* endScreen = new EndScreen(window, input, sceneManager, players[0]->getHealth() > 0);
-		sceneManager.LoadScene(endScreen);
+	OnlinePlayer* localPlayer{ players[playerNum-1] };
+	if (localPlayer->getHealth() <= 0) {
+		//Local player has won, send MatchWin packet to server
+		sf::Packet emptyPacket;
+		networkManager.SendDataToServer(NetworkManager::ReservedEntityIndexTable::NETWORK_SCENE, PacketCode::MatchWin, emptyPacket);
 	}
 }
 

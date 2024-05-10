@@ -22,7 +22,6 @@ public:
 	bool getCrouched();
 	int getHealth();
 	int getMaxHealth();
-	int getProtection();
 	bool getLimbActivity(int index);
 	int getLimbRotation(int index);
 	bool getActionable();

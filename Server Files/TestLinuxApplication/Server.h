@@ -33,7 +33,7 @@ public:
 
 	//----To be called every network tick//
 	void CheckForIncomingConnectionRequests();
-	void CheckForIncomingTCPData();
+	void CheckForIncomingTCPData(float dt);
 	void CheckForIncomingUDPData();
 	//----//
 
@@ -41,18 +41,23 @@ private:
 	sf::IpAddress serverAddress;
 	unsigned short serverPort;
 
+	float timeBetweenTimeoutCheckPackets; //Unique to each connected client, every timeBetweenTimeoutCheckPackets seconds, a packet will be sent to the client to ensure they're still online
+
 	sf::TcpListener tcpListener;
 	sf::TcpSocket tcpSocket;
 	sf::UdpSocket udpSocket;
 	std::map<int, sf::TcpSocket> connectedNetworkManagers; //Using a map instead of a vector for the unique property that map[map.size()] will create a new item, this is to work around sockets not being copyable
 	std::map<int, unsigned short> connectedUdpPorts; //Network Manager Index + Port that its UDP socket is bound to
 	std::map<int, std::string> onlineUsers; //Network Manager Index + Username that it's associated with
+	std::map<int, float> timeUntilNextTimeoutCheckPacket; //Network Manager Index + time left until the server sends a packet to the client to make sure they're still online
 	std::map<std::string, sf::Int32> onlineUserRankings; //Username + user's ranking
 	std::map<int, int> matchedUsers; //NMI + NMI combination of users that are currently in a match - order doesn't matter (if [a,b] is in a map, [b,a] won't be)
 	std::map<int, bool> userMatchSceneLoaded; //NMI + true/false whether the user's match scene has loaded (to ensure that both user's scenes have loaded before the match starts)
 
+	void DisconnectUser(int nmi); //Disconnect client associated with provided nmi
 	bool AccountExists(std::string username); //Searches the database for provided username and returns whether it was found or not
-	int GetOpponentNMI(int nmi); //Get nmi of the provided nmi's opponent
+	int GetOpponentNMI(int nmi); //Get nmi of the provided-nmi's opponent
+	void AwardMatchWin(int winningNMI); //Updates rankings accordingly
 };
 
 

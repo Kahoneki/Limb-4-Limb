@@ -3,7 +3,6 @@
 
 #include "PacketCode.h"
 #include "BaseNetworkListener.h"
-#include "SFML/Network.hpp"
 
 #include "OnlinePlayer.h"
 #include "RegistrationScreen.h"
@@ -14,9 +13,9 @@
 
 
 
-//This template class can be attached to a class to serve as a "network receiver component"
+//A speciliasation of this template class can be attached to a class to serve as a "network receiver component"
 //When data is received by the network manager, the packet will be sent to the appropriate network listener which will deconstruct the packet and use it to perform some operation on the
-//object that it is attached to
+//object that it is attached to (usually setting member values)
 
 
 
@@ -263,6 +262,16 @@ public:
         case PacketCode::MatchStart:
         {
             parentReference.matchStart = true;
+            break;
+        }
+        case PacketCode::MatchEnd:
+        {
+            int winningNMI{};
+            int updatedRanking{};
+            incomingData >> winningNMI >> updatedRanking;
+            parentReference.matchEnd = true;
+            parentReference.winningPlayerNMI = winningNMI;
+            parentReference.updatedRanking = updatedRanking;
             break;
         }
         }
