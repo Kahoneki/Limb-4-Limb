@@ -41,7 +41,6 @@ void MatchInvitationInterrupt::InitialiseCallbacks()
 		while (playerNum == -1) {
 			NetworkManager::getInstance(false).CheckForIncomingDataFromServer();
 		}
-		std::cout << "PLAYER NUM: " << playerNum << '\n';
 		readyToLoadScene = true;
 		invitationReceived = false;
 	};

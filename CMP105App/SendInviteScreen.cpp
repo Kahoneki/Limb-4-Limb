@@ -92,10 +92,13 @@ void SendInviteScreen::InitialiseCallbacks() {
 
 
 void SendInviteScreen::handleInput(float dt) {
-	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
-	usernameBox.processEvents(dt, mousePos);
-	sendInviteButton.processEvents(mousePos);
-	backButton.processEvents(mousePos);
+	//Only let user click if the server isn't awaiting responses
+	if (!awaitServerResponses) {
+		sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
+		usernameBox.processEvents(dt, mousePos);
+		sendInviteButton.processEvents(mousePos);
+		backButton.processEvents(mousePos);
+	}
 }
 
 

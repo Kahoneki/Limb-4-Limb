@@ -164,9 +164,9 @@ void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, i
 	}
 
 	}
-	namespace c = std::chrono;
-	uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
-	std::cout << "Send: " << ms << " milliseconds since the epoch\n";
+	//namespace c = std::chrono;
+	//uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
+	//std::cout << "Send: " << ms << " milliseconds since the epoch\n";
 }
 
 
@@ -240,9 +240,9 @@ void NetworkManager::SendDataToServer(int networkListenerIndex, PacketCode packe
 		break;
 	}
 	}
-	namespace c = std::chrono;
-	uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
-	std::cout << "Send: " << ms << " milliseconds since the epoch\n";
+	//namespace c = std::chrono;
+	//uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
+	//std::cout << "Send: " << ms << " milliseconds since the epoch\n";
 }
 
 
@@ -254,9 +254,9 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 
 		//Extract data and check if it's empty
 		if (tcpSocket.receive(incomingData) == sf::Socket::Done) {
-			namespace c = std::chrono;
-			uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
-			std::cout << "TCP Receive: " << ms << " milliseconds since the epoch\n";
+			//namespace c = std::chrono;
+			//uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
+			//std::cout << "TCP Receive: " << ms << " milliseconds since the epoch\n";
 
 			//Extract networkListenerIndex and send rest of packet to appropriate network listener
 			int networkListenerIndex;
@@ -280,9 +280,9 @@ void NetworkManager::CheckForIncomingDataFromServer() {
 		unsigned short incomingPort;
 		if (udpSocket.receive(incomingData, incomingAddress, incomingPort) == sf::Socket::Done) {
 			if (incomingAddress == serverAddress && incomingPort == serverPort) {
-				namespace c = std::chrono;
-				uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
-				std::cout << "UDP Receive: " << ms << " milliseconds since the epoch\n";
+				//namespace c = std::chrono;
+				//uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();
+				//std::cout << "UDP Receive: " << ms << " milliseconds since the epoch\n";
 
 				//Extract networkListenerIndex and send rest of packet to appropriate network listener
 				int networkListenerIndex;

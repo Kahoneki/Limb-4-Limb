@@ -228,9 +228,6 @@ void OnlinePlayer::update(float dt) {
 void OnlinePlayer::SendUpdateDataToNetwork(std::vector<int> changedKeys) {
 	for (int key : changedKeys) {
 		bool pressed = input->isKeyDown(key);
-
-		std::cout << key << ' ' << pressed << '\n';
-
 		sf::Packet outgoingPacket;
 		outgoingPacket << pressed << key;
 		networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, networkListenerIndex, PacketCode::KeyChange, outgoingPacket);
