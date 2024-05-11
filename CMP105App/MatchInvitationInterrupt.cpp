@@ -20,6 +20,7 @@ MatchInvitationInterrupt::MatchInvitationInterrupt()
 
 	networkListener = NetworkManager::getInstance(false).GenerateNetworkListener(*this, NetworkManager::ReservedEntityIndexTable::MATCH_INVITATION_INTERRUPT);
 	invitationReceived = false;
+	readyToLoadScene = false;
 	valuesSet = false;
 	username = "N/A";
 	ranking = -1;
@@ -82,6 +83,7 @@ int MatchInvitationInterrupt::getPlayerNum() { return playerNum; }
 
 void MatchInvitationInterrupt::Reset() {
 	invitationReceived = false;
+	readyToLoadScene = false;
 	valuesSet = false;
 	username = "N/A";
 	ranking = -1;
@@ -90,9 +92,3 @@ void MatchInvitationInterrupt::Reset() {
 }
 
 bool MatchInvitationInterrupt::getReadyToLoadScene() { return readyToLoadScene; }
-
-
-//std::string MatchInvitationInterrupt::getUsername() { return username; }
-//
-//sf::Int32 MatchInvitationInterrupt::getRanking() { return ranking; }
-

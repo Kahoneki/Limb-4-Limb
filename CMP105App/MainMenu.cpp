@@ -141,6 +141,9 @@ void MainMenu::handleInput(float dt)
 
 void MainMenu::update(float dt)
 {
+
+	std::cout << matchInvitationInterrupt.getInvitationReceived() << ' ' << matchInvitationInterrupt.getReadyToLoadScene() << '\n';
+
 	if (matchInvitationInterrupt.getReadyToLoadScene()) {
 		//Open network scene to start match
 		NetworkScene* networkScene{ new NetworkScene(window, input, sceneManager, matchInvitationInterrupt.getPlayerNum(), matchInvitationInterrupt.getNetworkManagerIndex())};
