@@ -80,6 +80,15 @@ int MatchInvitationInterrupt::getNetworkManagerIndex() { return networkManagerIn
 
 int MatchInvitationInterrupt::getPlayerNum() { return playerNum; }
 
+void MatchInvitationInterrupt::Reset() {
+	invitationReceived = false;
+	valuesSet = false;
+	username = "N/A";
+	ranking = -1;
+	networkManagerIndex = -1;
+	playerNum = -1;
+}
+
 bool MatchInvitationInterrupt::getReadyToLoadScene() { return readyToLoadScene; }
 
 

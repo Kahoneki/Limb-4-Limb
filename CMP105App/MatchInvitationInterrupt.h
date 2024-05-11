@@ -28,10 +28,8 @@ public:
 	bool getInvitationReceived();
 	int getNetworkManagerIndex();
 	bool getReadyToLoadScene();
-	bool getOpponentSceneLoaded();
 	int getPlayerNum();
-	//std::string getUsername();
-	//sf::Int32 getRanking();
+	void Reset();
 
 	friend class NetworkListener<MatchInvitationInterrupt>;
 
