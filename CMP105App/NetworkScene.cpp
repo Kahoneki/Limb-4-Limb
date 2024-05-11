@@ -81,8 +81,8 @@ void NetworkScene::InitialisePlayers() {
 		player->setHealth(100);
 		player->setOrigin(player->getLocalBounds().width / 2.f, player->getLocalBounds().height / 2.f);
 	}
-	players[0]->setPosition(325, 100);
-	players[1]->setPosition(1270, 100);
+	players[0]->setPosition(325, 800);
+	players[1]->setPosition(1270, 800);
 	players[1]->setScale(-1.0f, 1.0f);
 	players[1]->setFillColor(sf::Color::Red);
 }
