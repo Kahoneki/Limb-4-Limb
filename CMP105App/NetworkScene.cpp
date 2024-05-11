@@ -162,16 +162,16 @@ void NetworkScene::update(float dt) {
 	HealthBarUpdate();
 
 
-	if (matchEnd) {
-		std::cout << "Winner: " << (winningPlayerNMI == opponentNetworkManagerIndex) ? "Opponent. :|\n" : "Me! :]\n";
-		std::cout << "New ranking: " << updatedRanking << '\n';
-		AccountManager accountManager{ AccountManager::getInstance() };
-		accountManager.setValues(accountManager.getUsername(), updatedRanking);
+	//if (matchEnd) {
+	//	std::cout << "Winner: " << (winningPlayerNMI == opponentNetworkManagerIndex) ? "Opponent. :|\n" : "Me! :]\n";
+	//	std::cout << "New ranking: " << updatedRanking << '\n';
+	//	AccountManager accountManager{ AccountManager::getInstance() };
+	//	accountManager.setValues(accountManager.getUsername(), updatedRanking);
 
-		//TEMP: GO BACK TO MAIN MENU
-		MainMenu* mainMenu{ new MainMenu(window, input, sceneManager) };
-		sceneManager.LoadScene(mainMenu);
-	}
+	//	//TEMP: GO BACK TO MAIN MENU
+	//	MainMenu* mainMenu{ new MainMenu(window, input, sceneManager) };
+	//	sceneManager.LoadScene(mainMenu);
+	//}
 }
 
 
@@ -412,6 +412,18 @@ void NetworkScene::HealthBarUpdate() {
 		//Local player has won, send MatchWin packet to server
 		sf::Packet emptyPacket;
 		networkManager.SendDataToServer(NetworkManager::ReservedEntityIndexTable::NETWORK_SCENE, PacketCode::MatchWin, emptyPacket);
+		//Stall until matchEnd is true
+		while (!matchEnd) {
+			networkManager.CheckForIncomingDataFromServer();
+		}
+		std::cout << "Winner: " << (winningPlayerNMI == opponentNetworkManagerIndex) ? "Opponent. :|\n" : "Me! :]\n";
+		std::cout << "New ranking: " << updatedRanking << '\n';
+		AccountManager accountManager{ AccountManager::getInstance() };
+		accountManager.setValues(accountManager.getUsername(), updatedRanking);
+
+		//TEMP: GO BACK TO MAIN MENU
+		MainMenu* mainMenu{ new MainMenu(window, input, sceneManager) };
+		sceneManager.LoadScene(mainMenu);
 	}
 }
 
