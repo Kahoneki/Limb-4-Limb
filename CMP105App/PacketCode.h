@@ -16,6 +16,7 @@ enum PacketCode
 	PositionChange,
 	Grounded,
 	Flip,
+	Health,
 	//----//
 
 

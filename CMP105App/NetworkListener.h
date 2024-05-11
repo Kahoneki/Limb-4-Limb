@@ -66,6 +66,14 @@ public:
             parentReference.setScale(flipped ? -1 : 1, 1);
             break;
         }
+        
+        case PacketCode::Health:
+        {
+            int health;
+            incomingData >> health;
+            parentReference.health = health;
+            break;
+        }
 
         }
     }

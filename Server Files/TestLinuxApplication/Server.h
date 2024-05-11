@@ -53,10 +53,10 @@ private:
 	std::map<int, int> matchedUsers; //NMI + NMI combination of users that are currently in a match - order doesn't matter (if [a,b] is in a map, [b,a] won't be)
 	std::map<int, bool> userMatchSceneLoaded; //NMI + true/false whether the user's match scene has loaded (to ensure that both user's scenes have loaded before the match starts)
 
-	void DisconnectUser(int nmi); //Disconnect client associated with provided nmi
+	std::map<int, sf::TcpSocket>::iterator DisconnectUser(int nmi); //Disconnect client associated with provided nmi and return iterator to previous valid position in connectedNetworkManagers (so that in next iteration of for-loop, ++it will go to the next valid pair)
 	bool AccountExists(std::string username); //Searches the database for provided username and returns whether it was found or not
 	int GetOpponentNMI(int nmi); //Get nmi of the provided-nmi's opponent
-	void AwardMatchWin(int winningNMI); //Updates rankings accordingly
+	void AwardMatchWin(int winningNMI); //Updates rankings accordingly and send MatchEnd packet to both clients
 };
 
 

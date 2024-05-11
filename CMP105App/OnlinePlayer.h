@@ -19,6 +19,7 @@ public:
 	void SendUpdateDataToNetwork(std::vector<int> changedKeys);
 	void SendUpdateDataToNetwork(sf::Vector2f newPosition);
 	void SendUpdateDataToNetwork(bool flipped);
+	void SendUpdateDataToNetwork(int health);
 
 	int getPlayerNum();
 

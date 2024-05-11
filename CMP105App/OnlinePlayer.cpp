@@ -132,10 +132,14 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 void OnlinePlayer::update(float dt) {
 	if (isLocal) {
 		bool flippedAtStartOfFrame{ flipped };
+		int healthAtStartOfFrame{ health };
 		Player::update(dt);
 		//Check if flipped state has changed - send this change to the server
 		if (flippedAtStartOfFrame != flipped) {
 			SendUpdateDataToNetwork(flipped);
+		}
+		if (healthAtStartOfFrame != health) {
+			SendUpdateDataToNetwork(health);
 		}
 	}
 	else {
@@ -243,6 +247,12 @@ void OnlinePlayer::SendUpdateDataToNetwork(bool flipped) {
 	sf::Packet outgoingPacket;
 	outgoingPacket << flipped;
 	networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, networkListenerIndex, PacketCode::Flip, outgoingPacket);
+}
+
+void OnlinePlayer::SendUpdateDataToNetwork(int health) {
+	sf::Packet outgoingPacket;
+	outgoingPacket << health;
+	networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, networkListenerIndex, PacketCode::Health, outgoingPacket);
 }
 
 

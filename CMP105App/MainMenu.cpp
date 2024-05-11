@@ -106,6 +106,8 @@ void MainMenu::InitialiseCallbacks() {
 			//Go offline
 			if (networkManager.AttemptToDisconnectFromServer()) {
 				switchOnlineStatus.text.setString("GO ONLINE");
+				accountManager.setValues("N/A", -1);
+				login.text.setString("LOGIN");
 			}
 		}
 		else {

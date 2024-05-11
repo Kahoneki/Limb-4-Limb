@@ -407,8 +407,8 @@ void NetworkScene::HealthBarUpdate() {
 	HealthBarFront2.setSize(sf::Vector2f(Calc2, HealthBarFront1.getSize().y));
 	HealthBarFront2.setPosition((1920 - Calc2 - 37), 37);
 
-	OnlinePlayer* localPlayer{ players[playerNum-1] };
-	if (localPlayer->getHealth() <= 0) {
+	OnlinePlayer* nonLocalPlayer{ (playerNum == 1) ? players[1] : players[0] };
+	if (nonLocalPlayer->getHealth() <= 0) {
 		//Local player has won, send MatchWin packet to server
 		sf::Packet emptyPacket;
 		networkManager.SendDataToServer(NetworkManager::ReservedEntityIndexTable::NETWORK_SCENE, PacketCode::MatchWin, emptyPacket);

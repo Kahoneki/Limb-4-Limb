@@ -113,8 +113,6 @@ bool NetworkManager::AttemptToDisconnectFromServer()
 void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, int networkListenerIndex, PacketCode packetCode, sf::Packet incomingPacket) {
 	//Combine Packet code, NetworkManager index, and NetworkListener index into the data packet so it can be sent to the server
 
-	std::cout << "Outgoing NMI: " << outgoingNetworkManagerIndex << '\n';
-
 	sf::Packet outgoingPacket;
 	outgoingPacket << static_cast<std::underlying_type<PacketCode>::type>(packetCode) << outgoingNetworkManagerIndex << networkListenerIndex;
 	switch (packetCode)
@@ -150,12 +148,19 @@ void NetworkManager::SendDataToNetworkManager(int outgoingNetworkManagerIndex, i
 
 	case PacketCode::Flip:
 	{
-		std::cout << "FLIP\n";
 		bool flip;
 		incomingPacket >> flip;
 		outgoingPacket << flip;
 		tcpSocket.send(outgoingPacket);
 		break;
+	}
+
+	case PacketCode::Health:
+	{
+		int health;
+		incomingPacket >> health;
+		outgoingPacket << health;
+		tcpSocket.send(outgoingPacket);
 	}
 
 	}
@@ -227,6 +232,11 @@ void NetworkManager::SendDataToServer(int networkListenerIndex, PacketCode packe
 		outgoingPacket << loaded;
 		tcpSocket.send(outgoingPacket);
 		
+		break;
+	}
+	case PacketCode::MatchWin:
+	{
+		tcpSocket.send(outgoingPacket);
 		break;
 	}
 	}

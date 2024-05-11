@@ -42,6 +42,7 @@ void MatchInvitationInterrupt::InitialiseCallbacks()
 		}
 		std::cout << "PLAYER NUM: " << playerNum << '\n';
 		readyToLoadScene = true;
+		invitationReceived = false;
 	};
 	onDeclineMatchInvitationButtonClick = [this]() {
 		sf::Packet outgoingPacket;
