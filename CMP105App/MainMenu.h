@@ -47,6 +47,7 @@ private:
 	Button online;
 	Button registration;
 	Button login;
+	Button quit;
 	Button switchOnlineStatus; //Initially "Go Online". If clicked, "Go Offline"
 
 	//Callbacks
@@ -55,6 +56,7 @@ private:
 	std::function<void(void)> onOnlineButtonClick;
 	std::function<void(void)> onRegistrationButtonClick;
 	std::function<void(void)> onLoginButtonClick;
+	std::function<void(void)> onQuitClick;
 	std::function<void(void)> onSwitchOnlineStatusButtonClick;
 };
 

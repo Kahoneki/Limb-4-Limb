@@ -31,6 +31,7 @@ MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneM
 	online = Button(800, 300, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onOnlineButtonClick, "ONLINE");
 	registration = Button(230, 500, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onRegistrationButtonClick, "REGISTER");
 	login = Button(800, 500, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onLoginButtonClick, "");
+	quit = Button(230, 800, 920, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onQuitClick, "QUIT");
 	switchOnlineStatus = Button(1500, 800, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onSwitchOnlineStatusButtonClick, "");
 
 	username = TextBox(50, 950, 500, 40, INACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, "");
@@ -101,6 +102,10 @@ void MainMenu::InitialiseCallbacks() {
 		}
 	};
 
+	onQuitClick = [this]() {
+		exit(0);
+	};
+
 	onSwitchOnlineStatusButtonClick = [this]() {
 		if (networkManager.getConnectedToServer()) {
 			//Go offline
@@ -135,6 +140,7 @@ void MainMenu::handleInput(float dt)
 		online.processEvents(mousePos);
 		registration.processEvents(mousePos);
 		login.processEvents(mousePos);
+		quit.processEvents(mousePos);
 		switchOnlineStatus.processEvents(mousePos);
 	}
 }
@@ -157,6 +163,7 @@ void MainMenu::render()
 	window->draw(online);
 	window->draw(registration);
 	window->draw(login);
+	window->draw(quit);
 	window->draw(switchOnlineStatus);
 
 	if (accountManager.getUsername() != "N/A") { //N/A is default value
