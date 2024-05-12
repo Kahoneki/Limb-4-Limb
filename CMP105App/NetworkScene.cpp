@@ -63,7 +63,7 @@ void NetworkScene::InitialiseScene() {
 	platforms[0] = Platform(450, 675, 300, 25, true);   //Bottom left
 	platforms[1] = Platform(1170, 675, 300, 25, true);  //Bottom right
 	platforms[2] = Platform(800, 475, 320, 25, true);   //Top
-	platforms[3] = Platform(200, 875, 1520, 25, false); //Ground
+	platforms[3] = Platform(200, 875, 1520, 205, false); //Ground
 
 	//audioManager.playMusicbyName("GuileTheme");
 }
@@ -124,6 +124,18 @@ void NetworkScene::handleInput(float dt) {
 
 void NetworkScene::update(float dt) {
 
+	if (matchEnd) {
+		std::cout << "Winner: " << (winningPlayerNMI == opponentNetworkManagerIndex) ? "Opponent. :|\n" : "Me! :]\n";
+		std::cout << "New ranking: " << updatedRanking << '\n';
+		AccountManager accountManager{ AccountManager::getInstance() };
+		accountManager.setValues(accountManager.getUsername(), updatedRanking);
+
+		//TEMP: GO BACK TO MAIN MENU
+		MainMenu* mainMenu{ new MainMenu(window, input, sceneManager) };
+		sceneManager.LoadScene(mainMenu);
+		return;
+	}
+
 	if (playerStartUpdateTimeCountdown > 0) {
 		playerStartUpdateTimeCountdown -= dt;
 	}
@@ -162,16 +174,6 @@ void NetworkScene::update(float dt) {
 	HealthBarUpdate();
 
 
-	if (matchEnd) {
-		std::cout << "Winner: " << (winningPlayerNMI == opponentNetworkManagerIndex) ? "Opponent. :|\n" : "Me! :]\n";
-		std::cout << "New ranking: " << updatedRanking << '\n';
-		AccountManager accountManager{ AccountManager::getInstance() };
-		accountManager.setValues(accountManager.getUsername(), updatedRanking);
-
-		//TEMP: GO BACK TO MAIN MENU
-		MainMenu* mainMenu{ new MainMenu(window, input, sceneManager) };
-		sceneManager.LoadScene(mainMenu);
-	}
 }
 
 
