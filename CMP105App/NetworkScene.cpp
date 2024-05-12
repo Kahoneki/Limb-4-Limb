@@ -113,10 +113,19 @@ void NetworkScene::handleInput(float dt) {
 	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
 	pausePopup.processEvents(mousePos);
 
-	//Always handle online player's input, but only handle local player's input if they're not paused
-	if (!pausePopup.getPausePopupEnabled()) {
-		players[playerNum - 1]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
+	//If pause popup is enabled, set all keys to not-pressed before handling input
+	if (pausePopup.getPausePopupEnabled()) {
+		input->setKeyUp(sf::Keyboard::Space);
+		input->setKeyUp(sf::Keyboard::A);
+		input->setKeyUp(sf::Keyboard::D);
+		input->setKeyUp(sf::Keyboard::S);
+		input->setKeyUp(sf::Keyboard::LShift);
+		input->setKeyUp(sf::Keyboard::Semicolon);
+		input->setKeyUp(sf::Keyboard::LBracket);
+		input->setKeyUp(sf::Keyboard::RBracket);
+		input->setKeyUp(sf::Keyboard::Enter);
 	}
+	players[playerNum - 1]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
 	players[1 - (playerNum - 1)]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
 
 	if (input->isKeyDown(sf::Keyboard::F3)) {
