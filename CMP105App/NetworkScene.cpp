@@ -132,7 +132,7 @@ void NetworkScene::update(float dt) {
 
 		//Go to end screen
 		bool localPlayerWon{ winningPlayerNMI != opponentNetworkManagerIndex };
-		std::string resultText{ localPlayerWon ? "YOU LOST! :[" : "YOU WON! :]" };
+		std::string resultText{ localPlayerWon ? "YOU WON! :]" : "YOU LOST! :[" };
 		resultText += "\nYOUR RANKING IS NOW: ";
 		resultText += std::to_string(updatedRanking);
 		resultText += (localPlayerWon ? " (+30)" : " (-30)");
