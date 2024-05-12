@@ -26,7 +26,7 @@ EndScreen::EndScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, bool s
 		exitToMainMenu = Button(800, 330, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, mainMenuOnClick, "MAIN MENU");
 	}
 	else {
-		result = TextBox(350, 50, 520, 120, INACTIVEBOXCOLOUR, TEXTCOLOUR, 50, font, resultText.c_str()); //Make box taller
+		result = TextBox(350, 50, 800, 120, INACTIVEBOXCOLOUR, TEXTCOLOUR, 50, font, resultText.c_str()); //Make box taller and wider
 		exitToMainMenu = Button(230, 330, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, mainMenuOnClick, "MAIN MENU");
 	}
 
