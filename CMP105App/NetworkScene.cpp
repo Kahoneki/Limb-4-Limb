@@ -148,6 +148,7 @@ void NetworkScene::update(float dt) {
 
 		MainMenu* mainMenu = new MainMenu(window, input, sceneManager);
 		sceneManager.LoadScene(mainMenu);
+		return;
 	}
 
 	if (matchEnd) {
