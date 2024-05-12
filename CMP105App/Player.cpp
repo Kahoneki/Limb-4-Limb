@@ -278,6 +278,12 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 	}
 
 
+
+}
+
+
+void Player::update(float dt) {
+
 	//Player is in air, so bring them towards ground
 	if (!isGrounded && !(velocity.y == terminalVelocity)) {
 		velocity.y -= acceleration * dt;
@@ -285,11 +291,6 @@ void Player::handleInput(float dt, int jump, int left, int right, int down, int 
 	if (velocity.y < terminalVelocity) {
 		velocity.y = terminalVelocity;
 	}
-
-}
-
-
-void Player::update(float dt) {
 
 	//Update position - operating with sf::Vector2i to avoid any potential floating point inaccuracies
 	sf::Vector2i currentPos{ static_cast<sf::Vector2i>(getPosition()) };
