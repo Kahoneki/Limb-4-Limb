@@ -239,6 +239,11 @@ void NetworkManager::SendDataToServer(int networkListenerIndex, PacketCode packe
 		tcpSocket.send(outgoingPacket);
 		break;
 	}
+	case PacketCode::MatchLeave:
+	{
+		tcpSocket.send(outgoingPacket);
+		break;
+	}
 	}
 	//namespace c = std::chrono;
 	//uint64_t ms = c::duration_cast<c::milliseconds>(c::system_clock::now().time_since_epoch()).count();

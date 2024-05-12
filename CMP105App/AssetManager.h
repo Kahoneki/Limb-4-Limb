@@ -9,6 +9,7 @@ enum Font
 
 
 //Asset manager class responsible for providing asset references to classes that need them. This stops the same asset being unnecessarily loaded multiple times
+//This class is unused.
 class AssetManager
 {
 	static AssetManager& getInstance();

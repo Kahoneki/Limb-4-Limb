@@ -2,12 +2,13 @@
 #include "EndScreen.h"
 #include "Player.h"
 
-LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
+LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), pausePopup(in)
 {
 	std::cout << "Loading test scene\n";
 
 	window = hwnd;
 	input = in;
+
 	debugMode = false;
 	timeUntilPlayersShouldStartUpdate = 0.5f;
 	playerStartUpdateTimeCountdown = timeUntilPlayersShouldStartUpdate;
@@ -83,14 +84,20 @@ void LocalScene::InitialiseHealthBars() {
 
 
 void LocalScene::handleInput(float dt) {
-	players[0]->handleInput(dt, sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::T, sf::Keyboard::G);
-	players[1]->handleInput(dt, sf::Keyboard::O, sf::Keyboard::K, sf::Keyboard::Semicolon, sf::Keyboard::L, sf::Keyboard::N, sf::Keyboard::LBracket, sf::Keyboard::Quote, sf::Keyboard::RBracket, sf::Keyboard::Tilde);
 
-	if (input->isKeyDown(sf::Keyboard::F3)) {
-		debugMode = true;
-	}
-	else if (input->isKeyDown(sf::Keyboard::F4)) {
-		debugMode = false;
+	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
+	pausePopup.processEvents(mousePos);
+
+	if (!pausePopup.getPausePopupEnabled()) {
+		players[0]->handleInput(dt, sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::T, sf::Keyboard::G);
+		players[1]->handleInput(dt, sf::Keyboard::O, sf::Keyboard::K, sf::Keyboard::Semicolon, sf::Keyboard::L, sf::Keyboard::N, sf::Keyboard::LBracket, sf::Keyboard::Quote, sf::Keyboard::RBracket, sf::Keyboard::Tilde);
+
+		if (input->isKeyDown(sf::Keyboard::F3)) {
+			debugMode = true;
+		}
+		else if (input->isKeyDown(sf::Keyboard::F4)) {
+			debugMode = false;
+		}
 	}
 }
 
@@ -98,32 +105,39 @@ void LocalScene::handleInput(float dt) {
 
 void LocalScene::update(float dt) {
 
-	if (playerStartUpdateTimeCountdown > 0) {
-		playerStartUpdateTimeCountdown -= dt;
-	}
-	else {
-		players[0]->update(dt);
-		players[1]->update(dt);
+	if (pausePopup.getMainMenuButtonClicked()) {
+		MainMenu* mainMenu = new MainMenu(window, input, sceneManager);
+		sceneManager.LoadScene(mainMenu);
 	}
 
-
-	//Loop through both players
-	for (int playerIndex{}; playerIndex < 2; ++playerIndex) {
-
-		Player* p1 = players[playerIndex];	   //Defending player
-		Player* p2 = players[1 - playerIndex]; //Attacking player
-
-		PlatformCollisionCheck(p1);
-
-		//Defending player has invincibility frames left, continue to the next player
-		if (p1->getInvincibilityFramesLeft())
-			continue;
+	if (!pausePopup.getPausePopupEnabled()) {
+		if (playerStartUpdateTimeCountdown > 0) {
+			playerStartUpdateTimeCountdown -= dt;
+		}
 		else {
-			AttackHitboxCheck(p1, p2);
+			players[0]->update(dt);
+			players[1]->update(dt);
 		}
 
+
+		//Loop through both players
+		for (int playerIndex{}; playerIndex < 2; ++playerIndex) {
+
+			Player* p1 = players[playerIndex];	   //Defending player
+			Player* p2 = players[1 - playerIndex]; //Attacking player
+
+			PlatformCollisionCheck(p1);
+
+			//Defending player has invincibility frames left, continue to the next player
+			if (p1->getInvincibilityFramesLeft())
+				continue;
+			else {
+				AttackHitboxCheck(p1, p2);
+			}
+
+		}
+		HealthBarUpdate();
 	}
-	HealthBarUpdate();
 }
 
 
@@ -390,6 +404,10 @@ void LocalScene::render()
 
 	if (debugMode) {
 		DebugRender();
+	}
+
+	if (pausePopup.getPausePopupEnabled()) {
+		window->draw(pausePopup);
 	}
 
 	endDraw();

@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "Platform.h"
+#include "PausePopup.h"
 
 //Forward declarations
 class SceneManager;
@@ -27,6 +28,8 @@ public:
 
 private:
 	SceneManager& sceneManager;
+
+	PausePopup pausePopup;
 
 	Player* players[2];
 	sf::Texture robotTexture;

@@ -49,6 +49,7 @@ enum PacketCode
 	MatchSceneLoaded, //Sent by client when match scene is loaded - to make sure scene is loaded on both client's machine before match starts
 	MatchStart, //Sent by server once both matched users have sent a positive-status MatchSceneLoaded packet to tell them to start the match
 	MatchWin, //Sent by client if player wins - it is assumed that this means the other player has lost. This packet should only be sent by one of the two clients (the one which has won)
+	MatchLeave, //Sent by client if player leaves (to main menu) - this will result in a loss for the player that has sent the packet and a win for their opponent
 	MatchEnd, //Sent by server once match has ended (if client sends MatchWin packet or disconnects), holds winning player's nmi and client's new ranking
 	//----//
 

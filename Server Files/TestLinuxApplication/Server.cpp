@@ -558,6 +558,25 @@ void Server::CheckForIncomingTCPData(float dt) {
 
 			break;
 		}
+		case PacketCode::MatchLeave:
+		{
+			std::cout << "PacketCode: MatchLeave\n";
+
+			int opponentNetworkManagerIndex{ GetOpponentNMI(i) };
+
+			std::cout << "Winning player: " << onlineUsers[opponentNetworkManagerIndex];
+			AwardMatchWin(opponentNetworkManagerIndex);
+
+			//Remove both players from matchedUsers map
+			for (std::map<int, int>::iterator it{ matchedUsers.begin() }; it != matchedUsers.end(); ++it) {
+				if ((it->first == i) || (it->second == i)) {
+					matchedUsers.erase(it);
+					break;
+				}
+			}
+
+			break;
+		}
 		case PacketCode::KeyChange:
 		{
 			std::cout << "PacketCode: KeyChange\n";

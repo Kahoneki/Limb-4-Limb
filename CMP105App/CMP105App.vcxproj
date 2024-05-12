@@ -185,6 +185,7 @@
     <ClCompile Include="NetworkScene.cpp" />
     <ClCompile Include="OnlinePlayer.cpp" />
     <ClCompile Include="OnlineSelectScreen.cpp" />
+    <ClCompile Include="PausePopup.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RandomMatchScreen.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="OnlinePlayer.h" />
     <ClInclude Include="OnlineSelectScreen.h" />
     <ClInclude Include="PacketCode.h" />
+    <ClInclude Include="PausePopup.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RandomMatchScreen.h" />

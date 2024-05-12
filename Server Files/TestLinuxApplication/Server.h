@@ -56,7 +56,7 @@ private:
 	std::map<int, sf::TcpSocket>::iterator DisconnectUser(int nmi); //Disconnect client associated with provided nmi and return iterator to previous valid position in connectedNetworkManagers (so that in next iteration of for-loop, ++it will go to the next valid pair)
 	bool AccountExists(std::string username); //Searches the database for provided username and returns whether it was found or not
 	int GetOpponentNMI(int nmi); //Get nmi of the provided-nmi's opponent
-	void AwardMatchWin(int winningNMI); //Updates rankings accordingly and send MatchEnd packet to both clients
+	void AwardMatchWin(int winningNMI); //Update rankings accordingly and send MatchEnd packet to both clients
 };
 
 

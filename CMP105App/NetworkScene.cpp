@@ -4,7 +4,7 @@
 #include "NetworkManager.h"
 #include "AccountManager.h"
 
-NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn, int oppNMI) : sceneManager(sm), networkManager(NetworkManager::getInstance(true)), timeManager(TimeManager::getInstance(240))
+NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn, int oppNMI) : sceneManager(sm), networkManager(NetworkManager::getInstance(true)), timeManager(TimeManager::getInstance(240)), pausePopup(in)
 {
 	std::cout << "Loading network scene\n";
 
@@ -109,7 +109,14 @@ void NetworkScene::InitialiseHealthBars() {
 
 
 void NetworkScene::handleInput(float dt) {
-	players[playerNum - 1]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
+
+	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
+	pausePopup.processEvents(mousePos);
+
+	//Always handle online player's input, but only handle local player's input if they're not paused
+	if (!pausePopup.getPausePopupEnabled()) {
+		players[playerNum - 1]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
+	}
 	players[1 - (playerNum - 1)]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
 
 	if (input->isKeyDown(sf::Keyboard::F3)) {
@@ -123,6 +130,16 @@ void NetworkScene::handleInput(float dt) {
 
 
 void NetworkScene::update(float dt) {
+
+	if (pausePopup.getMainMenuButtonClicked()) {
+
+		//Local player is leaving, send MatchLeave packet to server (online player will win)
+		sf::Packet emptyPacket;
+		networkManager.SendDataToServer(NetworkManager::ReservedEntityIndexTable::NETWORK_SCENE, PacketCode::MatchLeave, emptyPacket);
+
+		MainMenu* mainMenu = new MainMenu(window, input, sceneManager);
+		sceneManager.LoadScene(mainMenu);
+	}
 
 	if (matchEnd) {
 		std::cout << "Winner: " << (winningPlayerNMI == opponentNetworkManagerIndex) ? "Opponent. :|\n" : "Me! :]\n";
@@ -177,8 +194,6 @@ void NetworkScene::update(float dt) {
 
 	}
 	HealthBarUpdate();
-
-
 }
 
 
@@ -451,6 +466,10 @@ void NetworkScene::render()
 
 	if (debugMode) {
 		DebugRender();
+	}
+
+	if (pausePopup.getPausePopupEnabled()) {
+		window->draw(pausePopup);
 	}
 
 	endDraw();
