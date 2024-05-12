@@ -131,11 +131,11 @@ void NetworkScene::update(float dt) {
 		accountManager.setValues(accountManager.getUsername(), updatedRanking);
 
 		//Go to end screen
-		bool localPlayerWon{ winningPlayerNMI == opponentNetworkManagerIndex };
+		bool localPlayerWon{ winningPlayerNMI != opponentNetworkManagerIndex };
 		std::string resultText{ localPlayerWon ? "YOU LOST! :[" : "YOU WON! :]" };
 		resultText += "\nYOUR RANKING IS NOW: ";
 		resultText += std::to_string(updatedRanking);
-		resultText += (localPlayerWon ? "(+30)" : "(-30)");
+		resultText += (localPlayerWon ? " (+30)" : " (-30)");
 		EndScreen* endScreen{ new EndScreen(window, input, sceneManager, false, resultText) };
 		sceneManager.LoadScene(endScreen);
 		return;
