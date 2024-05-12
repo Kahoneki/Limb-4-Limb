@@ -130,9 +130,12 @@ void NetworkScene::update(float dt) {
 		AccountManager accountManager{ AccountManager::getInstance() };
 		accountManager.setValues(accountManager.getUsername(), updatedRanking);
 
-		//TEMP: GO BACK TO MAIN MENU
-		MainMenu* mainMenu{ new MainMenu(window, input, sceneManager) };
-		sceneManager.LoadScene(mainMenu);
+		//Go to end screen
+		std::string resultText{ (winningPlayerNMI == opponentNetworkManagerIndex) ? "YOU LOST! :[" : "YOU WON! :]" };
+		resultText += "\nYOUR RANKING IS NOW: ";
+		resultText += std::to_string(updatedRanking);
+		EndScreen* endScreen{ new EndScreen(window, input, sceneManager, false, resultText) };
+		sceneManager.LoadScene(endScreen);
 		return;
 	}
 

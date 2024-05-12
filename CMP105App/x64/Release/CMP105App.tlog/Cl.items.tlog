@@ -1,33 +1,33 @@
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\AccountManager.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\AccountManager.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Button.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\Button.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\InputBox.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\InputBox.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LocalScene.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\LocalScene.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\LoginScreen.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\LoginScreen.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\MatchInvitationInterrupt.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\MatchInvitationInterrupt.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkManager.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\NetworkManager.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\EndScreen.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\EndScreen.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\Animation.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\Animation.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\AudioManager.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\AudioManager.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\BaseLevel.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\BaseLevel.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\Collision.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\Collision.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\Input.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\Input.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\GameObject.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\GameObject.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Attack.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\Attack.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\MusicObject.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\MusicObject.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\SoundObject.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\SoundObject.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\TileMap.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\TileMap.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Framework\VectorHelper.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\VectorHelper.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Main.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\Main.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\MainMenu.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\MainMenu.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\NetworkScene.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\NetworkScene.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\OnlinePlayer.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\OnlinePlayer.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\OnlineSelectScreen.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\OnlineSelectScreen.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Platform.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\Platform.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\Player.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\Player.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\RandomMatchScreen.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\RandomMatchScreen.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\RegistrationScreen.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\RegistrationScreen.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SceneManager.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\SceneManager.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SceneManager.h;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\SceneManager.h.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\SendInviteScreen.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\SendInviteScreen.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TextBox.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\TextBox.obj
-C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\TimeManager.cpp;C:\Users\shiny\Desktop\Code\Github Repository Clones\CMP105-Individual\CMP105App\x64\Release\TimeManager.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\AccountManager.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\AccountManager.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Button.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\Button.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\InputBox.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\InputBox.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\LocalScene.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\LocalScene.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\LoginScreen.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\LoginScreen.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\MatchInvitationInterrupt.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\MatchInvitationInterrupt.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\NetworkManager.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\NetworkManager.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\EndScreen.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\EndScreen.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Framework\Animation.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\Animation.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Framework\AudioManager.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\AudioManager.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Framework\BaseLevel.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\BaseLevel.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Framework\Collision.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\Collision.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Framework\Input.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\Input.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Framework\GameObject.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\GameObject.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Attack.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\Attack.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Framework\MusicObject.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\MusicObject.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Framework\SoundObject.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\SoundObject.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Framework\TileMap.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\TileMap.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Framework\VectorHelper.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\VectorHelper.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Main.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\Main.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\MainMenu.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\MainMenu.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\NetworkScene.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\NetworkScene.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\OnlinePlayer.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\OnlinePlayer.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\OnlineSelectScreen.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\OnlineSelectScreen.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Platform.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\Platform.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\Player.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\Player.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\RandomMatchScreen.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\RandomMatchScreen.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\RegistrationScreen.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\RegistrationScreen.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\SceneManager.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\SceneManager.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\SceneManager.h;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\SceneManager.h.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\SendInviteScreen.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\SendInviteScreen.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TextBox.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\TextBox.obj
+C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\TimeManager.cpp;C:\Users\shiny\Desktop\Code\CMP105-Individual\CMP105App\x64\Release\TimeManager.obj

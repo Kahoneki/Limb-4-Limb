@@ -41,7 +41,7 @@ void LocalScene::InitialiseScene() {
 	platforms[2] = Platform(800, 475, 320, 25, true);   //Top
 	platforms[3] = Platform(200, 875, 1520, 25, false); //Ground
 
-	//audioManager.playMusicbyName("GuileTheme");
+	audioManager.playMusicbyName("GuileTheme");
 }
 
 
@@ -359,7 +359,8 @@ void LocalScene::HealthBarUpdate() {
 	HealthBarFront2.setPosition((1920 - Calc2 - 37), 37);
 
 	if (players[0]->getHealth() <= 0 || players[1]->getHealth() <= 0) {
-		EndScreen* endScreen = new EndScreen(window, input, sceneManager, players[0]->getHealth() > 0);
+		std::string resultText{ (players[0]->getHealth() > 0) ? "PLAYER 1 WINS!" : "PLAYER 2 WINS!" };
+		EndScreen* endScreen = new EndScreen(window, input, sceneManager, true, resultText.c_str() );
 		sceneManager.LoadScene(endScreen);
 	}
 }
