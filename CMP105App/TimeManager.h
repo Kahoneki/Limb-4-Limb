@@ -12,7 +12,7 @@ public:
 	static TimeManager& getInstance(int tps);
 
 	//To be ran every frame in this order
-	void UpdateDeltaTime();
+	bool UpdateDeltaTimeAndCheckForNewFrame();
 	bool UpdateAndCheckNetworkTickStatus(); //Updates timeThroughTick and returns if tick has been passed (timeThroughTick >= tickSpeed)
 	
 	float getDeltaTime();
@@ -20,9 +20,12 @@ public:
 	static constexpr int PhysicsClockFramerate{ 30 };
 
 private:
-	TimeManager(int tps = 30);
+	TimeManager(int tps = 240);
 
 	sf::Clock clock;
+
+	float timeThroughFrame;
+	float frameSpeed;
 
 	int ticksPerSecond;
 	float tickSpeed;

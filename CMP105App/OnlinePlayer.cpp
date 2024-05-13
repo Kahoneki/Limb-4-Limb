@@ -1,15 +1,18 @@
 #include "OnlinePlayer.h"
 #include "NetworkManager.h"
 
-OnlinePlayer::OnlinePlayer(sf::Vector2f size, float acc, float ts, float js, int hp, int prot, int c1, bool flip, int pn, bool local) :
-	Player(size, acc, ts, js, hp, prot, c1, flip), networkManager(NetworkManager::getInstance()), timeManager (TimeManager::getInstance(240))
+OnlinePlayer::OnlinePlayer(sf::Vector2f size, float acc, float ts, float js, int hp, int prot, int c1, bool flip, int pn, bool local, int nmi) :
+	Player(size, acc, ts, js, hp, prot, c1, flip), networkManager(NetworkManager::getInstance(false)), timeManager (TimeManager::getInstance(240))
 {
 	verificationPacketTimer = 0;
-	verificationPacketCooldown = 10;
+	verificationPacketCooldown = 100.0f;
 	playerNum = pn;
 	isLocal = local;
+	opponentNetworkManagerIndex = nmi;
+	networkListenerIndex = (playerNum == 1) ? NetworkManager::ReservedEntityIndexTable::PLAYER_1 : NetworkManager::ReservedEntityIndexTable::PLAYER_2;
 	networkListener = networkManager.GenerateNetworkListener<OnlinePlayer>(*this, playerNum - 1);
-	for (int i{ 0 }; i < 8; ++i) {
+
+	for (int i{ 0 }; i < sizeof(prevKeyState)/sizeof(prevKeyState[0]); ++i) {
 		prevKeyState[i] = false;
 	}
 }
@@ -18,18 +21,20 @@ OnlinePlayer::OnlinePlayer(sf::Vector2f size, float acc, float ts, float js, int
 void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down, int dodge, int jab, int kick, int sweep, int upper) {
 	if (isLocal) {
 
+		bool flippedAtStartOfFrame{ flipped };
+
 		//Compare keys pressed this frame to keys pressed last frame, if they're different, send the differences to the network manager
 
-		int keys[9] { jump, left, right, down, dodge, jab, kick, sweep, upper };
+		int keys[6] { down, dodge, jab, kick, sweep, upper };
 		Player::handleInput(dt, jump, left, right, down, dodge, jab, kick, sweep, upper);
 
-		bool currentKeyState[8];
-		for (int i{ 0 }; i < 8; ++i) {
+		bool currentKeyState[6];
+		for (int i{ 0 }; i < sizeof(currentKeyState)/sizeof(currentKeyState[0]); ++i) {
 			currentKeyState[i] = input->isKeyDown(keys[i]);
 		}
 
 		std::vector<int> changedKeys;
-		for (int i{ 0 }; i < sizeof(keys)/sizeof(keys[0]); ++i) {
+		for (int i{ 0 }; i < sizeof(currentKeyState)/sizeof(currentKeyState[0]); ++i) {
 			if (currentKeyState[i] != prevKeyState[i]) {
 				changedKeys.push_back(keys[i]);
 			}
@@ -39,8 +44,19 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 			SendUpdateDataToNetwork(changedKeys);
 		}
 
-		for (int i{ 0 }; i < sizeof(keys)/sizeof(keys[0]); ++i) {
+		for (int i{ 0 }; i < sizeof(prevKeyState)/sizeof(prevKeyState[0]); ++i) {
 			prevKeyState[i] = currentKeyState[i];
+		}
+
+		//Check if position has changed - send this change to the server
+		if (prevPosition != getPosition()) {
+			SendUpdateDataToNetwork(getPosition());
+			prevPosition = getPosition();
+		}
+
+		//Check if flipped state has changed - send this change to the server
+		if (flippedAtStartOfFrame != flipped) {
+			SendUpdateDataToNetwork(flipped);
 		}
 	}
 
@@ -51,16 +67,16 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 		//-----COMBAT-----//
 		if (actionable) {
 			if (!crouched) {
-				if (input->isKeyDown(kick)) {
+				if (keyIsPressed[kick]) {
 					attacks[0].setAttacking(true);
 				}
-				if (input->isKeyDown(sweep)) {
+				if (keyIsPressed[sweep]) {
 					attacks[1].setAttacking(true);
 				}
-				if (input->isKeyDown(jab)) {
+				if (keyIsPressed[jab]) {
 					attacks[2].setAttacking(true);
 				}
-				if (input->isKeyDown(upper)) {
+				if (keyIsPressed[upper]) {
 					attacks[3].setAttacking(true);
 				}
 			}
@@ -69,10 +85,10 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 
 		directionKeycodesThisFrame.clear();
 
-		if (input->isKeyDown(left)) {
+		if (keyIsPressed[left]) {
 			directionKeycodesThisFrame.push_back(left);
 		}
-		if (input->isKeyDown(right)) {
+		if (keyIsPressed[right]) {
 			directionKeycodesThisFrame.push_back(right);
 		}
 
@@ -92,86 +108,8 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 		directionKeycodesLastFrame = directionKeycodesThisFrame;
 
 
-
-
-		//----MOVEMENT----//
-		//Pressing either left or right (but not both - case covered by above check)
-		if (input->isKeyDown(right) || input->isKeyDown(left)) {
-			//Handle horizontal movement
-			if (isGrounded && !dodgeFramesLeft) {
-				if (input->isKeyDown(right)) {
-					velocity.x = topSpeed;
-				}
-				if (input->isKeyDown(left)) {
-					velocity.x = -topSpeed;
-				}
-			}
-			//In midair, player can slightly adjust their direction
-			else if (!dodgeFramesLeft) {
-				if (input->isKeyDown(right)) {
-					//Jumping to the right
-					if (jumpDirection == 1) {
-						velocity.x = topSpeed;
-					}
-					//Travelling to left or straight up, but player is pressing right - let them switch direction to the right but only 30% of the regular speed
-					else {
-						velocity.x = 0.6 * topSpeed;
-					}
-				}
-				if (input->isKeyDown(left)) {
-					//Jumping to the left
-					if (jumpDirection == -1) {
-						velocity.x = -topSpeed;
-					}
-					//Travelling to right or straight up, but player is pressing right - let them switch direction to the left but only 30% of the regular speed
-					else {
-						velocity.x = 0.6 * -topSpeed;
-					}
-				}
-			}
-		}
-
-		if (!hasKnockback && !dodgeFramesLeft) {
-			//Pressing both keys at same time or not pressing either key (and doesn't have knockback)
-			if ((input->isKeyDown(left) && input->isKeyDown(right)) || (!input->isKeyDown(left) && (!input->isKeyDown(right)))) {
-				//Slow down to an immediate hault
-				velocity.x = 0;
-
-			}
-			//Pressing both keys at the same time, the player should be facing to their most recent key press
-			if (input->isKeyDown(left) && input->isKeyDown(right) && !dodgeFramesLeft) {
-				if (flipped && mostRecentDirectionKeycode == right) {
-					flipped = false;
-					setScale(1, 1);
-				}
-				else if (!flipped && mostRecentDirectionKeycode == left) {
-					flipped = true;
-					setScale(-1, 1);
-				}
-			}
-		}
-
-		if (isGrounded && !dodgeFramesLeft) {
-			//Jumping
-			if (input->isKeyDown(jump)) {
-				isGrounded = false;
-				velocity.y = jumpSpeed;
-				velocity.x *= 1.25;
-				if (velocity.x > 0) {
-					jumpDirection = 1;
-				}
-				else if (velocity.x < 0) {
-					jumpDirection = -1;
-				}
-				else {
-					jumpDirection = 0;
-				}
-			}
-
-		}
-
 		//Crouching
-		if (input->isKeyDown(down) && !dodgeFramesLeft) {
+		if (keyIsPressed[down] && !dodgeFramesLeft) {
 			if (!crouched) {
 				setSize(sf::Vector2f(getSize().x, getSize().y * 0.5f));
 				setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
@@ -180,95 +118,140 @@ void OnlinePlayer::handleInput(float dt, int jump, int left, int right, int down
 			}
 		}
 		if (crouched && !dodgeFramesLeft) {
-			if (!input->isKeyDown(down)) {
+			if (!keyIsPressed[down]) {
 				setSize(sf::Vector2f(getSize().x, getSize().y / 0.5f));
 				setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
 				setPosition(sf::Vector2f(getPosition().x, (getPosition().y - getSize().y / 4) + 1)); //Adding 1 to account for floating-point rounding error that causes player to go up 1 pixel every time
 				crouched = false;
 			}
 		}
-
-		//Dodging
-		if (!dodgeCooldownFramesLeft && !dodgeButtonPressed) {
-			if (input->isKeyDown(dodge) && mostRecentDirectionKeycode != -1) {
-				dodgeButtonPressed = true;
-				if (mostRecentDirectionKeycode == left) {
-					dodgeFramesLeft = totalDodgeFrames;
-					setVelocity(-dodgeVelocity, getVelocity().y);
-				}
-				else if (mostRecentDirectionKeycode == right) {
-					dodgeFramesLeft = totalDodgeFrames;
-					setVelocity(dodgeVelocity, getVelocity().y);
-				}
-			}
-		}
-		if (dodgeButtonPressed && !input->isKeyDown(dodge) && !dodgeFramesLeft) {
-			dodgeButtonPressed = false;
-		}
-
-
-		//Player is in air, so bring them towards ground
-		if (!isGrounded && !(velocity.y == terminalVelocity)) {
-			velocity.y -= acceleration * dt;
-		}
-		if (velocity.y < terminalVelocity) {
-			velocity.y = terminalVelocity;
-		}
 	}
 }
 
 
 void OnlinePlayer::update(float dt) {
-	Player::update(dt);
-	if (!isLocal) {
-		return;
+	if (isLocal) {
+		bool flippedAtStartOfFrame{ flipped };
+		int healthAtStartOfFrame{ health };
+		Player::update(dt);
+		//Check if flipped state has changed - send this change to the server
+		if (flippedAtStartOfFrame != flipped) {
+			SendUpdateDataToNetwork(flipped);
+		}
+		if (healthAtStartOfFrame != health) {
+			SendUpdateDataToNetwork(health);
+		}
 	}
+	else {
 
-	verificationPacketTimer += timeManager.getDeltaTime();
-	if (verificationPacketTimer >= verificationPacketCooldown) {
-		verificationPacketTimer = 0;
+		effectiveCollider = getGlobalBounds();
+		effectiveCollider.left += colliderShrinkage.x;
+		effectiveCollider.top += colliderShrinkage.y;
+		effectiveCollider.width -= colliderShrinkage.x * 2;
+		effectiveCollider.height -= colliderShrinkage.y * 2;
 
-		//A verification packet is a packet sent every so often with the current player's status to be checked against the other client - this helps to mitigate the effects of packet loss.
-		//A verification packet consists of:
-		//-Position
-		//-Health
-		//-Limb status
+		//Vertical - check if player has fallen off map
+		int deathPlaneLevel{ 1920 };
+		if (getPosition().y - getSize().y / 2 > deathPlaneLevel) {
+			health = 0;
+		}
 
-		//Create verification packet to send to server
-		int networkListenerIndex{ playerNum - 1 };
-		sf::Packet outgoingPacket;
-		outgoingPacket << getPosition().x << getPosition().y << health << activeLimbs[0] << activeLimbs[1] << activeLimbs[2] << activeLimbs[3];
-		networkManager.SendDataToNetworkManager(networkListenerIndex, PacketCode::Verification, outgoingPacket);
+		actionable = true;
+		for (int i{}; i < 4; ++i) {
+			if (attacks[i].getAttacking()) {
+				attacks[i].strike(dt, getPosition().x, getPosition().y, flipped, crouched);
+				actionable = false;
+			}
+		}
+
+		if ((invincibilityFramesLeft || dodgeFramesLeft) && getFillColor().a != 128) {
+			setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 128)); //Make transparent
+		}
+		else if (!(invincibilityFramesLeft || dodgeFramesLeft) && getFillColor().a != 255) {
+			setFillColor(sf::Color(getFillColor().r, getFillColor().g, getFillColor().b, 255)); //Restore to full transparency
+		}
+
+		//Check if player is being knocked back but has hit the ground again
+		if (hasKnockback && isGrounded) {
+			hasKnockback = false;
+		}
+
+		//Check if limbs are to be destroyed
+		for (int i{}; i < 4; ++i) {
+			activeLimbs[i] = health >= 20 * (i + 1);
+			UpdateTextures();
+		}
+
+
+		if (updateTextures) {
+			updateTextures = false;
+
+			//Clear the render texture
+			playerRenderTexture->clear(sf::Color::Transparent);
+
+			//Draw base
+			playerRenderTexture->draw(*basePlayerSprite);
+			playerRenderTexture->display();
+
+			//Draw limbs
+			for (int i{}; i < 4; ++i) {
+				if (activeLimbs[i]) {
+					//Draw alive limb
+					playerRenderTexture->draw(*aliveLimbSprites[i]);
+				}
+				else {
+					//Draw dead limb
+					playerRenderTexture->draw(*deadLimbSprites[i]);
+				}
+			}
+			playerRenderTexture->display();
+			setTexture(&playerRenderTexture->getTexture());
+		}
+
+		if (invincibilityFramesLeft > 0) { invincibilityFramesLeft -= TimeManager::PhysicsClockFramerate * dt; }
+		else if (invincibilityFramesLeft < 0) { invincibilityFramesLeft = 0; }
+
+		if (dodgeFramesLeft > 0) { dodgeFramesLeft -= TimeManager::PhysicsClockFramerate * dt; }
+		else if (dodgeFramesLeft < 0) {
+			dodgeFramesLeft = 0;
+			velocity.x = 0;
+			dodgeCooldownFramesLeft = dodgeCooldownFrames;
+		}
+
+		if (dodgeCooldownFramesLeft > 0) { dodgeCooldownFramesLeft -= TimeManager::PhysicsClockFramerate * dt; }
+		else if (dodgeCooldownFramesLeft < 0) { dodgeCooldownFramesLeft = 0; }
 	}
 }
 
 
 
 void OnlinePlayer::SendUpdateDataToNetwork(std::vector<int> changedKeys) {
-	int networkListenerIndex{ playerNum - 1 };
-
 	for (int key : changedKeys) {
 		bool pressed = input->isKeyDown(key);
 		sf::Packet outgoingPacket;
 		outgoingPacket << pressed << key;
-		networkManager.SendDataToNetworkManager(networkListenerIndex, PacketCode::KeyChange, outgoingPacket);
+		networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, networkListenerIndex, PacketCode::KeyChange, outgoingPacket);
 	}
 }
 
+void OnlinePlayer::SendUpdateDataToNetwork(sf::Vector2f newPosition) {
+	sf::Packet outgoingPacket;
+	outgoingPacket << newPosition.x << newPosition.y;
+	networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, networkListenerIndex, PacketCode::PositionChange, outgoingPacket);
+}
 
+void OnlinePlayer::SendUpdateDataToNetwork(bool flipped) {
+	sf::Packet outgoingPacket;
+	outgoingPacket << flipped;
+	networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, networkListenerIndex, PacketCode::Flip, outgoingPacket);
+}
 
-void OnlinePlayer::VerifyStatus(sf::Packet verificationPacket) {
-	//Compare status against verification packet - if there are any mismatches, favour the verification packet
-	sf::Vector2f pos;
-	verificationPacket >> pos.x >> pos.y;
-	setPosition(pos);
-	verificationPacket >> health >> activeLimbs[0] >> activeLimbs[1] >> activeLimbs[2] >> activeLimbs[3];
+void OnlinePlayer::SendUpdateDataToNetwork(int health) {
+	sf::Packet outgoingPacket;
+	outgoingPacket << health;
+	networkManager.SendDataToNetworkManager(opponentNetworkManagerIndex, networkListenerIndex, PacketCode::Health, outgoingPacket);
 }
 
 
 
 int OnlinePlayer::getPlayerNum() { return playerNum; }
-
-void OnlinePlayer::setKeyPressed(int key, bool pressed) {
-	keyIsPressed[key] = pressed;
-}

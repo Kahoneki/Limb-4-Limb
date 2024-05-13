@@ -2,13 +2,16 @@
 #include "EndScreen.h"
 #include "Player.h"
 
-LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
+LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), pausePopup(in)
 {
 	std::cout << "Loading test scene\n";
 
 	window = hwnd;
 	input = in;
+
 	debugMode = false;
+	timeUntilPlayersShouldStartUpdate = 0.5f;
+	playerStartUpdateTimeCountdown = timeUntilPlayersShouldStartUpdate;
 	minItemBoxCooldownTime = 15;
 	maxItemBoxCooldownTime = 30;
 	//timeUntilNextItemBox = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
@@ -47,7 +50,7 @@ void LocalScene::InitialiseScene() {
 	platforms[2] = Platform(800, 475, 320, 25, true);   //Top
 	platforms[3] = Platform(200, 875, 1520, 25, false); //Ground
 
-	//audioManager.playMusicbyName("GuileTheme");
+	audioManager.playMusicbyName("GuileTheme");
 }
 
 
@@ -61,8 +64,8 @@ void LocalScene::InitialisePlayers() {
 		player->setHealth(100);
 		player->setOrigin(player->getLocalBounds().width / 2.f, player->getLocalBounds().height / 2.f);
 	}
-	players[0]->setPosition(325, 0);
-	players[1]->setPosition(1270, 0);
+	players[0]->setPosition(325, 800);
+	players[1]->setPosition(1270, 800);
 	players[1]->setScale(-1.0f, 1.0f);
 	players[1]->setFillColor(sf::Color::Red);
 }
@@ -89,26 +92,36 @@ void LocalScene::InitialiseHealthBars() {
 
 
 void LocalScene::handleInput(float dt) {
-	players[0]->handleInput(dt, sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::T, sf::Keyboard::G);
-	players[1]->handleInput(dt, sf::Keyboard::O, sf::Keyboard::K, sf::Keyboard::Semicolon, sf::Keyboard::L, sf::Keyboard::N, sf::Keyboard::LBracket, sf::Keyboard::Quote, sf::Keyboard::RBracket, sf::Keyboard::Tilde);
 
-	if (input->isKeyDown(sf::Keyboard::F3)) {
-		debugMode = true;
-	}
-	else if (input->isKeyDown(sf::Keyboard::F4)) {
-		debugMode = false;
+	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
+	pausePopup.processEvents(mousePos);
+
+	if (!pausePopup.getPausePopupEnabled()) {
+		players[0]->handleInput(dt, sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::T, sf::Keyboard::G);
+		players[1]->handleInput(dt, sf::Keyboard::O, sf::Keyboard::K, sf::Keyboard::Semicolon, sf::Keyboard::L, sf::Keyboard::N, sf::Keyboard::LBracket, sf::Keyboard::Quote, sf::Keyboard::RBracket, sf::Keyboard::Tilde);
+
+		if (input->isKeyDown(sf::Keyboard::F3)) {
+			debugMode = true;
+		}
+		else if (input->isKeyDown(sf::Keyboard::F4)) {
+			debugMode = false;
+		}
 	}
 }
 
 
 
 void LocalScene::update(float dt) {
-	players[0]->update(dt);
-	players[1]->update(dt);
 
-	//Loop through both players
-	for (int playerIndex{}; playerIndex < 2; ++playerIndex) {
+	if (pausePopup.getMainMenuButtonClicked()) {
+		MainMenu* mainMenu = new MainMenu(window, input, sceneManager);
+		sceneManager.LoadScene(mainMenu);
+	}
 
+	if (!pausePopup.getPausePopupEnabled()) {
+		if (playerStartUpdateTimeCountdown > 0) {
+			playerStartUpdateTimeCountdown -= dt;
+		}
 		Player* p1 = players[playerIndex];	   //Defending player
 		Player* p2 = players[1 - playerIndex]; //Attacking player
 
@@ -119,7 +132,8 @@ void LocalScene::update(float dt) {
 		if (p1->getInvincibilityFramesLeft())
 			continue;
 		else {
-			AttackHitboxCheck(p1, p2);
+			players[0]->update(dt);
+			players[1]->update(dt);
 		}
 
 		//Update item box if it exists
@@ -279,7 +293,6 @@ void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPla
 
 		//If attacking player is attacking, attack is in first frame of active cycle, and self knockback hasn't been applied, apply self knockback regardless of whether attack is hitting defending player
 		if (attack.getAttacking() && (attack.getCounter() >= attack.getStartup() + 1 && attack.getCounter() <= attack.getStartup() + 2) && !attack.getSelfKnockbackApplied()) {
-			std::cout << "Applying to attacking player\n";
 			ApplyKnockbackToAttackingPlayer(defendingPlayer, attackingPlayer, limbIndex);
 			attack.setSelfKnockbackApplied(true);
 		}
@@ -396,7 +409,8 @@ void LocalScene::HealthBarUpdate() {
 	HealthBarFront2.setPosition((1920 - Calc2 - 37), 37);
 
 	if (players[0]->getHealth() <= 0 || players[1]->getHealth() <= 0) {
-		EndScreen* endScreen = new EndScreen(window, input, sceneManager, players[0]->getHealth() > 0);
+		std::string resultText{ (players[0]->getHealth() > 0) ? "PLAYER 1 WINS!" : "PLAYER 2 WINS!" };
+		EndScreen* endScreen = new EndScreen(window, input, sceneManager, true, resultText.c_str() );
 		sceneManager.LoadScene(endScreen);
 	}
 }
@@ -430,6 +444,10 @@ void LocalScene::render()
 
 	if (debugMode) {
 		DebugRender();
+	}
+
+	if (pausePopup.getPausePopupEnabled()) {
+		window->draw(pausePopup);
 	}
 
 	endDraw();

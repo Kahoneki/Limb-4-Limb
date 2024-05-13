@@ -1,4 +1,5 @@
 #include "SceneManager.h"
+#include "MatchInvitationInterrupt.h"
 
 SceneManager::SceneManager(sf::RenderWindow* hwnd, Input* in) : timeManager(TimeManager::getInstance(240)) {
 	window = hwnd;
@@ -16,6 +17,9 @@ SceneManager::~SceneManager() {
 void SceneManager::LoadScene(BaseLevel* level) {
 	delete currentScene;
 	currentScene = level;
+
+	//Reset match invitation interrupt
+	MatchInvitationInterrupt::getInstance().Reset();
 }
 
 void SceneManager::RunCurrentSceneLoop() {

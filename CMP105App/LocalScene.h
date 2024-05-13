@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "Platform.h"
+#include "PausePopup.h"
 
 #include "ItemBox.h"
 
@@ -29,6 +30,8 @@ public:
 
 private:
 	SceneManager& sceneManager;
+
+	PausePopup pausePopup;
 
 	Player* players[2];
 	sf::Texture robotTexture;
@@ -52,6 +55,9 @@ private:
 
 	AudioManager audioManager;
 
+	//To stop players from falling through platforms at startup - ensure the scene is fully loaded before updating players
+	float timeUntilPlayersShouldStartUpdate; //In seconds
+	float playerStartUpdateTimeCountdown;
 
 	void InitialiseScene();
 	void InitialisePlayers();
