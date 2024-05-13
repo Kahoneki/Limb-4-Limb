@@ -14,6 +14,7 @@ class SceneManager;
 class NetworkManager;
 template<typename ParentType>
 class NetworkListener;
+class MatchInvitationInterrupt;
 
 class LoginScreen : public BaseLevel
 {
@@ -53,7 +54,6 @@ private:
 	int maxUsernameLength;
 
 	bool awaitServerResponses;
-	void sendAccountInfoToServer();
 	NetworkListener<LoginScreen>* networkListener;
 	int networkListenerIndex;
 
@@ -62,6 +62,9 @@ private:
 	std::string username;
 	sf::Uint64 uuid;
 	sf::Int32 ranking;
+
+
+	MatchInvitationInterrupt& matchInvitationInterrupt;
 };
 
 #endif

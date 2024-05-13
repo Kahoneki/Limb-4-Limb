@@ -1,8 +1,10 @@
 #include "LocalScene.h"
 #include "EndScreen.h"
 #include "Player.h"
+#include "NetworkScene.h"
+#include "MatchInvitationInterrupt.h"
 
-LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), pausePopup(in)
+LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), pausePopup(in), matchInvitationInterrupt(MatchInvitationInterrupt::getInstance())
 {
 	std::cout << "Loading local scene\n";
 
@@ -92,9 +94,15 @@ void LocalScene::InitialiseHealthBars() {
 void LocalScene::handleInput(float dt) {
 
 	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
-	pausePopup.processEvents(mousePos);
 
-	if (!pausePopup.getPausePopupEnabled()) {
+	if (matchInvitationInterrupt.getInvitationReceived()) {
+		matchInvitationInterrupt.processEvents(mousePos);
+	}
+	else {
+		pausePopup.processEvents(mousePos);
+	}
+
+	if (!pausePopup.getPausePopupEnabled() && !matchInvitationInterrupt.getInvitationReceived()) {
 		players[0]->handleInput(dt, sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::T, sf::Keyboard::G);
 		players[1]->handleInput(dt, sf::Keyboard::O, sf::Keyboard::K, sf::Keyboard::Semicolon, sf::Keyboard::L, sf::Keyboard::N, sf::Keyboard::LBracket, sf::Keyboard::Quote, sf::Keyboard::RBracket, sf::Keyboard::Tilde);
 
@@ -110,6 +118,13 @@ void LocalScene::handleInput(float dt) {
 
 
 void LocalScene::update(float dt) {
+
+	if (matchInvitationInterrupt.getReadyToLoadScene()) {
+		//Open network scene to start match
+		NetworkScene* networkScene{ new NetworkScene(window, input, sceneManager, matchInvitationInterrupt.getPlayerNum(), matchInvitationInterrupt.getNetworkManagerIndex()) };
+		sceneManager.LoadScene(networkScene);
+		return;
+	}
 
 	if (pausePopup.getMainMenuButtonClicked()) {
 		MainMenu* mainMenu = new MainMenu(window, input, sceneManager);
@@ -456,6 +471,11 @@ void LocalScene::render()
 
 	if (pausePopup.getPausePopupEnabled()) {
 		window->draw(pausePopup);
+	}
+
+	if (matchInvitationInterrupt.getInvitationReceived()) {
+		//Match invitation has been received
+		window->draw(matchInvitationInterrupt);
 	}
 
 	endDraw();

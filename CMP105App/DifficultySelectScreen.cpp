@@ -3,8 +3,10 @@
 #include "SingleplayerScene.h"
 #include "SceneManager.h"
 #include "ColourPallete.h"
+#include "MatchInvitationInterrupt.h"
+#include "NetworkScene.h"
 
-DifficultySelectScreen::DifficultySelectScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm)
+DifficultySelectScreen::DifficultySelectScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), matchInvitationInterrupt(MatchInvitationInterrupt::getInstance())
 {
 	std::cout << "Loading difficulty select screen\n";
 
@@ -82,20 +84,33 @@ void DifficultySelectScreen::InitialiseCallbacks()
 void DifficultySelectScreen::handleInput(float dt)
 {
 	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
-	one.processEvents(mousePos);
-	two.processEvents(mousePos);
-	three.processEvents(mousePos);
-	four.processEvents(mousePos);
-	five.processEvents(mousePos);
-	backButton.processEvents(mousePos);
 
-	if (difficulty != 0) {
-		start.processEvents(mousePos);
+	if (matchInvitationInterrupt.getInvitationReceived()) {
+		matchInvitationInterrupt.processEvents(mousePos);
+	}
+
+	else {
+		//Only allow user to interact with other buttons if there isn't currently a match invitation pop up
+		one.processEvents(mousePos);
+		two.processEvents(mousePos);
+		three.processEvents(mousePos);
+		four.processEvents(mousePos);
+		five.processEvents(mousePos);
+		backButton.processEvents(mousePos);
+
+		if (difficulty != 0) {
+			start.processEvents(mousePos);
+		}
 	}
 }
 
 void DifficultySelectScreen::update(float dt)
 {
+	if (matchInvitationInterrupt.getReadyToLoadScene()) {
+		//Open network scene to start match
+		NetworkScene* networkScene{ new NetworkScene(window, input, sceneManager, matchInvitationInterrupt.getPlayerNum(), matchInvitationInterrupt.getNetworkManagerIndex()) };
+		sceneManager.LoadScene(networkScene);
+	}
 }
 
 void DifficultySelectScreen::render()
@@ -113,5 +128,10 @@ void DifficultySelectScreen::render()
 	window->draw(four);
 	window->draw(five);
 	window->draw(backButton);
+
+	if (matchInvitationInterrupt.getInvitationReceived()) {
+		//Match invitation has been received
+		window->draw(matchInvitationInterrupt);
+	}
 	endDraw();
 }

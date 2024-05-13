@@ -34,7 +34,7 @@ MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneM
 	registration = Button(450, 500, 450, 80, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 60, font, onRegistrationButtonClick, "REGISTER");
 	login = Button(960, 500, 450, 80, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 60, font, onLoginButtonClick, "");
 	quit = Button(450, 600, 960, 80, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 60, font, onQuitClick, "QUIT");
-	switchOnlineStatus = Button(1500, 800, 350, 80, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 60, font, onSwitchOnlineStatusButtonClick, "");
+	switchOnlineStatus = Button(1475, 800, 400, 80, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 60, font, onSwitchOnlineStatusButtonClick, "");
 
 	username = TextBox(50, 950, 500, 40, INACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, "");
 	ranking = TextBox(50, 1000, 500, 40, INACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, "");

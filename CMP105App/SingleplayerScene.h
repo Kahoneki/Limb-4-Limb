@@ -16,6 +16,7 @@
 class SceneManager;
 class Player;
 class AIPlayer;
+class MatchInvitationInterrupt;
 
 class SinglePlayerScene : public BaseLevel
 {
@@ -73,6 +74,8 @@ private:
 
 	bool debugMode; //Shows colliders
 	void DebugRender();
+
+	MatchInvitationInterrupt& matchInvitationInterrupt;
 };
 
 #endif

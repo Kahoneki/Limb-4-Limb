@@ -7,7 +7,7 @@
 #include <fstream>
 #include <filesystem> //For std::filesystem::exists
 
-LoginScreen::LoginScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), networkManager(NetworkManager::getInstance(false))
+LoginScreen::LoginScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), networkManager(NetworkManager::getInstance(false)), matchInvitationInterrupt(MatchInvitationInterrupt::getInstance())
 {
 	std::cout << "Loading login screen\n";
 
@@ -118,13 +118,28 @@ bool LoginScreen::checkClientSideUsernameValidity() {
 
 void LoginScreen::handleInput(float dt) {
 	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
-	usernameBox.processEvents(dt, mousePos);
-	loginButton.processEvents(mousePos);
-	backButton.processEvents(mousePos);
+
+	if (matchInvitationInterrupt.getInvitationReceived()) {
+		matchInvitationInterrupt.processEvents(mousePos);
+	}
+
+	else {
+		//Only allow user to interact with other buttons if there isn't currently a match invitation pop up
+		usernameBox.processEvents(dt, mousePos);
+		loginButton.processEvents(mousePos);
+		backButton.processEvents(mousePos);
+	}
 }
 
 
 void LoginScreen::update(float dt) {
+
+	if (matchInvitationInterrupt.getReadyToLoadScene()) {
+		//Open network scene to start match
+		NetworkScene* networkScene{ new NetworkScene(window, input, sceneManager, matchInvitationInterrupt.getPlayerNum(), matchInvitationInterrupt.getNetworkManagerIndex()) };
+		sceneManager.LoadScene(networkScene);
+	}
+
 	if (awaitServerResponses) {
 		if (loginStatus == -1) {
 			//Server hasn't responded yet
@@ -171,6 +186,10 @@ void LoginScreen::render()
 	window->draw(backButton);
 	if (displayStatusBar) {
 		window->draw(statusBar);
+	}
+	if (matchInvitationInterrupt.getInvitationReceived()) {
+		//Match invitation has been received
+		window->draw(matchInvitationInterrupt);
 	}
 	endDraw();
 }

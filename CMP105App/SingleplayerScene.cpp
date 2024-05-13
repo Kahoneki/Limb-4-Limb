@@ -3,8 +3,10 @@
 #include "Player.h"
 #include "AIPlayer.h"
 #include "ColourPallete.h"
+#include "MatchInvitationInterrupt.h"
+#include "NetworkScene.h"
 
-SinglePlayerScene::SinglePlayerScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int difficulty) : sceneManager(sm), pausePopup(in)
+SinglePlayerScene::SinglePlayerScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int difficulty) : sceneManager(sm), pausePopup(in), matchInvitationInterrupt(MatchInvitationInterrupt::getInstance())
 {
 	std::cout << "Loading single player scene\n";
 
@@ -52,7 +54,7 @@ void SinglePlayerScene::InitialiseScene() {
 	platforms[2] = Platform(800, 475, 320, 25, true);   //Top
 	platforms[3] = Platform(200, 875, 1520, 25, false); //Ground
 
-	//audioManager.playMusicbyName("GuileTheme");
+	audioManager.playMusicbyName("GuileTheme");
 }
 
 
@@ -117,22 +119,37 @@ void SinglePlayerScene::handleInput(float dt) {
 	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
 	pausePopup.processEvents(mousePos);
 
-	if (!pausePopup.getPausePopupEnabled()) {
-		players[0]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
-		static_cast<AIPlayer*>(players[1])->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, *players[0], platforms[3].getGlobalBounds());
+	if (matchInvitationInterrupt.getInvitationReceived()) {
+		matchInvitationInterrupt.processEvents(mousePos);
+	}
 
-		if (input->isKeyDown(sf::Keyboard::F3)) {
-			debugMode = true;
-		}
-		else if (input->isKeyDown(sf::Keyboard::F4)) {
-			debugMode = false;
+	else {
+		//Only allow user to interact with other buttons if there isn't currently a match invitation pop up
+		if (!pausePopup.getPausePopupEnabled()) {
+			players[0]->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::Semicolon, sf::Keyboard::LBracket, sf::Keyboard::RBracket, sf::Keyboard::Enter);
+			static_cast<AIPlayer*>(players[1])->handleInput(dt, sf::Keyboard::Space, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, *players[0], platforms[3].getGlobalBounds());
+
+			if (input->isKeyDown(sf::Keyboard::F3)) {
+				debugMode = true;
+			}
+			else if (input->isKeyDown(sf::Keyboard::F4)) {
+				debugMode = false;
+			}
 		}
 	}
+
 }
 
 
 
 void SinglePlayerScene::update(float dt) {
+
+	if (matchInvitationInterrupt.getReadyToLoadScene()) {
+		//Open network scene to start match
+		NetworkScene* networkScene{ new NetworkScene(window, input, sceneManager, matchInvitationInterrupt.getPlayerNum(), matchInvitationInterrupt.getNetworkManagerIndex()) };
+		sceneManager.LoadScene(networkScene);
+		return;
+	}
 
 	if (pausePopup.getMainMenuButtonClicked()) {
 		MainMenu* mainMenu = new MainMenu(window, input, sceneManager);
@@ -479,6 +496,11 @@ void SinglePlayerScene::render()
 
 	if (pausePopup.getPausePopupEnabled()) {
 		window->draw(pausePopup);
+	}
+
+	if (matchInvitationInterrupt.getInvitationReceived()) {
+		//Match invitation has been received
+		window->draw(matchInvitationInterrupt);
 	}
 
 	endDraw();

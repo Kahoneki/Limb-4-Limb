@@ -11,6 +11,7 @@
 
 //Forward declarations
 class SceneManager;
+class MatchInvitationInterrupt;
 
 class DifficultySelectScreen : public BaseLevel
 {
@@ -55,6 +56,8 @@ private:
 	std::function<void(void)> backButtonOnClick;
 
 	int difficulty;
+
+	MatchInvitationInterrupt& matchInvitationInterrupt;
 };
 
 #endif

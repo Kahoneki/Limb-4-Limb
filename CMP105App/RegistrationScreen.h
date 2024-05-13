@@ -12,9 +12,9 @@
 //Forward declarations
 class SceneManager;
 class NetworkManager;
-
 template<typename ParentType>
 class NetworkListener;
+class MatchInvitationInterrupt;
 
 class RegistrationScreen : public BaseLevel
 {
@@ -58,6 +58,8 @@ private:
 	int networkListenerIndex;
 	sf::Int8 usernameAvailable; //-1 = server hasn't responded yet, 0 = username available, 1 = username not available
 	sf::Uint64 uuid;
+
+	MatchInvitationInterrupt& matchInvitationInterrupt;
 };
 
 #endif

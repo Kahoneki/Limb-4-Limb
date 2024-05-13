@@ -163,7 +163,7 @@ void NetworkScene::update(float dt) {
 		resultText += "\nYOUR RANKING IS NOW: ";
 		resultText += std::to_string(updatedRanking);
 		resultText += (localPlayerWon ? " (+30)" : " (-30)");
-		EndScreen* endScreen{ new EndScreen(window, input, sceneManager, false, resultText) };
+		EndScreen* endScreen{ new EndScreen(window, input, sceneManager, 2, resultText) };
 		sceneManager.LoadScene(endScreen);
 		return;
 	}

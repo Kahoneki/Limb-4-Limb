@@ -15,6 +15,7 @@
 //Forward declarations
 class SceneManager;
 class Player;
+class MatchInvitationInterrupt;
 
 class LocalScene : public BaseLevel
 {
@@ -71,6 +72,8 @@ private:
 	
 	bool debugMode; //Shows colliders
 	void DebugRender();
+
+	MatchInvitationInterrupt& matchInvitationInterrupt;
 };
 
 #endif
