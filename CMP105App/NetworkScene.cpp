@@ -26,6 +26,8 @@ NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, 
 
 	networkListener = networkManager.GenerateNetworkListener(*this, NetworkManager::ReservedEntityIndexTable::NETWORK_SCENE);
 
+	itemBox = nullptr;
+
 	InitialiseScene();
 	InitialisePlayers();
 	InitialiseHealthBars();
@@ -528,6 +530,10 @@ void NetworkScene::render()
 
 	for (int i{ 0 }; i < sizeof(platforms) / sizeof(platforms[0]); ++i) {
 		window->draw(platforms[i]);
+	}
+
+	if (itemBox != nullptr) {
+		window->draw(*itemBox);
 	}
 
 	if (debugMode) {

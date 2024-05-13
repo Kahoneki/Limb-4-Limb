@@ -524,7 +524,8 @@ void Server::CheckForIncomingTCPData(float dt) {
 					}
 				}
 
-				matches[smallestFreeIndex] = std::make_pair<int, int>(i, opponentNetworkManagerIndex);
+				matches[smallestFreeIndex] = std::make_pair(i, opponentNetworkManagerIndex);
+				timeUntilNextItemBoxInMatch[smallestFreeIndex] = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
 			}
 
 			break;
@@ -578,10 +579,11 @@ void Server::CheckForIncomingTCPData(float dt) {
 				}
 			}
 
-			//Remove entry from matches map
+			//Remove entries from matches map and timeUntilNextItemBoxInMatch map
 			for (std::map<int, std::pair<int, int>>::iterator it{ matches.begin() }; it != matches.end(); ++it) {
 				if ((it->second.first == i) || (it->second.second == i)) {
 					matches.erase(it);
+					timeUntilNextItemBoxInMatch.erase(it->first);
 					break;
 				}
 			}
@@ -605,10 +607,11 @@ void Server::CheckForIncomingTCPData(float dt) {
 				}
 			}
 
-			//Remove entry from matches map
+			//Remove entry from matches map and timeUntilNextItemBoxInMatch map
 			for (std::map<int, std::pair<int, int>>::iterator it{ matches.begin() }; it != matches.end(); ++it) {
 				if ((it->second.first == i) || (it->second.second == i)) {
 					matches.erase(it);
+					timeUntilNextItemBoxInMatch.erase(it->first);
 					break;
 				}
 			}
@@ -799,7 +802,7 @@ void Server::UpdateAndCheckItemBoxCooldowns(float dt)
 			sf::Packet outgoingPacket;
 			int randXPos{ rand() % (1920 - 30) }; //30 is the width of the item box
 
-			chanceOfBeingGood = 0.65f;
+			float chanceOfBeingGood = 0.65f;
 			int riskRewardMultiplier{ 2 }; //Scale the risk-reward by the multiplier
 			float randVal{ static_cast<float>(rand()) / RAND_MAX };
 			float riskReward{ randVal * riskRewardMultiplier };
@@ -808,10 +811,10 @@ void Server::UpdateAndCheckItemBoxCooldowns(float dt)
 			randVal = static_cast<float>(rand()) / RAND_MAX;
 			ItemDrop drop = (randVal <= chanceOfBeingGood) ? (goodDrops[rand() % sizeof(goodDrops) / sizeof(goodDrops[0])]) : (badDrops[rand() % sizeof(badDrops) / sizeof(badDrops[0])]);
 
-			outgoingPacket << static_cast<std::underlying_type_t(ReservedEntityIndexTable)>(ReservedEntityIndexTable::NETWORK_SCENE);
-			outgoingPacket << static_cast<std::underlying_type_t(PacketCode)>(PacketCode::ItemBoxSpawn);
+			outgoingPacket << static_cast<std::underlying_type_t<ReservedEntityIndexTable>>(ReservedEntityIndexTable::NETWORK_SCENE);
+			outgoingPacket << static_cast<std::underlying_type_t<PacketCode>>(PacketCode::ItemBoxSpawn);
 			outgoingPacket << randXPos;
-			outgoingPacket << static_cast<std::underlying_type_t(ItemDrop)>(drop);
+			outgoingPacket << static_cast<std::underlying_type_t<ItemDrop>>(drop);
 			outgoingPacket << riskReward;
 
 			connectedNetworkManagers[matches[it->first].first].send(outgoingPacket);
@@ -836,6 +839,15 @@ std::map<int, sf::TcpSocket>::iterator Server::DisconnectUser(int nmi)
 			for (std::map<int, int>::iterator it{ matchedUsers.begin() }; it != matchedUsers.end(); ++it) {
 				if ((it->first == nmi) || (it->second == nmi)) {
 					matchedUsers.erase(it);
+					break;
+				}
+			}
+
+			//Remove entry from matches map and timeUntilNextItemBoxInMatch map
+			for (std::map<int, std::pair<int, int>>::iterator it{ matches.begin() }; it != matches.end(); ++it) {
+				if ((it->second.first == nmi) || (it->second.second == nmi)) {
+					matches.erase(it);
+					timeUntilNextItemBoxInMatch.erase(it->first);
 					break;
 				}
 			}
