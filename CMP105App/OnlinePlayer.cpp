@@ -220,6 +220,38 @@ void OnlinePlayer::update(float dt) {
 
 		if (dodgeCooldownFramesLeft > 0) { dodgeCooldownFramesLeft -= TimeManager::PhysicsClockFramerate * dt; }
 		else if (dodgeCooldownFramesLeft < 0) { dodgeCooldownFramesLeft = 0; }
+	
+
+		if (hasEffect) {
+			timeUntilEffectEnds -= dt;
+		}
+		if (timeUntilEffectEnds <= 0) {
+
+			hasEffect = false;
+
+			//Revert player to regular stats
+			switch (effect.itemDrop) {
+			case ItemDrop::JumpDecrease:
+			case ItemDrop::JumpIncrease:
+				jumpSpeed = defaultJumpSpeed;
+				break;
+			case ItemDrop::SpeedDecrease:
+			case ItemDrop::SpeedIncrease:
+				topSpeed = defaultTopSpeed;
+				break;
+			case MaxHealthDecrease:
+			case MaxHealthIncrease:
+				maxHealth = defaultMaxHealth;
+				if (health > maxHealth) { health = maxHealth; }
+				break;
+			case Invincibility:
+				invincible = false;
+				break;
+			case FlippedControls:
+				useFlippedControls = false;
+				break;
+			}
+		}
 	}
 }
 
