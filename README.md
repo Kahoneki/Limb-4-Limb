@@ -35,13 +35,12 @@ I’m looking to almost entirely rewrite the structure of the program to accommo
 
 ## Must Have Features
 
-- Restructuring : The codebase will be restructured to accommodate the new features I plan on adding and in a way that promotes modularity and functional abstraction.
+- Account system : Players will be able to register and log in to an account to keep their data saved.
 - LAN : Players will be able to fight each other across different computers in the same local area network.
 
 ## Should Have Features
 
 - WiFi Capabilities : Players will be able to fight each other from separate WiFi networks.
-- Account system : Players will be able to register and log in to an account to keep their data saved.
 - Database Connectivity : A database will be implemented to host player's account information.
 - Fun and Friendly : A new combat style will be implemented to promote a more fun and all-skill-levels-friendly feel, including random bonus items / power-ups.
 
