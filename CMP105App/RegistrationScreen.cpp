@@ -28,7 +28,7 @@ RegistrationScreen::RegistrationScreen(sf::RenderWindow* hwnd, Input* in, SceneM
 	InitialiseCallbacks();
 	registerButton = Button(1500, 800, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onRegisterButtonClick, "Register");
 	backButton = Button(100, 100, 30, 30, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onBackButtonClick, "<-");
-	statusBar = TextBox(230, 800, 700, 40, INACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, "");
+	statusBar = TextBox(230, 800, 700, 40, INACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, "", false);
 	displayStatusBar = false;
 
 

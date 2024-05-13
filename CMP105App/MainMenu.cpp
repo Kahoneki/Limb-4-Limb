@@ -42,26 +42,26 @@ MainMenu::MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneM
 	if (accountManager.getUsername() != "N/A") {
 		//User is logged in
 		username.text.setString(accountManager.getUsername());
-		username.RecenterText();
+		username.RecentreText();
 		ranking.text.setString(std::to_string(accountManager.getRanking()));
-		ranking.RecenterText();
+		ranking.RecentreText();
 
 		login.text.setString("LOGOUT");
-		login.RecenterText();
+		login.RecentreText();
 	}
 	else {
 		//User is logged out
 		login.text.setString("LOGIN");
-		login.RecenterText();
+		login.RecentreText();
 	}
 
 	if (networkManager.getConnectedToServer()) {
 		switchOnlineStatus.text.setString("GO OFFLINE");
-		switchOnlineStatus.RecenterText();
+		switchOnlineStatus.RecentreText();
 	}
 	else {
 		switchOnlineStatus.text.setString("GO ONLINE");
-		switchOnlineStatus.RecenterText();
+		switchOnlineStatus.RecentreText();
 	}
 
 	std::cout << "Loaded main menu\n";
@@ -113,7 +113,7 @@ void MainMenu::InitialiseCallbacks() {
 			networkManager.SendDataToServer(-1, PacketCode::Logout, outgoingData);
 			accountManager.setValues("N/A", -1);
 			login.text.setString("LOGIN");
-			login.RecenterText();
+			login.RecentreText();
 		}
 	};
 
@@ -128,14 +128,14 @@ void MainMenu::InitialiseCallbacks() {
 				switchOnlineStatus.text.setString("GO ONLINE");
 				accountManager.setValues("N/A", -1);
 				login.text.setString("LOGIN");
-				login.RecenterText();
+				login.RecentreText();
 			}
 		}
 		else {
 			//Go online
 			if (networkManager.AttemptToConnectToServer()) {
 				switchOnlineStatus.text.setString("GO OFFLINE");
-				switchOnlineStatus.RecenterText();
+				switchOnlineStatus.RecentreText();
 			}
 		}
 	};

@@ -3,7 +3,7 @@
 
 TextBox::TextBox() {}
 
-TextBox::TextBox(sf::Vector2f pos, sf::Vector2f size, sf::Color fillCol, sf::Color txCol, float txSize, sf::Font& txFont, const char* txt) {
+TextBox::TextBox(sf::Vector2f pos, sf::Vector2f size, sf::Color fillCol, sf::Color txCol, float txSize, sf::Font& txFont, const char* txt, bool centreText) {
 	box = sf::RectangleShape(size);
 	box.setPosition(pos);
 	box.setFillColor(fillCol);
@@ -11,11 +11,17 @@ TextBox::TextBox(sf::Vector2f pos, sf::Vector2f size, sf::Color fillCol, sf::Col
 	text = sf::Text(txt, txFont);
 	text.setFillColor(txCol);
 	text.setCharacterSize(txSize);
-	text.setPosition((pos.x+box.getSize().x/2) - (text.getGlobalBounds().width/2), pos.y);
+
+	if (centreText) {
+		text.setPosition((pos.x+box.getSize().x/2) - (text.getGlobalBounds().width/2), pos.y);
+	}
+	else {
+		text.setPosition(pos);
+	}
 	
 }
 
-TextBox::TextBox(float posX, float posY, float sizeX, float sizeY, sf::Color fillCol, sf::Color txCol, float txSize, sf::Font& txFont, const char* txt) {
+TextBox::TextBox(float posX, float posY, float sizeX, float sizeY, sf::Color fillCol, sf::Color txCol, float txSize, sf::Font& txFont, const char* txt, bool centreText) {
 	box = sf::RectangleShape(sf::Vector2f(sizeX, sizeY));
 	box.setPosition(posX, posY);
 	box.setFillColor(fillCol);
@@ -23,10 +29,16 @@ TextBox::TextBox(float posX, float posY, float sizeX, float sizeY, sf::Color fil
 	text = sf::Text(txt, txFont);
 	text.setFillColor(txCol);
 	text.setCharacterSize(txSize);
-	text.setPosition((posX + box.getSize().x / 2) - (text.getGlobalBounds().width / 2), posY);
+
+	if (centreText) {
+		text.setPosition((posX + box.getSize().x / 2) - (text.getGlobalBounds().width / 2), posY);
+	}
+	else {
+		text.setPosition(posX, posY);
+	}
 }
 
-void TextBox::RecenterText()
+void TextBox::RecentreText()
 {
 	text.setPosition((box.getPosition().x + box.getSize().x / 2) - (text.getGlobalBounds().width / 2), box.getPosition().y);
 }

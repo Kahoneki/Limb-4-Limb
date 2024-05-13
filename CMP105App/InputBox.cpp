@@ -8,7 +8,7 @@ bool charInCharacterSet(char character, const char* characterSet);
 InputBox::InputBox() {}
 
 InputBox::InputBox(sf::Vector2f pos, sf::Vector2f size, sf::Color fillCol, sf::Color txCol, float txSize, sf::Font& txFont, int maxLen, const char* acceptableChars, const char* defaultTxt, bool asterisks, sf::Color activeCol)
-	: TextBox(pos, size, fillCol, txCol, txSize, txFont, defaultTxt)
+	: TextBox(pos, size, fillCol, txCol, txSize, txFont, defaultTxt, false)
 {
 	maxLength = maxLen;
 	acceptableCharacters = acceptableChars;
@@ -27,7 +27,7 @@ InputBox::InputBox(sf::Vector2f pos, sf::Vector2f size, sf::Color fillCol, sf::C
 }
 
 InputBox::InputBox(float posX, float posY, float sizeX, float sizeY, sf::Color fillCol, sf::Color txCol, float txSize, sf::Font& txFont, int maxLen, const char* acceptableChars, const char* defaultTxt, bool asterisks, sf::Color activeCol)
-	: TextBox(posX, posY, sizeX, sizeY, fillCol, txCol, txSize, txFont, defaultTxt)
+	: TextBox(posX, posY, sizeX, sizeY, fillCol, txCol, txSize, txFont, defaultTxt, false)
 {
 	maxLength = maxLen;
 	acceptableCharacters = acceptableChars;
