@@ -4,7 +4,7 @@
 
 LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), pausePopup(in)
 {
-	std::cout << "Loading test scene\n";
+	std::cout << "Loading local scene\n";
 
 	window = hwnd;
 	input = in;
@@ -14,10 +14,7 @@ LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sc
 	playerStartUpdateTimeCountdown = timeUntilPlayersShouldStartUpdate;
 	minItemBoxCooldownTime = 15;
 	maxItemBoxCooldownTime = 30;
-	//timeUntilNextItemBox = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
-	timeUntilNextItemBox = 0;
-
-	
+	timeUntilNextItemBox = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
 
 	itemBox = nullptr;
 
@@ -25,16 +22,17 @@ LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sc
 	InitialisePlayers();
 	InitialiseHealthBars();
 
-	std::cout << "Loaded test scene\n";
+	std::cout << "Loaded local scene\n";
 }
 
 
 LocalScene::~LocalScene()
 {
-	std::cout << "Unloading test scene\n";
+	std::cout << "Unloading local scene\n";
 	delete players[0];
 	delete players[1];
-	std::cout << "Unloaded test scene\n";
+	if (itemBox != nullptr) { delete itemBox; }
+	std::cout << "Unloaded local scene\n";
 
 }
 
@@ -118,13 +116,23 @@ void LocalScene::update(float dt) {
 		sceneManager.LoadScene(mainMenu);
 	}
 
-	if (!pausePopup.getPausePopupEnabled()) {
-		if (playerStartUpdateTimeCountdown > 0) {
-			playerStartUpdateTimeCountdown -= dt;
-		}
+	if (pausePopup.getPausePopupEnabled()) {
+		return;
+	}
+	if (playerStartUpdateTimeCountdown > 0) {
+		playerStartUpdateTimeCountdown -= dt;
+	}
+	else {
+		players[0]->update(dt);
+		players[1]->update(dt);
+	}
+
+
+	//Loop through both players
+	for (int playerIndex{}; playerIndex < 2; ++playerIndex) {
+
 		Player* p1 = players[playerIndex];	   //Defending player
 		Player* p2 = players[1 - playerIndex]; //Attacking player
-
 
 		PlatformCollisionCheck(p1);
 
@@ -132,40 +140,40 @@ void LocalScene::update(float dt) {
 		if (p1->getInvincibilityFramesLeft())
 			continue;
 		else {
-			players[0]->update(dt);
-			players[1]->update(dt);
+			AttackHitboxCheck(p1, p2);
 		}
-
-		//Update item box if it exists
-		if (itemBox != nullptr) {
-			itemBox->update(dt);
-		}
-		if (itemBox != nullptr) {
-			ItemBoxCollisionCheck(p1);
-		}
-		if (itemBox != nullptr) {
-			//Off screen boundary check for item box
-			if (itemBox->getPosition().y + itemBox->getSize().y > 1920) {
-				delete itemBox;
-				itemBox = nullptr;
-			}
-		}
-
-		else {
-			timeUntilNextItemBox -= dt;
-			if (timeUntilNextItemBox <= 0) {
-				itemBox = new ItemBox();
-				timeUntilNextItemBox = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
-			}
-		}
-
 
 	}
 
-	HealthBarUpdate();
-	
-}
 
+	//Handle item box
+	//Update item box if it exists - need to check nullptr each time since all of these cases might result in the item box being deleted
+	if (itemBox != nullptr) {
+		itemBox->update(dt);
+	}
+	if (itemBox != nullptr) {
+		ItemBoxCollisionCheck(players[0]);
+	}
+	if (itemBox != nullptr) {
+		ItemBoxCollisionCheck(players[1]);
+	}
+	if (itemBox != nullptr) {
+		//Off screen boundary check for item box
+		if (itemBox->getPosition().y + itemBox->getSize().y > 1920) {
+			delete itemBox;
+			itemBox = nullptr;
+		}
+	}
+	else {
+		timeUntilNextItemBox -= dt;
+		if (timeUntilNextItemBox <= 0) {
+			itemBox = new ItemBox();
+			timeUntilNextItemBox = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
+		}
+	}
+
+	HealthBarUpdate();
+}
 
 
 void LocalScene::ItemBoxCollisionCheck(Player* player) {
@@ -304,7 +312,7 @@ void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPla
 		if (!defendingPlayer->getEffectiveCollider().intersects(attack.getHitbox().getGlobalBounds()))
 			continue;
 
-		
+
 		//Apply damage to defending player
 		int damageAmount = attack.getDamage();
 
@@ -327,7 +335,7 @@ void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPla
 }
 
 void LocalScene::ApplyKnockbackToDefendingPlayer(Player* defendingPlayer, Player* attackingPlayer, int limbIndex) {
-	
+
 	sf::Vector2f knockback = attackingPlayer->getAttack(limbIndex).getKnockback();
 
 	//If defending player is blocking, only apply 30% of the knockback
@@ -410,7 +418,7 @@ void LocalScene::HealthBarUpdate() {
 
 	if (players[0]->getHealth() <= 0 || players[1]->getHealth() <= 0) {
 		std::string resultText{ (players[0]->getHealth() > 0) ? "PLAYER 1 WINS!" : "PLAYER 2 WINS!" };
-		EndScreen* endScreen = new EndScreen(window, input, sceneManager, true, resultText.c_str() );
+		EndScreen* endScreen = new EndScreen(window, input, sceneManager, true, resultText.c_str());
 		sceneManager.LoadScene(endScreen);
 	}
 }
@@ -434,7 +442,7 @@ void LocalScene::render()
 	window->draw(HealthBarBack2);
 	window->draw(HealthBarFront1);
 	window->draw(HealthBarFront2);
-	for (int i{ 0 }; i < sizeof(platforms)/sizeof(platforms[0]); ++i) {
+	for (int i{ 0 }; i < sizeof(platforms) / sizeof(platforms[0]); ++i) {
 		window->draw(platforms[i]);
 	}
 

@@ -1,6 +1,7 @@
 #include "ItemBox.h"
 #include "Player.h"
 #include <random>
+#include <iostream>
 
 
 sf::Color LerpColour(sf::Color colourA, sf::Color colourB, float interp);
@@ -35,6 +36,7 @@ ItemBox::ItemBox() {
 	velocity = 100.0f;
 }
 
+ItemBox::~ItemBox() {}
 
 
 void ItemBox::ApplyToPlayer(Player& player) {

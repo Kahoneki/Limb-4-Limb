@@ -20,7 +20,7 @@ class RegistrationScreen : public BaseLevel
 {
 public:
 
-	RegistrationScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager);
+	RegistrationScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm);
 	~RegistrationScreen();
 
 	void handleInput(float dt) override;
@@ -37,7 +37,7 @@ private:
 	sf::RectangleShape background;
 
 	InputBox usernameBox;
-	
+
 	Button registerButton; //To confirm registration
 	Button backButton;
 

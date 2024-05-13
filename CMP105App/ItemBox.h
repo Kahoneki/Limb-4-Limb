@@ -31,6 +31,7 @@ class ItemBox : public GameObject
 {
 public:
 	ItemBox();
+	~ItemBox();
 	void ApplyToPlayer(Player& player); //To be called when player collides with item box
 	void update(float dt);
 

@@ -9,9 +9,9 @@ TextBox::TextBox(sf::Vector2f pos, sf::Vector2f size, sf::Color fillCol, sf::Col
 	box.setFillColor(fillCol);
 	
 	text = sf::Text(txt, txFont);
-	text.setPosition(pos);
 	text.setFillColor(txCol);
 	text.setCharacterSize(txSize);
+	text.setPosition((pos.x+box.getSize().x/2) - (text.getGlobalBounds().width/2), pos.y);
 	
 }
 
@@ -21,9 +21,14 @@ TextBox::TextBox(float posX, float posY, float sizeX, float sizeY, sf::Color fil
 	box.setFillColor(fillCol);
 
 	text = sf::Text(txt, txFont);
-	text.setPosition(posX, posY);
 	text.setFillColor(txCol);
 	text.setCharacterSize(txSize);
+	text.setPosition((posX + box.getSize().x / 2) - (text.getGlobalBounds().width / 2), posY);
+}
+
+void TextBox::RecenterText()
+{
+	text.setPosition((box.getPosition().x + box.getSize().x / 2) - (text.getGlobalBounds().width / 2), box.getPosition().y);
 }
 
 void TextBox::draw(sf::RenderTarget& target, sf::RenderStates states) const {

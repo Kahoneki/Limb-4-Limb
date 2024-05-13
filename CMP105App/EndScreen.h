@@ -7,13 +7,12 @@
 #include "Framework/GameObject.h"
 #include "Framework/AudioManager.h"
 #include <functional>
-
 #include "SceneManager.h"
 
 class EndScreen : public BaseLevel
 {
 public:
-	EndScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, bool sceneLocal, std::string resultText);
+	EndScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int sceneType, std::string resultText, int difficulty=-1);
 	~EndScreen();
 
 	void handleInput(float dt) override;
@@ -28,7 +27,7 @@ private:
 
 	sf::Font font;
 	TextBox result; //E.g.: "Player 1 Wins!"
-	Button restart; //If local match
+	Button restart; //If singleplayer match or local match
 	Button exitToMainMenu;
 
 	//Callbacks
@@ -36,7 +35,8 @@ private:
 	std::function<void(void)> restartOnClick;
 	std::function<void(void)> mainMenuOnClick;
 
-	bool sceneIsLocal; //Coming from local match if true, coming from online match if false
+	int scene; //Scene that user came from. 0 = singleplayer, 1 = local, 2 = online
+	int difficultySetting; //If user came from a singleplayer match, this is the difficulty of the AI, otherwise, it's unused
 };
 
 #endif

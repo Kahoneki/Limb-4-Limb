@@ -103,6 +103,12 @@ Player::Player(sf::Vector2f size, float acc, float ts, float js, int hp, int pro
 	hasEffect = false;
 	defaultJumpSpeed = jumpSpeed;
 	defaultTopSpeed = topSpeed;
+
+	effectiveCollider = getGlobalBounds();
+	effectiveCollider.left += colliderShrinkage.x;
+	effectiveCollider.top += colliderShrinkage.y;
+	effectiveCollider.width -= colliderShrinkage.x * 2;
+	effectiveCollider.height -= colliderShrinkage.y * 2;
 }
 
 Player::~Player() {
