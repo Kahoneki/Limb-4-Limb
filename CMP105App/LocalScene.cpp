@@ -12,6 +12,14 @@ LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sc
 	debugMode = false;
 	timeUntilPlayersShouldStartUpdate = 0.5f;
 	playerStartUpdateTimeCountdown = timeUntilPlayersShouldStartUpdate;
+	minItemBoxCooldownTime = 15;
+	maxItemBoxCooldownTime = 30;
+	//timeUntilNextItemBox = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
+	timeUntilNextItemBox = 0;
+
+	
+
+	itemBox = nullptr;
 
 	InitialiseScene();
 	InitialisePlayers();
@@ -114,29 +122,57 @@ void LocalScene::update(float dt) {
 		if (playerStartUpdateTimeCountdown > 0) {
 			playerStartUpdateTimeCountdown -= dt;
 		}
+		Player* p1 = players[playerIndex];	   //Defending player
+		Player* p2 = players[1 - playerIndex]; //Attacking player
+
+
+		PlatformCollisionCheck(p1);
+
+		//Defending player has invincibility frames left, continue to the next player
+		if (p1->getInvincibilityFramesLeft())
+			continue;
 		else {
 			players[0]->update(dt);
 			players[1]->update(dt);
 		}
 
-
-		//Loop through both players
-		for (int playerIndex{}; playerIndex < 2; ++playerIndex) {
-
-			Player* p1 = players[playerIndex];	   //Defending player
-			Player* p2 = players[1 - playerIndex]; //Attacking player
-
-			PlatformCollisionCheck(p1);
-
-			//Defending player has invincibility frames left, continue to the next player
-			if (p1->getInvincibilityFramesLeft())
-				continue;
-			else {
-				AttackHitboxCheck(p1, p2);
-			}
-
+		//Update item box if it exists
+		if (itemBox != nullptr) {
+			itemBox->update(dt);
 		}
-		HealthBarUpdate();
+		if (itemBox != nullptr) {
+			ItemBoxCollisionCheck(p1);
+		}
+		if (itemBox != nullptr) {
+			//Off screen boundary check for item box
+			if (itemBox->getPosition().y + itemBox->getSize().y > 1920) {
+				delete itemBox;
+				itemBox = nullptr;
+			}
+		}
+
+		else {
+			timeUntilNextItemBox -= dt;
+			if (timeUntilNextItemBox <= 0) {
+				itemBox = new ItemBox();
+				timeUntilNextItemBox = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
+			}
+		}
+
+
+	}
+
+	HealthBarUpdate();
+	
+}
+
+
+
+void LocalScene::ItemBoxCollisionCheck(Player* player) {
+	if (player->getEffectiveCollider().intersects(itemBox->getGlobalBounds()) && !player->getHasEffect()) {
+		itemBox->ApplyToPlayer(*player);
+		delete itemBox;
+		itemBox = nullptr;
 	}
 }
 
@@ -400,6 +436,10 @@ void LocalScene::render()
 	window->draw(HealthBarFront2);
 	for (int i{ 0 }; i < sizeof(platforms)/sizeof(platforms[0]); ++i) {
 		window->draw(platforms[i]);
+	}
+
+	if (itemBox != nullptr) {
+		window->draw(*itemBox);
 	}
 
 	if (debugMode) {

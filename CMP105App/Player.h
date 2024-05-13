@@ -3,6 +3,7 @@
 
 #include "Framework/GameObject.h"
 #include "Attack.h"
+#include "ItemBox.h" //For ItemDrop enum
 
 class Player : public GameObject {
 public:
@@ -35,6 +36,9 @@ public:
 	bool getOnPlatform();
 	bool getFallingThroughPlatform();
 	bool getHasKnockback();
+	int getJumpSpeed();
+	int getTopSpeed();
+	bool getHasEffect();
 
 	//Setters
 	void setCrouched(bool val);
@@ -51,6 +55,10 @@ public:
 	void setFallingThroughPlatform(bool val);
 	void setHasKnockback(bool val);
 	void setJumpDirection(int val);
+	void setJumpSpeed(int val);
+	void setTopSpeed(int val);
+	void setEffect(Effect val);
+	void setHasEffect(bool val);
 
 
 protected:
@@ -88,6 +96,15 @@ protected:
 	std::vector<int> directionKeycodesLastFrame;
 	std::vector<int> directionKeycodesThisFrame;
 	int mostRecentDirectionKeycode; //Keycode of the most recently pressed key (will be reset when a new direction key is pressed, will be -1 if no direction key is held down)
+
+	//Effects
+	Effect effect;
+	float effectCooldownTime;
+	float timeUntilEffectEnds;
+	bool hasEffect;
+	float defaultJumpSpeed;
+	float defaultTopSpeed;
+
 
 	//Base
 	sf::FloatRect effectiveCollider; //This is the collider that will be used in all collision calculations - it's a bit smaller than getGlobalBounds() and is also in world-space

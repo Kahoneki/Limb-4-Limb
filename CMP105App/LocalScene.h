@@ -10,6 +10,8 @@
 #include "Platform.h"
 #include "PausePopup.h"
 
+#include "ItemBox.h"
+
 //Forward declarations
 class SceneManager;
 class Player;
@@ -42,6 +44,15 @@ private:
 
 	Platform platforms[4];
 
+	ItemBox* itemBox;
+	//Time between item boxes is random, but...
+	float minItemBoxCooldownTime; //This is the min amount of time
+	float maxItemBoxCooldownTime; //and this is the max amount of time
+	float timeUntilNextItemBox; //Initially some random value between minItemBoxCooldownTime and maxItemBoxCooldownTime, but will count down until 0
+	
+	float itemBoxAbilityCooldownTime; //Time that player will have the ability for
+	float timeUntilAbilityEnds; //Counts down until 0
+
 	AudioManager audioManager;
 
 	//To stop players from falling through platforms at startup - ensure the scene is fully loaded before updating players
@@ -52,6 +63,7 @@ private:
 	void InitialisePlayers();
 	void InitialiseHealthBars();
 
+	void ItemBoxCollisionCheck(Player* player);
 	void PlatformCollisionCheck(Player* player);
 	void AttackHitboxCheck(Player* defendingPlayer, Player* attackingPlayer);
 	void ApplyKnockbackToDefendingPlayer(Player* defendingPlayer, Player* attackingPlayer, int limbIndex);
