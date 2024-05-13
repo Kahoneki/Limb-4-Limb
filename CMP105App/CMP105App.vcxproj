@@ -114,7 +114,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)/Box2D/lib;$(ProjectDir)/SFML/lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-audio-d.lib;sfml-network.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio-d.lib;sfml-network-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -157,12 +157,16 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)/Box2D/lib;$(ProjectDir)/SFML/lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-audio-d.lib;sfml-network.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ItemBox.cpp" />
+    <ClCompile Include="AccountManager.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="InputBox.cpp" />
     <ClCompile Include="LocalScene.cpp" />
+    <ClCompile Include="LoginScreen.cpp" />
+    <ClCompile Include="MatchInvitationInterrupt.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="EndScreen.cpp" />
     <ClCompile Include="Framework\Animation.cpp" />
@@ -178,13 +182,18 @@
     <ClCompile Include="Framework\VectorHelper.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="NetworkNode.cpp" />
     <ClCompile Include="NetworkScene.cpp" />
     <ClCompile Include="OnlinePlayer.cpp" />
+    <ClCompile Include="OnlineSelectScreen.cpp" />
+    <ClCompile Include="PausePopup.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RandomMatchScreen.cpp" />
+    <ClCompile Include="RegistrationScreen.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneManager.h" />
+    <ClCompile Include="SendInviteScreen.cpp" />
+    <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -192,9 +201,14 @@
     <Text Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AccountManager.h" />
     <ClInclude Include="BaseNetworkListener.h" />
-    <ClInclude Include="ItemBox.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="ColourPallete.h" />
+    <ClInclude Include="InputBox.h" />
     <ClInclude Include="LocalScene.h" />
+    <ClInclude Include="LoginScreen.h" />
+    <ClInclude Include="MatchInvitationInterrupt.h" />
     <ClInclude Include="NetworkListener.h" />
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="EndScreen.h" />
@@ -210,12 +224,18 @@
     <ClInclude Include="Framework\TileMap.h" />
     <ClInclude Include="Framework\VectorHelper.h" />
     <ClInclude Include="MainMenu.h" />
-    <ClInclude Include="NetworkNode.h" />
     <ClInclude Include="NetworkScene.h" />
     <ClInclude Include="OnlinePlayer.h" />
+    <ClInclude Include="OnlineSelectScreen.h" />
     <ClInclude Include="PacketCode.h" />
+    <ClInclude Include="PausePopup.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RandomMatchScreen.h" />
+    <ClInclude Include="RegistrationScreen.h" />
+    <ClInclude Include="SendInviteScreen.h" />
+    <ClInclude Include="TextBox.h" />
+    <ClInclude Include="AssetManager.h" />
     <ClInclude Include="TimeManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

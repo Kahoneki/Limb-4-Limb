@@ -4,35 +4,60 @@
 #include "Framework/BaseLevel.h"
 #include "Framework/Input.h"
 #include <iostream>
+#include "TextBox.h"
+#include "Button.h"
+#include <functional>
 
-class SceneManager; //Forward declaration
+
+//Forward declarations
+class SceneManager;
+class AccountManager;
+class MatchInvitationInterrupt;
+class NetworkManager;
+
 
 class MainMenu : public BaseLevel
 {
 public:
 
-	MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager);
+	MainMenu(sf::RenderWindow* hwnd, Input* in, SceneManager& sm);
 	~MainMenu();
+
 
 	void handleInput(float dt) override;
 	void update(float dt) override;
 	void render() override;
 
-	void InitialiseMainMenu();
-
 private:
 	SceneManager& sceneManager;
+	MatchInvitationInterrupt& matchInvitationInterrupt;
+	AccountManager& accountManager;
+	NetworkManager& networkManager;
 	
-	bool mousePressedLastFrame;
+	sf::RectangleShape background;
 	
 	sf::Font font;
-	sf::RectangleShape background;
-	sf::RectangleShape titleBox;
-	sf::RectangleShape localBox;
-	sf::RectangleShape onlineBox;
-	sf::Text titleText;
-	sf::Text localText;
-	sf::Text onlineText;
+	TextBox title;
+	//Will only be displayed if player is logged in
+	TextBox username;
+	TextBox ranking;
+	//--//
+
+	Button local;
+	Button online;
+	Button registration;
+	Button login;
+	Button quit;
+	Button switchOnlineStatus; //Initially "Go Online". If clicked, "Go Offline"
+
+	//Callbacks
+	void InitialiseCallbacks();
+	std::function<void(void)> onLocalButtonClick;
+	std::function<void(void)> onOnlineButtonClick;
+	std::function<void(void)> onRegistrationButtonClick;
+	std::function<void(void)> onLoginButtonClick;
+	std::function<void(void)> onQuitClick;
+	std::function<void(void)> onSwitchOnlineStatusButtonClick;
 };
 
 #endif

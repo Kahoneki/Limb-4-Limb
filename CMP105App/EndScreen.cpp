@@ -1,59 +1,63 @@
 #include "EndScreen.h"
 #include "LocalScene.h"
+#include "MainMenu.h"
+#include "ColourPallete.h"
+#include "AccountManager.h"
 
-EndScreen::EndScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, bool player1Win) : sceneManager(sm)
+EndScreen::EndScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, bool sceneLocal, std::string resultText) : sceneManager(sm)
 {
 
-	std::cout << "Loading end screen.\n";
+	std::cout << "Loading end screen\n";
 
 	window = hwnd;
 	input = in;
+	sceneIsLocal = sceneLocal;
 
-	background.setSize(sf::Vector2f(1200, 675));
+	background.setSize(sf::Vector2f(1920, 1080));
 	background.setPosition(0, 0);
-	background.setFillColor(sf::Color::Black);
-
-
-	winBox.setSize(sf::Vector2f(520, 60));
-	winBox.setPosition(350, 50);
-	winBox.setFillColor(sf::Color::White);
-
-
-	restartBox.setSize(sf::Vector2f(350, 40));
-	restartBox.setPosition(230, 300);
-	restartBox.setFillColor(sf::Color::White);
+	background.setFillColor(BACKGROUNDCOLOUR);
 
 	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
 
-	winText.setFont(font);
-	winText.setString(player1Win ? "PLAYER 1 WINS!" : "PLAYER 2 WINS!");
-	winText.setCharacterSize(50);
-	winText.setFillColor(sf::Color::Red);
-	winText.setPosition(350, 50);
+	InitialiseCallbacks();
+	if (sceneIsLocal) {
+		result = TextBox(350, 50, 520, 60, INACTIVEBOXCOLOUR, TEXTCOLOUR, 50, font, resultText.c_str());
+		restart = Button(230, 330, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, restartOnClick, "RESTART");
+		exitToMainMenu = Button(800, 330, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, mainMenuOnClick, "MAIN MENU");
+	}
+	else {
+		result = TextBox(350, 50, 850, 140, INACTIVEBOXCOLOUR, TEXTCOLOUR, 50, font, resultText.c_str()); //Make box taller and wider
+		exitToMainMenu = Button(230, 330, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, mainMenuOnClick, "MAIN MENU");
+	}
 
-
-	restartText.setFont(font);
-	restartText.setString("RESTART");
-	restartText.setCharacterSize(30);
-	restartText.setFillColor(sf::Color::Red);
-	restartText.setPosition(230, 300);
-
-	std::cout << "Loaded end screen.\n";
+	std::cout << "Loaded end screen\n";
 }
 
 EndScreen::~EndScreen() {
-	std::cout << "Unloading end screen.\n";
+	std::cout << "Unloading end screen\n";
 	std::cout << "Unloaded end screen\n";
 }
 
-void EndScreen::handleInput(float dt) {
-	bool mouseOverBox = restartBox.getGlobalBounds().contains(window->mapPixelToCoords(sf::Mouse::getPosition(*window)));
-	bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left) && !mousePressedLastFrame;
-	if (mouseOverBox && mouseDown) {
-		LocalScene* localScene = new LocalScene(window, input, sceneManager); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!0 IS A TEMP VALUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+void EndScreen::InitialiseCallbacks()
+{
+	restartOnClick = [this]() {
+		LocalScene* localScene = new LocalScene(window, input, sceneManager);
 		sceneManager.LoadScene(localScene);
+	};
+
+	mainMenuOnClick = [this]() {
+		MainMenu* mainMenu = new MainMenu(window, input, sceneManager);
+		sceneManager.LoadScene(mainMenu);
+	};
+}
+
+
+void EndScreen::handleInput(float dt) {
+	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
+	exitToMainMenu.processEvents(mousePos);
+	if (sceneIsLocal) {
+		restart.processEvents(mousePos);
 	}
-	mousePressedLastFrame = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 }
 
 void EndScreen::update(float dt) {}
@@ -61,11 +65,13 @@ void EndScreen::update(float dt) {}
 void EndScreen::render()
 {
 	beginDraw();
-	
-	window->draw(winBox);
-	window->draw(restartBox);
-	window->draw(winText);
-	window->draw(restartText);
+
+	window->draw(background);
+	window->draw(result);
+	window->draw(exitToMainMenu);
+	if (sceneIsLocal) {
+		window->draw(restart);
+	}
 	
 	endDraw();
 }
