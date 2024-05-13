@@ -9,10 +9,10 @@ sf::Color LerpColour(sf::Color colourA, sf::Color colourB, float interp);
 
 ItemBox::ItemBox() {
 
-	setSize(sf::Vector2f(30,30));
+	setSize(sf::Vector2f(30, 30));
 	setPosition(rand() % (1920 - static_cast<int>(getSize().x)), 0); //Spawn at top of screen in a random horizontal position
 
-	chanceOfBeingGood = 70;
+	chanceOfBeingGood = 0.65f;
 	int riskRewardMultiplier{ 2 }; //Scale the risk-reward by the multiplier
 	float randVal { static_cast<float>(rand()) / RAND_MAX};
 	riskReward = randVal*riskRewardMultiplier;
@@ -32,11 +32,26 @@ ItemBox::ItemBox() {
 	randVal = static_cast<float>(rand()) / RAND_MAX;
 	drop = (randVal <= chanceOfBeingGood) ? (goodDrops[rand() % sizeof(goodDrops)/sizeof(goodDrops[0])]) : (badDrops[rand() % sizeof(badDrops) / sizeof(badDrops[0])]);
 
-
 	velocity = 100.0f;
 }
 
 ItemBox::~ItemBox() {}
+
+
+
+ItemBox::ItemBox(float startX, ItemDrop itemDrop, float rr) {
+	setSize(sf::Vector2f(30, 30));
+	setPosition(startX, 0);
+
+	riskReward = rr;
+	//Green = low risk, low reward. Red = high risk, high reward
+	setFillColor(LerpColour(sf::Color::Green, sf::Color::Red, riskReward));
+
+	drop = itemDrop;
+
+	velocity = 100.0f;
+}
+
 
 
 void ItemBox::ApplyToPlayer(Player& player) {
@@ -45,22 +60,45 @@ void ItemBox::ApplyToPlayer(Player& player) {
 	switch (drop)
 	{
 	case JumpIncrease:
-		player.setJumpSpeed(player.getJumpSpeed() / (riskReward / 20));
+		player.setJumpSpeed(player.getJumpSpeed() + player.getJumpSpeed() * (riskReward / 3));
 		break;
 	case SpeedIncrease:
-		player.setTopSpeed(player.getTopSpeed() / (riskReward));
+		player.setTopSpeed(player.getTopSpeed() + player.getTopSpeed() * (riskReward / 2));;
+		break;
+	case HealthIncrease:
+		player.setHealth(player.getHealth() + player.getHealth()*riskReward);
+		if (player.getHealth() > player.getMaxHealth()) { player.setHealth(player.getMaxHealth()); }
+		break;
+	case MaxHealthIncrease:
+		player.setMaxHealth(player.getMaxHealth() + player.getMaxHealth() * (riskReward / 2));
+		player.setHealth(player.getMaxHealth());
+		break;
+	case Invincibility:
+		player.setInvincible(true);
 		break;
 	case JumpDecrease:
-		player.setJumpSpeed(player.getJumpSpeed() * (riskReward / 20));
+		player.setJumpSpeed(player.getJumpSpeed() - player.getJumpSpeed() * (riskReward / 3));
 		break;
 	case SpeedDecrease:
-		player.setTopSpeed(player.getTopSpeed() * (riskReward));
+		player.setTopSpeed(player.getTopSpeed() - player.getTopSpeed() * (riskReward / 2));
+		break;
+	case HealthDecrease:
+		player.setHealth(player.getHealth() - player.getHealth()*riskReward);
+		if (player.getHealth() <= 0) { player.setHealth(1); } //because im nice
+		break;
+	case MaxHealthDecrease:
+		player.setMaxHealth(player.getMaxHealth() - player.getMaxHealth() * (riskReward / 2));
+		if (player.getHealth() > player.getMaxHealth()) { player.setHealth(player.getMaxHealth()); } //because im evil
+		break;
+	case FlippedControls:
+		player.setUseFlippedControls(true);
 		break;
 	}
 
 	player.setHasEffect(true);
 	Effect effect{ drop, riskReward };
 	player.setEffect(effect);
+	std::cout << "drop: " << drop << '\n';
 }
 
 

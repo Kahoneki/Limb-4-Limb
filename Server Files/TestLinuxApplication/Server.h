@@ -28,12 +28,33 @@ public:
 		NUM_RESERVED_ENTITIES //Size of this enum - must be last
 	};
 
+	//From client side's "ItemBox" class
+	enum ItemDrop
+	{
+		START_OF_GOOD_DROPS,
+		JumpIncrease,
+		SpeedIncrease,
+		HealthIncrease,
+		MaxHealthIncrease,
+		Invincibility,
+		END_OF_GOOD_DROPS,
+
+		START_OF_BAD_DROPS,
+		JumpDecrease,
+		SpeedDecrease,
+		HealthDecrease,
+		MaxHealthDecrease,
+		FlippedControls,
+		END_OF_BAD_DROPS
+	};
+
 	Server(sf::IpAddress _ip, unsigned short _port);
 
 	//----To be called every network tick//
 	void CheckForIncomingConnectionRequests();
 	void CheckForIncomingTCPData(float dt);
 	void CheckForIncomingUDPData();
+	void UpdateAndCheckItemBoxCooldowns(float dt);
 	//----//
 
 private:
@@ -50,8 +71,17 @@ private:
 	std::map<int, std::string> onlineUsers; //Network Manager Index + Username that it's associated with
 	std::map<int, float> timeUntilNextTimeoutCheckPacket; //Network Manager Index + time left until the server sends a packet to the client to make sure they're still online
 	std::map<std::string, sf::Int32> onlineUserRankings; //Username + user's ranking
+	
 	std::map<int, int> matchedUsers; //NMI + NMI combination of users that are currently in a match - order doesn't matter (if [a,b] is in a map, [b,a] won't be)
 	std::map<int, bool> userMatchSceneLoaded; //NMI + true/false whether the user's match scene has loaded (to ensure that both user's scenes have loaded before the match starts)
+	std::map<int, std::pair<int, int>> matches; //Match index + associated entry from matchedUsers map
+	
+	//Time between item boxes is random, but...
+	float minItemBoxCooldownTime; //This is the min amount of time
+	float maxItemBoxCooldownTime; //and this is the max amount of time
+	ItemDrop goodDrops[5];
+	ItemDrop badDrops[5];
+	std::map<int, float> timeUntilNextItemBoxInMatch; //Match Index + initially some random value between minItemBoxCooldownTime and maxItemBoxCooldownTime, but will count down until 0
 
 	std::map<int, sf::TcpSocket>::iterator DisconnectUser(int nmi); //Disconnect client associated with provided nmi and return iterator to previous valid position in connectedNetworkManagers (so that in next iteration of for-loop, ++it will go to the next valid pair)
 	bool AccountExists(std::string username); //Searches the database for provided username and returns whether it was found or not

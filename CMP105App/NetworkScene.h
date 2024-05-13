@@ -8,6 +8,7 @@
 #include "Framework/AudioManager.h"
 #include "Platform.h"
 #include "PausePopup.h"
+#include "TextBox.h"
 
 //Forward declarations
 class SceneManager;
@@ -16,6 +17,7 @@ class NetworkManager;
 class TimeManager;
 template<typename ParentType>
 class NetworkListener;
+class ItemBox;
 
 class NetworkScene : public BaseLevel
 {
@@ -44,8 +46,13 @@ private:
 	sf::RectangleShape HealthBarFront2;
 	sf::RectangleShape HealthBarBack1;
 	sf::RectangleShape HealthBarBack2;
-	
+	sf::Font font;
+	TextBox p1EffectBox;
+	TextBox p2EffectBox;
+
 	Platform platforms[4];
+
+	ItemBox* itemBox; //Created by server
 
 	AudioManager audioManager;
 	NetworkManager& networkManager;
@@ -72,6 +79,7 @@ private:
 	void InitialisePlayers();
 	void InitialiseHealthBars();
 
+	void ItemBoxCollisionCheck(OnlinePlayer* player);
 	void PlatformCollisionCheck(OnlinePlayer* player);
 	void AttackHitboxCheck(OnlinePlayer* defendingPlayer, OnlinePlayer* attackingPlayer);
 	void ApplyKnockbackToDefendingPlayer(OnlinePlayer* defendingPlayer, OnlinePlayer* attackingPlayer, int limbIndex);

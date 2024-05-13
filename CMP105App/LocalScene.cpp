@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "NetworkScene.h"
 #include "MatchInvitationInterrupt.h"
+#include "ColourPallete.h"
 
 LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), pausePopup(in), matchInvitationInterrupt(MatchInvitationInterrupt::getInstance())
 {
@@ -14,8 +15,8 @@ LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sc
 	debugMode = false;
 	timeUntilPlayersShouldStartUpdate = 0.5f;
 	playerStartUpdateTimeCountdown = timeUntilPlayersShouldStartUpdate;
-	minItemBoxCooldownTime = 15;
-	maxItemBoxCooldownTime = 30;
+	minItemBoxCooldownTime = 5;
+	maxItemBoxCooldownTime = 10;
 	timeUntilNextItemBox = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
 
 	itemBox = nullptr;
@@ -50,7 +51,7 @@ void LocalScene::InitialiseScene() {
 	platforms[2] = Platform(800, 475, 320, 25, true);   //Top
 	platforms[3] = Platform(200, 875, 1520, 25, false); //Ground
 
-	audioManager.playMusicbyName("GuileTheme");
+	//audioManager.playMusicbyName("GuileTheme");
 }
 
 
@@ -87,6 +88,10 @@ void LocalScene::InitialiseHealthBars() {
 	HealthBarBack2.setSize(sf::Vector2f(600, 75));
 	HealthBarBack2.setPosition(1282, 37);
 	HealthBarBack2.setFillColor(sf::Color::Red);
+
+	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
+	p1EffectBox = TextBox(37, 125, 400, 60, INACTIVEBOXCOLOUR, TEXTCOLOUR, 45, font, "", false);
+	p2EffectBox = TextBox(1482, 125, 400, 60, INACTIVEBOXCOLOUR, TEXTCOLOUR, 45, font, "", false);
 }
 
 
@@ -157,7 +162,6 @@ void LocalScene::update(float dt) {
 		else {
 			AttackHitboxCheck(p1, p2);
 		}
-
 	}
 
 
@@ -326,6 +330,9 @@ void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPla
 		//Hitbox isn't colliding, continue to next limb
 		if (!defendingPlayer->getEffectiveCollider().intersects(attack.getHitbox().getGlobalBounds()))
 			continue;
+		//Defending player is invincible, continue to next limb
+		if (defendingPlayer->getInvincible())
+			continue;
 
 
 		//Apply damage to defending player
@@ -435,6 +442,23 @@ void LocalScene::HealthBarUpdate() {
 		std::string resultText{ (players[0]->getHealth() > 0) ? "PLAYER 1 WINS!" : "PLAYER 2 WINS!" };
 		EndScreen* endScreen = new EndScreen(window, input, sceneManager, true, resultText.c_str());
 		sceneManager.LoadScene(endScreen);
+		return;
+	}
+
+	//Clear effect box if player doesn't have effect and it isn't already cleared
+	if (!players[0]->getHasEffect() && p1EffectBox.text.getString() != "") {
+		p1EffectBox.text.setString("");
+	}
+	if (!players[1]->getHasEffect() && p2EffectBox.text.getString() != "") {
+		p2EffectBox.text.setString("");
+	}
+
+	//Change effect box text if it doesn't match player's current effect
+	else if (players[0]->getHasEffect() && p1EffectBox.text.getString() != players[0]->getEffectName()) {
+		p1EffectBox.text.setString(players[0]->getEffectName());
+	}
+	else if (players[1]->getHasEffect() && p1EffectBox.text.getString() != players[1]->getEffectName()) {
+		p2EffectBox.text.setString(players[1]->getEffectName());
 	}
 }
 
@@ -457,6 +481,9 @@ void LocalScene::render()
 	window->draw(HealthBarBack2);
 	window->draw(HealthBarFront1);
 	window->draw(HealthBarFront2);
+	window->draw(p1EffectBox);
+	window->draw(p2EffectBox);
+
 	for (int i{ 0 }; i < sizeof(platforms) / sizeof(platforms[0]); ++i) {
 		window->draw(platforms[i]);
 	}

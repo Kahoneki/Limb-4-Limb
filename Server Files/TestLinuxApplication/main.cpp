@@ -30,6 +30,7 @@ int main()
             server->CheckForIncomingConnectionRequests();
             server->CheckForIncomingTCPData(timeManager.getDeltaTime());
             server->CheckForIncomingUDPData();
+            server->UpdateAndCheckItemBoxCooldowns(timeManager.getDeltaTime());
             timeManager.UpdateDeltaTime();
 	    }
     }

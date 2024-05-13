@@ -25,6 +25,17 @@ Server::Server(sf::IpAddress _ip, unsigned short _port) {
 	udpSocket.setBlocking(false);
 
 	timeBetweenTimeoutCheckPackets = 5;
+
+
+	minItemBoxCooldownTime = 5;
+	maxItemBoxCooldownTime = 10;
+	//Populating goodDrops and badDrops
+	for (int indexCount{ 0 }, enumCount{ START_OF_GOOD_DROPS + 1 }; enumCount != END_OF_GOOD_DROPS; ++indexCount, ++enumCount) {
+		goodDrops[indexCount] = static_cast<ItemDrop>(enumCount);
+	}
+	for (int indexCount{ 0 }, enumCount{ START_OF_BAD_DROPS + 1 }; enumCount != END_OF_BAD_DROPS; ++indexCount, ++enumCount) {
+		badDrops[indexCount] = static_cast<ItemDrop>(enumCount);
+	}
 }
 
 
@@ -38,6 +49,7 @@ void Server::CheckForIncomingConnectionRequests() {
 		if (connectedNetworkManagers.find(i) == connectedNetworkManagers.end()) {
 			//Smallest free value found
 			smallestFreeNMI = i;
+			break;
 		}
 	}
 
@@ -469,8 +481,6 @@ void Server::CheckForIncomingTCPData(float dt) {
 
 			incomingData >> networkListenerIndex >> acceptance >> opponentNetworkManagerIndex;
 
-			std::cout << "Acceptance is: " << static_cast<int>(acceptance) << '\n';
-
 			//Send acceptance status to inviting client
 			{
 				std::cout << "PacketCode: MatchAcceptanceServerToClient\n";
@@ -501,8 +511,20 @@ void Server::CheckForIncomingTCPData(float dt) {
 					connectedNetworkManagers[i].send(outgoingData);
 				}
 
-				//Add players to match map
+				//Add players to match maps
 				matchedUsers[i] = opponentNetworkManagerIndex;
+
+				//Get smallest match index that is free (e.g.: if match indices 0,1,2,5,6,9,12 were taken - this should return 3)
+				int smallestFreeIndex{ 0 };
+				for (int i{ 1 }; i <= matches.size(); ++i) {
+					if (matches.find(i) == matches.end()) {
+						//Smallest free value found
+						smallestFreeIndex = i;
+						break;
+					}
+				}
+
+				matches[smallestFreeIndex] = std::make_pair<int, int>(i, opponentNetworkManagerIndex);
 			}
 
 			break;
@@ -556,6 +578,14 @@ void Server::CheckForIncomingTCPData(float dt) {
 				}
 			}
 
+			//Remove entry from matches map
+			for (std::map<int, std::pair<int, int>>::iterator it{ matches.begin() }; it != matches.end(); ++it) {
+				if ((it->second.first == i) || (it->second.second == i)) {
+					matches.erase(it);
+					break;
+				}
+			}
+
 			break;
 		}
 		case PacketCode::MatchLeave:
@@ -571,6 +601,14 @@ void Server::CheckForIncomingTCPData(float dt) {
 			for (std::map<int, int>::iterator it{ matchedUsers.begin() }; it != matchedUsers.end(); ++it) {
 				if ((it->first == i) || (it->second == i)) {
 					matchedUsers.erase(it);
+					break;
+				}
+			}
+
+			//Remove entry from matches map
+			for (std::map<int, std::pair<int, int>>::iterator it{ matches.begin() }; it != matches.end(); ++it) {
+				if ((it->second.first == i) || (it->second.second == i)) {
+					matches.erase(it);
 					break;
 				}
 			}
@@ -745,6 +783,40 @@ void Server::CheckForIncomingUDPData() {
 		std::cerr << "Packet code uninterpretable." << std::endl;
 		return;
 	}
+	}
+}
+
+
+void Server::UpdateAndCheckItemBoxCooldowns(float dt)
+{
+	for (std::map<int, float>::iterator it{ timeUntilNextItemBoxInMatch.begin() }; it != timeUntilNextItemBoxInMatch.end(); ++it) {
+		it->second -= dt;
+		if (it->second <= 0) {
+			//Ready to spawn an item box, reset the cooldown and send an ItemBox packet to both clients
+
+			it->second = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
+
+			sf::Packet outgoingPacket;
+			int randXPos{ rand() % (1920 - 30) }; //30 is the width of the item box
+
+			chanceOfBeingGood = 0.65f;
+			int riskRewardMultiplier{ 2 }; //Scale the risk-reward by the multiplier
+			float randVal{ static_cast<float>(rand()) / RAND_MAX };
+			float riskReward{ randVal * riskRewardMultiplier };
+
+			//Determine if good or bad and choose random drop to assign to item box
+			randVal = static_cast<float>(rand()) / RAND_MAX;
+			ItemDrop drop = (randVal <= chanceOfBeingGood) ? (goodDrops[rand() % sizeof(goodDrops) / sizeof(goodDrops[0])]) : (badDrops[rand() % sizeof(badDrops) / sizeof(badDrops[0])]);
+
+			outgoingPacket << static_cast<std::underlying_type_t(ReservedEntityIndexTable)>(ReservedEntityIndexTable::NETWORK_SCENE);
+			outgoingPacket << static_cast<std::underlying_type_t(PacketCode)>(PacketCode::ItemBoxSpawn);
+			outgoingPacket << randXPos;
+			outgoingPacket << static_cast<std::underlying_type_t(ItemDrop)>(drop);
+			outgoingPacket << riskReward;
+
+			connectedNetworkManagers[matches[it->first].first].send(outgoingPacket);
+			connectedNetworkManagers[matches[it->first].second].send(outgoingPacket);
+		}
 	}
 }
 
