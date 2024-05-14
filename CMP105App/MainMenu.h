@@ -43,6 +43,7 @@ private:
 	TextBox ranking;
 	//--//
 
+	Button difficultySelect;
 	Button local;
 	Button online;
 	Button registration;
@@ -52,6 +53,7 @@ private:
 
 	//Callbacks
 	void InitialiseCallbacks();
+	std::function<void(void)> onDifficultySelectButtonClick;
 	std::function<void(void)> onLocalButtonClick;
 	std::function<void(void)> onOnlineButtonClick;
 	std::function<void(void)> onRegistrationButtonClick;

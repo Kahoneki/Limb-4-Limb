@@ -17,6 +17,7 @@ enum PacketCode
 	Grounded,
 	Flip,
 	Health,
+	ItemBoxSpawn, //Holds x position, drop, and risk reward
 	//----//
 
 

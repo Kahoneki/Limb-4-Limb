@@ -1,17 +1,18 @@
 #include "EndScreen.h"
+#include "SingleplayerScene.h"
 #include "LocalScene.h"
 #include "MainMenu.h"
 #include "ColourPallete.h"
 #include "AccountManager.h"
 
-EndScreen::EndScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, bool sceneLocal, std::string resultText) : sceneManager(sm)
+EndScreen::EndScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int sceneType, std::string resultText, int difficulty) : sceneManager(sm)
 {
 
 	std::cout << "Loading end screen\n";
 
 	window = hwnd;
 	input = in;
-	sceneIsLocal = sceneLocal;
+	scene = sceneType;
 
 	background.setSize(sf::Vector2f(1920, 1080));
 	background.setPosition(0, 0);
@@ -20,15 +21,19 @@ EndScreen::EndScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, bool s
 	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
 
 	InitialiseCallbacks();
-	if (sceneIsLocal) {
+	if (sceneType != 2) {
+		//Singleplayer or local
 		result = TextBox(350, 50, 520, 60, INACTIVEBOXCOLOUR, TEXTCOLOUR, 50, font, resultText.c_str());
 		restart = Button(230, 330, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, restartOnClick, "RESTART");
 		exitToMainMenu = Button(800, 330, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, mainMenuOnClick, "MAIN MENU");
 	}
 	else {
+		//Online
 		result = TextBox(350, 50, 850, 140, INACTIVEBOXCOLOUR, TEXTCOLOUR, 50, font, resultText.c_str()); //Make box taller and wider
 		exitToMainMenu = Button(230, 330, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, mainMenuOnClick, "MAIN MENU");
 	}
+
+	difficultySetting = difficulty;
 
 	std::cout << "Loaded end screen\n";
 }
@@ -41,8 +46,14 @@ EndScreen::~EndScreen() {
 void EndScreen::InitialiseCallbacks()
 {
 	restartOnClick = [this]() {
-		LocalScene* localScene = new LocalScene(window, input, sceneManager);
-		sceneManager.LoadScene(localScene);
+		if (scene == 0) {
+			SinglePlayerScene* singlePlayerScene = new SinglePlayerScene(window, input, sceneManager, difficultySetting);
+			sceneManager.LoadScene(singlePlayerScene);
+		}
+		else if (scene == 1) {
+			LocalScene* localScene = new LocalScene(window, input, sceneManager);
+			sceneManager.LoadScene(localScene);
+		}
 	};
 
 	mainMenuOnClick = [this]() {
@@ -55,7 +66,8 @@ void EndScreen::InitialiseCallbacks()
 void EndScreen::handleInput(float dt) {
 	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
 	exitToMainMenu.processEvents(mousePos);
-	if (sceneIsLocal) {
+	if (scene != 2) {
+		//Singleplayer or local
 		restart.processEvents(mousePos);
 	}
 }
@@ -69,7 +81,8 @@ void EndScreen::render()
 	window->draw(background);
 	window->draw(result);
 	window->draw(exitToMainMenu);
-	if (sceneIsLocal) {
+	if (scene != 2) {
+		//Singleplayer or local
 		window->draw(restart);
 	}
 	

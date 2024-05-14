@@ -18,9 +18,9 @@ PausePopup::PausePopup(Input* in)
 
 	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
 	popupBox = TextBox(817.5, 150, 285, 100, INACTIVEBOXCOLOUR, TEXTCOLOUR, 70, font, "PAUSED");
-	resume = Button(735, 275, 200, 50, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 40, font, resumeOnClick, " RESUME");
-	exitToMainMenu = Button(985, 275, 200, 50, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 40, font, mainMenuOnClick, "   LEAVE");
-	quit = Button(735, 350, 450, 50, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 40, font, quitOnClick, "          QUIT GAME");
+	resume = Button(735, 275, 200, 50, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 40, font, resumeOnClick, "RESUME");
+	exitToMainMenu = Button(985, 275, 200, 50, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 40, font, mainMenuOnClick, "LEAVE");
+	quit = Button(735, 350, 450, 50, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 40, font, quitOnClick, "QUIT GAME");
 }
 
 void PausePopup::InitialiseCallbacks()

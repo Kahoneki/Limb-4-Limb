@@ -12,15 +12,15 @@
 //Forward declarations
 class SceneManager;
 class NetworkManager;
-
 template<typename ParentType>
 class NetworkListener;
+class MatchInvitationInterrupt;
 
 class RegistrationScreen : public BaseLevel
 {
 public:
 
-	RegistrationScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sceneManager);
+	RegistrationScreen(sf::RenderWindow* hwnd, Input* in, SceneManager& sm);
 	~RegistrationScreen();
 
 	void handleInput(float dt) override;
@@ -37,7 +37,7 @@ private:
 	sf::RectangleShape background;
 
 	InputBox usernameBox;
-	
+
 	Button registerButton; //To confirm registration
 	Button backButton;
 
@@ -58,6 +58,8 @@ private:
 	int networkListenerIndex;
 	sf::Int8 usernameAvailable; //-1 = server hasn't responded yet, 0 = username available, 1 = username not available
 	sf::Uint64 uuid;
+
+	MatchInvitationInterrupt& matchInvitationInterrupt;
 };
 
 #endif

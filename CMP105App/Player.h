@@ -38,11 +38,15 @@ public:
 	bool getHasKnockback();
 	int getJumpSpeed();
 	int getTopSpeed();
+	const char* getEffectName();
 	bool getHasEffect();
+	bool getInvincible();
+	bool getUseFlippedControls();
 
 	//Setters
 	void setCrouched(bool val);
 	void setHealth(int val);
+	void setMaxHealth(int val);
 	void UpdateTextures(); //Call whenever there's a change to activeLimbs[]
 	void setLimbActivity(int index, bool val);
 	void setLimbRotation(int index, int rotation); //Degrees
@@ -59,6 +63,8 @@ public:
 	void setTopSpeed(int val);
 	void setEffect(Effect val);
 	void setHasEffect(bool val);
+	void setInvincible(bool val);
+	void setUseFlippedControls(bool val);
 
 
 protected:
@@ -96,6 +102,8 @@ protected:
 	std::vector<int> directionKeycodesLastFrame;
 	std::vector<int> directionKeycodesThisFrame;
 	int mostRecentDirectionKeycode; //Keycode of the most recently pressed key (will be reset when a new direction key is pressed, will be -1 if no direction key is held down)
+	bool useFlippedControls;
+	bool invincible;
 
 	//Effects
 	Effect effect;
@@ -104,6 +112,7 @@ protected:
 	bool hasEffect;
 	float defaultJumpSpeed;
 	float defaultTopSpeed;
+	int defaultMaxHealth;
 
 
 	//Base

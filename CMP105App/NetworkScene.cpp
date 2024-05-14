@@ -3,6 +3,8 @@
 #include "OnlinePlayer.h"
 #include "NetworkManager.h"
 #include "AccountManager.h"
+#include "ItemBox.h"
+#include "ColourPallete.h"
 
 NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, int pn, int oppNMI) : sceneManager(sm), networkManager(NetworkManager::getInstance(true)), timeManager(TimeManager::getInstance(240)), pausePopup(in)
 {
@@ -23,6 +25,8 @@ NetworkScene::NetworkScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm, 
 	updatedRanking = -1;
 
 	networkListener = networkManager.GenerateNetworkListener(*this, NetworkManager::ReservedEntityIndexTable::NETWORK_SCENE);
+
+	itemBox = nullptr;
 
 	InitialiseScene();
 	InitialisePlayers();
@@ -65,7 +69,7 @@ void NetworkScene::InitialiseScene() {
 	platforms[2] = Platform(800, 475, 320, 25, true);   //Top
 	platforms[3] = Platform(200, 875, 1520, 205, false); //Ground
 
-	//audioManager.playMusicbyName("GuileTheme");
+	audioManager.playMusicbyName("GuileTheme");
 }
 
 
@@ -104,6 +108,10 @@ void NetworkScene::InitialiseHealthBars() {
 	HealthBarBack2.setSize(sf::Vector2f(600, 75));
 	HealthBarBack2.setPosition(1282, 37);
 	HealthBarBack2.setFillColor(sf::Color::Red);
+
+	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
+	p1EffectBox = TextBox(37, 125, 400, 60, INACTIVEBOXCOLOUR, TEXTCOLOUR, 45, font, "", false);
+	p2EffectBox = TextBox(1482, 125, 400, 60, INACTIVEBOXCOLOUR, TEXTCOLOUR, 45, font, "", false);
 }
 
 
@@ -163,7 +171,7 @@ void NetworkScene::update(float dt) {
 		resultText += "\nYOUR RANKING IS NOW: ";
 		resultText += std::to_string(updatedRanking);
 		resultText += (localPlayerWon ? " (+30)" : " (-30)");
-		EndScreen* endScreen{ new EndScreen(window, input, sceneManager, false, resultText) };
+		EndScreen* endScreen{ new EndScreen(window, input, sceneManager, 2, resultText) };
 		sceneManager.LoadScene(endScreen);
 		return;
 	}
@@ -201,9 +209,37 @@ void NetworkScene::update(float dt) {
 		else {
 			AttackHitboxCheck(p1, p2);
 		}
-
 	}
+
+	//Handle item box
+	//Update item box if it exists - need to check nullptr each time since all of these cases might result in the item box being deleted
+	if (itemBox != nullptr) {
+		itemBox->update(dt);
+	}
+	if (itemBox != nullptr) {
+		ItemBoxCollisionCheck(players[0]);
+	}
+	if (itemBox != nullptr) {
+		ItemBoxCollisionCheck(players[1]);
+	}
+	if (itemBox != nullptr) {
+		//Off screen boundary check for item box
+		if (itemBox->getPosition().y + itemBox->getSize().y > 1920) {
+			delete itemBox;
+			itemBox = nullptr;
+		}
+	}
+
 	HealthBarUpdate();
+}
+
+
+void NetworkScene::ItemBoxCollisionCheck(OnlinePlayer* player) {
+	if (player->getEffectiveCollider().intersects(itemBox->getGlobalBounds()) && !player->getHasEffect()) {
+		itemBox->ApplyToPlayer(*player);
+		delete itemBox;
+		itemBox = nullptr;
+	}
 }
 
 
@@ -334,6 +370,9 @@ void NetworkScene::AttackHitboxCheck(OnlinePlayer* defendingPlayer, OnlinePlayer
 		//Hitbox isn't colliding, continue to next limb
 		if (!defendingPlayer->getEffectiveCollider().intersects(attack.getHitbox().getGlobalBounds()))
 			continue;
+		//Defending player is invincible, continue to next limb
+		if (defendingPlayer->getInvincible())
+			continue;
 
 
 		//Apply damage to defending player
@@ -449,6 +488,22 @@ void NetworkScene::HealthBarUpdate() {
 			networkManager.CheckForIncomingDataFromServer();
 		}
 	}
+
+	//Clear effect box if player doesn't have effect and it isn't already cleared
+	if (!players[0]->getHasEffect() && p1EffectBox.text.getString() != "") {
+		p1EffectBox.text.setString("");
+	}
+	if (!players[1]->getHasEffect() && p2EffectBox.text.getString() != "") {
+		p2EffectBox.text.setString("");
+	}
+
+	//Change effect box text if it doesn't match player's current effect
+	else if (players[0]->getHasEffect() && p1EffectBox.text.getString() != players[0]->getEffectName()) {
+		p1EffectBox.text.setString(players[0]->getEffectName());
+	}
+	else if (players[1]->getHasEffect() && p1EffectBox.text.getString() != players[1]->getEffectName()) {
+		p2EffectBox.text.setString(players[1]->getEffectName());
+	}
 }
 
 
@@ -470,8 +525,15 @@ void NetworkScene::render()
 	window->draw(HealthBarBack2);
 	window->draw(HealthBarFront1);
 	window->draw(HealthBarFront2);
+	window->draw(p1EffectBox);
+	window->draw(p2EffectBox);
+
 	for (int i{ 0 }; i < sizeof(platforms) / sizeof(platforms[0]); ++i) {
 		window->draw(platforms[i]);
+	}
+
+	if (itemBox != nullptr) {
+		window->draw(*itemBox);
 	}
 
 	if (debugMode) {

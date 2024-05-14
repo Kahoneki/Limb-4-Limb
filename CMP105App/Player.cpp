@@ -103,6 +103,13 @@ Player::Player(sf::Vector2f size, float acc, float ts, float js, int hp, int pro
 	hasEffect = false;
 	defaultJumpSpeed = jumpSpeed;
 	defaultTopSpeed = topSpeed;
+	defaultMaxHealth = maxHealth;
+
+	effectiveCollider = getGlobalBounds();
+	effectiveCollider.left += colliderShrinkage.x;
+	effectiveCollider.top += colliderShrinkage.y;
+	effectiveCollider.width -= colliderShrinkage.x * 2;
+	effectiveCollider.height -= colliderShrinkage.y * 2;
 }
 
 Player::~Player() {
@@ -121,6 +128,13 @@ Player::~Player() {
 
 
 void Player::handleInput(float dt, int jump, int left, int right, int down, int dodge, int jab, int kick, int sweep, int upper) {
+
+	if (useFlippedControls) {
+		//Swap left and right
+		int temp{ left };
+		left = right;
+		right = temp;
+	}
 
 	if (dodgeFramesLeft) { actionable = false; }
 
@@ -427,10 +441,20 @@ void Player::update(float dt) {
 		case ItemDrop::JumpIncrease:
 			jumpSpeed = defaultJumpSpeed;
 			break;
-		
 		case ItemDrop::SpeedDecrease:
 		case ItemDrop::SpeedIncrease:
 			topSpeed = defaultTopSpeed;
+			break;
+		case MaxHealthDecrease:
+		case MaxHealthIncrease:
+			maxHealth = defaultMaxHealth;
+			if (health > maxHealth) { health = maxHealth; }
+			break;
+		case Invincibility:
+			invincible = false;
+			break;
+		case FlippedControls:
+			useFlippedControls = false;
 			break;
 		}
 	}
@@ -442,22 +466,6 @@ bool Player::getCrouched() { return crouched; }
 int Player::getHealth() { return health; }
 
 int Player::getMaxHealth() { return maxHealth; }
-
-void Player::setCrouched(bool val) {
-	crouched = val;
-	if (val) {
-		setSize(sf::Vector2f(getSize().x, getSize().y * 0.5));
-		setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-		setPosition(sf::Vector2f(getPosition().x, getPosition().y + 225 / 4));
-	}
-	else {
-		setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
-		setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
-		setPosition(sf::Vector2f(getPosition().x, getPosition().y - 225 / 8));
-	}
-}
-
-void Player::setHealth(int val) { health = val; }
 
 bool Player::getActionable() { return actionable; }
 
@@ -481,7 +489,29 @@ int Player::getJumpSpeed() { return jumpSpeed; }
 
 int Player::getTopSpeed() { return topSpeed; }
 
+const char* Player::getEffectName() {
+	if (!hasEffect) { return ""; }
+
+	switch (effect.itemDrop)
+	{
+	case ItemDrop::JumpIncrease: return " + JUMP";
+	case ItemDrop::SpeedIncrease: return " + SPEED";
+	case ItemDrop::HealthIncrease: return " + HEALTH";
+	case ItemDrop::MaxHealthIncrease: return " + MAX HEALTH";
+	case ItemDrop::Invincibility: return " + INVINCIBILITY";
+	case ItemDrop::JumpDecrease: return " - JUMP";
+	case ItemDrop::SpeedDecrease: return " - SPEED";
+	case ItemDrop::HealthDecrease: return " - HEALTH";
+	case ItemDrop::MaxHealthDecrease: return " - MAX HEALTH";
+	case ItemDrop::FlippedControls: return " - FLIPPED CONTROLS";
+	}
+}
+
 bool Player::getHasEffect() { return hasEffect; }
+
+bool Player::getInvincible() { return invincible; }
+
+bool Player::getUseFlippedControls() { return useFlippedControls; }
 
 int Player::getInvincibilityFramesLeft() { return invincibilityFramesLeft; }
 
@@ -490,6 +520,26 @@ bool Player::getFlipped() { return flipped; }
 bool Player::getBlocking() { return blocking;  }
 
 sf::FloatRect Player::getEffectiveCollider() { return effectiveCollider; }
+
+
+
+void Player::setCrouched(bool val) {
+	crouched = val;
+	if (val) {
+		setSize(sf::Vector2f(getSize().x, getSize().y * 0.5));
+		setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
+		setPosition(sf::Vector2f(getPosition().x, getPosition().y + 225 / 4));
+	}
+	else {
+		setSize(sf::Vector2f(getSize().x, getSize().y / 0.5));
+		setOrigin(getLocalBounds().width / 2.f, getLocalBounds().height / 2.f);
+		setPosition(sf::Vector2f(getPosition().x, getPosition().y - 225 / 8));
+	}
+}
+
+void Player::setHealth(int val) { health = val; }
+
+void Player::setMaxHealth(int val) { maxHealth = val; }
 
 void Player::UpdateTextures() { updateTextures = true; }
 
@@ -519,6 +569,10 @@ void Player::setHasEffect(bool val) {
 	timeUntilEffectEnds = effectCooldownTime;
 	hasEffect = val;
 }
+
+void Player::setInvincible(bool val) { invincible = val; }
+
+void Player::setUseFlippedControls(bool val) { useFlippedControls = val; }
 
 void Player::setLimbActivity(int index, bool val) { activeLimbs[index] = val; }
 

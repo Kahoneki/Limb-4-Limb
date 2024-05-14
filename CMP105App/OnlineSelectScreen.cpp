@@ -21,7 +21,7 @@ OnlineSelectScreen::OnlineSelectScreen(sf::RenderWindow* hwnd, Input* in, SceneM
 
 	InitialiseCallbacks();
 	sendInvite = Button(230, 300, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onSendInviteButtonClick, "SEND INVITE");
-	randomMatch = Button(800, 300, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onRandomMatchButtonClick, "JOIN RANDOM MATCH");
+	//randomMatch = Button(800, 300, 350, 40, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onRandomMatchButtonClick, "JOIN RANDOM MATCH");
 	backButton = Button(100, 100, 30, 30, INACTIVEBOXCOLOUR, ACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, onBackButtonClick, "<-");
 
 	username = TextBox(50, 950, 500, 40, INACTIVEBOXCOLOUR, TEXTCOLOUR, 30, font, "");
@@ -50,10 +50,10 @@ void OnlineSelectScreen::InitialiseCallbacks()
 		sceneManager.LoadScene(sendInviteScreen);
 	};
 
-	onRandomMatchButtonClick = [this]() {
+	/*onRandomMatchButtonClick = [this]() {
 		RandomMatchScreen* randomMatchScreen = new RandomMatchScreen(window, input, sceneManager);
 		sceneManager.LoadScene(randomMatchScreen);
-	};
+	};*/
 
 	onBackButtonClick = [this]() {
 		MainMenu* mainMenu = new MainMenu(window, input, sceneManager);
@@ -80,7 +80,7 @@ void OnlineSelectScreen::render()
 	window->draw(background);
 	window->draw(title);
 	window->draw(sendInvite);
-	window->draw(randomMatch);
+	//window->draw(randomMatch);
 	window->draw(backButton);
 	endDraw();
 }

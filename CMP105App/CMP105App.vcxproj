@@ -162,8 +162,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AccountManager.cpp" />
+    <ClCompile Include="AIPlayer.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="DifficultySelectScreen.cpp" />
     <ClCompile Include="InputBox.cpp" />
+    <ClCompile Include="ItemBox.cpp" />
     <ClCompile Include="LocalScene.cpp" />
     <ClCompile Include="LoginScreen.cpp" />
     <ClCompile Include="MatchInvitationInterrupt.cpp" />
@@ -193,6 +196,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneManager.h" />
     <ClCompile Include="SendInviteScreen.cpp" />
+    <ClCompile Include="SingleplayerScene.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>
@@ -202,10 +206,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AccountManager.h" />
+    <ClInclude Include="AIPlayer.h" />
     <ClInclude Include="BaseNetworkListener.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ColourPallete.h" />
+    <ClInclude Include="DifficultySelectScreen.h" />
     <ClInclude Include="InputBox.h" />
+    <ClInclude Include="ItemBox.h" />
     <ClInclude Include="LocalScene.h" />
     <ClInclude Include="LoginScreen.h" />
     <ClInclude Include="MatchInvitationInterrupt.h" />
@@ -234,6 +241,7 @@
     <ClInclude Include="RandomMatchScreen.h" />
     <ClInclude Include="RegistrationScreen.h" />
     <ClInclude Include="SendInviteScreen.h" />
+    <ClInclude Include="SingleplayerScene.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="TimeManager.h" />

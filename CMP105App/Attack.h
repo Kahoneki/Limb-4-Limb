@@ -38,9 +38,21 @@ public:
 	//Handles the actual attack
 	void strike(float dt, float player_x, float player_y, bool flip, bool crouch);
 
+
+	// Data for the hitbox
+	float width;
+
+	float height;
+
+	float relative_xpos;
+
+	float relative_ypos;
+
+
 private:
 
 	GameObject hitbox;
+	sf::RectangleShape hitboxShape;
 
 	// How many frames before the hitbox appears.
 	float startup;
@@ -74,16 +86,6 @@ private:
 
 	//Bool lock - true if self knockback has already been applied
 	bool selfKnockbackApplied;
-
-
-	// Data for the hitbox
-	float width;
-
-	float height;
-
-	float relative_xpos;
-
-	float relative_ypos;
 
 
 };

@@ -10,8 +10,10 @@ class TextBox : public GameObject
 {
 public:
 	TextBox(); //Empty text box
-	TextBox(sf::Vector2f pos, sf::Vector2f size, sf::Color fillCol, sf::Color txCol, float txSize, sf::Font& txFont, const char* txt);
-	TextBox(float posX, float posY, float sizeX, float sizeY, sf::Color fillCol, sf::Color txCol, float txSize, sf::Font& txFont, const char* txt);
+	TextBox(sf::Vector2f pos, sf::Vector2f size, sf::Color fillCol, sf::Color txCol, float txSize, sf::Font& txFont, const char* txt, bool centreText=true);
+	TextBox(float posX, float posY, float sizeX, float sizeY, sf::Color fillCol, sf::Color txCol, float txSize, sf::Font& txFont, const char* txt, bool centreText=true);
+
+	void RecentreText(); //To be called after text has been changed
 
 	sf::RectangleShape box;
 	sf::Text text;

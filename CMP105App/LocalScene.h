@@ -15,6 +15,7 @@
 //Forward declarations
 class SceneManager;
 class Player;
+class MatchInvitationInterrupt;
 
 class LocalScene : public BaseLevel
 {
@@ -41,6 +42,9 @@ private:
 	sf::RectangleShape HealthBarFront2;
 	sf::RectangleShape HealthBarBack1;
 	sf::RectangleShape HealthBarBack2;
+	sf::Font font;
+	TextBox p1EffectBox;
+	TextBox p2EffectBox;
 
 	Platform platforms[4];
 
@@ -71,6 +75,8 @@ private:
 	
 	bool debugMode; //Shows colliders
 	void DebugRender();
+
+	MatchInvitationInterrupt& matchInvitationInterrupt;
 };
 
 #endif

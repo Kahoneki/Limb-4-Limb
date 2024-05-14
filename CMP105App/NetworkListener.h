@@ -10,6 +10,7 @@
 #include "SendInviteScreen.h"
 #include "MatchInvitationInterrupt.h"
 #include "NetworkScene.h"
+#include "ItemBox.h"
 
 
 
@@ -74,7 +75,6 @@ public:
             parentReference.health = health;
             break;
         }
-
         }
     }
 
@@ -270,6 +270,15 @@ public:
         case PacketCode::MatchStart:
         {
             parentReference.matchStart = true;
+            break;
+        }
+        case PacketCode::ItemBoxSpawn:
+        {
+            int randXPos;
+            std::underlying_type_t<ItemDrop> drop;
+            float riskReward;
+            incomingData >> randXPos >> drop >> riskReward;
+            parentReference.itemBox = new ItemBox(randXPos, static_cast<ItemDrop>(drop), riskReward);
             break;
         }
         case PacketCode::MatchEnd:

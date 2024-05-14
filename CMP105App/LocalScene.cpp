@@ -1,10 +1,13 @@
 #include "LocalScene.h"
 #include "EndScreen.h"
 #include "Player.h"
+#include "NetworkScene.h"
+#include "MatchInvitationInterrupt.h"
+#include "ColourPallete.h"
 
-LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), pausePopup(in)
+LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sceneManager(sm), pausePopup(in), matchInvitationInterrupt(MatchInvitationInterrupt::getInstance())
 {
-	std::cout << "Loading test scene\n";
+	std::cout << "Loading local scene\n";
 
 	window = hwnd;
 	input = in;
@@ -12,12 +15,9 @@ LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sc
 	debugMode = false;
 	timeUntilPlayersShouldStartUpdate = 0.5f;
 	playerStartUpdateTimeCountdown = timeUntilPlayersShouldStartUpdate;
-	minItemBoxCooldownTime = 15;
-	maxItemBoxCooldownTime = 30;
-	//timeUntilNextItemBox = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
-	timeUntilNextItemBox = 0;
-
-	
+	minItemBoxCooldownTime = 5;
+	maxItemBoxCooldownTime = 10;
+	timeUntilNextItemBox = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
 
 	itemBox = nullptr;
 
@@ -25,16 +25,17 @@ LocalScene::LocalScene(sf::RenderWindow* hwnd, Input* in, SceneManager& sm) : sc
 	InitialisePlayers();
 	InitialiseHealthBars();
 
-	std::cout << "Loaded test scene\n";
+	std::cout << "Loaded local scene\n";
 }
 
 
 LocalScene::~LocalScene()
 {
-	std::cout << "Unloading test scene\n";
+	std::cout << "Unloading local scene\n";
 	delete players[0];
 	delete players[1];
-	std::cout << "Unloaded test scene\n";
+	if (itemBox != nullptr) { delete itemBox; }
+	std::cout << "Unloaded local scene\n";
 
 }
 
@@ -87,6 +88,10 @@ void LocalScene::InitialiseHealthBars() {
 	HealthBarBack2.setSize(sf::Vector2f(600, 75));
 	HealthBarBack2.setPosition(1282, 37);
 	HealthBarBack2.setFillColor(sf::Color::Red);
+
+	if (!font.loadFromFile("font/arial.ttf")) { std::cout << "Error loading font\n"; }
+	p1EffectBox = TextBox(37, 125, 400, 60, INACTIVEBOXCOLOUR, TEXTCOLOUR, 45, font, "", false);
+	p2EffectBox = TextBox(1482, 125, 400, 60, INACTIVEBOXCOLOUR, TEXTCOLOUR, 45, font, "", false);
 }
 
 
@@ -94,9 +99,15 @@ void LocalScene::InitialiseHealthBars() {
 void LocalScene::handleInput(float dt) {
 
 	sf::Vector2f mousePos{ window->mapPixelToCoords(sf::Mouse::getPosition(*window)) };
-	pausePopup.processEvents(mousePos);
 
-	if (!pausePopup.getPausePopupEnabled()) {
+	if (matchInvitationInterrupt.getInvitationReceived()) {
+		matchInvitationInterrupt.processEvents(mousePos);
+	}
+	else {
+		pausePopup.processEvents(mousePos);
+	}
+
+	if (!pausePopup.getPausePopupEnabled() && !matchInvitationInterrupt.getInvitationReceived()) {
 		players[0]->handleInput(dt, sf::Keyboard::W, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::LShift, sf::Keyboard::R, sf::Keyboard::F, sf::Keyboard::T, sf::Keyboard::G);
 		players[1]->handleInput(dt, sf::Keyboard::O, sf::Keyboard::K, sf::Keyboard::Semicolon, sf::Keyboard::L, sf::Keyboard::N, sf::Keyboard::LBracket, sf::Keyboard::Quote, sf::Keyboard::RBracket, sf::Keyboard::Tilde);
 
@@ -113,18 +124,35 @@ void LocalScene::handleInput(float dt) {
 
 void LocalScene::update(float dt) {
 
+	if (matchInvitationInterrupt.getReadyToLoadScene()) {
+		//Open network scene to start match
+		NetworkScene* networkScene{ new NetworkScene(window, input, sceneManager, matchInvitationInterrupt.getPlayerNum(), matchInvitationInterrupt.getNetworkManagerIndex()) };
+		sceneManager.LoadScene(networkScene);
+		return;
+	}
+
 	if (pausePopup.getMainMenuButtonClicked()) {
 		MainMenu* mainMenu = new MainMenu(window, input, sceneManager);
 		sceneManager.LoadScene(mainMenu);
 	}
 
-	if (!pausePopup.getPausePopupEnabled()) {
-		if (playerStartUpdateTimeCountdown > 0) {
-			playerStartUpdateTimeCountdown -= dt;
-		}
+	if (pausePopup.getPausePopupEnabled()) {
+		return;
+	}
+	if (playerStartUpdateTimeCountdown > 0) {
+		playerStartUpdateTimeCountdown -= dt;
+	}
+	else {
+		players[0]->update(dt);
+		players[1]->update(dt);
+	}
+
+
+	//Loop through both players
+	for (int playerIndex{}; playerIndex < 2; ++playerIndex) {
+
 		Player* p1 = players[playerIndex];	   //Defending player
 		Player* p2 = players[1 - playerIndex]; //Attacking player
-
 
 		PlatformCollisionCheck(p1);
 
@@ -132,40 +160,39 @@ void LocalScene::update(float dt) {
 		if (p1->getInvincibilityFramesLeft())
 			continue;
 		else {
-			players[0]->update(dt);
-			players[1]->update(dt);
+			AttackHitboxCheck(p1, p2);
 		}
-
-		//Update item box if it exists
-		if (itemBox != nullptr) {
-			itemBox->update(dt);
-		}
-		if (itemBox != nullptr) {
-			ItemBoxCollisionCheck(p1);
-		}
-		if (itemBox != nullptr) {
-			//Off screen boundary check for item box
-			if (itemBox->getPosition().y + itemBox->getSize().y > 1920) {
-				delete itemBox;
-				itemBox = nullptr;
-			}
-		}
-
-		else {
-			timeUntilNextItemBox -= dt;
-			if (timeUntilNextItemBox <= 0) {
-				itemBox = new ItemBox();
-				timeUntilNextItemBox = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
-			}
-		}
+	}
 
 
+	//Handle item box
+	//Update item box if it exists - need to check nullptr each time since all of these cases might result in the item box being deleted
+	if (itemBox != nullptr) {
+		itemBox->update(dt);
+	}
+	if (itemBox != nullptr) {
+		ItemBoxCollisionCheck(players[0]);
+	}
+	if (itemBox != nullptr) {
+		ItemBoxCollisionCheck(players[1]);
+	}
+	if (itemBox != nullptr) {
+		//Off screen boundary check for item box
+		if (itemBox->getPosition().y + itemBox->getSize().y > 1920) {
+			delete itemBox;
+			itemBox = nullptr;
+		}
+	}
+	else {
+		timeUntilNextItemBox -= dt;
+		if (timeUntilNextItemBox <= 0) {
+			itemBox = new ItemBox();
+			timeUntilNextItemBox = rand() % static_cast<int>(maxItemBoxCooldownTime - minItemBoxCooldownTime + 1) + minItemBoxCooldownTime;
+		}
 	}
 
 	HealthBarUpdate();
-	
 }
-
 
 
 void LocalScene::ItemBoxCollisionCheck(Player* player) {
@@ -303,8 +330,11 @@ void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPla
 		//Hitbox isn't colliding, continue to next limb
 		if (!defendingPlayer->getEffectiveCollider().intersects(attack.getHitbox().getGlobalBounds()))
 			continue;
+		//Defending player is invincible, continue to next limb
+		if (defendingPlayer->getInvincible())
+			continue;
 
-		
+
 		//Apply damage to defending player
 		int damageAmount = attack.getDamage();
 
@@ -327,7 +357,7 @@ void LocalScene::AttackHitboxCheck(Player* defendingPlayer, Player* attackingPla
 }
 
 void LocalScene::ApplyKnockbackToDefendingPlayer(Player* defendingPlayer, Player* attackingPlayer, int limbIndex) {
-	
+
 	sf::Vector2f knockback = attackingPlayer->getAttack(limbIndex).getKnockback();
 
 	//If defending player is blocking, only apply 30% of the knockback
@@ -410,8 +440,25 @@ void LocalScene::HealthBarUpdate() {
 
 	if (players[0]->getHealth() <= 0 || players[1]->getHealth() <= 0) {
 		std::string resultText{ (players[0]->getHealth() > 0) ? "PLAYER 1 WINS!" : "PLAYER 2 WINS!" };
-		EndScreen* endScreen = new EndScreen(window, input, sceneManager, true, resultText.c_str() );
+		EndScreen* endScreen = new EndScreen(window, input, sceneManager, true, resultText.c_str());
 		sceneManager.LoadScene(endScreen);
+		return;
+	}
+
+	//Clear effect box if player doesn't have effect and it isn't already cleared
+	if (!players[0]->getHasEffect() && p1EffectBox.text.getString() != "") {
+		p1EffectBox.text.setString("");
+	}
+	if (!players[1]->getHasEffect() && p2EffectBox.text.getString() != "") {
+		p2EffectBox.text.setString("");
+	}
+
+	//Change effect box text if it doesn't match player's current effect
+	else if (players[0]->getHasEffect() && p1EffectBox.text.getString() != players[0]->getEffectName()) {
+		p1EffectBox.text.setString(players[0]->getEffectName());
+	}
+	else if (players[1]->getHasEffect() && p1EffectBox.text.getString() != players[1]->getEffectName()) {
+		p2EffectBox.text.setString(players[1]->getEffectName());
 	}
 }
 
@@ -434,7 +481,10 @@ void LocalScene::render()
 	window->draw(HealthBarBack2);
 	window->draw(HealthBarFront1);
 	window->draw(HealthBarFront2);
-	for (int i{ 0 }; i < sizeof(platforms)/sizeof(platforms[0]); ++i) {
+	window->draw(p1EffectBox);
+	window->draw(p2EffectBox);
+
+	for (int i{ 0 }; i < sizeof(platforms) / sizeof(platforms[0]); ++i) {
 		window->draw(platforms[i]);
 	}
 
@@ -448,6 +498,11 @@ void LocalScene::render()
 
 	if (pausePopup.getPausePopupEnabled()) {
 		window->draw(pausePopup);
+	}
+
+	if (matchInvitationInterrupt.getInvitationReceived()) {
+		//Match invitation has been received
+		window->draw(matchInvitationInterrupt);
 	}
 
 	endDraw();

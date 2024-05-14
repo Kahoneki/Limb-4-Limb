@@ -38,7 +38,7 @@ private:
 
 	InputBox usernameBox;
 
-	Button sendInviteButton; //To confirm registration
+	Button sendInviteButton;
 	Button backButton;
 
 	//Callbacks
