@@ -1,25 +1,70 @@
-# CMP105 Extension Proposal
+# CMP105 2024 Final Submission 
+
+## Game 
+
+**Limb For Limb: This Time It's Global!** 
+
+This individual project extends the group portion by adding networking for online multiplayer, databases for account registration, AI, and new gameplay features.
+
+
+### **Controls:** 
+
+Left Click : Select
+
+__Local__:
+Escape : Pause
+**Player 1:**
+A/D : Move left/right
+W : Jump
+S : Crouch
+R/F/T/G : Attack
+LShift : Dodge/Dash
+
+**Player 2:**
+K/Semicolon : Move left/right
+O : Jump
+L : Crouch
+LBracket/Quote/RBracket/Tilde : Attack
+N : Dodge/Dash
+
+__Online/Singleplayer__:
+Escape : Pause
+A/D : Move left/right
+Space : Jump
+S : Crouch
+Semicolon/LBracket/RBracket/Enter : Attack
+LShift : Dodge/Dash
+
 
 ## Student Details
 
-**Name:** Ava Imray
-
-**Team:** Weedle
+**Student Name:** Ava Imray
+**Student Number:** 2300318
 
 **Course:** CGT
 
-**Abertay id:** 2300318
+## Changelist
 
-## Game Extended
-Limb For Limb
+* Added an account system
+* Added LAN (extended to full on WiFi functionality)
+* Added WiFi capabilities
+* Added database connectivity
+* Added a singleplayer mode
+* Added 5 difficulty levels of AI opponent
+* Added platforms
+* Added dodge/dash move
+* Fine tuned movement to feel more light and bouncy
+* Added random bonus items which hold power-ups and debuffs
+* Added knockback, both for the attacker and the defender
 
-author(s)
+## Known Bugs
+* Online match invitation process can be broken if inviting user disconnects after sending a match invitation and before invited user accepts/declines the invitation.
+* When user sends an match invitation, they are stuck on the match invitation screen until the invited user responds.
 
-Weedle
+---
+---
 
-## Title of Extension
-
-Limb For Limb : This Time It's Global!
+# Proposal from March
 
 ## Brief Overview of game 
 
@@ -35,7 +80,8 @@ I’m looking to almost entirely rewrite the structure of the program to accommo
 
 ## Must Have Features
 
-- Account system : Players will be able to register and log in to an account to keep their data saved.
+- (REMOVED : RESTRUCTURING THE CODEBASE - NOT A FEATURE)
+- Account system : Players will be able to register and log in to an account to keep their data saved. (MOVED FROM SHOULD HAVE TO MUST HAVE)
 - LAN : Players will be able to fight each other across different computers in the same local area network.
 
 ## Should Have Features
