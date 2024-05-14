@@ -11,7 +11,9 @@ This individual project extends the group portion by adding networking for onlin
 
 Left Click : Select
 
-**Local**:
+<br>
+
+**Local:**
 
 Escape : Pause
 
@@ -41,7 +43,8 @@ LBracket/Quote/RBracket/Tilde : Attack
 N : Dodge/Dash
 
 <br>
-**Online/Singleplayer**:
+
+**Online/Singleplayer:**
 
 Escape : Pause
 
