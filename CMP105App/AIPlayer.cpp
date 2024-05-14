@@ -126,6 +126,15 @@ void AIPlayer::handleInput(float dt, int jump, int left, int right, int down, in
 		keyIsPressed[right] = false;
 	}
 
+	if (difficulty == 4 || difficulty == 5) {
+		//These difficulty levels have the capacity to dodge to get closer to the player or to get back on the ground if they've fallen off the edge
+		bool offEdge{ (getPosition().y < ground.left) || (getPosition().y > ground.left + ground.width) };
+		float horizontalDistanceToPlayer{ abs(getPosition().x - opponent.getPosition().x) };
+		bool dashTowardsPlayer{ horizontalDistanceToPlayer > ((difficulty == 4) ? 500 : 100) }; //Dash towards player if distance is greater than 500 pixels for level 4 or 100 pixels for level 5
+		if (offEdge || dashTowardsPlayer) {
+			keyIsPressed[dodge] = true;
+		}
+	}
 
 
 	//Apply flipchance changes
