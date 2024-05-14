@@ -69,7 +69,7 @@ void NetworkScene::InitialiseScene() {
 	platforms[2] = Platform(800, 475, 320, 25, true);   //Top
 	platforms[3] = Platform(200, 875, 1520, 205, false); //Ground
 
-	//audioManager.playMusicbyName("GuileTheme");
+	audioManager.playMusicbyName("GuileTheme");
 }
 
 
