@@ -1,4 +1,4 @@
-For my 1st year 'Games Programming with C++' module.
+Individual extension for my 1st year 'Games Programming with C++' module.
 - Client-server networking architecture with a combined TCP/UDP protocol and a robust structure to maintain synchronisation between clients
 - Oracle-hosted Linux instance on ARM
 - SQLite-backed account system
